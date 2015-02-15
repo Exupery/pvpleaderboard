@@ -1,0 +1,6 @@
+language: ruby
+rvm:
+  - 2.2.0
+before_script:
+  - psql -c 'create database pvptest;' -U postgres
+
