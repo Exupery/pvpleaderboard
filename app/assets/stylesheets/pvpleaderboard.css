@@ -1,6 +1,8 @@
 html, body {
 	color: #E4A703;
 	background-color: #1A0F08;
+	font-family: Caudex, sans-serif;
+	font-size: 1em;
 }
 
 .center-text {
@@ -17,6 +19,11 @@ a:hover {
 
 .jumbotron {
 	background-color: inherit;
+}
+
+#footer ul {
+	padding-left: 10%;
+	padding-right: 10%;
 }
 
 #footer li {
