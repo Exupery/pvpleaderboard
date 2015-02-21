@@ -21,6 +21,10 @@ a:hover {
 	background-color: inherit;
 }
 
+#footer {
+	margin-top: 5em;
+}
+
 #footer ul {
 	padding-left: 10%;
 	padding-right: 10%;
