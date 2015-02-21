@@ -1,5 +1,22 @@
+html, body {
+	color: #E4A703;
+	background-color: #1A0F08;
+}
+
 .center-text {
   text-align: center;
+}
+
+a {
+	color: #DAF092;
+}
+
+a:hover {
+	color: #68B5D1;
+}
+
+.jumbotron {
+	background-color: inherit;
 }
 
 #footer li {
