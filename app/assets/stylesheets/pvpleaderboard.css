@@ -20,17 +20,18 @@ a:hover {
 
 .navbar {
 	border-radius: 0;
-	color: #1A0F08;
-	background-color: #E4A703;
+	color: #E4A703;
+	background-color: #302620;
+	border-bottom-color: #E4A703;
 }
 
 .navbar a {
-	color: #1A0F08;
+	color: #E4A703;
 }
 
 .nav>li>a:hover {
-	color: #E4A703;
-	background-color: #1A0F08;
+	color: #302620;
+	background-color: #E4A703;
 }
 
 .jumbotron {
