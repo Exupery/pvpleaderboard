@@ -3,6 +3,7 @@ html, body {
 	background-color: #1A0F08;
 	font-family: Caudex, sans-serif;
 	font-size: 1em;
+	text-align: center;
 }
 
 .center-text {
@@ -15,6 +16,21 @@ a {
 
 a:hover {
 	color: #68B5D1;
+}
+
+.navbar {
+	border-radius: 0;
+	color: #1A0F08;
+	background-color: #E4A703;
+}
+
+.navbar a {
+	color: #1A0F08;
+}
+
+.nav>li>a:hover {
+	color: #E4A703;
+	background-color: #1A0F08;
 }
 
 .jumbotron {
