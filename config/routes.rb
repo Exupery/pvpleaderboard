@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root 'application#index'
 
-  get 'stats' => 'application#stats'
-  get 'stats/:bracket' => 'application#stats'
+  get 'overview' => 'overview#stats'
+  get 'overview/:bracket' => 'overview#stats'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
