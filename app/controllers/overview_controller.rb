@@ -1,7 +1,6 @@
 class OverviewController < ApplicationController
   protect_from_forgery with: :exception
 
-  @@db = ActiveRecord::Base.connection
   @@BRACKETS = ["2v2", "3v3", "5v5", "rbg"]
 
   def stats
@@ -42,7 +41,7 @@ class OverviewController < ApplicationController
   def faction_counts bracket
   	h = Hash.new
 
-  	rows = @@db.execute("SELECT factions.name AS faction, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id GROUP BY faction ORDER BY faction ASC")
+  	rows = ActiveRecord::Base.connection.execute("SELECT factions.name AS faction, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id GROUP BY faction ORDER BY faction ASC")
   	rows.each do |row|
   		h[row["faction"]] = row["count"].to_i
   	end
