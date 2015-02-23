@@ -10,6 +10,10 @@ html, body {
   text-align: center;
 }
 
+.left-text {
+  text-align: left;
+}
+
 .center {
 	margin-left: auto;
 	margin-right: auto;
@@ -27,6 +31,7 @@ a:hover {
 	background-color: #302620;
 	margin-top: 1em;
 	width: auto;
+	font-size: 1.1em;
 }
 
 th {
@@ -38,6 +43,10 @@ th {
 .table-bordered>tbody>tr>td {
 	border-color: #E4A703;
 	padding: 0.65em;
+}
+
+.table-hover>tbody>tr:hover {
+	background-color: #1A0F08;
 }
 
 .navbar {

@@ -1,5 +1,5 @@
 <h1>Overview for <%= @bracket %></h1>
-<table class="table table-bordered table-condensed table-responsive center">
+<table class="table table-bordered table-condensed table-responsive table-hover center">
 	<thead>
 		<tr>
 			<th>Faction</th>
@@ -11,7 +11,7 @@
 		<% percents = faction_percent() %>
 		<% @counts.each do |f, c| %>
 			<tr>
-				<td><%= f %></td>
+				<td class="left-text"><%= f %></td>
 				<td><%= c %></td>
 				<td><%= percents[f] %>%</td>
 			</tr>
