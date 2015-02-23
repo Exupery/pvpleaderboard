@@ -5,6 +5,7 @@ default: &default
   timeout: 5000
   username: <%= ENV['PVP_DB_USER'] %>
   password: <%= ENV['PVP_DB_PASSWORD'] %>
+  sslmode: require
 
 development:
   <<: *default
