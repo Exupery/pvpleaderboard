@@ -10,12 +10,34 @@ html, body {
   text-align: center;
 }
 
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
 a {
 	color: #DAF092;
 }
 
 a:hover {
 	color: #68B5D1;
+}
+
+.table {
+	background-color: #302620;
+	margin-top: 1em;
+	width: auto;
+}
+
+th {
+	background-color: #1A0F08;
+}
+
+.table-bordered,
+.table-bordered>thead>tr>th,
+.table-bordered>tbody>tr>td {
+	border-color: #E4A703;
+	padding: 0.65em;
 }
 
 .navbar {

@@ -1,1 +1,20 @@
-<h1><%= @bracket %></h1>
+<h1>Overview for <%= @bracket %></h1>
+<table class="table table-bordered table-condensed table-responsive center">
+	<thead>
+		<tr>
+			<th>Faction</th>
+			<th>Count</th>
+			<th>Percent</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% percents = faction_percent() %>
+		<% @counts.each do |f, c| %>
+			<tr>
+				<td><%= f %></td>
+				<td><%= c %></td>
+				<td><%= percents[f] %>%</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
