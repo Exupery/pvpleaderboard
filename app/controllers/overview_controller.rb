@@ -14,16 +14,16 @@ class OverviewController < ApplicationController
   	@title = "#{title_bracket || 'Leaderboard'} Overview"
   	@description = "WoW PvP leaderboard overview"
 
-  	@counts = Hash.new(0)
+  	@factions = Hash.new(0)
   	if bracket.nil?
   		@@BRACKETS.each do |b|
   			fc = faction_counts b
   			fc.each do |f, c|
-  				@counts[f] = @counts[f] + c
+  				@factions[f] = @factions[f] + c
   			end
   		end
   	else
-  		@counts = faction_counts bracket
+  		@factions = faction_counts bracket
   	end
 
   	case bracket

@@ -9,7 +9,7 @@
 	</thead>
 	<tbody>
 		<% percents = faction_percent() %>
-		<% @counts.each do |f, c| %>
+		<% @factions.each do |f, c| %>
 			<tr>
 				<td><img src="/images/<%= f.downcase %>.png" class="img-responsive center" alt="<%= f %>"></td>
 				<td><%= c %></td>
