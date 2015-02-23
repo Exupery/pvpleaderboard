@@ -10,7 +10,7 @@ default: &default
 development:
   <<: *default
   host: localhost
-  database: pvp
+  database: <%= ENV['PVP_DB_NAME'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
