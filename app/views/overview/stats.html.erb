@@ -11,7 +11,7 @@
 		<% percents = faction_percent() %>
 		<% @counts.each do |f, c| %>
 			<tr>
-				<td class="left-text"><%= f %></td>
+				<td><img src="/images/<%= f.downcase %>.png" class="img-responsive center" alt="<%= f %>"></td>
 				<td><%= c %></td>
 				<td><%= percents[f] %>%</td>
 			</tr>

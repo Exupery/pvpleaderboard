@@ -31,11 +31,19 @@ a:hover {
 	background-color: #302620;
 	margin-top: 1em;
 	width: auto;
-	font-size: 1.1em;
+	font-size: 1.45em;
+}
+
+.table img {
+	width: 1.65em;
 }
 
 th {
 	background-color: #1A0F08;
+}
+
+.table>tbody>tr>td {
+	vertical-align: middle;
 }
 
 .table-bordered,
