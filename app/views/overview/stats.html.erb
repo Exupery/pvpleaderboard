@@ -11,9 +11,33 @@
 		<% percents = faction_percent() %>
 		<% @factions.each do |f, c| %>
 			<tr>
-				<td><img src="/images/<%= f.downcase %>.png" class="img-responsive center" alt="<%= f %>"></td>
+				<td title="<%= f %>"><img src="/images/<%= f.downcase %>.png" class="img-responsive center" alt="<%= f %>"></td>
 				<td><%= c %></td>
 				<td><%= percents[f] %>%</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<table class="table table-bordered table-condensed table-responsive table-hover center">
+	<thead>
+		<tr>
+			<th>Race</th>
+			<th>Count</th>
+			<th>Percent</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% percents = race_percent() %>
+		<% @races.each do |r, c| %>
+			<tr>
+				<td title="<%= r %>">
+					<% race_slug = r.downcase.sub(/\s/, "_") %>
+					<img src="/images/races/<%= race_slug %>_female.png" class="img-responsive center inline-block" alt="<%= r %> Female">
+					<img src="/images/races/<%= race_slug %>_male.png" class="img-responsive center inline-block" alt="<%= r %> Male">
+				</td>
+				<td><%= c %></td>
+				<td><%= percents[r] %>%</td>
 			</tr>
 		<% end %>
 	</tbody>
