@@ -15,40 +15,10 @@ class OverviewController < ApplicationController
   	@description = "WoW PvP leaderboard overview"
 
   	@factions = Hash.new(0)
-  	if bracket.nil?
-  		@@BRACKETS.each do |b|
-  			fc = faction_counts b
-  			fc.each do |f, c|
-  				@factions[f] += c
-  			end
-  		end
-  	else
-  		@factions = faction_counts bracket
-  	end
-
     @races = Hash.new(0)
-    if bracket.nil?
-      @@BRACKETS.each do |b|
-        rc = race_counts b
-        rc.each do |r, c|
-          @races[r] += c
-        end
-      end
-    else
-      @races = race_counts bracket
-    end
-
     @classes = Hash.new(0)
-    if bracket.nil?
-      @@BRACKETS.each do |b|
-        cc = class_counts b
-        cc.each do |cl, c|
-          @classes[cl] += c
-        end
-      end
-    else
-      @classes = class_counts bracket
-    end
+
+    find_counts bracket
 
   	case bracket
   	when nil
@@ -61,6 +31,31 @@ class OverviewController < ApplicationController
   end
 
   private
+
+  def find_counts bracket
+    if bracket.nil?
+      @@BRACKETS.each do |b|
+        fc = faction_counts b
+        fc.each do |f, c|
+          @factions[f] += c
+        end
+
+        rc = race_counts b
+        rc.each do |r, c|
+          @races[r] += c
+        end
+
+        cc = class_counts b
+        cc.each do |cl, c|
+          @classes[cl] += c
+        end
+      end
+    else
+      @factions = faction_counts bracket
+      @races = race_counts bracket
+      @classes = class_counts bracket
+    end
+  end
 
   def faction_counts bracket
   	h = Hash.new
