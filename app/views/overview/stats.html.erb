@@ -32,7 +32,7 @@
 		<% @races.each do |r, c| %>
 			<tr>
 				<td title="<%= r %>">
-					<% race_slug = r.downcase.sub(/\s/, "_") %>
+					<% race_slug = slugify r %>
 					<img src="/images/races/<%= race_slug %>_female.png" class="img-responsive center inline-block" alt="<%= r %> Female">
 					<img src="/images/races/<%= race_slug %>_male.png" class="img-responsive center inline-block" alt="<%= r %> Male">
 				</td>

@@ -22,4 +22,8 @@ module OverviewHelper
 		end
 		return h
 	end
+
+	def slugify txt
+		return txt.downcase.sub(/\s/, "_")
+	end
 end
