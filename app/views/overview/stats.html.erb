@@ -42,3 +42,23 @@
 		<% end %>
 	</tbody>
 </table>
+
+<table class="table table-bordered table-condensed table-responsive table-hover center">
+	<thead>
+		<tr>
+			<th>Class</th>
+			<th>Count</th>
+			<th>Percent</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% percents = classes_percent() %>
+		<% @classes.each do |cl, c| %>
+			<tr>
+				<td title="<%= cl %>"><img src="/images/classes/<%= slugify cl %>.png" class="img-responsive center" alt="<%= cl %>"></td>
+				<td><%= c %></td>
+				<td><%= percents[cl] %>%</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

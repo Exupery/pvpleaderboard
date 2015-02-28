@@ -23,6 +23,18 @@ module OverviewHelper
 		return h
 	end
 
+	def classes_percent
+		h = Hash.new
+		total = 0
+		@classes.each do |cl, c|
+			total += c
+		end
+		@classes.each do |cl, c|
+			h[cl] = (c.to_f / total * 100).round(1)
+		end
+		return h
+	end
+
 	def slugify txt
 		return txt.downcase.sub(/\s/, "_")
 	end
