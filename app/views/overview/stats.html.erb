@@ -8,7 +8,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% percents = faction_percent() %>
+		<% percents = percent_counts @factions %>
 		<% @factions.each do |f, c| %>
 			<tr>
 				<td title="<%= f %>"><img src="/images/<%= f.downcase %>.png" class="img-responsive center" alt="<%= f %>"></td>
@@ -28,7 +28,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% percents = race_percent() %>
+		<% percents = percent_counts @races %>
 		<% @races.each do |r, c| %>
 			<tr>
 				<td title="<%= r %>">
@@ -52,7 +52,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% percents = classes_percent() %>
+		<% percents = percent_counts @classes %>
 		<% @classes.each do |cl, c| %>
 			<tr>
 				<td title="<%= cl %>"><img src="/images/classes/<%= slugify cl %>.png" class="img-responsive center" alt="<%= cl %>"></td>
