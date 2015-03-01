@@ -1,7 +1,6 @@
-$(document).ready(function() {
+var ready = function() {
   $(".table-sorted").tablesorter({sortInitialOrder: "desc"});
-
-  /*$("th").click(function() {
-  	$(this).focus().blur();
-  });*/
-});
+};
+/* Needed so jQuery's ready plays well with Rails turbolinks */
+$(document).ready(ready);
+$(document).on('page:load', ready);
