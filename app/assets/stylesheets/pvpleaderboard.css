@@ -46,17 +46,6 @@ a:hover {
 	text-decoration: none;
 }
 
-.btn-default.active {
-	color: #1A0F08;
-	background-color: #E4A703;
-	border-color: inherit;
-}
-
-.btn-default.active:hover {
-	color: #1A0F08;
-	background-color: #ECC14E;
-}
-
 .table {
 	background-color: #302620;
 	margin-top: 1em;
@@ -94,37 +83,47 @@ th {
 	cursor: pointer;
 }
 
+th:focus {
+	outline: none;
+}
+
+.navbar,
+.navbar-default {
+	border-radius: 0;
+	color: #E4A703;
+	background-color: #302620;
+	border-color: #302620;
+	border-bottom-color: #E4A703;
+}
+
+.navbar a,
+.navbar-default .navbar-nav>li>a {
+	color: #E4A703;
+}
+
 th.tablesorter-headerDesc,
-th.tablesorter-headerAsc {
+th.tablesorter-headerAsc,
+.btn-default.active,
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus {
 	color: #1A0F08;
 	background-color: #E4A703;
 	border-color: inherit;
 }
 
+.nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:hover {
+	color: #E4A703;
+	background-color: #1A0F08;
+	border-color: inherit;
+}
+
 th.tablesorter-headerDesc:hover,
-th.tablesorter-headerAsc:hover {
+th.tablesorter-headerAsc:hover,
+.btn-default.active:hover,
+.navbar-default .navbar-nav>.active>a:hover {
 	color: #1A0F08;
 	background-color: #ECC14E;
-}
-
-th:focus {
-	outline: none;
-}
-
-.navbar {
-	border-radius: 0;
-	color: #E4A703;
-	background-color: #302620;
-	border-bottom-color: #E4A703;
-}
-
-.navbar a {
-	color: #E4A703;
-}
-
-.nav>li>a:hover {
-	color: #302620;
-	background-color: #E4A703;
 }
 
 .jumbotron {
