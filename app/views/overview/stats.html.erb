@@ -1,4 +1,12 @@
+<div class="btn-group btn-group-lg" role="group" aria-label="Brackets">
+  <% ["2v2", "3v3", "5v5", "RBG", "All"].each do |b| %>
+  	<% active = (b[0] == @bracket[0]) ? "active" : "" %>
+  	<a href="/overview/<%= b.downcase %>" type="button" class="btn btn-default <%= active %>" role="button"><%= b %></a>
+  <% end %>
+</div>
+
 <h1>Overview for <%= @bracket %></h1>
+
 <table class="table table-bordered table-condensed table-responsive table-hover table-sorted center">
 	<thead>
 		<tr>
