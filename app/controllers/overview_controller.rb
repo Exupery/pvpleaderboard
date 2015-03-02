@@ -17,6 +17,7 @@ class OverviewController < ApplicationController
   	@factions = Hash.new(0)
     @races = Hash.new(0)
     @classes = Hash.new(0)
+    @specs = Hash.new(nil)
 
     find_counts bracket
 
@@ -49,11 +50,21 @@ class OverviewController < ApplicationController
         cc.each do |cl, c|
           @classes[cl] += c
         end
+
+        sc = spec_counts b
+        sc.each do |s, info|
+          if @specs[s].nil?
+            @specs[s] = info
+          else
+            @specs[s].count += info.count
+          end
+        end
       end
     else
       @factions = faction_counts bracket
       @races = race_counts bracket
       @classes = class_counts bracket
+      @specs = spec_counts bracket
     end
   end
 
@@ -88,5 +99,28 @@ class OverviewController < ApplicationController
     end
 
     return h
+  end
+
+  def spec_counts bracket
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT specs.name AS spec, specs.icon, classes.name AS class, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN specs ON players.spec_id=specs.id JOIN classes ON specs.class_id=classes.id GROUP BY spec, specs.icon, class ORDER BY spec ASC")
+    rows.each do |row|
+      h[row["class"] + row["spec"]] = SpecInfo.new(row["spec"], row["count"].to_i, row["icon"], row["class"])
+    end
+
+    return h
+  end
+end
+
+class SpecInfo
+  attr_reader :name, :icon, :class_name
+  attr_accessor :count
+
+  def initialize(name, count, icon, class_name)
+    @name = name
+    @count = count
+    @icon = icon
+    @class_name = class_name
   end
 end

@@ -11,6 +11,15 @@ module OverviewHelper
 		return h
 	end
 
+	def spec_percent_counts
+		h = Hash.new
+		@specs.each do |slug, info|
+			h[slug] = info.count
+		end
+
+		return percent_counts h
+	end
+
 	def slugify txt
 		return txt.downcase.sub(/\s/, "_")
 	end
