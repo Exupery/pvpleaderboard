@@ -23,6 +23,10 @@ html, body {
 	display: inline-block;
 }
 
+h1 {
+	margin-bottom: 0.5em;
+}
+
 a {
 	color: #DAF092;
 }
