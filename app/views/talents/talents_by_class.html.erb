@@ -3,7 +3,7 @@
 <div>
 	<div class="btn-group btn-group-lg" role="group" aria-label="Class">
 		<% @classes.each do |c, s| %>
-			<% active = (s == "TODO") ? "active" : "" %>
+			<% active = (@class_slug && s == @class_slug) ? "active" : "" %>
 			<a href="/talents/<%= s.sub(/_/, "-") %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= c %>"><img src="/images/classes/<%= s %>.png" class="img-responsive center" alt="<%= c %>"></a>
 	  <% end %>
 	</div>
@@ -13,7 +13,7 @@
 	<div class="btn-group btn-group-lg" role="group" aria-label="Spec">
 		<% if @clazz %>
 			<% @specs[@clazz].each do |spec| %>
-				<% active = (spec == "TODO") ? "active" : "" %>
+				<% active = (@spec_slug && @spec_slug == spec.slug) ? "active" : "" %>
 				<a href="/talents/<%= @class_slug.sub(/_/, "-") %>/<%= spec.slug.sub(/_/, "-") %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= spec.name %>"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>"></a>
 		  <% end %>
 	  <% end %>

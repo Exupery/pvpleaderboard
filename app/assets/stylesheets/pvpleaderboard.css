@@ -103,10 +103,23 @@ th:focus {
 	width: 7vw;
 	max-width: 4em;
 	min-width: 1.4em;
+	-webkit-filter: brightness(0.95);
+	filter: brightness(0.95);
 }
 
 .btn-group img:hover {
-	-webkit-filter: brightness(65%);
+	-webkit-filter: brightness(1.8);
+	filter: brightness(1.8);
+}
+
+.btn-group a.active img {
+	-webkit-filter: sepia(1);
+	filter: sepia(1);
+}
+
+.btn-group a.active img:hover {
+	-webkit-filter: sepia(0.6);
+	filter: sepia(0.6);
 }
 
 .navbar,
