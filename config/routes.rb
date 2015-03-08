@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'overview' => 'overview#stats'
   get 'overview/:bracket' => 'overview#stats'
   get 'talents' => 'talents#talents_by_class'
+  get 'talents/:class' => 'talents#talents_by_class'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
