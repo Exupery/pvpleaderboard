@@ -8,6 +8,6 @@ class Spec
     @description = description
     @background_image = background_image
     @icon = icon
-    @slug = name.downcase.sub(/-/, "_")
+    @slug = name.downcase.sub(/\s/, "_")
   end
 end
