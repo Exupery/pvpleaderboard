@@ -1,3 +1,5 @@
+include Utils
+
 class Spec
   attr_reader :class_name, :name, :role, :description, :background_image, :icon, :slug
 
@@ -8,6 +10,6 @@ class Spec
     @description = description
     @background_image = background_image
     @icon = icon
-    @slug = name.downcase.sub(/\s/, "_")
+    @slug = slugify name
   end
 end

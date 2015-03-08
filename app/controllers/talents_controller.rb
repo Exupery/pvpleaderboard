@@ -1,4 +1,5 @@
 class TalentsController < ApplicationController
+	include Utils
 	protect_from_forgery with: :exception
 
 	def talents_by_class
@@ -7,7 +8,7 @@ class TalentsController < ApplicationController
 
 		@heading = "Select a Class"
 		@classes = Classes.list
-		@class_slug = params[:class] ? params[:class].downcase.sub(/-/, "_") : nil
+		@class_slug = slugify params[:class]
 		if @class_slug
 			class_slugs = @classes.invert
 			if !class_slugs.key?(@class_slug)
@@ -20,7 +21,7 @@ class TalentsController < ApplicationController
 		end
 
 		@specs = Specs.list
-		@spec_slug = params[:spec] ? params[:spec].downcase.sub(/-/, "_") : nil
+		@spec_slug = slugify params[:spec]
 		if @spec_slug
 			spec_slugs = Specs.slugs
 			full_slug = "#{@class_slug}_#{@spec_slug}"

@@ -1,4 +1,6 @@
 module OverviewHelper
+	include Utils
+
 	def percent_counts hash
 		h = Hash.new
 		total = 0
@@ -18,9 +20,5 @@ module OverviewHelper
 		end
 
 		return percent_counts h
-	end
-
-	def slugify txt
-		return txt.downcase.sub(/\s/, "_")
 	end
 end

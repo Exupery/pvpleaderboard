@@ -1,3 +1,5 @@
+include Utils
+
 class Classes
 	@@classes = nil
 
@@ -14,7 +16,7 @@ class Classes
 		rows = ActiveRecord::Base.connection.execute("SELECT name FROM classes ORDER BY name ASC")
     rows.each do |row|
       n = row["name"]
-      h[n] = n.downcase.sub(/\s/, "_")
+      h[n] = slugify n
     end
 
     return h

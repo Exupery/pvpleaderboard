@@ -1,3 +1,5 @@
+include Utils
+
 class Specs
 	@@specs = nil
 	@@slugs = nil
@@ -35,7 +37,7 @@ class Specs
     rows.each do |row|
       clazz = row["class"]
       spec = row["spec"]
-      slug = ("#{clazz}_#{spec}").downcase.sub(/\s/, "_")
+      slug = slugify "#{clazz}_#{spec}"
       h[slug] = spec
     end
 
