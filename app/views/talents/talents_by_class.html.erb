@@ -1,0 +1,7 @@
+<h1><%= @title %></h1>
+<div class="btn-group btn-group-lg" role="group" aria-label="Class">
+	<% @classes.each do |c, s| %>
+		<% active = (s == "TODO") ? "active" : "" %>
+		<a href="/talents/<%= s %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= c %>"><img src="/images/classes/<%= s %>.png" class="img-responsive center" alt="<%= c %>"></a>
+  <% end %>
+</div>
