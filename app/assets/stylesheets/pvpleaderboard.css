@@ -86,8 +86,6 @@ th {
 }
 
 .table-sorted th:hover {
-	color: #E4A703;
-	background-color: #302620;
 	cursor: pointer;
 }
 
@@ -148,14 +146,16 @@ th.tablesorter-headerAsc,
 
 .nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:hover {
-	color: #E4A703;
-	background-color: #1A0F08;
 	border-color: inherit;
 }
 
 th.tablesorter-headerDesc:hover,
 th.tablesorter-headerAsc:hover,
+.table-sorted th:hover,
+.btn:hover,
 .btn-default.active:hover,
+.nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>.active>a:hover {
 	color: #1A0F08;
 	background-color: #ECC14E;
