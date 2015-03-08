@@ -13,10 +13,10 @@ class Classes
 	def self.get_classes
 		h = Hash.new()
 
-		rows = ActiveRecord::Base.connection.execute("SELECT name FROM classes ORDER BY name ASC")
+		rows = ActiveRecord::Base.connection.execute("SELECT id, name FROM classes ORDER BY name ASC")
     rows.each do |row|
       n = row["name"]
-      h[n] = slugify n
+      h[slugify n] = {"id" => row["id"], "name" => n}
     end
 
     return h
