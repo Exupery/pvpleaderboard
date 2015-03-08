@@ -3,5 +3,4 @@
 # It doesn't feel pity, or remorse, or fear.
 
 User-agent: *
-Disallow: /images/
 Disallow: /javascripts/
