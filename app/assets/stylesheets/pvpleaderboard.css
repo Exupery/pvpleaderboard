@@ -35,6 +35,10 @@ a:hover {
 	color: #68B5D1;
 }
 
+.margin-top-2em {
+	margin-top: 2em;
+}
+
 .btn-default {
 	color: #E4A703;
 	background-color: #1A0F08;

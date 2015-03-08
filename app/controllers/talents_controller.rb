@@ -4,15 +4,33 @@ class TalentsController < ApplicationController
 	def talents_by_class
 		@title = "Talents"
 		@description = "WoW PvP leaderboard talent choices"
+
+		@heading = "Select a Class"
 		@classes = Classes.list
-		slug = params[:class] ? params[:class].sub(/-/, "_") : nil
-		if slug
-			slugs = @classes.invert
-			if !slugs.key?(slug)
+		@class_slug = params[:class] ? params[:class].downcase.sub(/-/, "_") : nil
+		if @class_slug
+			class_slugs = @classes.invert
+			if !class_slugs.key?(@class_slug)
 				redirect_to "/talents"
 				return nil
 			end
-			@title = "#{slugs[slug]} Talents"
+			@clazz = class_slugs[@class_slug]
+			@title = "#{@clazz} Talents"
+			@heading = "Select a Specialization"
+		end
+
+		@specs = Specs.list
+		@spec_slug = params[:spec] ? params[:spec].downcase.sub(/-/, "_") : nil
+		if @spec_slug
+			spec_slugs = Specs.slugs
+			full_slug = "#{@class_slug}_#{@spec_slug}"
+			if !spec_slugs.key?(full_slug)
+				redirect_to "/talents/#{@class_slug}"
+				return nil
+			end
+			@spec = spec_slugs[full_slug]
+			@title = "#{@spec} #{@clazz} Talents"
+			@heading = @title
 		end
 	end
 
