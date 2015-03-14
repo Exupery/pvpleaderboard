@@ -59,6 +59,7 @@ a:hover {
 	margin-top: 1em;
 	width: auto;
 	font-size: 1.45em;
+	font-size: calc(1vw + 0.7em);
 }
 
 .table img {
@@ -93,14 +94,25 @@ th:focus {
 	outline: none;
 }
 
+#talent-build img {
+	width: 5vw;
+  max-width: 3em;
+  min-width: 1.5em;
+}
+
+.most-selected {
+	color: #1A0F08;
+	background-color: #E4A703;
+}
+
 .btn-group-lg>.btn.small-padding {
 	padding: 0.25em;
 }
 
 .btn-group img {
-	width: 7vw;
+	width: 6vw;
 	max-width: 4em;
-	min-width: 1.4em;
+	min-width: 1.3em;
 	-webkit-filter: brightness(0.95);
 	filter: brightness(0.95);
 }
