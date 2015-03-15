@@ -146,6 +146,11 @@ th:focus {
 	color: #E4A703;
 }
 
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+  color: inherit;
+}
+
 th.tablesorter-headerDesc,
 th.tablesorter-headerAsc,
 .btn-default.active,
