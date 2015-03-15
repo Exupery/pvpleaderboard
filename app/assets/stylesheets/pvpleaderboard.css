@@ -62,6 +62,13 @@ a:hover {
 	font-size: calc(1vw + 0.7em);
 }
 
+td {
+	background: -moz-linear-gradient(left, #261E19 0%, #302620 25%, #302620 75%, #261E19 100%);
+	background: -webkit-linear-gradient(left, #261E19 0%, #302620 25%, #302620 75%, #261E19 100%);
+	background: -ms-linear-gradient(left, #261E19 0%, #302620 25%, #302620 75%, #261E19 100%);
+	background: linear-gradient(to right, #261E19 0%, #302620 25%, #302620 75%, #261E19 100%);
+}
+
 .table img {
 	width: 1.65em;
 }
@@ -82,8 +89,10 @@ th {
 	padding: 0.65em;
 }
 
+.table-hover tr:hover td,
 .table-hover>tbody>tr:hover {
 	background-color: #1A0F08;
+	background: #1A0F08;
 }
 
 .table-sorted th:hover {
@@ -103,6 +112,10 @@ th:focus {
 .most-selected {
 	color: #1A0F08;
 	background-color: #E4A703;
+	background: -moz-linear-gradient(left, #B68502 0%, #E4A703 25%, #E4A703 75%, #B68502 100%);
+	background: -webkit-linear-gradient(left, #B68502 0%, #E4A703 25%, #E4A703 75%, #B68502 100%);
+	background: -ms-linear-gradient(left, #B68502 0%, #E4A703 25%, #E4A703 75%, #B68502 100%);
+	background: linear-gradient(to right, #B68502 0%, #E4A703 25%, #E4A703 75%, #B68502 100%);
 }
 
 .btn-group-lg>.btn.small-padding {
