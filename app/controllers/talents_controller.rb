@@ -16,6 +16,7 @@ class TalentsController < ApplicationController
 			end
 			@clazz = @classes[@class_slug]["name"]
 			@title = "#{@clazz} Talents"
+			@description = @title
 			@heading = "Select a Specialization"
 		end
 
@@ -30,6 +31,7 @@ class TalentsController < ApplicationController
 			end
 			@spec = spec_slugs[full_slug]["name"]
 			@title = "#{@spec} #{@clazz} Talents"
+			@description = @title
 			@heading = @title
 
 			class_id = @classes[@class_slug]["id"]
