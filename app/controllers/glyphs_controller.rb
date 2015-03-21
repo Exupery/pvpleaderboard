@@ -2,6 +2,9 @@ class GlyphsController < ApplicationController
 	include Utils
 	protect_from_forgery with: :exception
 
+	@@MAJOR_TYPE_ID = 0
+	@@MINOR_TYPE_ID = 1
+
 	def glyphs_by_class
 		@title = "Glyphs"
 		@description = "WoW PvP leaderboard glyph choices"
@@ -35,17 +38,19 @@ class GlyphsController < ApplicationController
 			class_id = classes[@class_slug]["id"]
 			spec_id = spec_slugs[full_slug]["id"]
 
-			@counts = glyph_counts(class_id, spec_id)
+			@major_counts = glyph_counts(class_id, spec_id, @@MAJOR_TYPE_ID)
+			@minor_counts = glyph_counts(class_id, spec_id, @@MINOR_TYPE_ID)
 			@total = total_player_count(class_id, spec_id)
+			@class_glyphs = Glyphs.get_glyphs class_id
 		end
 	end
 
 	private
 
-	def glyph_counts(class_id, spec_id)
+	def glyph_counts(class_id, spec_id, type_id)
 		h = Hash.new
 
-		rows = ActiveRecord::Base.connection.execute("SELECT glyphs.id AS glyph, COUNT(*) AS count FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_glyphs ON players.id=players_glyphs.player_id JOIN glyphs ON players_glyphs.glyph_id=glyphs.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} GROUP BY glyph")
+		rows = ActiveRecord::Base.connection.execute("SELECT glyphs.id AS glyph, COUNT(*) AS count FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_glyphs ON players.id=players_glyphs.player_id JOIN glyphs ON players_glyphs.glyph_id=glyphs.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} AND glyphs.type_id=#{type_id} GROUP BY glyph")
     rows.each do |row|
       h[row["glyph"]] = row["count"].to_i
     end

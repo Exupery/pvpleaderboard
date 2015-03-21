@@ -1,3 +1,25 @@
 <h1><%= @heading %></h1>
 <%= render "layouts/class_selection", :selected_slug => @class_slug, :base_path => "/glyphs" %>
 <%= render "layouts/spec_selection", :selected_class_slug => @class_slug, :selected_spec_slug => @spec_slug, :base_path => "/glyphs" %>
+
+<div class="margin-top-2em">
+	<% if @major_counts %>
+	<table id="talent-build" class="table table-bordered table-condensed table-responsive table-hover table-sorted center">
+		<thead>
+			<tr>
+				<th>Glyph</th>
+				<th>Percent</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @major_counts.each do |id, count| %>
+				<% glyph = @class_glyphs[id] %>
+				<tr>
+					<td><%= glyph["name"] %></td>
+					<td><%= (count.to_f / @total * 100).round(1) %>%</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<% end %>
+</div>
