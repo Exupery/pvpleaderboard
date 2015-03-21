@@ -34,7 +34,23 @@ class GlyphsController < ApplicationController
 
 			class_id = classes[@class_slug]["id"]
 			spec_id = spec_slugs[full_slug]["id"]
+
+			@counts = glyph_counts(class_id, spec_id)
+			@total = total_player_count(class_id, spec_id)
 		end
 	end
-	
+
+	private
+
+	def glyph_counts(class_id, spec_id)
+		h = Hash.new
+
+		rows = ActiveRecord::Base.connection.execute("SELECT glyphs.id AS glyph, COUNT(*) AS count FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_glyphs ON players.id=players_glyphs.player_id JOIN glyphs ON players_glyphs.glyph_id=glyphs.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} GROUP BY glyph")
+    rows.each do |row|
+      h[row["glyph"]] = row["count"].to_i
+    end
+
+		return h
+	end
+
 end
