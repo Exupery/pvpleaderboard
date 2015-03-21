@@ -1,24 +1,6 @@
 <h1><%= @heading %></h1>
-
-<div>
-	<div class="btn-group btn-group-lg" role="group" aria-label="Class">
-		<% @classes.each do |slug, hash| %>
-			<% active = (@class_slug && slug == @class_slug) ? "active" : "" %>
-			<a href="/talents/<%= urlify slug %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= hash["name"] %>"><img src="/images/classes/<%= slug %>.png" class="img-responsive center" alt="<%= hash["name"] %>"></a>
-	  <% end %>
-	</div>
-</div>
-
-<div class="margin-top-2em">
-	<div class="btn-group btn-group-lg" role="group" aria-label="Spec">
-		<% if @clazz %>
-			<% @specs[@clazz].each do |spec| %>
-				<% active = (@spec_slug && @spec_slug == spec.slug) ? "active" : "" %>
-				<a href="/talents/<%= urlify @class_slug %>/<%= urlify spec.slug %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= spec.name %>"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>"></a>
-		  <% end %>
-	  <% end %>
-	</div>
-</div>
+<%= render "layouts/class_selection", :selected_slug => @class_slug %>
+<%= render "layouts/spec_selection", :selected_class_slug => @class_slug, :selected_spec_slug => @spec_slug %>
 
 <div class="margin-top-2em">
 	<% if @counts %>

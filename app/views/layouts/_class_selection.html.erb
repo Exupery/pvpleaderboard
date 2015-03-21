@@ -1,0 +1,8 @@
+<div>
+	<div class="btn-group btn-group-lg" role="group" aria-label="Class">
+		<% Classes.list.each do |slug, hash| %>
+			<% active = (defined?(selected_slug) && slug == selected_slug) ? "active" : "" %>
+			<a href="/talents/<%= urlify slug %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= hash["name"] %>"><img src="/images/classes/<%= slug %>.png" class="img-responsive center" alt="<%= hash["name"] %>"></a>
+	  <% end %>
+	</div>
+</div>

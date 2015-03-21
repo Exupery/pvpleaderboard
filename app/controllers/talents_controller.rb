@@ -5,22 +5,21 @@ class TalentsController < ApplicationController
 	def talents_by_class
 		@title = "Talents"
 		@description = "WoW PvP leaderboard talent choices"
-
 		@heading = "Select a Class"
-		@classes = Classes.list
+
+		classes = Classes.list
 		@class_slug = slugify params[:class]
 		if @class_slug
-			if !@classes.key?(@class_slug)
+			if !classes.key?(@class_slug)
 				redirect_to "/talents"
 				return nil
 			end
-			@clazz = @classes[@class_slug]["name"]
+			clazz = classes[@class_slug]["name"]
 			@title = "#{@clazz} Talents"
 			@description = @title
 			@heading = "Select a Specialization"
 		end
 
-		@specs = Specs.list
 		@spec_slug = slugify params[:spec]
 		if @spec_slug
 			spec_slugs = Specs.slugs
@@ -29,12 +28,11 @@ class TalentsController < ApplicationController
 				redirect_to "/talents/#{@class_slug}"
 				return nil
 			end
-			@spec = spec_slugs[full_slug]["name"]
-			@title = "#{@spec} #{@clazz} Talents"
+			@title = "#{spec_slugs[full_slug]["name"]} #{clazz} Talents"
 			@description = @title
 			@heading = @title
 
-			class_id = @classes[@class_slug]["id"]
+			class_id = classes[@class_slug]["id"]
 			spec_id = spec_slugs[full_slug]["id"]
 			@counts = talent_counts(class_id, spec_id)
 			@total = total_count(class_id, spec_id)

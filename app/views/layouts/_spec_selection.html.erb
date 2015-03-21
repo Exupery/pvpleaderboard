@@ -1,0 +1,11 @@
+<div class="margin-top-2em">
+	<div class="btn-group btn-group-lg" role="group" aria-label="Spec">
+		<% if defined?(selected_class_slug) && !selected_class_slug.nil? %>
+			<% selected_class_name = Classes.list[selected_class_slug]["name"] %>
+			<% Specs.list[selected_class_name].each do |spec| %>
+				<% active = (defined?(selected_spec_slug) && selected_spec_slug == spec.slug) ? "active" : "" %>
+				<a href="/talents/<%= urlify selected_class_slug %>/<%= urlify spec.slug %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= spec.name %>"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>"></a>
+		  <% end %>
+	  <% end %>
+	</div>
+</div>
