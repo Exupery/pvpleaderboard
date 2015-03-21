@@ -4,22 +4,14 @@
 
 <div class="margin-top-2em">
 	<% if @major_counts %>
-	<table id="talent-build" class="table table-bordered table-condensed table-responsive table-hover table-sorted center">
-		<thead>
-			<tr>
-				<th>Glyph</th>
-				<th>Percent</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @major_counts.each do |id, count| %>
-				<% glyph = @class_glyphs[id] %>
-				<tr>
-					<td><img src="/images/icons/<%= glyph["icon"] %>.png" class="img-responsive center" alt="<%= glyph["name"] %>"><%= glyph["name"] %></td>
-					<td><%= (count.to_f / @total * 100).round(1) %>%</td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+		<h3>Major Glyphs</h3>
+		<%= render "glyph_count_table", :counts => @major_counts %>
+	<% end %>
+</div>
+
+<div class="margin-top-2em">
+	<% if @minor_counts %>
+		<h3>Minor Glyphs</h3>
+		<%= render "glyph_count_table", :counts => @minor_counts %>
 	<% end %>
 </div>

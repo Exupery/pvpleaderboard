@@ -1,0 +1,17 @@
+<table class="table table-bordered table-condensed table-responsive table-hover table-sorted center">
+	<thead>
+		<tr>
+			<th>Glyph</th>
+			<th>Percent</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% counts.each do |id, count| %>
+			<% glyph = @class_glyphs[id] %>
+			<tr>
+				<td><img src="/images/icons/<%= glyph["icon"] %>.png" class="img-responsive center" alt="<%= glyph["name"] %>"><%= glyph["name"] %></td>
+				<td><%= (count.to_f / @total * 100).round(1) %>%</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
