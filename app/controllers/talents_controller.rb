@@ -35,7 +35,7 @@ class TalentsController < ApplicationController
 			class_id = classes[@class_slug]["id"]
 			spec_id = spec_slugs[full_slug]["id"]
 			@counts = talent_counts(class_id, spec_id)
-			@total = total_count(class_id, spec_id)
+			@total = total_player_count(class_id, spec_id)
 			@class_talents = Talents.get_talents class_id
 		end
 	end
@@ -51,17 +51,6 @@ class TalentsController < ApplicationController
     end
 
 		return h
-	end
-
-	def total_count(class_id, spec_id)
-		total = 0
-
-		rows = ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS total FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id}")
-		rows.each do |row|
-      total = row["total"].to_i
-    end
-
-    return total
 	end
 
 end
