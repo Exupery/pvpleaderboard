@@ -11,4 +11,8 @@ Rails.application.routes.draw do
   get 'glyphs' => 'glyphs#glyphs_by_class'
   get 'glyphs/:class' => 'glyphs#glyphs_by_class'
   get 'glyphs/:class/:spec' => 'glyphs#glyphs_by_class'
+
+  get 'stats' => 'stats#stats_by_class'
+  get 'stats/:class' => 'stats#stats_by_class'
+  get 'stats/:class/:spec' => 'stats#stats_by_class'
 end
