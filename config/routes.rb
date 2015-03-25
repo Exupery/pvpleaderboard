@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   get 'stats' => 'stats#stats_by_class'
   get 'stats/:class' => 'stats#stats_by_class'
   get 'stats/:class/:spec' => 'stats#stats_by_class'
+
+  get 'filter' => 'filter#show'
 end
