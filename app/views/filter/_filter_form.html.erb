@@ -1,0 +1,28 @@
+<form class="filter-form">
+  <div class="margin-top-1em">
+    <label for="class" class="btn-group-label" title="Required">Class</label>
+    <div id="class" class="btn-group btn-group-lg" role="group" aria-label="Classes" data-toggle="buttons">
+      <% Classes.list.each do |slug, hash| %>
+        <label class="btn image-holder" title="<%= hash["name"] %>">
+          <input type="radio" autocomplete="off"><img src="/images/classes/<%= slug %>.png" class="img-responsive center" alt="<%= hash["name"] %>">
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="margin-top-1em">
+    <label for="leaderboards" class="btn-group-label" title="Currently on the leaderboard for the selected brackets">Leaderboard(s)</label>
+    <div id="leaderboards" class="btn-group btn-group-lg" role="group" aria-label="Leaderboards" data-toggle="buttons">
+      <% ["2v2", "3v3", "5v5", "RBG"].each do |leaderboard| %>
+        <label class="btn">
+          <input type="checkbox" autocomplete="off"><%= leaderboard %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="margin-top-2em">
+    <input class="btn btn-danger btn-lg" type="button" value="Reset">
+    <input class="btn btn-primary btn-lg btn-submit" type="button" value="Filter">
+  </div>
+</form>

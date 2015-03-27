@@ -33,21 +33,48 @@ h1 {
 }
 
 a {
-	color: #DAF092;
+	color: #F6E4B3;
 }
 
 a:hover {
-	color: #68B5D1;
+	color: #B4C8B9;
+}
+
+.margin-top-1em {
+	margin-top: 1em;
 }
 
 .margin-top-2em {
 	margin-top: 2em;
 }
 
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn:active:focus,
+.btn:focus,
+th:focus {
+	outline: none;
+}
+
+.btn-group>.btn,
 .btn-default {
 	color: #E4A703;
 	background-color: #1A0F08;
 	border-color: #E4A703;
+}
+
+.btn-primary {
+	color: #F6E4B3;
+	background-color: #081A0F;
+	border-color: #F6E4B3;
+}
+
+.btn-danger {
+	color: #F6E4B3;
+	background-color: #6C2927;
+	border-color: #F6E4B3;
 }
 
 .btn.focus,
@@ -57,6 +84,55 @@ a:hover {
 	background-color: #302620;
 	border-color: inherit;
 	text-decoration: none;
+}
+
+.btn.btn-primary.focus,
+.btn.btn-primary:focus,
+.btn.btn-primary:hover {
+	color: #E4A703;
+	background-color: #203026;
+	background: #203026;
+	border-color: #E4A703;
+	text-decoration: none;
+}
+
+.btn.btn-danger.focus,
+.btn.btn-danger:focus,
+.btn.btn-danger:hover {
+	color: #E4A703;
+	background-color: #7A3E3C;
+	background: #7A3E3C;
+	border-color: #E4A703;
+	text-decoration: none;
+}
+
+.btn-group>.btn:hover {
+	color: #E4A703;
+	background-color: #302620;
+	background: #302620;
+}
+
+.btn-submit {
+	margin-left: 2em;
+	width: 10em;
+}
+
+.filter-form .btn-group-label {
+	margin-right: 1em;
+	font-size: 1.5em;
+	vertical-align: bottom;
+}
+
+.filter-form .image-holder {
+	padding: 0.2em;
+}
+
+.filter-form .btn-group img {
+	width: 6vw;
+	max-width: 2.1em;
+	min-width: 1.3em;
+	-webkit-filter: brightness(0.95);
+	filter: brightness(0.95);
 }
 
 .table {
@@ -109,10 +185,6 @@ th {
 	cursor: pointer;
 }
 
-th:focus {
-	outline: none;
-}
-
 #talent-build img {
 	width: 5vw;
   max-width: 3em;
@@ -146,12 +218,14 @@ th:focus {
 	filter: brightness(1.8);
 }
 
-.btn-group a.active img {
+.btn-group a.active img,
+.filter-form .btn-group .btn.active img {
 	-webkit-filter: sepia(1);
 	filter: sepia(1);
 }
 
-.btn-group a.active img:hover {
+.btn-group a.active img:hover,
+.filter-form .btn-group .btn.active img:hover {
 	-webkit-filter: sepia(0.6);
 	filter: sepia(0.6);
 }
@@ -177,13 +251,20 @@ th:focus {
 
 th.tablesorter-headerDesc,
 th.tablesorter-headerAsc,
+.btn.active,
 .btn-default.active,
+.btn-group>.btn.active:hover,
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:focus {
 	color: #1A0F08;
 	background-color: #E4A703;
 	background: #E4A703;
 	border-color: inherit;
+}
+
+.btn-group>.btn.active:hover {
+	background-color: #F6E4B3;
+	background: #F6E4B3;
 }
 
 .nav>li>a:hover,
