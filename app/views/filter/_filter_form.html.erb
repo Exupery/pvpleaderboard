@@ -33,8 +33,11 @@
   <div class="filter-row">
     <label for="leaderboards" class="btn-group-label" title="Currently on the leaderboard for the selected brackets">Leaderboard(s)</label>
     <div id="leaderboards" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Leaderboards" data-toggle="buttons">
+      <label class="btn active leaderboards-any">
+        <input type="checkbox" autocomplete="off">ANY
+      </label>
       <% ["2v2", "3v3", "5v5", "RBG"].each do |leaderboard| %>
-        <label class="btn">
+        <label class="btn leaderboards-btn">
           <input type="checkbox" autocomplete="off"><%= leaderboard %>
         </label>
       <% end %>

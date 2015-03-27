@@ -21,6 +21,14 @@ var ready = function() {
       $(".placeholder-spec-group").show();
     }
   });
+
+  $(".leaderboards-any").click(function() {
+    $(".leaderboards-btn").removeClass("active");
+  });
+
+  $(".leaderboards-btn").click(function() {
+    $(".leaderboards-any").removeClass("active");
+  });
 };
 /* Needed so jQuery's ready plays well with Rails turbolinks */
 $(document).ready(ready);
