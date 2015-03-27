@@ -33,12 +33,26 @@
   <div class="filter-row">
     <label for="leaderboards" class="btn-group-label" title="Currently on the leaderboard for the selected brackets">Leaderboard(s)</label>
     <div id="leaderboards" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Leaderboards" data-toggle="buttons">
-      <label class="btn active leaderboards-any">
+      <label class="btn active leaderboards-any unactivater" data-unactivate="leaderboards-btn">
         <input type="checkbox" autocomplete="off">ANY
       </label>
       <% ["2v2", "3v3", "5v5", "RBG"].each do |leaderboard| %>
-        <label class="btn leaderboards-btn">
+        <label class="btn leaderboards-btn unactivater" data-unactivate="leaderboards-any">
           <input type="checkbox" autocomplete="off"><%= leaderboard %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label for="factions" class="btn-group-label">Faction(s)</label>
+    <div id="factions" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Factions" data-toggle="buttons">
+      <label class="btn active unactivater factions-any" data-unactivate="factions-btn">
+        <input type="checkbox" autocomplete="off">ANY
+      </label>
+      <% ["Alliance", "Horde"].each do |faction| %>
+        <label class="btn factions-btn unactivater" title="<%= faction %>" data-unactivate="factions-any">
+          <input type="checkbox" autocomplete="off"><%= faction %>
         </label>
       <% end %>
     </div>
