@@ -59,22 +59,20 @@ th:focus {
 }
 
 .btn-group>.btn,
-.btn-default {
+.btn-default,
+.btn-primary,
+.btn-danger {
 	color: #E4A703;
 	background-color: #1A0F08;
 	border-color: #E4A703;
 }
 
 .btn-primary {
-	color: #F6E4B3;
-	background-color: #081A0F;
-	border-color: #F6E4B3;
+	background-color: #144126;
 }
 
 .btn-danger {
-	color: #F6E4B3;
-	background-color: #6C2927;
-	border-color: #F6E4B3;
+	background-color: #56201F;
 }
 
 .btn.focus,
@@ -88,22 +86,26 @@ th:focus {
 
 .btn.btn-primary.focus,
 .btn.btn-primary:focus,
+.btn.btn-primary:hover,
+.btn.btn-danger.focus,
+.btn.btn-danger:focus,
+.btn.btn-danger:hover {
+	color: #F6E4B3;
+	border-color: #F6E4B3;
+}
+
+.btn.btn-primary.focus,
+.btn.btn-primary:focus,
 .btn.btn-primary:hover {
-	color: #E4A703;
 	background-color: #203026;
 	background: #203026;
-	border-color: #E4A703;
-	text-decoration: none;
 }
 
 .btn.btn-danger.focus,
 .btn.btn-danger:focus,
 .btn.btn-danger:hover {
-	color: #E4A703;
-	background-color: #7A3E3C;
-	background: #7A3E3C;
-	border-color: #E4A703;
-	text-decoration: none;
+	background-color: #613130;
+	background: #613130;
 }
 
 .btn-group>.btn:hover {
