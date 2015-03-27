@@ -40,7 +40,8 @@ a:hover {
 	color: #B4C8B9;
 }
 
-.margin-top-1em {
+.margin-top-1em,
+.filter-row {
 	margin-top: 1em;
 }
 
@@ -121,8 +122,15 @@ th:focus {
 
 .filter-form .btn-group-label {
 	margin-right: 1em;
-	font-size: 1.5em;
+	font-size: 1.35em;
 	vertical-align: bottom;
+	display: table-cell;
+}
+
+.filter-form .btn-group-filter>.btn {
+	padding: 0.5vw calc(0.75em + 0.1vw);
+	font-size: 1em;
+	font-size: calc(1em + 0.1vw);
 }
 
 .filter-form .image-holder {
@@ -135,6 +143,15 @@ th:focus {
 	min-width: 1.3em;
 	-webkit-filter: brightness(0.95);
 	filter: brightness(0.95);
+}
+
+.filter-form {
+	width: calc(100% - 60vw);
+	min-width: 22em;
+}
+
+.filter-row {
+	text-align: left;
 }
 
 .table {
