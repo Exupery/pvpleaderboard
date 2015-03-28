@@ -1,8 +1,8 @@
 <form class="filter-form center">
   <%= render "basic_filter" %>
+  <button id="toggle-advanced-filters" class="btn btn-default btn-collapse margin-top-2em" type="button" data-toggle="collapse" data-text="Advanced Filters" data-target="#advanced-filters" aria-expanded="false" aria-controls="collapse-advanced-filters">Show Advanced Filters</button>
 
-  <button class="btn btn-default margin-top-1em" type="button" data-toggle="collapse" data-target="#advanced-filters" aria-expanded="false" aria-controls="collapse-advanced-filters">Show Advanced Filters</button>
-  <div class="collapse" id="advanced-filters">
+  <div id="advanced-filters" class="collapse" data-toggler="toggle-advanced-filters">
     <%= render "adv_filter" %>
   </div>
 

@@ -49,6 +49,10 @@ a:hover {
 	margin-top: 2em;
 }
 
+.expands {
+	min-height: calc(100vh - 200px);
+}
+
 .btn.active.focus,
 .btn.active:focus,
 .btn.focus,
