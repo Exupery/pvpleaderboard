@@ -50,7 +50,7 @@
       <input type="checkbox" autocomplete="off">ANY
     </label>
     <% ["Alliance", "Horde"].each do |faction| %>
-      <label class="btn factions-btn unactivater" title="<%= faction %>" data-unactivate="factions-any">
+      <label class="btn factions-btn unactivater" data-unactivate="factions-any">
         <input type="checkbox" autocomplete="off"><%= faction %>
       </label>
     <% end %>
