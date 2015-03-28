@@ -1,61 +1,9 @@
 <form class="filter-form center">
-  <div class="filter-row">
-    <label for="class" class="btn-group-label" title="Player Class">Class</label>
-    <div id="class" class="btn-group btn-group-lg class-selector-group" role="group" aria-label="Classes" data-toggle="buttons">
-      <% Classes.list.each do |slug, hash| %>
-        <label class="btn image-holder class-selector" title="<%= hash["name"] %>" data-class-slug="<%= slug %>">
-          <input type="radio" autocomplete="off"><img src="/images/classes/<%= slug %>.png" class="img-responsive center" alt="<%= hash["name"] %>">
-        </label>
-      <% end %>
-    </div>
-  </div>
+  <%= render "basic_filter" %>
 
-  <div class="filter-row">
-    <label for="specs" class="btn-group-label" title="Player Spec">Spec</label>
-    <div id="specs" class="btn-group btn-group-lg spec-group placeholder-spec-group" role="group" aria-label="Specializations" data-toggle="buttons">
-      <% (1..3).each do |i| %>
-        <label class="btn image-holder" title="Select a class above first" disabled="disabled">
-          <img src="/images/icons/placeholder.png" class="img-responsive center" alt="Select class first">
-        </label>
-      <% end %>
-    </div>
-    <% Specs.list.each do |clazz, specs| %>
-      <div id="<%= urlify clazz %>-specs" class="btn-group btn-group-lg spec-group" role="group" aria-label="<%= clazz %> Specializations" style="display: none;" data-toggle="buttons">
-        <% specs.each do |spec| %>
-          <label class="btn image-holder spec-selector" title="<%= spec.name %>">
-            <input type="radio" autocomplete="off"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>">
-          </label>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="filter-row">
-    <label for="leaderboards" class="btn-group-label" title="Currently on the leaderboard for the selected brackets">Leaderboard(s)</label>
-    <div id="leaderboards" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Leaderboards" data-toggle="buttons">
-      <label class="btn active leaderboards-any unactivater" data-unactivate="leaderboards-btn">
-        <input type="checkbox" autocomplete="off">ANY
-      </label>
-      <% ["2v2", "3v3", "5v5", "RBG"].each do |leaderboard| %>
-        <label class="btn leaderboards-btn unactivater" data-unactivate="leaderboards-any">
-          <input type="checkbox" autocomplete="off"><%= leaderboard %>
-        </label>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="filter-row">
-    <label for="factions" class="btn-group-label">Faction(s)</label>
-    <div id="factions" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Factions" data-toggle="buttons">
-      <label class="btn active unactivater factions-any" data-unactivate="factions-btn">
-        <input type="checkbox" autocomplete="off">ANY
-      </label>
-      <% ["Alliance", "Horde"].each do |faction| %>
-        <label class="btn factions-btn unactivater" title="<%= faction %>" data-unactivate="factions-any">
-          <input type="checkbox" autocomplete="off"><%= faction %>
-        </label>
-      <% end %>
-    </div>
+  <button class="btn btn-default margin-top-1em" type="button" data-toggle="collapse" data-target="#advanced-filters" aria-expanded="false" aria-controls="collapse-advanced-filters">Show Advanced Filters</button>
+  <div class="collapse" id="advanced-filters">
+    <%= render "adv_filter" %>
   </div>
 
   <div class="margin-top-2em">
