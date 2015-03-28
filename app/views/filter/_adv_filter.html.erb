@@ -1,0 +1,13 @@
+<div class="filter-row">
+  <label for="races" class="btn-group-label">Race(s)</label>
+  <div id="races" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Races" data-toggle="buttons">
+    <label class="btn active unactivater races-any" data-unactivate="races-btn">
+      <input type="checkbox" autocomplete="off">ANY
+    </label>
+    <% Races.list.each do |race| %>
+      <label class="btn races-btn unactivater" data-unactivate="races-any">
+        <input type="checkbox" autocomplete="off"><%= race %>
+      </label>
+    <% end %>
+  </div>
+</div>
