@@ -44,6 +44,13 @@ var ready = function() {
   $(".collapse").on("hide.bs.collapse", function() {
     toggleCollapser($(this).data("toggler"), true);
   });
+
+  $(".dropdown-menu li").click(function() {
+    var btn = $("#" + $(this).data("target-button"));
+    btn.width(btn.width());
+    btn.addClass("active");
+    $("#" + $(this).data("target")).text($(this).text());
+  });
 };
 /* Needed so jQuery's ready plays well with Rails turbolinks */
 $(document).ready(ready);

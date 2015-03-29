@@ -1,4 +1,28 @@
 <div class="filter-row">
+  <label for="cr" class="btn-group-label">Minimum Current Rating</label>
+  <div id="cr" class="input-group">
+      <div class="input-group-btn">
+        <button id="btn-cr-bracket" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span id="cr-bracket">Bracket</span><span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <% ["2v2", "3v3", "5v5", "RBG"].each do |bracket| %>
+            <li data-target="cr-bracket" data-target-button="btn-cr-bracket"><%= bracket %></li>
+          <% end %>
+          <li class="divider"></li>
+          <li data-target="cr-bracket" data-target-button="btn-cr-bracket">ANY</li>
+        </ul>
+      </div>
+      <div class="input-group-btn">
+        <button id="btn-current-rating" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span id="current-rating">Rating</span><span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <% (2000..3000).step(100) do |rating| %>
+            <li data-target="current-rating" data-target-button="btn-current-rating"><%= rating %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+</div>
+
+<div class="filter-row">
   <label for="races" class="btn-group-label">Race(s)</label>
   <div id="races" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Races" data-toggle="buttons">
     <label class="btn active unactivater races-any" data-unactivate="races-btn">

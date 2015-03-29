@@ -53,6 +53,38 @@ a:hover {
 	min-height: calc(100vh - 200px);
 }
 
+.input-group-addon, .input-group-btn {
+  width: auto;
+}
+
+.dropdown-menu {
+	color: #1A0F08;
+	background-color: #E4A703;
+}
+
+.dropdown-menu li {
+	padding-left: 1em;
+  font-size: 1.4em;
+  cursor: pointer;
+}
+
+.dropdown-menu .divider,
+.dropdown-menu .divider:hover {
+  background-color: #1A0F08;
+}
+
+.btn {
+	font-size: 1.2vw;
+}
+
+.btn .caret {
+  margin-left: 1em;
+  float: right;
+  position: relative;
+  top: 0.6em;
+  right: 0em;
+}
+
 .btn.active.focus,
 .btn.active:focus,
 .btn.focus,
@@ -285,7 +317,8 @@ th.tablesorter-headerAsc,
 	border-color: inherit;
 }
 
-.btn-group>.btn.active:hover {
+.btn-group>.btn.active:hover,
+.dropdown-menu li:hover {
 	background-color: #F6E4B3;
 	background: #F6E4B3;
 }
@@ -302,7 +335,8 @@ th.tablesorter-headerAsc:hover,
 .btn-default.active:hover,
 .nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:hover,
-.navbar-default .navbar-nav>.active>a:hover {
+.navbar-default .navbar-nav>.active>a:hover,
+.open>.dropdown-toggle.btn-default {
 	color: #1A0F08;
 	background-color: #ECC14E;
 	background: #ECC14E;
