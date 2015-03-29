@@ -68,6 +68,11 @@ a:hover {
   cursor: pointer;
 }
 
+.dropdown-right li {
+  text-align: right;
+  padding-right: 1.4em;
+}
+
 .dropdown-menu .divider,
 .dropdown-menu .divider:hover {
   background-color: #1A0F08;
