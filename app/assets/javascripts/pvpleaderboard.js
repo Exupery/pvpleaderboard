@@ -49,7 +49,16 @@ var ready = function() {
     var btn = $("#" + $(this).data("target-button"));
     btn.width(btn.width());
     btn.addClass("active");
-    $("#" + $(this).data("target")).text($(this).text());
+    var txtTarget = $("#" + $(this).data("target"));
+    var width = txtTarget.width();
+    txtTarget.css("margin-right", "0");
+    txtTarget.width(width);
+    txtTarget.text($(this).text());
+  });
+
+  $(".form-resetter").click(function() {
+    $(this).blur();
+    resetForm("#" + $(this).data("target"));
   });
 };
 /* Needed so jQuery's ready plays well with Rails turbolinks */
@@ -61,6 +70,14 @@ function toggleCollapser(id, collapsed) {
   var toggler = $("#" + id);
   toggler.width(toggler.width());
   toggler.text(text + " " + $(toggler).data("text"));
+}
+
+function resetForm(target) {
+  $(target + " .active").removeClass("active");
+  $(target + " .default-option").addClass("active");
+  $(target + " .dropdown-text").each(function () {
+    $(this).text($(this).data("default"));
+  });
 }
 
 function cssify(str) {

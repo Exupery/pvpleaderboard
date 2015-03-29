@@ -2,7 +2,7 @@
   <label for="cr" class="btn-group-label">Minimum Current Rating</label>
   <div id="cr" class="input-group">
       <div class="input-group-btn">
-        <button id="btn-cr-bracket" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span id="cr-bracket">Bracket</span><span class="caret"></span></button>
+        <button id="btn-cr-bracket" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span id="cr-bracket" class="dropdown-text" data-default="Bracket">Bracket</span><span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
           <% ["2v2", "3v3", "5v5", "RBG"].each do |bracket| %>
             <li data-target="cr-bracket" data-target-button="btn-cr-bracket"><%= bracket %></li>
@@ -12,7 +12,7 @@
         </ul>
       </div>
       <div class="input-group-btn">
-        <button id="btn-current-rating" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span id="current-rating">Rating</span><span class="caret"></span></button>
+        <button id="btn-current-rating" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span id="current-rating" class="dropdown-text" data-default="Rating">Rating</span><span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
           <% (2000..3000).step(100) do |rating| %>
             <li data-target="current-rating" data-target-button="btn-current-rating"><%= rating %></li>
@@ -47,7 +47,7 @@
 <div class="filter-row">
   <label for="races" class="btn-group-label">Race(s)</label>
   <div id="races" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Races" data-toggle="buttons">
-    <label class="btn active unactivater races-any" data-unactivate="races-btn">
+    <label class="btn active unactivater races-any default-option" data-unactivate="races-btn">
       <input type="checkbox" autocomplete="off">ANY
     </label>
     <% Races.list.each do |race| %>
@@ -61,7 +61,7 @@
 <div class="filter-row">
   <label for="hks" class="btn-group-label">Minimum Honorable Kills</label>
   <div id="hks" class="input-group">
-    <button id="btn-hk-count" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span id="hk-count">Honorable Kills</span><span class="caret"></span></button>
+    <button id="btn-hk-count" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><div id="hk-count" class="dropdown-text inline-block" data-default="Honorable Kills">Honorable Kills</div><span class="caret"></span></button>
     <ul class="dropdown-menu dropdown-right" role="menu">
       <% [5000, 10000, 25000, 50000, 100000, 250000].each do |hks| %>
         <li data-target="hk-count" data-target-button="btn-hk-count"><%= hks %></li>

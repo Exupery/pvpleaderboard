@@ -1,4 +1,4 @@
-<form class="filter-form center">
+<form id="filter-form" class="filter-form center">
   <%= render "basic_filter" %>
   <button id="toggle-advanced-filters" class="btn btn-default btn-collapse margin-top-2em" type="button" data-toggle="collapse" data-text="Advanced Filters" data-target="#advanced-filters" aria-expanded="false" aria-controls="collapse-advanced-filters">Show Advanced Filters</button>
 
@@ -7,7 +7,7 @@
   </div>
 
   <div class="margin-top-2em">
-    <input class="btn btn-danger btn-lg" type="button" value="Reset">
+    <input class="btn btn-danger btn-lg form-resetter" type="button" value="Reset" data-target="filter-form">
     <input class="btn btn-primary btn-lg btn-submit" type="button" value="Filter">
   </div>
 </form>

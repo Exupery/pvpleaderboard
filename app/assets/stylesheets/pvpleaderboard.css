@@ -78,12 +78,15 @@ a:hover {
   background-color: #1A0F08;
 }
 
+.dropdown-text {
+	margin-right: 1em;
+}
+
 .btn {
 	font-size: 1.2vw;
 }
 
 .btn .caret {
-  margin-left: 1em;
   float: right;
   position: relative;
   top: 0.6em;
