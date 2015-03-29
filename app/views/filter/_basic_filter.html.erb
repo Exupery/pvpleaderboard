@@ -2,7 +2,7 @@
   <label for="class" class="btn-group-label" title="Player Class">Class</label>
   <div id="class" class="btn-group btn-group-lg class-selector-group" role="group" aria-label="Classes" data-toggle="buttons">
     <% Classes.list.each do |slug, hash| %>
-      <label class="btn image-holder class-selector" title="<%= hash["name"] %>" data-class-slug="<%= slug %>">
+      <label class="btn image-holder class-selector" title="<%= hash["name"] %>" data-value="<%= urlify slug %>">
         <input type="radio" autocomplete="off"><img src="/images/classes/<%= slug %>.png" class="img-responsive center" alt="<%= hash["name"] %>">
       </label>
     <% end %>
@@ -21,7 +21,7 @@
   <% Specs.list.each do |clazz, specs| %>
     <div id="<%= urlify clazz %>-specs" class="btn-group btn-group-lg spec-group" role="group" aria-label="<%= clazz %> Specializations" style="display: none;" data-toggle="buttons">
       <% specs.each do |spec| %>
-        <label class="btn image-holder spec-selector" title="<%= spec.name %>">
+        <label class="btn image-holder spec-selector" title="<%= spec.name %>" data-value="<%= urlify spec.slug %>">
           <input type="radio" autocomplete="off"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>">
         </label>
       <% end %>
@@ -36,7 +36,7 @@
       <input type="checkbox" autocomplete="off">ANY
     </label>
     <% ["2v2", "3v3", "5v5", "RBG"].each do |leaderboard| %>
-      <label class="btn leaderboards-btn unactivater" data-unactivate="leaderboards-any">
+      <label class="btn leaderboards-btn unactivater" data-value="<%= leaderboard %>" data-unactivate="leaderboards-any">
         <input type="checkbox" autocomplete="off"><%= leaderboard %>
       </label>
     <% end %>
@@ -50,7 +50,7 @@
       <input type="checkbox" autocomplete="off">ANY
     </label>
     <% ["Alliance", "Horde"].each do |faction| %>
-      <label class="btn factions-btn unactivater" data-unactivate="factions-any">
+      <label class="btn factions-btn unactivater" data-value="<%= faction %>" data-unactivate="factions-any">
         <input type="checkbox" autocomplete="off"><%= faction %>
       </label>
     <% end %>

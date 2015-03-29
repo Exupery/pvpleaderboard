@@ -1,8 +1,12 @@
 var ready = function() {
   $(".table-sorted").tablesorter({sortInitialOrder: "desc"});
 
+  $(".btn").click(function() {
+    $(this).blur();
+  });
+
   $(".class-selector").mouseenter(function() {
-    var classSlug = cssify($(this).data("class-slug"));
+    var classSlug = urlify($(this).data("value"));
     $(".spec-group").hide();
     $("#" + classSlug + "-specs").show();
   });
@@ -13,7 +17,7 @@ var ready = function() {
 
   $(".class-selector-group").mouseleave(function() {
     if ($(".class-selector").hasClass("active")) {
-      var classSlug = cssify($(".class-selector.active").first().data("class-slug"));
+      var classSlug = urlify($(".class-selector.active").first().data("value"));
       $(".spec-group").hide();
       $("#" + classSlug + "-specs").show();
     } else {
@@ -49,21 +53,99 @@ var ready = function() {
     var btn = $("#" + $(this).data("target-button"));
     btn.width(btn.width());
     btn.addClass("active");
+
     var txtTarget = $("#" + $(this).data("target"));
     var width = txtTarget.width();
     txtTarget.css("margin-right", "0");
     txtTarget.width(width);
-    txtTarget.text($(this).text());
+
+    var txt = $(this).text();
+    txtTarget.text(txt);
+    txtTarget.data("value", txt);
   });
 
   $(".form-resetter").click(function() {
-    $(this).blur();
     resetForm("#" + $(this).data("target"));
+  });
+
+  $("#filter-form").submit(function(e) {
+    e.preventDefault();
+    submitFilterForm();
   });
 };
 /* Needed so jQuery's ready plays well with Rails turbolinks */
 $(document).ready(ready);
 $(document).on('page:load', ready);
+
+function submitFilterForm() {
+  var params = createFilterQueryString();
+  if (params) {
+    console.log(params);  // TODO DELME
+  }
+}
+
+function createFilterQueryString() {
+  var params = "?"
+
+  var clazz = getFirstValue(".class-selector.active");
+  if (!clazz) {
+    // TODO DISPLAY ERROR
+    return null;
+  }
+
+  var spec = getFirstValue(".spec-selector.active");
+  if (!spec) {
+    // TODO DISPLAY ERROR
+    return null;
+  }
+  params += "class=" + clazz + "&spec=" + spec;
+
+  params += queryParam("leaderboards", getAllValues(".leaderboards-btn.active"));
+  params += queryParam("factions", getAllValues(".factions-btn.active"));
+  params += queryParam("cr-bracket", getAllValues("#cr-bracket"));
+  params += queryParam("current-rating", getAllValues("#current-rating"));
+  params += queryParam("arena-achievements", getAllValues(".arena-achievements-btn.active"));
+  params += queryParam("rbg-achievements", getAllValues(".rbg-achievements-btn.active"));
+  params += queryParam("races", getAllValues(".races-btn.active"));
+  params += queryParam("hks", getAllValues("#hk-count"));
+
+  return params;
+}
+
+function queryParam(key, value) {
+  if (isEmptyOrAny(value)) {
+    return "";
+  }
+
+  return "&" + key + "=" + value;
+}
+
+function getFirstValue(selector) {
+  var value = $(selector).first().data("value");
+  return (isEmptyOrAny(value)) ? null : urlify(value);
+}
+
+function getAllValues(selector) {
+  var values = [];
+
+  $(selector).each(function() {
+    var value = $(this).data("value");
+    if (!isEmptyOrAny(value)) {
+      values.push(urlify(value));
+    }
+  });
+
+  return values.join("+");
+}
+
+function isEmptyOrAny(value) {
+  if (!value || value == null) {
+    return true;
+  }
+
+  var str = urlify(value);
+  return (str == "" || str == "any");
+}
 
 function toggleCollapser(id, collapsed) {
   var text = (collapsed) ? "Show" : "Hide";
@@ -77,9 +159,10 @@ function resetForm(target) {
   $(target + " .default-option").addClass("active");
   $(target + " .dropdown-text").each(function () {
     $(this).text($(this).data("default"));
+    $(this).data("value", "");
   });
 }
 
-function cssify(str) {
-  return str.toLowerCase().replace(/[\s_]/g, "-");
+function urlify(str) {
+  return str.toString().trim().toLowerCase().replace(/[\s_]/g, "-");
 }
