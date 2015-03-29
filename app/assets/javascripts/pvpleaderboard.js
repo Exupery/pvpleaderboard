@@ -80,7 +80,7 @@ $(document).on('page:load', ready);
 function submitFilterForm() {
   var params = createFilterQueryString();
   if (params) {
-    console.log(params);  // TODO DELME
+    window.location.href = "/filter/results" + params;
   }
 }
 
