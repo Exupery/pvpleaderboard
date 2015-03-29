@@ -23,6 +23,28 @@
 </div>
 
 <div class="filter-row">
+  <label for="arena-achievements" class="btn-group-label">Arena Achievement(s)</label>
+  <div id="arena-achievements" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Arena Achievements" data-toggle="buttons">
+    <% arena_achievements().each do |id, achievement| %>
+      <label class="btn" title="<%= achievement[:description] %>">
+        <input type="checkbox" autocomplete="off"><%= achievement[:name] %>
+      </label>
+    <% end %>
+  </div>
+</div>
+
+<div class="filter-row">
+  <label for="rbg-achievements" class="btn-group-label">Rated Battleground Achievement(s)</label>
+  <div id="rbg-achievements" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="RBG Achievements" data-toggle="buttons">
+    <% rbg_achievements().each do |id, achievement| %>
+      <label class="btn" title="<%= achievement[:description] %>">
+        <input type="checkbox" autocomplete="off"><%= achievement[:name] %>
+      </label>
+    <% end %>
+  </div>
+</div>
+
+<div class="filter-row">
   <label for="races" class="btn-group-label">Race(s)</label>
   <div id="races" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Races" data-toggle="buttons">
     <label class="btn active unactivater races-any" data-unactivate="races-btn">
