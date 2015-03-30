@@ -1,5 +1,5 @@
 <div class="filter-row">
-  <label for="class" class="btn-group-label" title="Player Class">Class</label>
+  <label for="class" class="btn-group-label" title="Player Class (required)">Class <span class="text-muted">(required)</span></label>
   <div id="class" class="btn-group btn-group-lg class-selector-group" role="group" aria-label="Classes" data-toggle="buttons">
     <% Classes.list.each do |slug, hash| %>
       <label class="btn image-holder class-selector" title="<%= hash["name"] %>" data-value="<%= urlify slug %>">
@@ -10,7 +10,7 @@
 </div>
 
 <div class="filter-row">
-  <label for="specs" class="btn-group-label" title="Player Spec">Spec</label>
+  <label for="specs" class="btn-group-label" title="Player Spec (required)">Spec <span class="text-muted">(required)</span></label>
   <div id="specs" class="btn-group btn-group-lg spec-group placeholder-spec-group" role="group" aria-label="Specializations" data-toggle="buttons">
     <% (1..3).each do |i| %>
       <label class="btn image-holder" title="Select a class above first" disabled="disabled">

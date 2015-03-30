@@ -12,7 +12,17 @@ var ready = function() {
   });
 
   $(".class-selector").click(function() {
-    $(".spec-selector").removeClass("active");
+    var active = $(".class-selector.active").first();
+    if (active && active.data("value") != $(this).data("value")) {
+      $(".spec-selector").removeClass("active");
+      $(".btn-submit").prop("disabled", true);
+    }
+  });
+
+  $(".spec-selector").click(function() {
+    if ($(".class-selector.active").length == 1) {
+      $(".btn-submit").prop("disabled", false);
+    }
   });
 
   $(".class-selector-group").mouseleave(function() {
@@ -89,13 +99,13 @@ function createFilterQueryString() {
 
   var clazz = getFirstValue(".class-selector.active");
   if (!clazz) {
-    // TODO DISPLAY ERROR
+    showErrorModal();
     return null;
   }
 
   var spec = getFirstValue(".spec-selector.active");
   if (!spec) {
-    // TODO DISPLAY ERROR
+    showErrorModal();
     return null;
   }
   params += "class=" + clazz + "&spec=" + spec;
@@ -161,6 +171,10 @@ function resetForm(target) {
     $(this).text($(this).data("default"));
     $(this).data("value", "");
   });
+}
+
+function showErrorModal() {
+  $("#error-modal").modal("show");
 }
 
 function urlify(str) {

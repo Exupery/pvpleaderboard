@@ -8,6 +8,14 @@
 
   <div class="margin-top-2em">
     <input class="btn btn-danger btn-lg form-resetter" type="button" value="Reset" data-target="filter-form">
-    <input class="btn btn-primary btn-lg btn-submit" type="submit" value="Filter">
+    <input class="btn btn-primary btn-lg btn-submit" type="submit" value="Filter" disabled="disabled">
+  </div>
+
+  <div id="error-modal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <h1>Class and spec required to filter!</h1>
+      </div>
+    </div>
   </div>
 </form>

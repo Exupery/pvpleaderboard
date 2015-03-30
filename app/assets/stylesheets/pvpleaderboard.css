@@ -53,6 +53,17 @@ a:hover {
 	min-height: calc(100vh - 200px);
 }
 
+.text-muted {
+	color: inherit;
+  font-size: 0.75em;
+  opacity: 0.5;
+}
+
+.modal-content {
+	background-color: #E4A703;
+	color: #1A0F08;
+}
+
 .input-group-addon, .input-group-btn {
   width: auto;
 }
@@ -114,6 +125,11 @@ th:focus {
 
 .btn-primary {
 	background-color: #144126;
+}
+
+.btn-primary[disabled] {
+	background-color: #1A0F08;
+	border-color: #E4A703;
 }
 
 .btn-danger {
