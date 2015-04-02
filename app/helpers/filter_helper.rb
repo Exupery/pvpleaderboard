@@ -14,9 +14,11 @@ module FilterHelper
     join_ids.each do |first, second|
       f = achievements[first]
       s = achievements[second]
-      id = "#{f[:id]}-#{s[:id]}"
-      name = "#{f[:name]} / #{s[:name]}"
-      h[id] = {:id => id, :name => name, :description => f[:description]}
+      if !f.nil? && !s.nil? then
+        id = "#{f[:id]}-#{s[:id]}"
+        name = "#{f[:name]} / #{s[:name]}"
+        h[id] = {:id => id, :name => name, :description => f[:description]}
+      end
     end
 
     return h
