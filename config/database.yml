@@ -5,7 +5,6 @@ default: &default
   timeout: 5000
   username: <%= ENV['PVP_DB_USER'] %>
   password: <%= ENV['PVP_DB_PASSWORD'] %>
-  sslmode: require
 
 development:
   <<: *default
@@ -24,3 +23,4 @@ production:
   <<: *default
   host: <%= ENV['PVP_DB_HOST'] %>
   database: <%= ENV['PVP_DB_NAME'] %>
+  sslmode: require
