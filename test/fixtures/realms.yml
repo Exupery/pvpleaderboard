@@ -1,0 +1,8 @@
+<% 25.times do |n| %>
+realm<%= n %>:
+  slug: <%= "realm#{n}" %>
+  name: <%= "Realm#{n}" %>
+  battlegroup: <%= "battlegroup#{n % 5}" %>
+  timezone: <%= "timezone#{n % 5}" %>
+  type: pvp
+<% end %>

@@ -1,0 +1,7 @@
+alliance:
+  id: 0
+  name: Alliance
+
+horde:
+  id: 1
+  name: Horde

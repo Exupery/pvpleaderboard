@@ -1,0 +1,9 @@
+<% 100.times do |n| %>
+glyph<%= n %>:
+  id: <%= n %>
+  class_id: <%= (n % 11) + 1 %>
+  name: <%= "glyphname#{n}" %>
+  icon: <%= "glyphicon#{n}" %>
+  item_id: 0
+  type_id: 0
+<% end %>

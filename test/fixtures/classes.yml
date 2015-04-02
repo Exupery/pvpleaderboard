@@ -1,0 +1,43 @@
+warrior:
+  id: 1
+  name: Warrior
+
+paladin:
+  id: 2
+  name: Paladin
+
+hunter:
+  id: 3
+  name: Hunter
+
+rogue:
+  id: 4
+  name: Rogue
+
+priest:
+  id: 5
+  name: Priest
+
+death_knight:
+  id: 6
+  name: Death Knight
+
+shaman:
+  id: 7
+  name: Shaman
+
+mage:
+  id: 8
+  name: Mage
+
+warlock:
+  id: 9
+  name: Warlock
+
+monk:
+  id: 10
+  name: Monk
+
+druid:
+  id: 11
+  name: Druid

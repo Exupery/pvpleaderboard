@@ -1,0 +1,10 @@
+<% 33.times do |n| %>
+spec<%= n %>:
+  id: <%= n %>
+  class_id: <%= (n % 11) + 1 %>
+  name: <%= "spec#{n}" %>
+  role: <%= "role#{n % 3}" %>
+  description: <%= "specdescription#{n}" %>
+  background_image: <%= "specbackground#{n}" %>
+  icon: <%= "specicon#{n}" %>
+<% end %>

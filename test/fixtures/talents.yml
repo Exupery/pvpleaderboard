@@ -1,0 +1,10 @@
+<% 300.times do |n| %>
+talent<%= n %>:
+  id: <%= n %>
+  class_id: <%= (n % 11) + 1 %>
+  name: <%= "talent#{n}" %>
+  description: <%= "talentdescription#{n}" %>
+  icon: <%= "talenticon#{n}" %>
+  col: <%= n % 3 %>
+  tier: <%= n % 7 %>
+<% end %>

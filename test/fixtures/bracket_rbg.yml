@@ -1,0 +1,8 @@
+<% 500.times do |n| %>
+bracket_entry<%= n %>:
+  ranking: <%= n + 1 %>
+  player_id: <%= n %>
+  rating: <%= 3000 - n %>
+  season_wins: <%= 100 - n %>
+  season_losses: <%= n %>
+<% end %>

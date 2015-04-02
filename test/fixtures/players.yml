@@ -1,0 +1,14 @@
+<% 1000.times do |n| %>
+player<%= n %>:
+  id: <%= n %>
+  name: <%= "player#{n}" %>
+  class_id: <%= (n % 11) + 1 %>
+  spec_id: <%= n % 33 %>
+  faction_id: <%= n % 2 %>
+  race_id: <%= n % 10 %>
+  realm_slug: <%= "realm#{n % 10}" %>
+  guild: <%= "guild#{n % 20}" %>
+  gender: <%= n % 2 %>
+  achievement_points: <%= n * 10 %>
+  honorable_kills: <%= n * 5000 %>
+<% end %>

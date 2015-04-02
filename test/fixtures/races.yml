@@ -1,0 +1,49 @@
+human:
+  id: 1
+  name: Human
+  side: alliance
+
+orc:
+  id: 2
+  name: Orc
+  side: horde
+
+dwarf:
+  id: 3
+  name: Dwarf
+  side: alliance
+
+night_elf:
+  id: 4
+  name: Night Elf
+  side: alliance
+
+undead:
+  id: 5
+  name: Undead
+  side: horde
+
+tauren:
+  id: 6
+  name: Tauren
+  side: horde
+
+gnome:
+  id: 7
+  name: Gnome
+  side: alliance
+
+troll:
+  id: 8
+  name: Troll
+  side: horde
+
+goblin:
+  id: 9
+  name: Goblin
+  side: horde
+
+blood_elf:
+  id: 10
+  name: Blood Elf
+  side: horde
