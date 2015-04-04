@@ -16,7 +16,7 @@ class Classes
 		rows = ActiveRecord::Base.connection.execute("SELECT id, name FROM classes ORDER BY name ASC")
     rows.each do |row|
       n = row["name"]
-      h[slugify n] = {"id" => row["id"], "name" => n}
+      h[slugify n] = {:id => row["id"], :name => n}
     end
 
     return h

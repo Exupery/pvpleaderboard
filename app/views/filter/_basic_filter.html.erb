@@ -2,8 +2,8 @@
   <label for="class" class="btn-group-label" title="Player Class (required)">Class <span class="text-muted">(required)</span></label>
   <div id="class" class="btn-group btn-group-lg class-selector-group" role="group" aria-label="Classes" data-toggle="buttons">
     <% Classes.list.each do |slug, hash| %>
-      <label class="btn image-holder class-selector" title="<%= hash["name"] %>" data-value="<%= urlify slug %>">
-        <input type="radio" autocomplete="off"><img src="/images/classes/<%= slug %>.png" class="img-responsive center" alt="<%= hash["name"] %>">
+      <label class="btn image-holder class-selector" title="<%= hash[:name] %>" data-value="<%= urlify slug %>">
+        <input type="radio" autocomplete="off"><img src="/images/classes/<%= slug %>.png" class="img-responsive center" alt="<%= hash[:name] %>">
       </label>
     <% end %>
   </div>

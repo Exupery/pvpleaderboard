@@ -38,7 +38,7 @@ class Specs
       clazz = row["class"]
       spec = row["spec"]
       slug = slugify "#{clazz}_#{spec}"
-      h[slug] = {"id" => row["id"], "name" => spec}
+      h[slug] = {:id => row["id"], :name => spec}
     end
 
     return h

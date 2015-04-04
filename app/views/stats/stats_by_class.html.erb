@@ -16,9 +16,9 @@
 			<% @counts.each do |s, h| %>
 				<tr>
 					<td><%= s.gsub(/[_]/, " ").titleize %></td>
-					<td><%= h["min"] %></td>
-					<td><%= h["avg"] %></td>
-					<td><%= h["max"] %></td>
+					<td><%= h[:min] %></td>
+					<td><%= h[:avg] %></td>
+					<td><%= h[:max] %></td>
 				</tr>
 			<% end %>
 		</tbody>

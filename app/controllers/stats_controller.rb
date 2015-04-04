@@ -14,7 +14,7 @@ class StatsController < ApplicationController
 				redirect_to "/stats"
 				return nil
 			end
-			clazz = classes[@class_slug]["name"]
+			clazz = classes[@class_slug][:name]
 			@title = "#{@clazz} Stats"
 			@description = @title
 			@heading = "Select a Specialization"
@@ -28,12 +28,12 @@ class StatsController < ApplicationController
 				redirect_to "/stats/#{@class_slug}"
 				return nil
 			end
-			@title = "#{spec_slugs[full_slug]["name"]} #{clazz} Stats"
+			@title = "#{spec_slugs[full_slug][:name]} #{clazz} Stats"
 			@description = @title
 			@heading = @title
 
-			class_id = classes[@class_slug]["id"]
-			spec_id = spec_slugs[full_slug]["id"]
+			class_id = classes[@class_slug][:id]
+			spec_id = spec_slugs[full_slug][:id]
 
 			@counts = stat_counts(class_id, spec_id)
 		end
@@ -57,9 +57,9 @@ class StatsController < ApplicationController
     rows.each do |row|
     	stats.each do |stat|
     		h[stat] = Hash.new
-    		h[stat]["min"] = row["min_#{stat}"].to_i
-    		h[stat]["avg"] = row["avg_#{stat}"].to_i
-    		h[stat]["max"] = row["max_#{stat}"].to_i
+    		h[stat][:min] = row["min_#{stat}"].to_i
+    		h[stat][:avg] = row["avg_#{stat}"].to_i
+    		h[stat][:max] = row["max_#{stat}"].to_i
     	end
     end
 

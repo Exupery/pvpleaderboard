@@ -14,7 +14,7 @@ class TalentsController < ApplicationController
 				redirect_to "/talents"
 				return nil
 			end
-			clazz = classes[@class_slug]["name"]
+			clazz = classes[@class_slug][:name]
 			@title = "#{@clazz} Talents"
 			@description = @title
 			@heading = "Select a Specialization"
@@ -28,12 +28,12 @@ class TalentsController < ApplicationController
 				redirect_to "/talents/#{@class_slug}"
 				return nil
 			end
-			@title = "#{spec_slugs[full_slug]["name"]} #{clazz} Talents"
+			@title = "#{spec_slugs[full_slug][:name]} #{clazz} Talents"
 			@description = @title
 			@heading = @title
 
-			class_id = classes[@class_slug]["id"]
-			spec_id = spec_slugs[full_slug]["id"]
+			class_id = classes[@class_slug][:id]
+			spec_id = spec_slugs[full_slug][:id]
 			@counts = talent_counts(class_id, spec_id)
 			@total = total_player_count(class_id, spec_id)
 			@class_talents = Talents.get_talents class_id

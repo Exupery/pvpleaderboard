@@ -17,7 +17,7 @@ class GlyphsController < ApplicationController
 				redirect_to "/glyphs"
 				return nil
 			end
-			clazz = classes[@class_slug]["name"]
+			clazz = classes[@class_slug][:name]
 			@title = "#{@clazz} Glyphs"
 			@description = @title
 			@heading = "Select a Specialization"
@@ -31,12 +31,12 @@ class GlyphsController < ApplicationController
 				redirect_to "/glyphs/#{@class_slug}"
 				return nil
 			end
-			@title = "#{spec_slugs[full_slug]["name"]} #{clazz} Glyphs"
+			@title = "#{spec_slugs[full_slug][:name]} #{clazz} Glyphs"
 			@description = @title
 			@heading = @title
 
-			class_id = classes[@class_slug]["id"]
-			spec_id = spec_slugs[full_slug]["id"]
+			class_id = classes[@class_slug][:id]
+			spec_id = spec_slugs[full_slug][:id]
 
 			@major_counts = glyph_counts(class_id, spec_id, @@MAJOR_TYPE_ID)
 			@minor_counts = glyph_counts(class_id, spec_id, @@MINOR_TYPE_ID)
