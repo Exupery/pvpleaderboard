@@ -1,4 +1,5 @@
 class FilterController < ApplicationController
+  include Utils
   protect_from_forgery with: :exception
 
   def filter
@@ -13,6 +14,8 @@ class FilterController < ApplicationController
     player_ids = find_player_ids
     return nil if player_ids.empty?
     puts player_ids.length  ## TODO DELME
+    @selected = get_selected
+    puts @selected  ## TODO DELME
   end
 
   private
@@ -25,7 +28,20 @@ class FilterController < ApplicationController
     # rows.each do |row|
     #   ids.push(row["id"])
     # end
+    ids.push(0) ## TODO DELME
 
     return ids
+  end
+
+  def get_selected
+    h = Hash.new
+
+    filters = [:class, :spec, :leaderboards, :factions, :"cr-bracket", :"current-rating", :"arena-achievements", :"rbg-achievements", :races, :hks]
+
+    filters.each do |filter|
+      h[filter] = urlify params[filter]
+    end
+
+    return h
   end
 end

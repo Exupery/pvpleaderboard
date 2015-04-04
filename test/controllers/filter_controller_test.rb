@@ -7,4 +7,12 @@ class FilterControllerTest < ActionController::TestCase
     assert_not_nil assigns(:title)
     assert_not_nil assigns(:description)
   end
+
+  test "should get selected params" do
+    get(:results, {"class" => "death-knight"})
+    assert_response :success
+    assert_not_nil assigns(:selected)
+    assert_not_empty :selected
+    assert_not_nil  @controller.instance_variable_get(:@selected)[:class]
+  end
 end
