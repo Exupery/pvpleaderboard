@@ -51,12 +51,12 @@ var ready = function() {
     });
   });
 
-  $(".collapse").on("show.bs.collapse", function() {
-    toggleCollapser($(this).data("toggler"), false);
+  $(".collapse").on("show.bs.collapse", function(e) {
+    toggleCollapser("toggle-" + e.target.id, false);
   });
 
-  $(".collapse").on("hide.bs.collapse", function() {
-    toggleCollapser($(this).data("toggler"), true);
+  $(".collapse").on("hide.bs.collapse", function(e) {
+    toggleCollapser("toggle-" + e.target.id, true);
   });
 
   $(".dropdown-menu li").click(function() {
@@ -171,6 +171,8 @@ function resetForm(target) {
     $(this).text($(this).data("default"));
     $(this).data("value", "");
   });
+  $(target + " .hide-on-reset").hide();
+  $(target + " .show-on-reset").show();
 }
 
 function showErrorModal() {

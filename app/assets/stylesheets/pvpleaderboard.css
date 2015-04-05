@@ -19,6 +19,10 @@ html, body {
   text-align: left;
 }
 
+.right-text {
+  text-align: right;
+}
+
 .center {
 	margin-left: auto;
 	margin-right: auto;
@@ -64,7 +68,7 @@ a:hover {
 	color: #1A0F08;
 }
 
-.input-group-addon, .input-group-btn {
+.input-group-btn {
   width: auto;
 }
 
@@ -93,6 +97,10 @@ a:hover {
 	margin-right: 1em;
 }
 
+.dropdown-toggle {
+	min-width: 7em;
+}
+
 .btn {
 	font-size: 1.2vw;
 }
@@ -102,6 +110,7 @@ a:hover {
   position: relative;
   top: 0.6em;
   right: 0em;
+  margin-left: 0.75em;
 }
 
 .btn.active.focus,

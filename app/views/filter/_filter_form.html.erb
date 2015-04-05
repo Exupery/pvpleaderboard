@@ -8,7 +8,8 @@
 
   <div class="margin-top-2em">
     <input class="btn btn-danger btn-lg form-resetter" type="button" value="Reset" data-target="filter-form">
-    <input class="btn btn-primary btn-lg btn-submit" type="submit" value="Filter" disabled="disabled">
+    <% disabled = (@selected[:class] && @selected[:spec]) ? "" : "disabled=\"disabled\"" %>
+    <input class="btn btn-primary btn-lg btn-submit" type="submit" value="Filter" <%= disabled %>>
   </div>
 
   <div id="error-modal" class="modal fade">

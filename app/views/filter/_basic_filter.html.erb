@@ -2,7 +2,8 @@
   <label for="class" class="btn-group-label" title="Player Class (required)">Class <span class="text-muted">(required)</span></label>
   <div id="class" class="btn-group btn-group-lg class-selector-group" role="group" aria-label="Classes" data-toggle="buttons">
     <% Classes.list.each do |slug, hash| %>
-      <label class="btn image-holder class-selector" title="<%= hash[:name] %>" data-value="<%= urlify slug %>">
+      <% active = urlify(slug) == @selected[:class] ? "active" : "" %>
+      <label class="btn image-holder class-selector <%= active %>" title="<%= hash[:name] %>" data-value="<%= urlify slug %>">
         <input type="radio" autocomplete="off"><img src="/images/classes/<%= slug %>.png" class="img-responsive center" alt="<%= hash[:name] %>">
       </label>
     <% end %>
@@ -11,7 +12,8 @@
 
 <div class="filter-row">
   <label for="specs" class="btn-group-label" title="Player Spec (required)">Spec <span class="text-muted">(required)</span></label>
-  <div id="specs" class="btn-group btn-group-lg spec-group placeholder-spec-group" role="group" aria-label="Specializations" data-toggle="buttons">
+  <% style = @selected[:class] ? "display: none;" : "" %>
+  <div id="specs" class="btn-group btn-group-lg spec-group placeholder-spec-group show-on-reset" style="<%= style %>" role="group" aria-label="Specializations" data-toggle="buttons">
     <% (1..3).each do |i| %>
       <label class="btn image-holder" title="Select a class above first" disabled="disabled">
         <img src="/images/icons/placeholder.png" class="img-responsive center" alt="Select class first">
@@ -19,9 +21,11 @@
     <% end %>
   </div>
   <% Specs.list.each do |clazz, specs| %>
-    <div id="<%= urlify clazz %>-specs" class="btn-group btn-group-lg spec-group" role="group" aria-label="<%= clazz %> Specializations" style="display: none;" data-toggle="buttons">
+    <% style = (@selected[:class] && urlify(clazz) == @selected[:class]) ? "" : "display: none;" %>
+    <div id="<%= urlify clazz %>-specs" class="btn-group btn-group-lg spec-group hide-on-reset" role="group" aria-label="<%= clazz %> Specializations" style="<%= style %>" data-toggle="buttons">
       <% specs.each do |spec| %>
-        <label class="btn image-holder spec-selector" title="<%= spec.name %>" data-value="<%= urlify spec.slug %>">
+        <% active = (urlify(clazz) == @selected[:class] && urlify(spec.slug) == @selected[:spec]) ? "active" : "" %>
+        <label class="btn image-holder spec-selector <%= active %>" title="<%= spec.name %>" data-value="<%= urlify spec.slug %>">
           <input type="radio" autocomplete="off"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>">
         </label>
       <% end %>
@@ -32,11 +36,13 @@
 <div class="filter-row">
   <label for="leaderboards" class="btn-group-label" title="Currently on the leaderboard for the selected brackets">Leaderboard(s)</label>
   <div id="leaderboards" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Leaderboards" data-toggle="buttons">
-    <label class="btn active unactivater leaderboards-any default-option" data-unactivate="leaderboards-btn">
+  <% active = @selected[:leaderboards].nil? ? "active" : "" %>
+    <label class="btn <%= active %> unactivater leaderboards-any default-option" data-unactivate="leaderboards-btn">
       <input type="checkbox" autocomplete="off">ANY
     </label>
     <% ["2v2", "3v3", "5v5", "RBG"].each do |leaderboard| %>
-      <label class="btn leaderboards-btn unactivater" data-value="<%= leaderboard %>" data-unactivate="leaderboards-any">
+      <% active = (@selected[:leaderboards].include?(urlify(leaderboard)) if @selected[:leaderboards]) ? "active" : "" %>
+      <label class="btn leaderboards-btn unactivater <%= active %>" data-value="<%= leaderboard %>" data-unactivate="leaderboards-any">
         <input type="checkbox" autocomplete="off"><%= leaderboard %>
       </label>
     <% end %>
@@ -46,11 +52,13 @@
 <div class="filter-row">
   <label for="factions" class="btn-group-label">Faction(s)</label>
   <div id="factions" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Factions" data-toggle="buttons">
-    <label class="btn active unactivater factions-any default-option" data-unactivate="factions-btn">
+    <% active = @selected[:factions].nil? ? "active" : "" %>
+    <label class="btn <%= active %> unactivater factions-any default-option" data-unactivate="factions-btn">
       <input type="checkbox" autocomplete="off">ANY
     </label>
     <% ["Alliance", "Horde"].each do |faction| %>
-      <label class="btn factions-btn unactivater" data-value="<%= faction %>" data-unactivate="factions-any">
+      <% active = (@selected[:factions].include?(urlify(faction)) if @selected[:factions]) ? "active" : "" %>
+      <label class="btn factions-btn unactivater <%= active %>" data-value="<%= faction %>" data-unactivate="factions-any">
         <input type="checkbox" autocomplete="off"><%= faction %>
       </label>
     <% end %>
