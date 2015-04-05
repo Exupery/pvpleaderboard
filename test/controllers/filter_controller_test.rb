@@ -8,8 +8,19 @@ class FilterControllerTest < ActionController::TestCase
     assert_not_nil assigns(:description)
   end
 
-  test "should get selected params" do
+  test "should redirect if no class or spec" do
+    get :results
+    assert_response :redirect
+
     get(:results, {"class" => "death-knight"})
+    assert_response :redirect
+
+    get(:results, {"spec" => "frost"})
+    assert_response :redirect
+  end
+
+  test "should get selected params" do
+    get(:results, {"class" => "death-knight", "spec" => "frost"})
     assert_response :success
     assert_not_nil assigns(:selected)
     assert_not_empty :selected

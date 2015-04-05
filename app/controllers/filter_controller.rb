@@ -5,16 +5,21 @@ class FilterController < ApplicationController
   def filter
     @title = "Filter"
     @description = "WoW PvP leaderboard Talents, Glyphs, and Stats"
+
+    @selected = get_selected
+    puts @selected  ## TODO DELME
   end
 
   def results
     @title = "Filter Results"
     @description = "WoW PvP leaderboard Talents, Glyphs, and Stats Filter Results"
 
+    @selected = get_selected
+    redirect_to "/filter" if (@selected[:class].nil? || @selected[:spec].nil?)
+
     player_ids = find_player_ids
     return nil if player_ids.empty?
     puts player_ids.length  ## TODO DELME
-    @selected = get_selected
     puts @selected  ## TODO DELME
   end
 
