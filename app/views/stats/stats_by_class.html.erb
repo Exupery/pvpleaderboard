@@ -3,7 +3,7 @@
 <%= render "layouts/spec_selection", :selected_class_slug => @class_slug, :selected_spec_slug => @spec_slug, :base_path => "/stats" %>
 
 <% if @counts %>
-	<table class="table table-bordered table-condensed table-responsive table-hover table-sorted center">
+	<table class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[2,1]]">
 		<thead>
 			<tr>
 				<th>Stat</th>
