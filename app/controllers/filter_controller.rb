@@ -135,13 +135,13 @@ class FilterController < ApplicationController
     cr = @selected[:"current-rating"].to_i
     return "" if (!@@brackets.include?(bracket) || cr <= 0)
 
-    return " AND bracket_#{bracket}.rating > #{cr}"
+    return " AND cr_bracket.rating > #{cr}"
   end
 
   def cr_join leaderboard
     bracket = @selected[:"cr-bracket"].downcase
     if @@brackets.include?(bracket)
-      return " JOIN bracket_#{bracket} ON #{leaderboard}.player_id=bracket_#{bracket}.player_id"
+      return " JOIN bracket_#{bracket} AS cr_bracket ON #{leaderboard}.player_id=cr_bracket.player_id"
     end
 
     return ""
