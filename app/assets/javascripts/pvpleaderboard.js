@@ -173,6 +173,7 @@ function resetForm(target) {
   });
   $(target + " .hide-on-reset").hide();
   $(target + " .show-on-reset").show();
+  $(".btn-submit").prop("disabled", true);
 }
 
 function showErrorModal() {
