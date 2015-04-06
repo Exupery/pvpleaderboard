@@ -35,32 +35,20 @@ class StatsController < ApplicationController
 			class_id = classes[@class_slug][:id]
 			spec_id = spec_slugs[full_slug][:id]
 
-			@counts = stat_counts(class_id, spec_id)
+			@stat_counts = get_stat_counts(class_id, spec_id)
 		end
 	end
 
 	private
 
-	def stat_counts(class_id, spec_id)
+	def get_stat_counts(class_id, spec_id)
 		h = Hash.new
-
-		cols = ""
-		stats = ["strength", "agility", "intellect", "stamina", "spirit", "critical_strike", "haste", "attack_power", "mastery", "multistrike", "versatility", "leech", "dodge", "parry"]
-		stats.each do |stat|
-			cols += "," if !cols.empty?
-			cols += "MIN(#{stat}) AS min_#{stat}, AVG(#{stat}) AS avg_#{stat}, MAX(#{stat}) AS max_#{stat}"
-		end
-
+		cols = get_stat_cols
 		return h if cols.empty?
 
 		rows = ActiveRecord::Base.connection.execute("SELECT #{cols} FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_stats ON players.id=players_stats.player_id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id}")
     rows.each do |row|
-    	stats.each do |stat|
-    		h[stat] = Hash.new
-    		h[stat][:min] = row["min_#{stat}"].to_i
-    		h[stat][:avg] = row["avg_#{stat}"].to_i
-    		h[stat][:max] = row["max_#{stat}"].to_i
-    	end
+    	h.merge!(parse_stats_row row)
     end
 
 		return h

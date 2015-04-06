@@ -14,7 +14,7 @@ class StatsControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:class_slug)
     assert_not_nil assigns(:spec_slug)
-    assert_not_nil assigns(:counts)
+    assert_not_nil assigns(:stat_counts)
 
     assert_not_empty :counts
   end

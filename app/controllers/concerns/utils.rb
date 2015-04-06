@@ -1,4 +1,34 @@
 module Utils extend ActiveSupport::Concern
+
+	@@stats = ["strength", "agility", "intellect", "stamina", "spirit", "critical_strike", "haste", "attack_power", "mastery", "multistrike", "versatility", "leech", "dodge", "parry"]
+
+	def stats
+		return @@stats
+	end
+
+	def get_stat_cols
+		cols = ""
+		@@stats.each do |stat|
+			cols += "," if !cols.empty?
+			cols += "MIN(#{stat}) AS min_#{stat}, AVG(#{stat}) AS avg_#{stat}, MAX(#{stat}) AS max_#{stat}"
+		end
+
+		return cols
+	end
+
+	def parse_stats_row row
+		h = Hash.new
+
+		@@stats.each do |stat|
+  		h[stat] = Hash.new
+  		h[stat][:min] = row["min_#{stat}"].to_i
+  		h[stat][:avg] = row["avg_#{stat}"].to_i
+  		h[stat][:max] = row["max_#{stat}"].to_i
+  	end
+
+		return h
+	end
+
 	def slugify txt
 		return nil if txt.nil?
 		return txt.downcase.gsub(/[\s\-]/, "_")

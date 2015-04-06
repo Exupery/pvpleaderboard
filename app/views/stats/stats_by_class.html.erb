@@ -2,25 +2,8 @@
 <%= render "layouts/class_selection", :selected_slug => @class_slug, :base_path => "/stats" %>
 <%= render "layouts/spec_selection", :selected_class_slug => @class_slug, :selected_spec_slug => @spec_slug, :base_path => "/stats" %>
 
-<% if @counts %>
-	<table class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[2,1]]">
-		<thead>
-			<tr>
-				<th>Stat</th>
-				<th>Min</th>
-				<th>Average</th>
-				<th>Max</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @counts.each do |s, h| %>
-				<tr>
-					<td><%= s.gsub(/[_]/, " ").titleize %></td>
-					<td><%= h[:min] %></td>
-					<td><%= h[:avg] %></td>
-					<td><%= h[:max] %></td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+<% if @stat_counts %>
+	<div class="margin-top-2em">
+		<%= render "layouts/stats_table", :counts => @stat_counts %>
+	</div>
 <% end %>

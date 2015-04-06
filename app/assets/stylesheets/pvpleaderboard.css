@@ -217,7 +217,7 @@ th:focus {
 	margin-top: 1em;
 	width: auto;
 	font-size: 1em;
-	font-size: calc(1vw + 10px);
+	font-size: calc(1vw + 8px);
 }
 
 td {
@@ -269,8 +269,13 @@ th {
   min-width: 1.5em;
 }
 
-#talent-build {
+#talent-build,
+#stats-table {
 	margin-top: 0;
+}
+
+.results-panel table {
+	width: 100%;
 }
 
 .most-selected {
