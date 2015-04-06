@@ -203,7 +203,8 @@ th:focus {
 }
 
 .filter-form,
-.results-panel {
+.results-panel,
+.middle {
 	width: calc(100% - 60vw);
 	min-width: 22em;
 }
