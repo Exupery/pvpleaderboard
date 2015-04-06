@@ -1,4 +1,15 @@
 class Glyphs
+  @@MAJOR_TYPE_ID = 0
+  @@MINOR_TYPE_ID = 1
+
+  def self.MAJOR_ID
+    return @@MAJOR_TYPE_ID
+  end
+
+  def self.MINOR_ID
+    return @@MINOR_TYPE_ID
+  end
+
 	def self.get_glyphs class_id
 		h = Hash.new()
 

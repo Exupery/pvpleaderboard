@@ -28,7 +28,10 @@ class FilterController < ApplicationController
     @class_id = clazz[:id] if clazz
 
     ids = player_ids.to_a.join(",")
+
     @talent_counts = get_talent_counts ids
+    @major_glyph_counts = get_glyph_counts(ids, Glyphs.MAJOR_ID)
+    @minor_glyph_counts = get_glyph_counts(ids, Glyphs.MINOR_ID)
   end
 
   private
@@ -39,6 +42,17 @@ class FilterController < ApplicationController
     rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM players JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.id IN (#{ids}) GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
+    end
+
+    return h
+  end
+
+  def get_glyph_counts(ids, type_id)
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT glyphs.id AS glyph, COUNT(*) AS count FROM players JOIN players_glyphs ON players.id=players_glyphs.player_id JOIN glyphs ON players_glyphs.glyph_id=glyphs.id WHERE players.id IN (#{ids}) AND glyphs.type_id=#{type_id} GROUP BY glyph")
+    rows.each do |row|
+      h[row["glyph"]] = row["count"].to_i
     end
 
     return h

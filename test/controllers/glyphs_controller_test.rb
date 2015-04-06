@@ -13,13 +13,12 @@ class GlyphsControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_not_nil assigns(:class_slug)
+    assert_not_nil assigns(:class_id)
     assert_not_nil assigns(:spec_slug)
-    assert_not_nil assigns(:major_counts)
+    assert_not_nil assigns(:major_glyph_counts)
     assert_not_nil assigns(:total)
-    assert_not_nil assigns(:class_glyphs)
 
     assert_not_empty :major_counts
-    assert_not_empty :class_glyphs
 
     assert_not_equal(0, :total)
   end

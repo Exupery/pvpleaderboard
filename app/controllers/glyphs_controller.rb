@@ -2,9 +2,6 @@ class GlyphsController < ApplicationController
 	include Utils
 	protect_from_forgery with: :exception
 
-	@@MAJOR_TYPE_ID = 0
-	@@MINOR_TYPE_ID = 1
-
 	def glyphs_by_class
 		@title = "Glyphs"
 		@description = "WoW PvP leaderboard glyph choices"
@@ -35,13 +32,12 @@ class GlyphsController < ApplicationController
 			@description = @title
 			@heading = @title
 
-			class_id = classes[@class_slug][:id]
+			@class_id = classes[@class_slug][:id]
 			spec_id = spec_slugs[full_slug][:id]
 
-			@major_counts = glyph_counts(class_id, spec_id, @@MAJOR_TYPE_ID)
-			@minor_counts = glyph_counts(class_id, spec_id, @@MINOR_TYPE_ID)
-			@total = total_player_count(class_id, spec_id)
-			@class_glyphs = Glyphs.get_glyphs class_id
+			@major_glyph_counts = glyph_counts(@class_id, spec_id, Glyphs.MAJOR_ID)
+			@minor_glyph_counts = glyph_counts(@class_id, spec_id, Glyphs.MINOR_ID)
+			@total = total_player_count(@class_id, spec_id)
 		end
 	end
 

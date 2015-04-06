@@ -3,15 +3,15 @@
 <%= render "layouts/spec_selection", :selected_class_slug => @class_slug, :selected_spec_slug => @spec_slug, :base_path => "/glyphs" %>
 
 <div class="margin-top-2em">
-	<% if @major_counts %>
+	<% if @major_glyph_counts %>
 		<h3>Major Glyphs</h3>
-		<%= render "glyph_count_table", :counts => @major_counts %>
+		<%= render "layouts/glyph_count_table", :counts => @major_glyph_counts %>
 	<% end %>
 </div>
 
 <div class="margin-top-2em">
-	<% if @minor_counts %>
+	<% if @minor_glyph_counts %>
 		<h3>Minor Glyphs</h3>
-		<%= render "glyph_count_table", :counts => @minor_counts %>
+		<%= render "layouts/glyph_count_table", :counts => @minor_glyph_counts %>
 	<% end %>
 </div>
