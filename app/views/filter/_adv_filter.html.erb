@@ -75,7 +75,7 @@
   <div id="hks" class="input-group">
     <% selected = @selected[:hks].to_i if (@selected[:hks] && @selected[:hks].to_i > 0) %>
     <% txt = selected || "HKs" %>
-    <% active = (@selected[:hks].nil? && txt != "HKs") ? "" : "active" %>
+    <% active = selected ? "active" : "" %>
     <button id="btn-hk-count" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><div id="hk-count" class="dropdown-text inline-block" data-value="<%= selected %>" data-default="HKs"><%= txt %></div><span class="caret"></span></button>
     <ul class="dropdown-menu dropdown-right" role="menu">
       <% [5000, 10000, 25000, 50000, 100000, 250000].each do |hks| %>
