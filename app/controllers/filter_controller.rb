@@ -86,6 +86,8 @@ class FilterController < ApplicationController
       end
     end
 
+    return ids if ids.empty?
+
     ids = narrow_by_achievements ids if (@selected[:"arena-achievements"] || @selected[:"rbg-achievements"])
 
     return ids
