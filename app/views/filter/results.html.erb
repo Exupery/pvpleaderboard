@@ -1,7 +1,13 @@
 <div class="expands center">
-<button id="toggle-filters" class="btn btn-default btn-collapse margin-top-1em" type="button" data-toggle="collapse" data-text="Filters" data-target="#filters" aria-expanded="false" aria-controls="collapse-filters">Show Filters</button>
+  <button id="toggle-filters" class="btn btn-default btn-collapse margin-top-1em" type="button" data-toggle="collapse" data-text="Filters" data-target="#filters" aria-expanded="false" aria-controls="collapse-filters">Show Filters</button>
 
   <div id="filters" class="collapse" data-toggler="toggle-filters">
     <%= render "filter_form" %>
   </div>
+
+  <% if @num_matches == 0 %>
+    <h1>No players matched selected criteria</h1>
+  <% else %>
+    <%= render "filter_results" %>
+  <% end %>
 </div>

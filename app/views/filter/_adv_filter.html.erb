@@ -6,7 +6,7 @@
         <% txt = @selected[:"cr-bracket"] || "Bracket" %>
         <% txt.upcase! if (txt == "rbg" || txt == "any") %>
         <% active = @selected[:"cr-bracket"].nil? ? "" : "active" %>
-        <button id="btn-cr-bracket" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="cr-bracket" class="dropdown-text" data-value="" data-default="Bracket"><%= txt %></span><span class="caret"></span></button>
+        <button id="btn-cr-bracket" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="cr-bracket" class="dropdown-text" data-value="<%= @selected[:"cr-bracket"] %>" data-default="Bracket"><%= txt %></span><span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
           <% ["2v2", "3v3", "5v5", "RBG"].each do |bracket| %>
             <li data-target="cr-bracket" data-target-button="btn-cr-bracket"><%= bracket %></li>
@@ -19,7 +19,7 @@
       <div class="input-group-btn">
         <% txt = @selected[:"current-rating"] || "Rating" %>
         <% active = @selected[:"current-rating"].nil? ? "" : "active" %>
-        <button id="btn-current-rating" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="current-rating" class="dropdown-text" data-value="" data-default="Rating"><%= txt %></span><span class="caret"></span></button>
+        <button id="btn-current-rating" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="current-rating" class="dropdown-text" data-value="<%= @selected[:"current-rating"] %>" data-default="Rating"><%= txt %></span><span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
           <% (2000..3000).step(100) do |rating| %>
             <li data-target="current-rating" data-target-button="btn-current-rating"><%= rating %></li>
@@ -61,7 +61,7 @@
     <label class="btn <%= active %> unactivater races-any default-option" data-unactivate="races-btn">
       <input type="checkbox" autocomplete="off">ANY
     </label>
-    <% Races.list.each do |race| %>
+    <% Races.names.each do |race| %>
       <% active = (@selected[:races].include?(urlify race) if @selected[:races]) ? "active" : "" %>
       <label class="btn races-btn unactivater <%= active %>" data-unactivate="races-any" data-value="<%= race %>">
         <input type="checkbox" autocomplete="off"><%= race %>
@@ -73,9 +73,10 @@
 <div class="filter-row">
   <label for="hks" class="btn-group-label">Minimum Honorable Kills</label>
   <div id="hks" class="input-group">
-    <% txt = @selected[:hks] || "HKs" %>
-    <% active = @selected[:hks].nil? ? "" : "active" %>
-    <button id="btn-hk-count" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><div id="hk-count" class="dropdown-text inline-block" data-value="" data-default="HKs"><%= txt %></div><span class="caret"></span></button>
+    <% selected = @selected[:hks].to_i if (@selected[:hks] && @selected[:hks].to_i > 0) %>
+    <% txt = selected || "HKs" %>
+    <% active = (@selected[:hks].nil? && txt != "HKs") ? "" : "active" %>
+    <button id="btn-hk-count" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><div id="hk-count" class="dropdown-text inline-block" data-value="<%= selected %>" data-default="HKs"><%= txt %></div><span class="caret"></span></button>
     <ul class="dropdown-menu dropdown-right" role="menu">
       <% [5000, 10000, 25000, 50000, 100000, 250000].each do |hks| %>
         <li data-target="hk-count" data-target-button="btn-hk-count"><%= hks %></li>
