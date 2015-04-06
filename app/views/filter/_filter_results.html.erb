@@ -1,1 +1,16 @@
-<h1><%= @num_matches %> results</h1>
+<h1><%= @num_matches %> player<%= "s" if @num_matches != 1 %> matching criteria</h1>
+<div class="results-panel center" role="tabpanel">
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#talents" aria-controls="talents" role="tab" data-toggle="tab">Talents</a></li>
+    <li role="presentation"><a href="#glyphs" aria-controls="glyphs" role="tab" data-toggle="tab">Glyphs</a></li>
+    <li role="presentation"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="talents">TODO TALENTS</div>
+    <div role="tabpanel" class="tab-pane" id="glyphs">TODO GLYPHS</div>
+    <div role="tabpanel" class="tab-pane" id="stats">TODO STATS</div>
+  </div>
+
+</div>

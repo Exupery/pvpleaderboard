@@ -214,7 +214,8 @@ th:focus {
 	filter: brightness(0.95);
 }
 
-.filter-form {
+.filter-form,
+.results-panel {
 	width: calc(100% - 60vw);
 	min-width: 22em;
 }
@@ -377,6 +378,26 @@ th.tablesorter-headerAsc:hover,
 	background: -webkit-linear-gradient(top, #D4AD46 0%, #ECC14E 20%, #ECC14E 80%, #D4AD46 100%);
 	background: -ms-linear-gradient(top, #D4AD46 0%, #ECC14E 20%, #ECC14E 80%, #D4AD46 100%);
 	background: linear-gradient(to bottom, #D4AD46 0%, #ECC14E 20%, #ECC14E 80%, #D4AD46 100%);
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus {
+  color: #1A0F08;
+  cursor: pointer;
+  background-color: #E4A703;
+  border: 1px solid #F6E4B3;
+  border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.nav>li>a:focus {
+  text-decoration: none;
+  background-color: inherit;
+  color: inherit;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #E4A703;
 }
 
 .jumbotron {
