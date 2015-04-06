@@ -101,10 +101,6 @@ a:hover {
 	min-width: 7em;
 }
 
-.btn {
-	font-size: 1.2vw;
-}
-
 .btn .caret {
   float: right;
   position: relative;
@@ -206,14 +202,6 @@ th:focus {
 	padding: 0.2em;
 }
 
-.filter-form .btn-group img {
-	width: 6vw;
-	max-width: 2.1em;
-	min-width: 1.3em;
-	-webkit-filter: brightness(0.95);
-	filter: brightness(0.95);
-}
-
 .filter-form,
 .results-panel {
 	width: calc(100% - 60vw);
@@ -228,8 +216,8 @@ th:focus {
 	background-color: #302620;
 	margin-top: 1em;
 	width: auto;
-	font-size: 1.45em;
-	font-size: calc(1vw + 0.3em);
+	font-size: 1em;
+	font-size: calc(1vw + 10px);
 }
 
 td {
@@ -300,9 +288,10 @@ th {
 }
 
 .btn-group img {
-	width: 6vw;
-	max-width: 4em;
-	min-width: 1.3em;
+	width: 5vw;
+	max-width: 3em;
+	min-width: 18px;
+	font-size: 0.6em;
 	-webkit-filter: brightness(0.95);
 	filter: brightness(0.95);
 }
