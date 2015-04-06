@@ -13,10 +13,10 @@ class TalentsControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_not_nil assigns(:class_slug)
+    assert_not_nil assigns(:class_id)
     assert_not_nil assigns(:spec_slug)
-    assert_not_nil assigns(:counts)
+    assert_not_nil assigns(:talent_counts)
     assert_not_nil assigns(:total)
-    assert_not_nil assigns(:class_talents)
 
     assert_not_empty :counts
     assert_not_empty :class_talents

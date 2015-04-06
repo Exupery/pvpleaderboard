@@ -1,10 +1,11 @@
 module TalentsHelper
 	include Utils
 
-	def talent_counts_table
+	def talent_counts_table class_id
 		h = Hash.new
+		@class_talents = Talents.get_talents class_id
 
-		@counts.each do |id, count|
+		@talent_counts.each do |id, count|
 			talent = @class_talents[id]
 			talent[:percent] = (count.to_f / @total * 100).round(1)
 			k = "#{talent[:tier]}-#{talent[:col]}"

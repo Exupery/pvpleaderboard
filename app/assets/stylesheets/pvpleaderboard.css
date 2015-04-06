@@ -229,7 +229,7 @@ th:focus {
 	margin-top: 1em;
 	width: auto;
 	font-size: 1.45em;
-	font-size: calc(1vw + 0.7em);
+	font-size: calc(1vw + 0.3em);
 }
 
 td {
@@ -255,6 +255,7 @@ th {
 
 .table>tbody>tr>td {
 	vertical-align: middle;
+	cursor: default;
 }
 
 .table-bordered,
@@ -276,8 +277,12 @@ th {
 
 #talent-build img {
 	width: 5vw;
-  max-width: 3em;
+  max-width: 2.5em;
   min-width: 1.5em;
+}
+
+#talent-build {
+	margin-top: 0;
 }
 
 .most-selected {

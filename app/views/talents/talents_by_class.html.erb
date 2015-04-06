@@ -3,25 +3,7 @@
 <%= render "layouts/spec_selection", :selected_class_slug => @class_slug, :selected_spec_slug => @spec_slug, :base_path => "/talents" %>
 
 <div class="margin-top-2em">
-	<% if @counts %>
-	<table id="talent-build" class="table table-bordered table-condensed table-responsive center">
-		<tbody>
-			<% build = talent_counts_table %>
-			<% (0..6).each do |t| %>
-				<tr>
-					<% (0..2).each do |c| %>
-						<% k = "#{t}-#{c}" %>
-						<% talent = build[k] %>
-						<% highest = talent[:highest] ? "most-selected" : "" %>
-						<td id="<%= k %>" title="<%= talent[:description] %>" class="<%= highest %>">
-							<img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
-							<div><%= talent[:name] %></div>
-							<div><%= talent[:percent] %>%</div>
-						</td>
-					<% end %>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+	<% if @talent_counts %>
+		<%= render "layouts/talents_table", :talents => talent_counts_table(@class_id) %>
 	<% end %>
 </div>

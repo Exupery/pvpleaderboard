@@ -32,17 +32,16 @@ class TalentsController < ApplicationController
 			@description = @title
 			@heading = @title
 
-			class_id = classes[@class_slug][:id]
+			@class_id = classes[@class_slug][:id]
 			spec_id = spec_slugs[full_slug][:id]
-			@counts = talent_counts(class_id, spec_id)
-			@total = total_player_count(class_id, spec_id)
-			@class_talents = Talents.get_talents class_id
+			@talent_counts = get_talent_counts(@class_id, spec_id)
+			@total = total_player_count(@class_id, spec_id)
 		end
 	end
 
 	private
 
-	def talent_counts(class_id, spec_id)
+	def get_talent_counts(class_id, spec_id)
 		h = Hash.new
 
 		rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} GROUP BY talent")

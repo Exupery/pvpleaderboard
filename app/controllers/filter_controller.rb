@@ -21,11 +21,28 @@ class FilterController < ApplicationController
     redirect_to "/filter" if (@selected[:class].nil? || @selected[:spec].nil?)
 
     player_ids = find_player_ids
-    @num_matches = player_ids.length
+    @total = player_ids.length
     return nil if player_ids.empty?
+
+    clazz = Classes.list[slugify @selected[:class]]
+    @class_id = clazz[:id] if clazz
+
+    ids = player_ids.to_a.join(",")
+    @talent_counts = get_talent_counts ids
   end
 
   private
+
+  def get_talent_counts ids
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM players JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.id IN (#{ids}) GROUP BY talent")
+    rows.each do |row|
+      h[row["talent"]] = row["count"].to_i
+    end
+
+    return h
+  end
 
   def find_player_ids
     ids = Set.new

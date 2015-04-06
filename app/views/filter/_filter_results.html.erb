@@ -1,4 +1,4 @@
-<h1><%= @num_matches %> player<%= "s" if @num_matches != 1 %> matching criteria</h1>
+<h1><%= @total %> player<%= "s" if @total != 1 %> matching criteria</h1>
 <div class="results-panel center" role="tabpanel">
 
   <ul class="nav nav-tabs" role="tablist">
@@ -8,7 +8,9 @@
   </ul>
 
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="talents">TODO TALENTS</div>
+    <div role="tabpanel" class="tab-pane active" id="talents">
+      <%= render "layouts/talents_table", :talents => talent_counts_table(@class_id) %>
+    </div>
     <div role="tabpanel" class="tab-pane" id="glyphs">TODO GLYPHS</div>
     <div role="tabpanel" class="tab-pane" id="stats">TODO STATS</div>
   </div>

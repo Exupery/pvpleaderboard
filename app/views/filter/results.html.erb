@@ -5,7 +5,7 @@
     <%= render "filter_form" %>
   </div>
 
-  <% if @num_matches == 0 %>
+  <% if @total == 0 %>
     <h1>No players matched selected criteria</h1>
   <% else %>
     <%= render "filter_results" %>
