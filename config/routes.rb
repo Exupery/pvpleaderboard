@@ -4,6 +4,13 @@ Rails.application.routes.draw do
   get "overview" => "overview#stats"
   get "overview/:bracket" => "overview#stats"
 
+  get "pvp" => "classes#select_class"
+  get "pvp/:class" => "classes#select_class"
+  get "pvp/:class/:spec" => "classes#results_by_class"
+
+  get "filter" => "filter#filter"
+  get "filter/results" => "filter#results"
+
   get "talents" => "talents#talents_by_class"
   get "talents/:class" => "talents#talents_by_class"
   get "talents/:class/:spec" => "talents#talents_by_class"
@@ -15,7 +22,4 @@ Rails.application.routes.draw do
   get "stats" => "stats#stats_by_class"
   get "stats/:class" => "stats#stats_by_class"
   get "stats/:class/:spec" => "stats#stats_by_class"
-
-  get "filter" => "filter#filter"
-  get "filter/results" => "filter#results"
 end
