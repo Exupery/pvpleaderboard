@@ -341,6 +341,10 @@ th {
   color: inherit;
 }
 
+.navbar-nav {
+  margin: 0;
+}
+
 th.tablesorter-headerDesc,
 th.tablesorter-headerAsc,
 .btn.active,
