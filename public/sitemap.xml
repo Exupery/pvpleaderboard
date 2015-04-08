@@ -10,24 +10,196 @@
   <changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/overview</loc>
+  <loc>https://www.pvpleaderboard.com/pvp</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/death-knight</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/druid</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/hunter</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/mage</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/monk</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/paladin</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/priest</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/rogue</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/shaman</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/warlock</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/warrior</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/death-knight/blood</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/talents</loc>
-  <changefreq>weekly</changefreq>
+  <loc>https://www.pvpleaderboard.com/pvp/death-knight/frost</loc>
+  <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/glyphs</loc>
-  <changefreq>weekly</changefreq>
+  <loc>https://www.pvpleaderboard.com/pvp/death-knight/unholy</loc>
+  <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/stats</loc>
-  <changefreq>weekly</changefreq>
+  <loc>https://www.pvpleaderboard.com/pvp/druid/balance</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/druid/feral</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/druid/guardian</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/druid/restoration</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/hunter/beast-mastery</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/hunter/marksmanship</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/hunter/survival</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/mage/arcane</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/mage/fire</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/mage/frost</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/monk/brewmaster</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/monk/mistweaver</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/monk/windwalker</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/paladin/holy</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/paladin/protection</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/paladin/retribution</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/priest/discipline</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/priest/holy</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/priest/shadow</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/rogue/assassination</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/rogue/combat</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/rogue/subtlety</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/shaman/elemental</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/shaman/enhancement</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/shaman/restoration</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/warlock/affliction</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/warlock/demonology</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/warlock/destruction</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/warrior/arms</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/warrior/fury</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/pvp/warrior/protection</loc>
+  <changefreq>daily</changefreq>
 </url>
 <url>
   <loc>https://www.pvpleaderboard.com/filter</loc>
   <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/overview</loc>
+  <changefreq>daily</changefreq>
 </url>
 <url>
   <loc>https://www.pvpleaderboard.com/overview/2v2</loc>
@@ -43,546 +215,6 @@
 </url>
 <url>
   <loc>https://www.pvpleaderboard.com/overview/rbg</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/death-knight</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/druid</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/hunter</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/mage</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/monk</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/paladin</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/priest</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/rogue</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/shaman</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/warlock</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/warrior</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/death-knight</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/druid</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/hunter</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/mage</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/monk</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/paladin</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/priest</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/rogue</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/shaman</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/warlock</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/warrior</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/death-knight</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/druid</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/hunter</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/mage</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/monk</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/paladin</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/priest</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/rogue</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/shaman</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/warlock</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/warrior</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/death-knight/blood</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/death-knight/frost</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/death-knight/unholy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/druid/balance</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/druid/feral</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/druid/guardian</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/druid/restoration</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/hunter/beast-mastery</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/hunter/marksmanship</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/hunter/survival</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/mage/arcane</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/mage/fire</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/mage/frost</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/monk/brewmaster</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/monk/mistweaver</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/monk/windwalker</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/paladin/holy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/paladin/protection</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/paladin/retribution</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/priest/discipline</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/priest/holy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/priest/shadow</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/rogue/assassination</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/rogue/combat</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/rogue/subtlety</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/shaman/elemental</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/shaman/enhancement</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/shaman/restoration</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/warlock/affliction</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/warlock/demonology</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/warlock/destruction</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/warrior/arms</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/warrior/fury</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/talents/warrior/protection</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/death-knight/blood</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/death-knight/frost</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/death-knight/unholy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/druid/balance</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/druid/feral</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/druid/guardian</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/druid/restoration</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/hunter/beast-mastery</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/hunter/marksmanship</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/hunter/survival</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/mage/arcane</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/mage/fire</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/mage/frost</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/monk/brewmaster</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/monk/mistweaver</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/monk/windwalker</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/paladin/holy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/paladin/protection</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/paladin/retribution</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/priest/discipline</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/priest/holy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/priest/shadow</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/rogue/assassination</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/rogue/combat</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/rogue/subtlety</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/shaman/elemental</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/shaman/enhancement</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/shaman/restoration</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/warlock/affliction</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/warlock/demonology</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/warlock/destruction</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/warrior/arms</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/warrior/fury</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/glyphs/warrior/protection</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/death-knight/blood</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/death-knight/frost</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/death-knight/unholy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/druid/balance</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/druid/feral</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/druid/guardian</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/druid/restoration</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/hunter/beast-mastery</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/hunter/marksmanship</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/hunter/survival</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/mage/arcane</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/mage/fire</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/mage/frost</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/monk/brewmaster</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/monk/mistweaver</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/monk/windwalker</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/paladin/holy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/paladin/protection</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/paladin/retribution</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/priest/discipline</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/priest/holy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/priest/shadow</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/rogue/assassination</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/rogue/combat</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/rogue/subtlety</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/shaman/elemental</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/shaman/enhancement</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/shaman/restoration</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/warlock/affliction</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/warlock/demonology</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/warlock/destruction</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/warrior/arms</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/warrior/fury</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/stats/warrior/protection</loc>
   <changefreq>daily</changefreq>
 </url>
 </urlset>
