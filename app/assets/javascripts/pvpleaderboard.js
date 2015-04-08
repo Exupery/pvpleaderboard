@@ -25,6 +25,14 @@ var ready = function() {
     }
   });
 
+  $("#pvp-selector .spec-selector").click(function() {
+    if ($(".class-selector.active").length == 1) {
+      var clazz = getFirstValue(".class-selector.active");
+      var spec = getFirstValue(this);
+      window.location.href = "/pvp/" + clazz + "/" + spec;
+    }
+  });
+
   $(".class-selector-group").mouseleave(function() {
     if ($(".class-selector").hasClass("active")) {
       var classSlug = urlify($(".class-selector.active").first().data("value"));

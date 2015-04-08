@@ -8,6 +8,7 @@
   <% if @total == 0 %>
     <h1>No players matched selected criteria</h1>
   <% else %>
-    <%= render "filter_results" %>
+    <h1><%= @total %> player<%= "s" if @total != 1 %> matching criteria</h1>
+    <%= render "layouts/results" %>
   <% end %>
 </div>

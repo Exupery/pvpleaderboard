@@ -1,0 +1,12 @@
+<h1><%= @heading %></h1>
+
+<div class="margin-top-2em">
+  <%= render "layouts/class_selection" %>
+</div>
+<div id="pvp-selector" class="margin-top-1em">
+  <%= render "layouts/spec_selection" %>
+</div>
+
+<div class="margin-top-2em">
+  <%= render "layouts/results" if @class_id %>
+</div>

@@ -1,9 +1,0 @@
-<h1><%= @heading %></h1>
-<%= render "layouts/class_selection", :selected_slug => @class_slug, :base_path => "/talents" %>
-<%= render "layouts/spec_selection", :selected_class_slug => @class_slug, :selected_spec_slug => @spec_slug, :base_path => "/talents" %>
-
-<div class="margin-top-2em">
-	<% if @talent_counts %>
-		<%= render "layouts/talents_table", :talents => talent_counts_table(@class_id) %>
-	<% end %>
-</div>

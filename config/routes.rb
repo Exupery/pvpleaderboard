@@ -11,15 +11,21 @@ Rails.application.routes.draw do
   get "filter" => "filter#filter"
   get "filter/results" => "filter#results"
 
-  get "talents" => "talents#talents_by_class"
-  get "talents/:class" => "talents#talents_by_class"
-  get "talents/:class/:spec" => "talents#talents_by_class"
+  ## Keep the initial talent/glyph/stat routes for now
+  ## OLD ROUTES BEGIN
+  get "talents", to: redirect("/pvp")
+  get "talents/:class", to: redirect { |path_params, req| "/pvp/#{path_params[:class]}" }
+  get "talents/:class/:spec", to: redirect { |path_params, req|
+    "/pvp/#{path_params[:class]}/#{path_params[:spec]}" }
 
-  get "glyphs" => "glyphs#glyphs_by_class"
-  get "glyphs/:class" => "glyphs#glyphs_by_class"
-  get "glyphs/:class/:spec" => "glyphs#glyphs_by_class"
+  get "glyphs", to: redirect("/pvp")
+  get "glyphs/:class", to: redirect { |path_params, req| "/pvp/#{path_params[:class]}" }
+  get "glyphs/:class/:spec", to: redirect { |path_params, req|
+    "/pvp/#{path_params[:class]}/#{path_params[:spec]}" }
 
-  get "stats" => "stats#stats_by_class"
-  get "stats/:class" => "stats#stats_by_class"
-  get "stats/:class/:spec" => "stats#stats_by_class"
+  get "stats", to: redirect("/pvp")
+  get "stats/:class", to: redirect { |path_params, req| "/pvp/#{path_params[:class]}" }
+  get "stats/:class/:spec", to: redirect { |path_params, req|
+    "/pvp/#{path_params[:class]}/#{path_params[:spec]}" }
+  ## OLD ROUTES END
 end

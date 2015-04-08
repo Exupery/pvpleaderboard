@@ -1,8 +1,15 @@
 <nav class="navbar navbar-default">
 	<ul class="nav navbar-nav">
 		<li class="<%= is_active "/" %>"><a href="/">Home</a></li>
-    <% entries = ["overview", "talents", "glyphs", "stats", "filter"] %>
-    <% entries.each do |entry| %>
+    <li class="dropdown <%= is_active "/pvp" %>">
+      <a href="/pvp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Classes <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <% Classes.list.each do |slug, clazz| %>
+        <li class="<%= is_active "/pvp/#{slug}" %>"><a href="/pvp/<%= urlify slug %>"><%= clazz[:name] %></a></li>
+        <% end %>
+      </ul>
+    </li>
+    <% ["filter", "overview"].each do |entry| %>
       <li class="<%= is_active "/#{entry}" %>"><a href="/<%= entry %>"><%= entry.titleize %></a></li>
     <% end %>
 	</ul>

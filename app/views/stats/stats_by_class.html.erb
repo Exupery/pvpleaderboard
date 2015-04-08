@@ -1,9 +1,0 @@
-<h1><%= @heading %></h1>
-<%= render "layouts/class_selection", :selected_slug => @class_slug, :base_path => "/stats" %>
-<%= render "layouts/spec_selection", :selected_class_slug => @class_slug, :selected_spec_slug => @spec_slug, :base_path => "/stats" %>
-
-<% if @stat_counts %>
-	<div class="margin-top-2em">
-		<%= render "layouts/stats_table", :counts => @stat_counts %>
-	</div>
-<% end %>

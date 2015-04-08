@@ -1,4 +1,3 @@
-<h1><%= @total %> player<%= "s" if @total != 1 %> matching criteria</h1>
 <div class="results-panel center" role="tabpanel">
 
   <ul class="nav nav-tabs" role="tablist">
@@ -12,12 +11,8 @@
       <%= render "layouts/talents_table", :talents => talent_counts_table(@class_id) %>
     </div>
     <div role="tabpanel" class="tab-pane" id="glyphs">
-      <% if @major_glyph_counts && @minor_glyph_counts %>
-        <h3>Major Glyphs</h3>
-        <%= render "layouts/glyph_count_table", :counts => @major_glyph_counts %>
-        <h3>Minor Glyphs</h3>
-        <%= render "layouts/glyph_count_table", :counts => @minor_glyph_counts %>
-      <% end %>
+      <%= render "layouts/glyph_count_table", :counts => @major_glyph_counts, :glyph_type => "Major" %>
+      <%= render "layouts/glyph_count_table", :counts => @minor_glyph_counts, :glyph_type => "Minor"  %>
     </div>
     <div role="tabpanel" class="tab-pane" id="stats"><%= render "layouts/stats_table", :counts => @stat_counts %></div>
   </div>

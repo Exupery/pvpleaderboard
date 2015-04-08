@@ -1,11 +1,22 @@
-<div class="margin-top-2em">
-	<div class="btn-group btn-group-lg" role="group" aria-label="Spec">
-		<% if defined?(selected_class_slug) && !selected_class_slug.nil? %>
-			<% selected_class_name = Classes.list[selected_class_slug][:name] %>
-			<% Specs.list[selected_class_name].each do |spec| %>
-				<% active = (defined?(selected_spec_slug) && selected_spec_slug == spec.slug) ? "active" : "" %>
-				<a href="<%= base_path %>/<%= urlify selected_class_slug %>/<%= urlify spec.slug %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= spec.name %>"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>"></a>
-		  <% end %>
-	  <% end %>
-	</div>
+<div>
+	<% style = (params[:class] && !Classes.list[slugify params[:class]].nil?) ? "display: none;" : "" %>
+  <div id="specs" class="btn-group btn-group-lg spec-group placeholder-spec-group show-on-reset" style="<%= style %>" role="group" aria-label="Specializations" data-toggle="buttons">
+    <% (1..3).each do |i| %>
+      <label class="btn image-holder" title="Select a class above first" disabled="disabled">
+        <img src="/images/icons/placeholder.png" class="img-responsive center" alt="Select class first">
+      </label>
+    <% end %>
+  </div>
+
+  <% Specs.list.each do |clazz, specs| %>
+    <% style = (params[:class] && urlify(clazz) == urlify(params[:class])) ? "" : "display: none;" %>
+    <div id="<%= urlify clazz %>-specs" class="btn-group btn-group-lg spec-group hide-on-reset" role="group" aria-label="<%= clazz %> Specializations" style="<%= style %>" data-toggle="buttons">
+      <% specs.each do |spec| %>
+        <% active = (urlify(clazz) == urlify(params[:class]) && urlify(spec.slug) == urlify(params[:spec])) ? "active" : "" %>
+        <label class="btn image-holder spec-selector <%= active %>" title="<%= spec.name %>" data-value="<%= urlify spec.slug %>">
+          <input type="radio" autocomplete="off"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>">
+        </label>
+      <% end %>
+    </div>
+  <% end %>
 </div>
