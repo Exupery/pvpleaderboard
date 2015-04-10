@@ -10,12 +10,16 @@
 
   <% Specs.list.each do |clazz, specs| %>
     <% style = (params[:class] && urlify(clazz) == urlify(params[:class])) ? "" : "display: none;" %>
-    <div id="<%= urlify clazz %>-specs" class="btn-group btn-group-lg spec-group hide-on-reset" role="group" aria-label="<%= clazz %> Specializations" style="<%= style %>" data-toggle="buttons">
+    <div id="<%= urlify clazz %>-specs" class="btn-group btn-group-lg spec-group hide-on-reset" role="group" aria-label="<%= clazz %> Specializations" style="<%= style %>" <%= "data-toggle=buttons" unless use_anchors %>>
       <% specs.each do |spec| %>
         <% active = (urlify(clazz) == urlify(params[:class]) && urlify(spec.slug) == urlify(params[:spec])) ? "active" : "" %>
-        <label class="btn image-holder spec-selector <%= active %>" title="<%= spec.name %>" data-value="<%= urlify spec.slug %>">
+        <% if use_anchors %>
+          <a href="/pvp/<%= urlify clazz %>/<%= urlify spec.slug %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= spec.name %>"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>"></a>
+        <% else %>
+          <label class="btn image-holder spec-selector <%= active %>" title="<%= spec.name %>" data-value="<%= urlify spec.slug %>">
           <input type="radio" autocomplete="off"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>">
         </label>
+        <% end %>
       <% end %>
     </div>
   <% end %>
