@@ -296,7 +296,7 @@ th {
 }
 
 .btn-group-lg>.btn.small-padding {
-	padding: 0.25em;
+	padding: 0.2em;
 }
 
 .btn-group img {
@@ -314,12 +314,14 @@ th {
 }
 
 .btn-group a.active img,
+.btn-group label.active img,
 .filter-form .btn-group .btn.active img {
 	-webkit-filter: sepia(1);
 	filter: sepia(1);
 }
 
 .btn-group a.active img:hover,
+.btn-group label.active img:hover,
 .filter-form .btn-group .btn.active img:hover {
 	-webkit-filter: sepia(0.6);
 	filter: sepia(0.6);
