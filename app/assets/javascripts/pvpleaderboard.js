@@ -5,7 +5,7 @@ var ready = function() {
     $(this).blur();
   });
 
-  $(".class-selector").mouseenter(function() {
+  $(".class-selector").on("mouseenter touchstart click", function() {
     var classSlug = urlify($(this).data("value"));
     $(".spec-group").hide();
     $("#" + classSlug + "-specs").show();
