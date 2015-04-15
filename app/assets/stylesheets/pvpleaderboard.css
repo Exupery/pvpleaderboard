@@ -44,6 +44,14 @@ a:hover {
 	color: #B4C8B9;
 }
 
+.no-a-style,
+.no-a-style:focus,
+.no-a-style:hover {
+	color: inherit;
+	text-decoration: none;
+	cursor: default;
+}
+
 .margin-top-1em,
 .filter-row {
 	margin-top: 1em;
