@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: achievements; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: achievements; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE achievements (
@@ -43,7 +43,7 @@ CREATE TABLE achievements (
 
 
 --
--- Name: bracket_2v2; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_2v2; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE bracket_2v2 (
@@ -57,7 +57,7 @@ CREATE TABLE bracket_2v2 (
 
 
 --
--- Name: bracket_3v3; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_3v3; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE bracket_3v3 (
@@ -71,7 +71,7 @@ CREATE TABLE bracket_3v3 (
 
 
 --
--- Name: bracket_5v5; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_5v5; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE bracket_5v5 (
@@ -85,7 +85,7 @@ CREATE TABLE bracket_5v5 (
 
 
 --
--- Name: bracket_rbg; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_rbg; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE bracket_rbg (
@@ -99,7 +99,7 @@ CREATE TABLE bracket_rbg (
 
 
 --
--- Name: classes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: classes; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE classes (
@@ -109,7 +109,7 @@ CREATE TABLE classes (
 
 
 --
--- Name: factions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: factions; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE factions (
@@ -119,7 +119,7 @@ CREATE TABLE factions (
 
 
 --
--- Name: glyphs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: glyphs; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE glyphs (
@@ -128,7 +128,8 @@ CREATE TABLE glyphs (
     name character varying(128) NOT NULL,
     icon character varying(128),
     item_id integer,
-    type_id smallint
+    type_id smallint,
+    spell_id integer DEFAULT 0 NOT NULL
 );
 
 
@@ -151,7 +152,7 @@ UNION
 
 
 --
--- Name: players; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: players; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE players (
@@ -171,7 +172,7 @@ CREATE TABLE players (
 
 
 --
--- Name: players_achievements; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: players_achievements; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE players_achievements (
@@ -182,7 +183,7 @@ CREATE TABLE players_achievements (
 
 
 --
--- Name: players_glyphs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: players_glyphs; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE players_glyphs (
@@ -211,7 +212,7 @@ ALTER SEQUENCE players_id_seq OWNED BY players.id;
 
 
 --
--- Name: players_stats; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: players_stats; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE players_stats (
@@ -234,7 +235,7 @@ CREATE TABLE players_stats (
 
 
 --
--- Name: players_talents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: players_talents; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE players_talents (
@@ -244,7 +245,7 @@ CREATE TABLE players_talents (
 
 
 --
--- Name: races; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: races; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE races (
@@ -255,7 +256,7 @@ CREATE TABLE races (
 
 
 --
--- Name: realms; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: realms; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE realms (
@@ -268,7 +269,7 @@ CREATE TABLE realms (
 
 
 --
--- Name: specs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: specs; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE specs (
@@ -283,7 +284,7 @@ CREATE TABLE specs (
 
 
 --
--- Name: talents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: talents; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE talents (
@@ -305,7 +306,7 @@ ALTER TABLE ONLY players ALTER COLUMN id SET DEFAULT nextval('players_id_seq'::r
 
 
 --
--- Name: achievements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: achievements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY achievements
@@ -313,7 +314,7 @@ ALTER TABLE ONLY achievements
 
 
 --
--- Name: bracket_2v2_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_2v2_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_2v2
@@ -321,7 +322,7 @@ ALTER TABLE ONLY bracket_2v2
 
 
 --
--- Name: bracket_2v2_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_2v2_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_2v2
@@ -329,7 +330,7 @@ ALTER TABLE ONLY bracket_2v2
 
 
 --
--- Name: bracket_3v3_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_3v3_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_3v3
@@ -337,7 +338,7 @@ ALTER TABLE ONLY bracket_3v3
 
 
 --
--- Name: bracket_3v3_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_3v3_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_3v3
@@ -345,7 +346,7 @@ ALTER TABLE ONLY bracket_3v3
 
 
 --
--- Name: bracket_5v5_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_5v5_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_5v5
@@ -353,7 +354,7 @@ ALTER TABLE ONLY bracket_5v5
 
 
 --
--- Name: bracket_5v5_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_5v5_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_5v5
@@ -361,7 +362,7 @@ ALTER TABLE ONLY bracket_5v5
 
 
 --
--- Name: bracket_rbg_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_rbg_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_rbg
@@ -369,7 +370,7 @@ ALTER TABLE ONLY bracket_rbg
 
 
 --
--- Name: bracket_rbg_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_rbg_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_rbg
@@ -377,7 +378,7 @@ ALTER TABLE ONLY bracket_rbg
 
 
 --
--- Name: classes_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: classes_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY classes
@@ -385,7 +386,7 @@ ALTER TABLE ONLY classes
 
 
 --
--- Name: classes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: classes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY classes
@@ -393,7 +394,7 @@ ALTER TABLE ONLY classes
 
 
 --
--- Name: factions_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: factions_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY factions
@@ -401,7 +402,7 @@ ALTER TABLE ONLY factions
 
 
 --
--- Name: factions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: factions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY factions
@@ -409,7 +410,7 @@ ALTER TABLE ONLY factions
 
 
 --
--- Name: glyphs_class_id_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: glyphs_class_id_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY glyphs
@@ -417,7 +418,7 @@ ALTER TABLE ONLY glyphs
 
 
 --
--- Name: glyphs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: glyphs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY glyphs
@@ -425,7 +426,7 @@ ALTER TABLE ONLY glyphs
 
 
 --
--- Name: players_achievements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: players_achievements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY players_achievements
@@ -433,7 +434,7 @@ ALTER TABLE ONLY players_achievements
 
 
 --
--- Name: players_glyphs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: players_glyphs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY players_glyphs
@@ -441,7 +442,7 @@ ALTER TABLE ONLY players_glyphs
 
 
 --
--- Name: players_name_realm_slug_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: players_name_realm_slug_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY players
@@ -449,7 +450,7 @@ ALTER TABLE ONLY players
 
 
 --
--- Name: players_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: players_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY players
@@ -457,7 +458,7 @@ ALTER TABLE ONLY players
 
 
 --
--- Name: players_stats_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: players_stats_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY players_stats
@@ -465,7 +466,7 @@ ALTER TABLE ONLY players_stats
 
 
 --
--- Name: players_talents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: players_talents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY players_talents
@@ -473,7 +474,7 @@ ALTER TABLE ONLY players_talents
 
 
 --
--- Name: races_name_side_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: races_name_side_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY races
@@ -481,7 +482,7 @@ ALTER TABLE ONLY races
 
 
 --
--- Name: races_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: races_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY races
@@ -489,7 +490,7 @@ ALTER TABLE ONLY races
 
 
 --
--- Name: realms_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: realms_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY realms
@@ -497,7 +498,7 @@ ALTER TABLE ONLY realms
 
 
 --
--- Name: realms_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: realms_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY realms
@@ -505,7 +506,7 @@ ALTER TABLE ONLY realms
 
 
 --
--- Name: specs_class_id_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: specs_class_id_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY specs
@@ -513,7 +514,7 @@ ALTER TABLE ONLY specs
 
 
 --
--- Name: specs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: specs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY specs
@@ -521,7 +522,7 @@ ALTER TABLE ONLY specs
 
 
 --
--- Name: talents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: talents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY talents
@@ -529,98 +530,98 @@ ALTER TABLE ONLY talents
 
 
 --
--- Name: achievements_name_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: achievements_name_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX achievements_name_idx ON achievements USING btree (name);
 
 
 --
--- Name: bracket_2v2_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_2v2_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX bracket_2v2_last_update_idx ON bracket_2v2 USING btree (last_update DESC);
 
 
 --
--- Name: bracket_2v2_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_2v2_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX bracket_2v2_rating_idx ON bracket_2v2 USING btree (rating);
 
 
 --
--- Name: bracket_3v3_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_3v3_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX bracket_3v3_last_update_idx ON bracket_3v3 USING btree (last_update DESC);
 
 
 --
--- Name: bracket_3v3_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_3v3_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX bracket_3v3_rating_idx ON bracket_3v3 USING btree (rating);
 
 
 --
--- Name: bracket_5v5_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_5v5_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX bracket_5v5_last_update_idx ON bracket_5v5 USING btree (last_update DESC);
 
 
 --
--- Name: bracket_5v5_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_5v5_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX bracket_5v5_rating_idx ON bracket_5v5 USING btree (rating);
 
 
 --
--- Name: bracket_rbg_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_rbg_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX bracket_rbg_last_update_idx ON bracket_rbg USING btree (last_update DESC);
 
 
 --
--- Name: bracket_rbg_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: bracket_rbg_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX bracket_rbg_rating_idx ON bracket_rbg USING btree (rating);
 
 
 --
--- Name: players_class_id_spec_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: players_class_id_spec_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX players_class_id_spec_id_idx ON players USING btree (class_id, spec_id);
 
 
 --
--- Name: players_faction_id_race_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: players_faction_id_race_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX players_faction_id_race_id_idx ON players USING btree (faction_id, race_id);
 
 
 --
--- Name: players_guild_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: players_guild_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX players_guild_idx ON players USING btree (guild);
 
 
 --
--- Name: talents_class_id_name_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: talents_class_id_name_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX talents_class_id_name_idx ON talents USING btree (class_id, name);
 
 
 --
--- Name: talents_tier_col_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: talents_tier_col_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX talents_tier_col_idx ON talents USING btree (tier, col);

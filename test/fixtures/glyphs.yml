@@ -6,4 +6,5 @@ glyph<%= n %>:
   icon: <%= "glyphicon#{n}" %>
   item_id: 0
   type_id: 0
+  spell_id: 0
 <% end %>
