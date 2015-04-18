@@ -1,10 +1,47 @@
-<% 33.times do |n| %>
-spec<%= n %>:
-  id: <%= n %>
-  class_id: <%= (n % 11) + 1 %>
-  name: <%= "spec#{n}" %>
-  role: <%= "role#{n % 3}" %>
-  description: <%= "specdescription#{n}" %>
-  background_image: <%= "specbackground#{n}" %>
-  icon: <%= "specicon#{n}" %>
+<% specs = [
+  [62, 8, "Arcane"],
+  [63, 8, "Fire"],
+  [64, 8, "Frost"],
+  [65, 2, "Holy"],
+  [66, 2, "Protection"],
+  [70, 2, "Retribution"],
+  [71, 1, "Arms"],
+  [72, 1, "Fury"],
+  [73, 1, "Protection"],
+  [102, 11, "Balance"],
+  [103, 11, "Feral"],
+  [104, 11, "Guardian"],
+  [105, 11, "Restoration"],
+  [250, 6, "Blood"],
+  [251, 6, "Frost"],
+  [252, 6, "Unholy"],
+  [253, 3, "Beast Mastery"],
+  [254, 3, "Marksmanship"],
+  [255, 3, "Survival"],
+  [256, 5, "Discipline"],
+  [257, 5, "Holy"],
+  [258, 5, "Shadow"],
+  [259, 4, "Assassination"],
+  [260, 4, "Combat"],
+  [261, 4, "Subtlety"],
+  [262, 7, "Elemental"],
+  [263, 7, "Enhancement"],
+  [264, 7, "Restoration"],
+  [265, 9, "Affliction"],
+  [266, 9, "Demonology"],
+  [267, 9, "Destruction"],
+  [268, 10, "Brewmaster"],
+  [269, 10, "Windwalker"],
+  [270, 10, "Mistweaver"]
+] %>
+
+<% specs.each do |a| %>
+spec<%= a[0] %>:
+  id: <%= a[0] %>
+  class_id: <%= a[1] %>
+  name: <%= a[2] %>
+  role: <%= "role#{a[0] % 3}" %>
+  description: <%= "specdescription#{a[0]}" %>
+  background_image: <%= "specbackground#{a[0]}" %>
+  icon: <%= "specicon#{a[0]}" %>
 <% end %>

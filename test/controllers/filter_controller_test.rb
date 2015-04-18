@@ -28,7 +28,7 @@ class FilterControllerTest < ActionController::TestCase
   end
 
   test "should find filtered results" do
-    get(:results, {"class" => "death-knight", "spec" => "spec5"})
+    get(:results, {"class" => "death-knight", "spec" => "frost"})
     assert_response :success
     assert_not_nil assigns(:class_id)
     assert_not_nil assigns(:talent_counts)

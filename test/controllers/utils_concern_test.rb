@@ -19,7 +19,7 @@ class UtilsConcernTest < ActionController::TestCase
   end
 
   test "should get leaderboard player count" do
-    assert_not_equal(0, total_player_count(1, 0))
+    assert_not_equal(0, total_player_count(10, 270))
     assert_equal(0, total_player_count(-999, -999))
   end
 end

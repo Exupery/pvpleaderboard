@@ -17,7 +17,7 @@ class ClassesControllerTest < ActionController::TestCase
   end
 
   test "should find results" do
-    get(:results_by_class, {"class" => "hunter", "spec" => "spec13"})
+    get(:results_by_class, {"class" => "hunter", "spec" => "beast-mastery"})
     assert_response :success
 
     assert_not_nil assigns(:class_id)
