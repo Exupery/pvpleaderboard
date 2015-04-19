@@ -62,7 +62,7 @@ a:hover {
 }
 
 .expands {
-	min-height: calc(100vh - 200px);
+	min-height: calc(100vh - 235px);
 }
 
 .text-muted {
@@ -393,7 +393,8 @@ th.tablesorter-headerAsc,
 
 .nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:hover {
-	border-color: inherit;
+	border-color: #F6E4B3;
+	border-bottom-color: rgba(0, 0, 0, 0);
 }
 
 th.tablesorter-headerDesc:hover,
@@ -420,7 +421,7 @@ th.tablesorter-headerAsc:hover,
   color: #1A0F08;
   cursor: pointer;
   background-color: #E4A703;
-  border: 1px solid #F6E4B3;
+  border: 1px solid #E9B835;
   border-bottom-color: rgba(0, 0, 0, 0);
 }
 

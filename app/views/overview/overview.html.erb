@@ -1,97 +1,12 @@
-<div class="btn-group btn-group-lg" role="group" aria-label="Brackets">
-  <% ["2v2", "3v3", "5v5", "RBG", "All"].each do |b| %>
-  	<% active = (b[0] == @bracket[0]) ? "active" : "" %>
-  	<a href="/overview/<%= b.downcase %>" type="button" class="btn btn-default <%= active %>" role="button"><%= b %></a>
-  <% end %>
+<div class="expands">
+	<div class="btn-group btn-group-lg" role="group" aria-label="Brackets">
+	  <% ["2v2", "3v3", "5v5", "RBG", "All"].each do |b| %>
+	  	<% active = (b[0] == @bracket[0]) ? "active" : "" %>
+	  	<a href="/overview/<%= b.downcase %>" type="button" class="btn btn-default <%= active %>" role="button"><%= b %></a>
+	  <% end %>
+	</div>
+
+	<h1>Overview for <%= @bracket %></h1>
+
+	<%= render "overview_tables" %>
 </div>
-
-<h1>Overview for <%= @bracket %></h1>
-
-<table class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[2,1]]">
-	<thead>
-		<tr>
-			<th>Faction</th>
-			<th>Count</th>
-			<th>Percent</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% percents = percent_counts @factions %>
-		<% @factions.each do |f, c| %>
-			<tr>
-				<td title="<%= f %>"><img src="/images/<%= f.downcase %>.png" class="img-responsive center" alt="<%= f %>"></td>
-				<td><%= c %></td>
-				<td><%= percents[f] %>%</td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
-
-<table class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[2,1]]">
-	<thead>
-		<tr>
-			<th>Race</th>
-			<th>Count</th>
-			<th>Percent</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% percents = percent_counts @races %>
-		<% @races.each do |r, c| %>
-			<tr>
-				<td title="<%= r %>">
-					<% race_slug = slugify r %>
-					<img src="/images/races/<%= race_slug %>_female.png" class="img-responsive center inline-block" alt="<%= r %> Female">
-					<img src="/images/races/<%= race_slug %>_male.png" class="img-responsive center inline-block" alt="<%= r %> Male">
-				</td>
-				<td><%= c %></td>
-				<td><%= percents[r] %>%</td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
-
-<table class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[2,1]]">
-	<thead>
-		<tr>
-			<th>Class</th>
-			<th>Count</th>
-			<th>Percent</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% percents = percent_counts @classes %>
-		<% @classes.each do |cl, c| %>
-			<tr>
-				<td title="<%= cl %>"><img src="/images/classes/<%= slugify cl %>.png" class="img-responsive center" alt="<%= cl %>"></td>
-				<td><%= c %></td>
-				<td><%= percents[cl] %>%</td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
-
-<table class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[3,1]]">
-	<thead>
-		<tr>
-			<th>Spec</th>
-			<th>Class</th>
-			<th>Count</th>
-			<th>Percent</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% percents = spec_percent_counts %>
-		<% @specs.each do |slug, info| %>
-			<tr>
-				<% spec = info.name %>
-				<td title="<%= spec %>"><img src="/images/icons/<%= info.icon %>.png" class="img-responsive center" alt="<%= spec %>"></td>
-				<td title="<%= info.class_name %>"><img src="/images/classes/<%= slugify info.class_name %>.png" class="img-responsive center" alt="<%= info.class_name %>"></td>
-				<td><%= info.count %></td>
-				<td><%= percents[slug] %>%</td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
-
-<%= render "layouts/last_updated" %>
