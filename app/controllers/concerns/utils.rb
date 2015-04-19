@@ -49,4 +49,15 @@ module Utils extend ActiveSupport::Concern
 
     return total
 	end
+
+  def last_players_update
+    last = nil
+
+    rows = ActiveRecord::Base.connection.execute("SELECT MAX(last_update) FROM players")
+    rows.each do |row|
+      last = DateTime.parse(row["max"]) if row["max"]
+    end
+
+    return last.nil? ? "UNKNOWN" : last.strftime("%d %b %Y %H:%M:%S")
+  end
 end
