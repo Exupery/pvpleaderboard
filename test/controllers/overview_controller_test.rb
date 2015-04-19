@@ -2,7 +2,7 @@ require "test_helper"
 
 class OverviewControllerTest < ActionController::TestCase
   test "should set title and description" do
-    get :stats
+    get :overview
     assert_response :success
     assert_not_nil assigns(:title)
     assert_not_nil assigns(:description)
@@ -10,7 +10,7 @@ class OverviewControllerTest < ActionController::TestCase
 
   test "should show overview" do
     ["2v2", "3v3", "5v5", "rbg", "all"].each do |bracket|
-      get(:stats, {"bracket" => bracket})
+      get(:overview, {"bracket" => bracket})
       assert_response :success if bracket != "all"
       assert_response :redirect if bracket == "all"
 
