@@ -3,7 +3,7 @@ class OverviewController < ApplicationController
 
   @@BRACKETS = ["2v2", "3v3", "5v5", "rbg"]
 
-  def stats
+  def overview
   	bracket = params[:bracket]
   	bracket.downcase! if bracket
   	if bracket && !@@BRACKETS.include?(bracket)

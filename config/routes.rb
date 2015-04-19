@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root "application#index"
 
-  get "overview" => "overview#stats"
-  get "overview/:bracket" => "overview#stats"
+  get "overview" => "overview#overview"
+  get "overview/:bracket" => "overview#overview"
 
   get "pvp" => "classes#select_class"
   get "pvp/:class" => "classes#select_class"
