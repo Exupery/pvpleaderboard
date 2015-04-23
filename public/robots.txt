@@ -4,3 +4,5 @@
 
 User-agent: *
 Disallow: /javascripts/
+
+Sitemap: https://www.pvpleaderboard.com/sitemap.xml
