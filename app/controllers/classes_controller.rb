@@ -40,6 +40,8 @@ class ClassesController < ApplicationController
     @major_glyph_counts = get_glyph_counts Glyphs.MAJOR_ID
     @minor_glyph_counts = get_glyph_counts Glyphs.MINOR_ID
     @stat_counts = get_stat_counts
+    @gear_counts = get_gear_counts
+    puts @gear_counts ## TODO DELME
 
     @total = total_player_count(@class_id, @spec_id)
   end
@@ -76,6 +78,19 @@ class ClassesController < ApplicationController
     rows = ActiveRecord::Base.connection.execute("SELECT #{cols} FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_stats ON players.id=players_stats.player_id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id}")
     rows.each do |row|
       h.merge!(parse_stats_row row)
+    end
+
+    return h
+  end
+
+  def get_gear_counts
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute(gear_sql(@class_id, @spec_id))
+    rows.each do |row|
+      get_slots.each do |slot|
+        h[slot] = row[slot].to_i
+      end
     end
 
     return h

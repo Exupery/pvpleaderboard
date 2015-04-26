@@ -1,0 +1,7 @@
+<% 250.times do |n| %>
+item<%= n %>:
+  id: <%= n %>
+  name: <%= "name#{n}" %>
+  icon: <%= "icon#{n}" %>
+  item_level: <%= n * 2 %>
+<% end %>

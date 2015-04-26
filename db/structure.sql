@@ -134,6 +134,18 @@ CREATE TABLE glyphs (
 
 
 --
+-- Name: items; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE items (
+    id integer NOT NULL,
+    name character varying(128),
+    icon character varying(128),
+    item_level integer
+);
+
+
+--
 -- Name: player_ids_all_brackets; Type: VIEW; Schema: public; Owner: -
 --
 
@@ -209,6 +221,35 @@ CREATE SEQUENCE players_id_seq
 --
 
 ALTER SEQUENCE players_id_seq OWNED BY players.id;
+
+
+--
+-- Name: players_items; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE players_items (
+    player_id integer NOT NULL,
+    average_item_level integer,
+    average_item_level_equipped integer,
+    head integer,
+    neck integer,
+    shoulder integer,
+    back integer,
+    chest integer,
+    shirt integer,
+    tabard integer,
+    wrist integer,
+    hands integer,
+    waist integer,
+    legs integer,
+    feet integer,
+    finger1 integer,
+    finger2 integer,
+    trinket1 integer,
+    trinket2 integer,
+    mainhand integer,
+    offhand integer
+);
 
 
 --
@@ -362,19 +403,19 @@ ALTER TABLE ONLY bracket_5v5
 
 
 --
--- Name: bracket_rbg_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: bracket_rbgs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_rbg
-    ADD CONSTRAINT bracket_rbg_pkey PRIMARY KEY (ranking);
+    ADD CONSTRAINT bracket_rbgs_pkey PRIMARY KEY (ranking);
 
 
 --
--- Name: bracket_rbg_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: bracket_rbgs_player_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bracket_rbg
-    ADD CONSTRAINT bracket_rbg_player_id_key UNIQUE (player_id);
+    ADD CONSTRAINT bracket_rbgs_player_id_key UNIQUE (player_id);
 
 
 --
@@ -426,6 +467,14 @@ ALTER TABLE ONLY glyphs
 
 
 --
+-- Name: items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY items
+    ADD CONSTRAINT items_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: players_achievements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
@@ -439,6 +488,14 @@ ALTER TABLE ONLY players_achievements
 
 ALTER TABLE ONLY players_glyphs
     ADD CONSTRAINT players_glyphs_pkey PRIMARY KEY (player_id, glyph_id);
+
+
+--
+-- Name: players_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY players_items
+    ADD CONSTRAINT players_items_pkey PRIMARY KEY (player_id);
 
 
 --
@@ -579,17 +636,17 @@ CREATE INDEX bracket_5v5_rating_idx ON bracket_5v5 USING btree (rating);
 
 
 --
--- Name: bracket_rbg_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: bracket_rbgs_last_update_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
-CREATE INDEX bracket_rbg_last_update_idx ON bracket_rbg USING btree (last_update DESC);
+CREATE INDEX bracket_rbgs_last_update_idx ON bracket_rbg USING btree (last_update DESC);
 
 
 --
--- Name: bracket_rbg_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: bracket_rbgs_rating_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
-CREATE INDEX bracket_rbg_rating_idx ON bracket_rbg USING btree (rating);
+CREATE INDEX bracket_rbgs_rating_idx ON bracket_rbg USING btree (rating);
 
 
 --
@@ -652,11 +709,11 @@ ALTER TABLE ONLY bracket_5v5
 
 
 --
--- Name: bracket_rbg_player_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: bracket_rbgs_player_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY bracket_rbg
-    ADD CONSTRAINT bracket_rbg_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id);
+    ADD CONSTRAINT bracket_rbgs_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id);
 
 
 --
@@ -713,6 +770,14 @@ ALTER TABLE ONLY players_glyphs
 
 ALTER TABLE ONLY players_glyphs
     ADD CONSTRAINT players_glyphs_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id);
+
+
+--
+-- Name: players_items_player_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY players_items
+    ADD CONSTRAINT players_items_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id);
 
 
 --
