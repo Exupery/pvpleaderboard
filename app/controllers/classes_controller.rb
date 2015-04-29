@@ -40,8 +40,8 @@ class ClassesController < ApplicationController
     @major_glyph_counts = get_glyph_counts Glyphs.MAJOR_ID
     @minor_glyph_counts = get_glyph_counts Glyphs.MINOR_ID
     @stat_counts = get_stat_counts
-    @gear_counts = get_gear_counts
-    puts @gear_counts ## TODO DELME
+    @gear = get_most_equipped_gear
+    puts @gear ## TODO DELME
 
     @total = total_player_count(@class_id, @spec_id)
   end
@@ -83,8 +83,9 @@ class ClassesController < ApplicationController
     return h
   end
 
-  def get_gear_counts
+  def get_most_equipped_gear
     h = Hash.new
+    gear = Hash.new
 
     rows = ActiveRecord::Base.connection.execute(gear_sql(@class_id, @spec_id))
     rows.each do |row|
@@ -93,7 +94,12 @@ class ClassesController < ApplicationController
       end
     end
 
-    return h
+    names = get_gear_names h.values
+    h.each do |slot, id|
+      gear[slot] = {:id => id, :name => names[id]}
+    end
+
+    return gear
   end
 
 end

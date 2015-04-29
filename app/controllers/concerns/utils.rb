@@ -47,6 +47,17 @@ module Utils extend ActiveSupport::Concern
     return "SELECT #{sql}"
   end
 
+  def get_gear_names ids
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT id, name FROM items WHERE id IN (#{ids.join(",")})")
+    rows.each do |row|
+      h[row["id"].to_i] = row["name"]
+    end
+
+    return h
+  end
+
 	def slugify txt
 		return nil if txt.nil?
 		return txt.downcase.gsub(/[\s\-]/, "_")
