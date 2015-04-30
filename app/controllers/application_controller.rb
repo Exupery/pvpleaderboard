@@ -3,6 +3,6 @@ class ApplicationController < ActionController::Base
 
   def index
   	@title = "Home"
-  	@description = "See which talents, glyphs, and stats top WoW PvPers are selecting"
+  	@description = "See which talents, glyphs, stats, and gear top World of Warcraft PvPers are selecting"
   end
 end

@@ -30,7 +30,7 @@ class ClassesController < ApplicationController
 
     class_and_spec = "#{spec[:name]} #{clazz[:name]}"
     @title = class_and_spec
-    @description = "WoW PvP leaderboard Talents, Glyphs, and Stats for #{class_and_spec}"
+    @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear for #{class_and_spec}"
     @heading = class_and_spec
 
     @class_id = clazz[:id]
@@ -40,8 +40,7 @@ class ClassesController < ApplicationController
     @major_glyph_counts = get_glyph_counts Glyphs.MAJOR_ID
     @minor_glyph_counts = get_glyph_counts Glyphs.MINOR_ID
     @stat_counts = get_stat_counts
-    @gear = get_most_equipped_gear
-    puts @gear ## TODO DELME
+    @gear = get_most_equipped_gear_by_spec(@class_id, @spec_id)
 
     @total = total_player_count(@class_id, @spec_id)
   end
@@ -82,24 +81,4 @@ class ClassesController < ApplicationController
 
     return h
   end
-
-  def get_most_equipped_gear
-    h = Hash.new
-    gear = Hash.new
-
-    rows = ActiveRecord::Base.connection.execute(gear_sql(@class_id, @spec_id))
-    rows.each do |row|
-      get_slots.each do |slot|
-        h[slot] = row[slot].to_i
-      end
-    end
-
-    names = get_gear_names h.values
-    h.each do |slot, id|
-      gear[slot] = {:id => id, :name => names[id]}
-    end
-
-    return gear
-  end
-
 end

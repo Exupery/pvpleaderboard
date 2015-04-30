@@ -34,5 +34,6 @@ class FilterControllerTest < ActionController::TestCase
     assert_not_nil assigns(:talent_counts)
     assert_not_nil assigns(:major_glyph_counts)
     assert_not_nil assigns(:stat_counts)
+    assert_not_nil assigns(:gear)
   end
 end

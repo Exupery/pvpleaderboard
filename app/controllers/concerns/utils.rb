@@ -35,27 +35,12 @@ module Utils extend ActiveSupport::Concern
     return @@normal_slots + ["finger1", "finger2", "trinket1", "trinket2"]
   end
 
-  def gear_sql(class_id, spec_id)
-    sql = ""
-    @@normal_slots.each do |slot|
-      sql += "(SELECT #{slot} FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_items ON players_items.player_id=players.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} GROUP BY #{slot} ORDER BY COUNT(*) DESC LIMIT 1),"
-    end
-
-    sql += two_slot_sql("finger", class_id, spec_id)+","
-    sql += two_slot_sql("trinket", class_id, spec_id)
-
-    return "SELECT #{sql}"
+  def get_most_equipped_gear_by_spec(class_id, spec_id)
+    return get_most_equipped_gear(class_id, spec_id, nil)
   end
 
-  def get_gear_names ids
-    h = Hash.new
-
-    rows = ActiveRecord::Base.connection.execute("SELECT id, name FROM items WHERE id IN (#{ids.join(",")})")
-    rows.each do |row|
-      h[row["id"].to_i] = row["name"]
-    end
-
-    return h
+  def get_most_equipped_gear_by_player_ids ids
+    return get_most_equipped_gear(nil, nil, ids)
   end
 
 	def slugify txt
@@ -92,14 +77,58 @@ module Utils extend ActiveSupport::Concern
 
   private
 
-  def two_slot_sql(slot, class_id, spec_id)
+  def get_most_equipped_gear(class_id, spec_id, ids)
+    h = Hash.new
+    gear = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute(gear_sql(class_id, spec_id, ids))
+    rows.each do |row|
+      get_slots.each do |slot|
+        h[slot] = row[slot].to_i
+      end
+    end
+
+    names = get_gear_names h.values
+    h.each do |slot, id|
+      gear[slot] = {:id => id, :name => names[id]}
+    end
+
+    return gear
+  end
+
+  def gear_sql(class_id, spec_id, ids)
     sql = ""
-    from = "FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_items ON players_items.player_id=players.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id}"
+    where = ids ? "players.id IN (#{ids})" : "players.class_id=#{class_id} AND players.spec_id=#{spec_id}"
+
+    @@normal_slots.each do |slot|
+      sql += "(SELECT #{slot} FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_items ON players_items.player_id=players.id WHERE #{where} GROUP BY #{slot} ORDER BY COUNT(*) DESC LIMIT 1),"
+    end
+
+    sql += two_slot_sql("finger", where)+","
+    sql += two_slot_sql("trinket", where)
+
+    return "SELECT #{sql}"
+  end
+
+  def two_slot_sql(slot, where)
+    sql = ""
+    from = "FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_items ON players_items.player_id=players.id WHERE #{where}"
     base = "(SELECT #{slot} AS #{slot}%s FROM (SELECT players_items.player_id, #{slot}1 AS #{slot} #{from} UNION ALL SELECT players_items.player_id, #{slot}2 AS #{slot} #{from}) AS tbl GROUP BY #{slot} ORDER BY COUNT(*) DESC LIMIT 1 %s)"
 
     sql += base % ["1", ""]
     sql += ",#{base % ["2", "OFFSET 1"]}"
 
     return sql
+  end
+
+  def get_gear_names ids
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT id, name FROM items WHERE id IN (#{ids.join(",")})")
+    rows.each do |row|
+      h[row["id"].to_i] = row["name"]
+    end
+
+    return h
   end
 end

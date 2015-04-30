@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/Exupery/pvpleaderboard.svg)](https://travis-ci.org/Exupery/pvpleaderboard)
 # PvPLeaderboard
 
-[PvPLeaderboard](https://www.pvpleaderboard.com/) shows the talent, glyph, and stat choices made by the best [World of Warcraft](http://us.battle.net/wow/en/) PvP players as well as a breakdown of the PvP leaderboards by class, spec, race, and faction.
+[PvPLeaderboard](https://www.pvpleaderboard.com/) shows the talent, glyph, stat, and gear choices made by the best [World of Warcraft](http://us.battle.net/wow/en/) PvP players as well as a breakdown of the PvP leaderboards by class, spec, race, and faction.
 
 Use: `bundle exec puma -C config/puma.rb`
 

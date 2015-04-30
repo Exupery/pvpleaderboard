@@ -8,14 +8,14 @@ class FilterController < ApplicationController
 
   def filter
     @title = "Filter"
-    @description = "WoW PvP leaderboard Talents, Glyphs, and Stats"
+    @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear"
 
     @selected = get_selected
   end
 
   def results
     @title = "Filter Results"
-    @description = "WoW PvP leaderboard Talents, Glyphs, and Stats Filter Results"
+    @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear Filter Results"
 
     @selected = get_selected
     redirect_to "/filter" if (@selected[:class].nil? || @selected[:spec].nil?)
@@ -33,6 +33,7 @@ class FilterController < ApplicationController
     @major_glyph_counts = get_glyph_counts(ids, Glyphs.MAJOR_ID)
     @minor_glyph_counts = get_glyph_counts(ids, Glyphs.MINOR_ID)
     @stat_counts = get_stat_counts ids
+    @gear = get_most_equipped_gear_by_player_ids ids
   end
 
   private
