@@ -18,12 +18,14 @@ class OverviewControllerTest < ActionController::TestCase
       assert_not_nil assigns(:races)
       assert_not_nil assigns(:classes)
       assert_not_nil assigns(:specs)
+      assert_not_nil assigns(:realms)
       assert_not_nil assigns(:bracket)
 
       assert_not_empty :factions
       assert_not_empty :class_talents
       assert_not_empty :races
       assert_not_empty :specs
+      assert_not_empty :realms
       assert_not_empty :bracket
     end
   end
