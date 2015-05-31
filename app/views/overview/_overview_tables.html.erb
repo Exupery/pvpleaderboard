@@ -5,6 +5,7 @@
     <li role="presentation"><a href="#overview-by-spec" aria-controls="overview-by-spec" role="tab" data-toggle="tab">Spec</a></li>
     <li role="presentation"><a href="#overview-by-race" aria-controls="overview-by-race" role="tab" data-toggle="tab">Race</a></li>
     <li role="presentation"><a href="#overview-by-faction" aria-controls="overview-by-faction" role="tab" data-toggle="tab">Faction</a></li>
+    <li role="presentation"><a href="#overview-by-realm" aria-controls="overview-by-realm" role="tab" data-toggle="tab">Realm</a></li>
   </ul>
 
   <div class="tab-content">
@@ -102,6 +103,30 @@
         </tbody>
       </table>
     </div>
+
+    <div role="tabpanel" class="tab-pane" id="overview-by-realm">
+      <table class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[2,1],[1,1],[0,0]]">
+        <thead>
+          <tr>
+            <th>Realm</th>
+            <th>Count</th>
+            <th>Percent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% percents = percent_counts @realms %>
+          <% @realms.each do |r, c| %>
+            <tr>
+              <td><%= r %></td>
+              <td><%= c %></td>
+              <td><%= percents[r] %>%</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <h4>Showing only top 50 realms</h4>
+    </div>
+
   </div>
 
   <%= render "layouts/last_updated" %>
