@@ -88,6 +88,19 @@ var ready = function() {
     e.preventDefault();
     submitFilterForm();
   });
+
+  if (window.location.hash) {
+    var tab = (window.location.hash).replace(/#/, "");
+    $("a[href='#tab-pane-" + tab + "']").tab("show");
+  }
+
+  $(".nav-tabs li a").on("shown.bs.tab", function(e) {
+    var fragment = $(e.target).data("fragment");
+    if (fragment) {
+      var href = (window.location.href).replace(/#.*/, "") + "#" + fragment;
+      window.location.replace(href);
+    }
+  });
 };
 /* Needed so jQuery's ready plays well with Rails turbolinks */
 $(document).ready(ready);

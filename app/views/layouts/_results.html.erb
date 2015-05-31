@@ -1,22 +1,22 @@
 <div class="results-panel center" role="tabpanel">
 
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#talents" aria-controls="talents" role="tab" data-toggle="tab">Talents</a></li>
-    <li role="presentation"><a href="#glyphs" aria-controls="glyphs" role="tab" data-toggle="tab">Glyphs</a></li>
-    <li role="presentation"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
-    <li role="presentation"><a href="#gear" aria-controls="gear" role="tab" data-toggle="tab">Gear</a></li>
+    <li role="presentation" class="active"><a href="#tab-pane-talents" aria-controls="talents" role="tab" data-toggle="tab" data-fragment="talents">Talents</a></li>
+    <li role="presentation"><a href="#tab-pane-glyphs" aria-controls="glyphs" role="tab" data-toggle="tab" data-fragment="glyphs">Glyphs</a></li>
+    <li role="presentation"><a href="#tab-pane-stats" aria-controls="stats" role="tab" data-toggle="tab" data-fragment="stats">Stats</a></li>
+    <li role="presentation"><a href="#tab-pane-gear" aria-controls="gear" role="tab" data-toggle="tab" data-fragment="gear">Gear</a></li>
   </ul>
 
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="talents">
+    <div role="tabpanel" class="tab-pane active" id="tab-pane-talents">
       <%= render "layouts/talents_table", :talents => talent_counts_table(@class_id) %>
     </div>
-    <div role="tabpanel" class="tab-pane" id="glyphs">
+    <div role="tabpanel" class="tab-pane" id="tab-pane-glyphs">
       <%= render "layouts/glyph_count_table", :counts => @major_glyph_counts, :glyph_type => "Major" %>
       <%= render "layouts/glyph_count_table", :counts => @minor_glyph_counts, :glyph_type => "Minor"  %>
     </div>
-    <div role="tabpanel" class="tab-pane" id="stats"><%= render "layouts/stats_table", :counts => @stat_counts %></div>
-    <div role="tabpanel" class="tab-pane" id="gear"><%= render "layouts/gear_table", :gear => @gear %></div>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-stats"><%= render "layouts/stats_table", :counts => @stat_counts %></div>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-gear"><%= render "layouts/gear_table", :gear => @gear %></div>
   </div>
 
   <%= render "layouts/last_updated" %>
