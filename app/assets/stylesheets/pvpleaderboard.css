@@ -358,8 +358,7 @@ th {
   margin: 0;
 }
 
-th.tablesorter-headerDesc,
-th.tablesorter-headerAsc,
+th.tablesorter-primary,
 .btn.active,
 .btn-default.active,
 .btn-group>.btn.active:hover,

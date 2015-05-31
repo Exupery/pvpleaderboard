@@ -1,5 +1,11 @@
 var ready = function() {
-  $(".table-sorted").tablesorter({sortInitialOrder: "desc"});
+  $(".table-sorted").tablesorter({
+    sortInitialOrder: "desc",
+    widgets: ["columns"],
+    widgetOptions : {
+      columns : [ "tablesorter-primary", "tablesorter-secondary", "tablesorter-tertiary" ]
+    }
+  });
 
   $(".btn").click(function() {
     $(this).blur();
