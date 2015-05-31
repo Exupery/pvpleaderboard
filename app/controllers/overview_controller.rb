@@ -117,7 +117,7 @@ class OverviewController < ApplicationController
   def realm_counts bracket
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT realms.name AS realm, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN realms ON players.realm_slug=realms.slug GROUP BY realm ORDER BY COUNT(*) DESC LIMIT 25")
+    rows = ActiveRecord::Base.connection.execute("SELECT realms.name AS realm, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN realms ON players.realm_slug=realms.slug GROUP BY realm ORDER BY COUNT(*) DESC LIMIT 50")
     rows.each do |row|
       h[row["realm"]] = row["count"].to_i
     end
