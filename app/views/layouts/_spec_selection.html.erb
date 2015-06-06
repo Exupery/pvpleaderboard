@@ -14,7 +14,7 @@
       <% specs.each do |spec| %>
         <% active = (urlify(clazz) == urlify(params[:class]) && urlify(spec.slug) == urlify(params[:spec])) ? "active" : "" %>
         <% if use_anchors %>
-          <a href="/pvp/<%= urlify clazz %>/<%= urlify spec.slug %>" type="button" class="btn btn-default small-padding <%= active %>" role="button" title="<%= spec.name %>"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>"></a>
+          <a href="/pvp/<%= urlify clazz %>/<%= urlify spec.slug %>" type="button" class="btn btn-default small-padding include-fragment <%= active %>" role="button" title="<%= spec.name %>"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>"></a>
         <% else %>
           <label class="btn image-holder spec-selector <%= active %>" title="<%= spec.name %>" data-value="<%= urlify spec.slug %>">
           <input type="radio" autocomplete="off"><img src="/images/icons/<%= spec.icon %>.png" class="img-responsive center" alt="<%= spec.name %>">
