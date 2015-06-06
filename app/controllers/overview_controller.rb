@@ -19,6 +19,7 @@ class OverviewController < ApplicationController
     @classes = Hash.new(0)
     @specs = Hash.new(nil)
     @realms = Hash.new(0)
+    @guilds = Hash.new(nil)
 
     find_counts bracket
 
@@ -60,6 +61,14 @@ class OverviewController < ApplicationController
         (realm_counts b).each do |r, c|
           @realms[r] += c
         end
+
+        (guild_counts b).each do |g, info|
+          if @guilds[g].nil?
+            @guilds[g] = info
+          else
+            @guilds[g].count += info.count
+          end
+        end
       end
     else
       @factions = faction_counts bracket
@@ -67,6 +76,7 @@ class OverviewController < ApplicationController
       @classes = class_counts bracket
       @specs = spec_counts bracket
       @realms = realm_counts bracket
+      @guilds = guild_counts bracket
     end
   end
 
@@ -124,6 +134,17 @@ class OverviewController < ApplicationController
 
     return h
   end
+
+  def guild_counts bracket
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT guild, realms.name AS realm, factions.name AS faction, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id JOIN realms ON players.realm_slug=realms.slug WHERE guild != '' GROUP BY guild,realms.name,factions.name ORDER BY COUNT(*) DESC LIMIT 50")
+    rows.each do |row|
+      h[row["guild"] + row["realm"] + row["faction"]] = GuildInfo.new(row["guild"], row["realm"], row["faction"], row["count"].to_i)
+    end
+
+    return h
+  end
 end
 
 class SpecInfo
@@ -135,5 +156,17 @@ class SpecInfo
     @count = count
     @icon = icon
     @class_name = class_name
+  end
+end
+
+class GuildInfo
+  attr_reader :name, :realm, :faction
+  attr_accessor :count
+
+  def initialize(name, realm, faction, count)
+    @name = name
+    @realm = realm
+    @faction = faction
+    @count = count
   end
 end
