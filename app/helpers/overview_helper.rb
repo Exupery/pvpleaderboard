@@ -13,9 +13,9 @@ module OverviewHelper
 		return h
 	end
 
-	def spec_percent_counts
+	def object_percent_counts hash
 		h = Hash.new
-		@specs.each do |slug, info|
+		hash.each do |slug, info|
 			h[slug] = info.count
 		end
 

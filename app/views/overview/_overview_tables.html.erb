@@ -6,6 +6,7 @@
     <li role="presentation"><a href="#tab-pane-race" aria-controls="tab-pane-race" role="tab" data-toggle="tab" data-fragment="race">Race</a></li>
     <li role="presentation"><a href="#tab-pane-faction" aria-controls="tab-pane-faction" role="tab" data-toggle="tab" data-fragment="faction">Faction</a></li>
     <li role="presentation"><a href="#tab-pane-realm" aria-controls="tab-pane-realm" role="tab" data-toggle="tab" data-fragment="realm">Realm</a></li>
+    <li role="presentation"><a href="#tab-pane-guild" aria-controls="tab-pane-guild" role="tab" data-toggle="tab" data-fragment="guild">Guild</a></li>
   </ul>
 
   <div class="tab-content">
@@ -42,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-          <% percents = spec_percent_counts %>
+          <% percents = object_percent_counts @specs %>
           <% @specs.each do |slug, info| %>
             <tr>
               <% spec = info.name %>
@@ -125,6 +126,33 @@
         </tbody>
       </table>
       <h4>Showing only top 50 realms</h4>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="tab-pane-guild">
+      <table class="table table-bordered table-condensed table-responsive table-hover table-sorted table-small-font center" data-sortlist="[[4,1],[3,1],[0,0]]">
+        <thead>
+          <tr>
+            <th>Guild</th>
+            <th>Realm</th>
+            <th>Faction</th>
+            <th>Count</th>
+            <th>Percent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% percents = object_percent_counts @guilds %>
+          <% @guilds.each do |slug, guild| %>
+            <tr>
+              <td><%= guild.name %></td>
+              <td><%= guild.realm %></td>
+              <td title="<%= guild.faction %>"><img src="/images/<%= guild.faction.downcase %>.png" class="img-responsive center" alt="<%= guild.faction %>"></td>
+              <td><%= guild.count %></td>
+              <td><%= percents[slug] %>%</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <h4>Showing only top 50 guilds</h4>
     </div>
 
   </div>

@@ -235,6 +235,10 @@ th:focus {
 	font-size: calc(1vw + 8px);
 }
 
+.table-small-font {
+	font-size: calc(1vw + 4px);
+}
+
 td {
 	background: -moz-linear-gradient(left, #261E19 0%, #302620 25%, #302620 75%, #261E19 100%);
 	background: -webkit-linear-gradient(left, #261E19 0%, #302620 25%, #302620 75%, #261E19 100%);
