@@ -7,8 +7,7 @@ class OverviewController < ApplicationController
   	bracket = params[:bracket]
   	bracket.downcase! if bracket
   	if bracket && !@@BRACKETS.include?(bracket)
-  		redirect_to "/overview"
-  		return nil
+      bracket = nil
   	end
   	title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
   	@title = "#{title_bracket || 'Leaderboard'} Overview"

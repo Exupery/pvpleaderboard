@@ -11,8 +11,7 @@ class OverviewControllerTest < ActionController::TestCase
   test "should show overview" do
     ["2v2", "3v3", "5v5", "rbg", "all"].each do |bracket|
       get(:overview, {"bracket" => bracket})
-      assert_response :success if bracket != "all"
-      assert_response :redirect if bracket == "all"
+      assert_response :success
 
       assert_not_nil assigns(:factions)
       assert_not_nil assigns(:races)
