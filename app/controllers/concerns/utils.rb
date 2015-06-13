@@ -72,7 +72,7 @@ module Utils extend ActiveSupport::Concern
       last = DateTime.parse(row["max"]) if row["max"]
     end
 
-    return last.nil? ? "UNKNOWN" : last.strftime("%d %b %Y %H:%M:%S")
+    return last
   end
 
   private

@@ -25,8 +25,7 @@ class UtilsConcernTest < ActionController::TestCase
 
   test "should get last updated time" do
     assert_not_nil last_players_update
-    assert_not_empty last_players_update
-    assert_not_equal("UNKNOWN", last_players_update)
-    assert_kind_of(DateTime, DateTime.strptime(last_players_update, "%d %b %Y %H:%M:%S"))
+    assert_kind_of(DateTime, last_players_update)
+    assert_not_equal("0", last_players_update.strftime("%Q"))
   end
 end

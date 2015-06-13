@@ -1,1 +1,3 @@
-<div>Last updated <%= last_players_update %> UTC</div>
+<% if last_players_update %>
+<div>Last updated <span id="last-update-time" data-unix-time=<%= last_players_update.strftime("%Q") %>><%= last_players_update.strftime("%d %b %Y %H:%M:%S") %> UTC</span></div>
+<% end %>

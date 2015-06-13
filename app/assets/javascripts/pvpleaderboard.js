@@ -1,3 +1,12 @@
+var DATE_FORMAT_OPTIONS = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  timeZoneName: "long"
+};
+
 var ready = function() {
   $(".table-sorted").tablesorter({
     sortInitialOrder: "desc",
@@ -103,6 +112,8 @@ var ready = function() {
       window.location.replace(href);
     }
   });
+
+  adjustForTimezone();
 };
 /* Needed so jQuery's ready plays well with Rails turbolinks */
 $(document).ready(ready);
@@ -206,6 +217,14 @@ function resetForm(target) {
 
 function showErrorModal() {
   $("#error-modal").modal("show");
+}
+
+function adjustForTimezone() {
+  var utc = $("#last-update-time").data("unix-time");
+  if (utc) {
+    var date = new Date(utc);
+    $("#last-update-time").text(date.toLocaleString(navigator.language, DATE_FORMAT_OPTIONS));
+  }
 }
 
 function urlify(str) {
