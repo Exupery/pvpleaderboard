@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title><%= @title %> | PvPLeaderboard</title>
+<% title = @title ? "#{@title} | PvPLeaderboard" : "WoW PvP Leaderboard" %>
+<title><%= title %></title>
 <meta name="author" content="Matthew Frost"/>
 <meta name="description" content="<%= @description %>"/>
-<meta name="keywords" content="World of Warcraft, WoW, PvP, Arena, Rated Battleground, Leaderboard, Talents, Glyphs, Gear"/>
+<meta name="keywords" content="World of Warcraft, WoW, PvP, Arena, Rated Battleground, Leaderboard, Leaderboards, Talents, Glyphs, Gear, Stats"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%= render "layouts/twitter_tags" %>
 <%= render "layouts/og_tags" %>
