@@ -73,6 +73,9 @@ class OverviewController < ApplicationController
   end
 
   def faction_counts bracket
+    cache_key = "faction_counts_#{bracket}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
   	h = Hash.new
 
   	rows = ActiveRecord::Base.connection.execute("SELECT factions.name AS faction, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id GROUP BY faction ORDER BY faction ASC")
@@ -80,10 +83,14 @@ class OverviewController < ApplicationController
   		h[row["faction"]] = row["count"].to_i
   	end
 
+    Rails.cache.write(cache_key, h)
   	return h
 	end
 
   def race_counts bracket
+    cache_key = "race_counts_#{bracket}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
     h = Hash.new
 
     rows = ActiveRecord::Base.connection.execute("SELECT races.name AS race, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN races ON players.race_id=races.id GROUP BY race ORDER BY race ASC")
@@ -91,10 +98,14 @@ class OverviewController < ApplicationController
       h[row["race"]] = row["count"].to_i
     end
 
+    Rails.cache.write(cache_key, h)
     return h
   end
 
   def class_counts bracket
+    cache_key = "class_counts_#{bracket}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
     h = Hash.new
 
     rows = ActiveRecord::Base.connection.execute("SELECT classes.name AS class, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN classes ON players.class_id=classes.id GROUP BY class ORDER BY class ASC")
@@ -102,10 +113,14 @@ class OverviewController < ApplicationController
       h[row["class"]] = row["count"].to_i
     end
 
+    Rails.cache.write(cache_key, h)
     return h
   end
 
   def spec_counts bracket
+    cache_key = "spec_counts_#{bracket}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
     h = Hash.new
 
     rows = ActiveRecord::Base.connection.execute("SELECT specs.name AS spec, specs.icon, classes.name AS class, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN specs ON players.spec_id=specs.id JOIN classes ON specs.class_id=classes.id GROUP BY spec, specs.icon, class ORDER BY spec ASC")
@@ -113,10 +128,14 @@ class OverviewController < ApplicationController
       h[row["class"] + row["spec"]] = SpecInfo.new(row["spec"], row["count"].to_i, row["icon"], row["class"])
     end
 
+    Rails.cache.write(cache_key, h)
     return h
   end
 
   def realm_counts bracket
+    cache_key = "realm_counts_#{bracket}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
     h = Hash.new
 
     rows = ActiveRecord::Base.connection.execute("SELECT realms.name AS realm, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN realms ON players.realm_slug=realms.slug GROUP BY realm ORDER BY COUNT(*) DESC LIMIT 50")
@@ -124,10 +143,14 @@ class OverviewController < ApplicationController
       h[row["realm"]] = row["count"].to_i
     end
 
+    Rails.cache.write(cache_key, h)
     return h
   end
 
   def guild_counts bracket
+    cache_key = "guild_counts_#{bracket}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
     h = Hash.new
 
     rows = ActiveRecord::Base.connection.execute("SELECT guild, realms.name AS realm, factions.name AS faction, COUNT(*) FROM #{bracket} JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id JOIN realms ON players.realm_slug=realms.slug WHERE guild != '' GROUP BY guild,realms.name,factions.name ORDER BY COUNT(*) DESC LIMIT 50")
@@ -135,6 +158,7 @@ class OverviewController < ApplicationController
       h[row["guild"] + row["realm"] + row["faction"]] = GuildInfo.new(row["guild"], row["realm"], row["faction"], row["count"].to_i)
     end
 
+    Rails.cache.write(cache_key, h)
     return h
   end
 end

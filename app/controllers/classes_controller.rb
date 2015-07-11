@@ -48,6 +48,9 @@ class ClassesController < ApplicationController
   private
 
   def get_talent_counts
+    cache_key = "talent_counts_#{@class_id}_#{@spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
     h = Hash.new
 
     rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} GROUP BY talent")
@@ -55,10 +58,14 @@ class ClassesController < ApplicationController
       h[row["talent"]] = row["count"].to_i
     end
 
+    Rails.cache.write(cache_key, h)
     return h
   end
 
   def get_glyph_counts type_id
+    cache_key = "glyph_#{type_id}_counts_#{@class_id}_#{@spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
     h = Hash.new
 
     rows = ActiveRecord::Base.connection.execute("SELECT glyphs.id AS glyph, COUNT(*) AS count FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_glyphs ON players.id=players_glyphs.player_id JOIN glyphs ON players_glyphs.glyph_id=glyphs.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND glyphs.type_id=#{type_id} GROUP BY glyph")
@@ -66,10 +73,14 @@ class ClassesController < ApplicationController
       h[row["glyph"]] = row["count"].to_i
     end
 
+    Rails.cache.write(cache_key, h)
     return h
   end
 
   def get_stat_counts
+    cache_key = "stat_counts_#{@class_id}_#{@spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
     h = Hash.new
     cols = get_stat_cols
     return h if cols.empty?
@@ -79,6 +90,7 @@ class ClassesController < ApplicationController
       h.merge!(parse_stats_row row)
     end
 
+    Rails.cache.write(cache_key, h)
     return h
   end
 end

@@ -36,7 +36,12 @@ module Utils extend ActiveSupport::Concern
   end
 
   def get_most_equipped_gear_by_spec(class_id, spec_id)
-    return get_most_equipped_gear(class_id, spec_id, nil)
+    cache_key = "gear_counts_#{class_id}_#{spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    gear = get_most_equipped_gear(class_id, spec_id, nil)
+    Rails.cache.write(cache_key, gear)
+    return gear
   end
 
   def get_most_equipped_gear_by_player_ids ids
@@ -54,6 +59,9 @@ module Utils extend ActiveSupport::Concern
 	end
 
 	def total_player_count(class_id, spec_id)
+    cache_key = "total_player_count_#{class_id}_#{spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
 		total = 0
 
 		rows = ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS total FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id}")
@@ -61,6 +69,7 @@ module Utils extend ActiveSupport::Concern
       total = row["total"].to_i
     end
 
+    Rails.cache.write(cache_key, total)
     return total
 	end
 
