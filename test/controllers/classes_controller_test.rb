@@ -29,9 +29,9 @@ class ClassesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:stat_counts)
     assert_not_nil assigns(:gear)
 
-    assert_not_empty :talent_counts
-    assert_not_empty :major_glyph_counts
-    assert_not_empty :stat_counts
-    assert_not_empty :gear
+    assert_not_empty assigns(:talent_counts)
+    assert_not_empty assigns(:major_glyph_counts)
+    assert_not_empty assigns(:stat_counts)
+    assert_not_empty assigns(:gear)
   end
 end

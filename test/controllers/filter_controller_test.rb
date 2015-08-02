@@ -23,8 +23,8 @@ class FilterControllerTest < ActionController::TestCase
     get(:results, {"class" => "death-knight", "spec" => "frost"})
     assert_response :success
     assert_not_nil assigns(:selected)
-    assert_not_empty :selected
-    assert_not_nil  @controller.instance_variable_get(:@selected)[:class]
+    assert_not_empty assigns(:selected)
+    assert_not_nil  assigns(:selected)[:class]
   end
 
   test "should find filtered results" do
