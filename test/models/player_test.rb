@@ -1,37 +1,39 @@
 require "test_helper"
 
 class PlayerTest < ActiveSupport::TestCase
-  test "should calculate win ratio" do
-    player = create_player("Tron", "ENCOM", 100, 50)
+  def initialize arg
+    super arg
+    @player = create_player
+  end
 
-    assert_not_nil player
-    assert_not_nil player.win_ratio
-    assert player.win_ratio == 66.7
+  test "should calculate win ratio" do
+    assert_not_nil @player
+    assert_not_nil @player.win_ratio
+    assert @player.win_ratio == 66.7
   end
 
   test "should create an armory link" do
-    player = create_player("Tron", "ENCOM", 100, 50)
-
-    assert_not_nil player
-    assert_not_nil player.armory_link
-    assert player.armory_link == "https://us.battle.net/wow/en/character/ENCOM/Tron/advanced"
+    assert_not_nil @player
+    assert_not_nil @player.armory_link
+    assert @player.armory_link == "https://us.battle.net/wow/en/character/ENCOM/Tron/advanced"
   end
 
-  def create_player(name, realm, wins, losses)
+  def create_player
     hash = Hash.new
 
     hash["ranking"] = 1
     hash["rating"] = 2000
-    hash["wins"] = wins
-    hash["losses"] = losses
-    hash["name"] = name
+    hash["wins"] = 100
+    hash["losses"] = 50
+    hash["name"] = "Tron"
     hash["faction"] = "Horde"
     hash["race"] = "Goblin"
     hash["gender"] = 0
     hash["class"] = "Hunter"
     hash["spec"] = "Beast Mastery"
-    hash["realm"] = realm
-    hash["realm_slug"] = realm
+    hash["spec_icon"] = "ability_hunter_bestialdiscipline"
+    hash["realm"] = "ENCOM"
+    hash["realm_slug"] = "ENCOM"
     hash["guild"] = "Tyranny"
 
     return Player.new hash
