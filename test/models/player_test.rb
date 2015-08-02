@@ -27,6 +27,7 @@ class PlayerTest < ActiveSupport::TestCase
     hash["name"] = name
     hash["faction"] = "Horde"
     hash["race"] = "Goblin"
+    hash["gender"] = 0
     hash["class"] = "Hunter"
     hash["spec"] = "Beast Mastery"
     hash["realm"] = realm

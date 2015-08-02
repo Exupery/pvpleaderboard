@@ -4,11 +4,12 @@ class Player
   def initialize hash
     @ranking = hash["ranking"]
     @rating = hash["rating"]
-    @wins = hash["wins"]
-    @losses = hash["losses"]
+    @wins = hash["wins"].to_i
+    @losses = hash["losses"].to_i
     @name = hash["name"]
     @faction = hash["faction"]
     @race = hash["race"]
+    @gender = hash["gender"] == 0 ? "male" : "female"
     @class = hash["class"]
     @spec = hash["spec"]
     @realm = hash["realm"]
