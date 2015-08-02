@@ -1,14 +1,8 @@
 class OverviewController < ApplicationController
   protect_from_forgery with: :exception
 
-  @@BRACKETS = ["2v2", "3v3", "5v5", "rbg"]
-
   def overview
-  	bracket = params[:bracket]
-  	bracket.downcase! if bracket
-  	if bracket && !@@BRACKETS.include?(bracket)
-      bracket = nil
-  	end
+    bracket = get_bracket
   	title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
   	@title = "#{title_bracket || 'Leaderboard'} Overview"
   	@description = "World of Warcraft PvP leaderboard overview"
