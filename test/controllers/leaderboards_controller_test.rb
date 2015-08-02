@@ -13,9 +13,13 @@ class LeaderboardsControllerTest < ActionController::TestCase
       get(:show, {"bracket" => bracket})
       assert_response :success
 
+      assert_not_nil assigns(:bracket)
       assert_not_nil assigns(:active_bracket)
+      assert_not_nil assigns(:leaderboard)
 
-      assert_not_empty :active_bracket
+      assert_not_empty assigns(:bracket)
+      assert_not_empty assigns(:active_bracket)
+      assert_not_empty assigns(:leaderboard)
     end
   end
 end
