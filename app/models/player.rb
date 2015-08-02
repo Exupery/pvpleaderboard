@@ -1,5 +1,5 @@
 class Player
-  attr_reader :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :realm, :guild
+  attr_reader :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :guild
 
   def initialize hash
     @ranking = hash["ranking"]
@@ -9,9 +9,10 @@ class Player
     @name = hash["name"]
     @faction = hash["faction"]
     @race = hash["race"]
-    @gender = hash["gender"] == 0 ? "male" : "female"
+    @gender = hash["gender"].to_i == 0 ? "male" : "female"
     @class = hash["class"]
     @spec = hash["spec"]
+    @spec_icon = hash["spec_icon"]
     @realm = hash["realm"]
     @realm_slug = hash["realm_slug"]
     @guild = hash["guild"]
