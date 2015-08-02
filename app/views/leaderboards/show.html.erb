@@ -9,4 +9,7 @@
   <% heading = @active_bracket ? "#{@active_bracket} Leaderboard" : "Select a Leaderboard" %>
   <h1><%= heading %></h1>
 
+  <% if @active_bracket %>
+    <%= render "leaderboard" %>
+  <% end %>
 </div>
