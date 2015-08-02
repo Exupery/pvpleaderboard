@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get "filter" => "filter#filter"
   get "filter/results" => "filter#results"
 
+  get "leaderboards" => "leaderboards#show"
+  get "leaderboards/:bracket" => "leaderboards#show"
+
   ## Keep the initial talent/glyph/stat routes for now
   ## OLD ROUTES BEGIN
   get "talents", to: redirect("/pvp")
