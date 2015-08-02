@@ -158,7 +158,6 @@ th:focus {
 .btn:hover {
 	color: inherit;
 	background-color: #302620;
-	border-color: inherit;
 	text-decoration: none;
 }
 
@@ -371,7 +370,6 @@ th.tablesorter-primary,
 	color: #1A0F08;
 	background-color: #E4A703;
 	background: #E4A703;
-	border-color: inherit;
 }
 
 .navbar-default .navbar-nav>.open>a:focus,
