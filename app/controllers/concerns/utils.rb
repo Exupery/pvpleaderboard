@@ -76,9 +76,9 @@ module Utils extend ActiveSupport::Concern
   def last_players_update
     last = nil
 
-    rows = ActiveRecord::Base.connection.execute("SELECT MAX(last_update) FROM players")
+    rows = ActiveRecord::Base.connection.execute("SELECT last_update FROM metadata WHERE key='update_time'")
     rows.each do |row|
-      last = DateTime.parse(row["max"]) if row["max"]
+      last = DateTime.parse(row["last_update"]) if row["last_update"]
     end
 
     return last

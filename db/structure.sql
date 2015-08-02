@@ -338,6 +338,16 @@ CREATE TABLE talents (
     col smallint
 );
 
+--
+-- Name: metadata; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE metadata (
+  key character varying(32) NOT NULL,
+  value character varying(512) NOT NULL DEFAULT '',
+  last_update timestamp without time zone DEFAULT now()
+);
+
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
@@ -529,6 +539,12 @@ ALTER TABLE ONLY players_stats
 ALTER TABLE ONLY players_talents
     ADD CONSTRAINT players_talents_pkey PRIMARY KEY (player_id, talent_id);
 
+--
+-- Name: metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY metadata
+    ADD CONSTRAINT metadata_pkey PRIMARY KEY (key);
 
 --
 -- Name: races_name_side_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
