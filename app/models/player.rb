@@ -1,5 +1,5 @@
 class Player
-  attr_reader :ranking, :rating, :wins, :losses, :name, :faction, :race, :class, :spec, :realm, :guild
+  attr_reader :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :realm, :guild
 
   def initialize hash
     @ranking = hash["ranking"]
