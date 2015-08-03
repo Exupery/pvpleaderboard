@@ -26,7 +26,7 @@
       </td>
       <td title="<%= player.class %>"><img src="/images/classes/<%= slugify player.class %>.png" class="img-responsive center" alt="<%= player.class %>"></td>
       <td title="<%= player.spec %>"><img src="/images/icons/<%= player.spec_icon %>.png" class="img-responsive center" alt="<%= player.spec %>"></td>
-      <td><span><%= player.wins %></span>&nbsp;&#45;&nbsp;<span><%= player.losses %></span></td>
+      <td><span class="wins"><%= player.wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= player.losses %></span></td>
       <td><%= player.win_ratio %>%</td>
     </tr>
   <% end %>

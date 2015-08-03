@@ -458,6 +458,14 @@ th.tablesorter-headerAsc:hover,
   margin-bottom: 0.5em;
 }
 
+.wins {
+	color: #40E403;
+}
+
+.losses {
+	color: #E43603;
+}
+
 /* PACE */
 .pace {
   -webkit-pointer-events: none;
