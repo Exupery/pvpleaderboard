@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   get "leaderboards" => "leaderboards#show"
   get "leaderboards/:bracket" => "leaderboards#show"
+  get "leaderboards/:bracket/more" => "leaderboards#more"
 
   ## Keep the initial talent/glyph/stat routes for now
   ## OLD ROUTES BEGIN

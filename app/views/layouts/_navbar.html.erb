@@ -12,7 +12,7 @@
     <% ["filter", "overview"].each do |entry| %>
       <li class="<%= is_active "/#{entry}" %>"><a href="/<%= entry %>"><%= entry.titleize %></a></li>
     <% end %>
-    <li class="dropdown <%= is_active "/leaderboards" %>">
+    <li class="dropdown <%= is_active "/leaderboards" %>" data-no-turbolink="true">
       <a href="/leaderboards" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Leaderboards <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
         <% ["2v2", "3v3", "5v5", "RBG"].each do |bracket| %>

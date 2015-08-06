@@ -1,0 +1,17 @@
+<% @leaderboard.each do |player| %>
+  <tr data-ranking="<%= player.ranking %>">
+    <td><%= player.ranking %></td>
+    <td><%= player.rating %></td>
+    <td><a href="<%= player.armory_link %>"><%= player.name %></a></td>
+    <td title="<%= player.faction %>"><img src="/images/<%= player.faction.downcase %>.png" class="img-responsive center" alt="<%= player.faction %>"></td>
+    <% race_and_gender = "#{player.race} #{player.gender}".titleize %>
+    <td title="<%= race_and_gender %>">
+      <% race_slug = slugify player.race %>
+      <img src="/images/races/<%= race_slug %>_<%= player.gender %>.png" class="img-responsive center inline-block" alt="<%= race_and_gender %>">
+    </td>
+    <td title="<%= player.class %>"><img src="/images/classes/<%= slugify player.class %>.png" class="img-responsive center" alt="<%= player.class %>"></td>
+    <td title="<%= player.spec %>"><img src="/images/icons/<%= player.spec_icon %>.png" class="img-responsive center" alt="<%= player.spec %>"></td>
+    <td><span class="wins"><%= player.wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= player.losses %></span></td>
+    <td><%= player.win_ratio %>%</td>
+  </tr>
+<% end %>

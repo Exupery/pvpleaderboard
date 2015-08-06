@@ -16,6 +16,14 @@ var ready = function() {
     }
   });
 
+  $("#leaderboard-table").bind("sortBegin", function() {
+    $("#leaderboard-heading").text("Sorting...");
+  });
+
+  $("#leaderboard-table").bind("sortEnd", function() {
+    $("#leaderboard-heading").text($("#leaderboard-heading").data("default"));
+  });
+
   $(".btn").click(function() {
     $(this).blur();
   });
@@ -113,11 +121,65 @@ var ready = function() {
     }
   });
 
+  $(window).scroll(function() {
+    windowScroll();
+  });
+  windowScroll.fetching = {};
+
   adjustForTimezone();
 };
 /* Needed so jQuery's ready plays well with Rails turbolinks */
 $(document).ready(ready);
 $(document).on("page:load", ready);
+
+function windowScroll() {
+  var table = "#leaderboard-table";
+  if ($(table).length > 0) {
+    onLeaderboardScroll(table, 0.75);
+  }
+}
+
+function onLeaderboardScroll(table, minPos) {
+  var pos = $(window).scrollTop() / $(table).height();
+  if (pos > minPos) {
+    var minRanking = 0;
+    $(table + " tr").each(function() {
+      var ranking = $(this).data("ranking");
+      if (ranking > minRanking) {
+        minRanking = ranking;
+      }
+    });
+    if (minRanking < $(table).data("last")) {
+      if (!windowScroll.fetching[minRanking]) {
+        windowScroll.fetching[minRanking] = true;
+        addLeaderboardEntries(table, minRanking);
+      }
+    } else {
+      $(window).unbind("scroll");
+      $("#loading").hide();
+    }
+  }
+}
+
+function addLeaderboardEntries(table, minRanking) {
+  $.ajax({
+    url: "/leaderboards/" + $(table).data("bracket") + "/more?min=" + minRanking,
+    dataType: "html",
+    cache: false
+  }).done(function(response) {
+    addLeaderboardRows(response, table, minRanking);
+  });
+}
+
+function addLeaderboardRows(rows, table, minRanking) {
+  var seen = rows.indexOf("data-ranking=\""+minRanking+"\"");
+  if (seen < 0) {
+    $(table + " > tbody:last-child").append(rows);
+    $(table).trigger("update", true);
+  }  else {
+    setTimeout(onLeaderboardScroll, 1000, table, 0.9);
+  }
+}
 
 function includeFragments(fragment) {
   $(".include-fragment").each(function() {

@@ -1,5 +1,5 @@
 <div class="expands">
-  <div class="btn-group btn-group-lg" role="group" aria-label="Brackets">
+  <div class="btn-group btn-group-lg" role="group" aria-label="Brackets" data-no-turbolink="true">
     <% ["2v2", "3v3", "5v5", "RBG"].each do |b| %>
       <% active = (@active_bracket && b[0] == @active_bracket[0]) ? "active" : "" %>
       <a href="/leaderboards/<%= b.downcase %>" type="button" class="btn btn-default <%= active %>" role="button"><%= b %></a>
@@ -7,7 +7,7 @@
   </div>
 
   <% heading = @active_bracket ? "#{@active_bracket} Leaderboard" : "Select a Leaderboard" %>
-  <h1><%= heading %></h1>
+  <h1 id="leaderboard-heading" data-default="<%= heading %>"><%= heading %></h1>
 
   <% if @active_bracket %>
     <%= render "leaderboard" %>
