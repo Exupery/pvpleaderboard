@@ -176,6 +176,10 @@ function addLeaderboardRows(rows, table, minRanking) {
   if (seen < 0) {
     $(table + " > tbody:last-child").append(rows);
     $(table).trigger("update", true);
+    $("#leaderboard-display-count").text($(table + " tbody tr").length);
+    if ($("#leaderboard-display-count").text() == $("#leaderboard-total-count").text()) {
+      $("#leaderboard-scroll-msg").html("&nbsp;");
+    }
   }  else {
     setTimeout(onLeaderboardScroll, 1000, table, 0.9);
   }

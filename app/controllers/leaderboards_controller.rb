@@ -13,6 +13,7 @@ class LeaderboardsController < ApplicationController
 
     @active_bracket = @bracket.eql?("rbg") ? "Rated Battleground" : @bracket
     if @bracket
+      @total = total
       @leaderboard = players_on_leaderboard 0
       @last = last_ranking
     end
@@ -58,6 +59,21 @@ class LeaderboardsController < ApplicationController
 
     Rails.cache.write(cache_key, last)
     return last
+  end
+
+  def total
+    cache_key = "#{@bracket}_count"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+    count = 0
+
+    rows = ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS count FROM bracket_#{@bracket}")
+
+    rows.each do |row|
+      count = row["count"].to_i
+    end
+
+    Rails.cache.write(cache_key, count)
+    return count
   end
 
 end
