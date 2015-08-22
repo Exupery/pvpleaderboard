@@ -195,7 +195,7 @@ function includeFragments(fragment) {
 function submitFilterForm() {
   var params = createFilterQueryString();
   if (params) {
-    window.location.href = "/filter/results" + params;
+    window.location.href = "/pvp/filter/results" + params;
   }
 }
 
