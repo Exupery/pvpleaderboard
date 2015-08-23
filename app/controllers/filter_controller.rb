@@ -3,21 +3,19 @@ require "set"
 class FilterController < ApplicationController
   include Utils
   protect_from_forgery with: :exception
+  before_action :get_selected
 
   @@brackets = ["2v2", "3v3", "5v5", "rbg"]
 
   def filter
     @title = "Filter"
     @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear"
-
-    @selected = get_selected
   end
 
   def results
     @title = "Filter Results"
     @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear Filter Results"
 
-    @selected = get_selected
     redirect_to "/filter" if (@selected[:class].nil? || @selected[:spec].nil?)
 
     player_ids = find_player_ids
@@ -222,15 +220,13 @@ class FilterController < ApplicationController
   end
 
   def get_selected
-    h = Hash.new
+    @selected = Hash.new
 
     filters = [:class, :spec, :leaderboards, :factions, :"cr-bracket", :"current-rating", :"arena-achievements", :"rbg-achievements", :races, :hks]
 
     filters.each do |filter|
-      h[filter] = urlify params[filter]
+      @selected[filter] = urlify params[filter]
     end
-
-    return h
   end
 
   def sanitize obj
