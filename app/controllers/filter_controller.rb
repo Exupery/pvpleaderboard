@@ -16,7 +16,7 @@ class FilterController < ApplicationController
     @title = "Filter Results"
     @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear Filter Results"
 
-    redirect_to "/filter" if (@selected[:class].nil? || @selected[:spec].nil?)
+    redirect_to "/pvp/filter" if (@selected[:class].nil? || @selected[:spec].nil?)
 
     player_ids = find_player_ids
     @total = player_ids.length
