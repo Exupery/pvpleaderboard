@@ -19,7 +19,7 @@ module FilterUtils extend ActiveSupport::Concern
     where += races_clause if @selected[:races]
     where += " AND players.honorable_kills > #{@selected[:hks].to_i}" if (@selected[:hks] && @selected[:hks].to_i > 0)
 
-    return where
+    return where.start_with?(" AND ") ? where.sub(" AND ", "") : where
   end
 
   def factions_clause
