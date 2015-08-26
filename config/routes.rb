@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get "pvp/:class/:spec" => "classes#results_by_class"
 
   get "leaderboards" => "leaderboards#show"
+  get "leaderboards/filter" => "leaderboard_filter#filter"
+  get "leaderboards/filter/results" => "leaderboard_filter#results"
   get "leaderboards/:bracket" => "leaderboards#show"
   get "leaderboards/:bracket/more" => "leaderboards#more"
 

@@ -1,7 +1,8 @@
 class Player
-  attr_reader :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :guild
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :guild
 
   def initialize hash
+    @id = hash["id"]
     @ranking = hash["ranking"]
     @rating = hash["rating"]
     @wins = hash["wins"].to_i

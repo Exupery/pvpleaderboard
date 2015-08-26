@@ -1,0 +1,12 @@
+<div class="expands center">
+  <button id="toggle-filters" class="btn btn-default btn-collapse margin-top-1em" type="button" data-toggle="collapse" data-text="Filters" data-target="#filters" aria-expanded="false" aria-controls="collapse-filters">Show Filters</button>
+
+  <div id="filters" class="collapse" data-toggler="toggle-filters">
+  </div>
+
+  <% if @leaderboard.empty? %>
+    <h1>No players matched selected criteria</h1>
+  <% else %>
+    <h1><%= @leaderboard.size %> player<%= "s" if @leaderboard.size != 1 %> matching criteria</h1>
+  <% end %>
+</div>

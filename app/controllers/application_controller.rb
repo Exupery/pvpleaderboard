@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_bracket
-    bracket = params[:bracket]
+    bracket = params[:bracket] || params[:leaderboard]
     if bracket
       bracket.downcase!
       bracket = nil unless @@BRACKETS.include?(bracket)
