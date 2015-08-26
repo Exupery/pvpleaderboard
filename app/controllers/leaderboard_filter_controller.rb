@@ -28,7 +28,7 @@ class LeaderboardFilterController < ApplicationController
   def players_on_leaderboard
     players = Array.new
     where = create_where_clause
-    where += "WHERE " unless where.empty?
+    where = "WHERE #{where}" unless where.empty?
 
     rows = ActiveRecord::Base.connection.execute("SELECT players.id AS id, ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, classes.name AS class, specs.name AS spec, specs.icon AS spec_icon, realms.slug AS realm_slug, realms.name AS realm, players.guild FROM bracket_#{@bracket} LEFT JOIN players ON bracket_#{@bracket}.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN classes on players.class_id=classes.id LEFT JOIN specs ON players.spec_id=specs.id LEFT JOIN realms ON players.realm_slug=realms.slug #{where} ORDER BY ranking ASC")
 
