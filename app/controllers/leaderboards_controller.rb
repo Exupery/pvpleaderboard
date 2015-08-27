@@ -24,7 +24,7 @@ class LeaderboardsController < ApplicationController
     if @bracket && params[:min]
       @leaderboard = players_on_leaderboard params[:min]
       respond_to do |format|
-        format.js { render partial: "leaderboard_table_body" }
+        format.js { render partial: "layouts/leaderboard_table_body" }
       end
     end
   end

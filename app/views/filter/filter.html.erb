@@ -1,5 +1,5 @@
 <div class="expands center">
   <h2>Filter leaderboard players matching below critera</h2>
   <h4>Class and spec required, all other fields optional</h4>
-  <%= render "filter_form" %>
+  <%= render "layouts/filter_form", form_id: "filter-form", include_cr: true, required: "Class and spec" %>
 </div>

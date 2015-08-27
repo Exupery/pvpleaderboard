@@ -17,6 +17,8 @@
         <% ["2v2", "3v3", "5v5", "RBG"].each do |bracket| %>
         <li class="<%= is_active "/leaderboards/#{urlify bracket}" %>"><a href="/leaderboards/<%= urlify bracket %>"><%= bracket %></a></li>
         <% end %>
+        <li class="divider"></li>
+        <li class="<%= is_active "/leaderboards/filter" %>"><a href="/leaderboards/filter">Filter</a></li>
       </ul>
     </li>
     <li class="<%= is_active "/overview" %>"><a href="/overview">Overview</a></li>

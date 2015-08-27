@@ -1,0 +1,15 @@
+<div class="filter-row">
+  <label for="factions" class="btn-group-label">Faction(s)</label>
+  <div id="factions" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Factions" data-toggle="buttons">
+    <% active = @selected[:factions].nil? ? "active" : "" %>
+    <label class="btn <%= active %> unactivater factions-any default-option" data-unactivate="factions-btn">
+      <input type="checkbox" autocomplete="off">ANY
+    </label>
+    <% ["Alliance", "Horde"].each do |faction| %>
+      <% active = (@selected[:factions].include?(urlify(faction)) if @selected[:factions]) ? "active" : "" %>
+      <label class="btn factions-btn unactivater <%= active %>" data-value="<%= faction %>" data-unactivate="factions-any">
+        <input type="checkbox" autocomplete="off"><%= faction %>
+      </label>
+    <% end %>
+  </div>
+</div>

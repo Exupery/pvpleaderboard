@@ -1,21 +1,20 @@
-<form id="filter-form" class="filter-form center">
+<form id="<%= form_id %>" class="filter-form center" data-required="<%= required %>">
   <%= render "basic_filter" %>
   <button id="toggle-advanced-filters" class="btn btn-default btn-collapse margin-top-2em" type="button" data-toggle="collapse" data-text="Advanced Filters" data-target="#advanced-filters" aria-expanded="false" aria-controls="collapse-advanced-filters">Show Advanced Filters</button>
 
   <div id="advanced-filters" class="collapse" data-toggler="toggle-advanced-filters">
-    <%= render "adv_filter" %>
+    <%= render "layouts/adv_filter", include_cr: include_cr %>
   </div>
 
   <div class="margin-top-2em">
-    <input class="btn btn-danger btn-lg form-resetter" type="button" value="Reset" data-target="filter-form">
-    <% disabled = (@selected[:class] && @selected[:spec]) ? "" : "disabled=\"disabled\"" %>
-    <input class="btn btn-primary btn-lg btn-submit" type="submit" value="Filter" <%= disabled %>>
+    <input class="btn btn-danger btn-lg form-resetter" type="button" value="Reset" data-target="<%= form_id %>">
+    <%= render "submit_button" %>
   </div>
 
   <div id="error-modal" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
-        <h1>Class and spec required to filter!</h1>
+        <h1><%= required %> required to filter!</h1>
       </div>
     </div>
   </div>

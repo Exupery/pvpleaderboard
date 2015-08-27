@@ -1,0 +1,23 @@
+<div class="filter-row">
+  <label for="leaderboard" class="btn-group-label" title="Leaderboard (required)">Leaderboard <span class="text-muted">(required)</span></label>
+  <div id="leaderboard" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Leaderboard" data-toggle="buttons">
+    <% ["2v2", "3v3", "5v5", "RBG"].each do |leaderboard| %>
+      <% active = (urlify(leaderboard) == @selected[:leaderboard]) ? "active" : "" %>
+      <label class="btn leaderboard-btn <%= active %>" data-value="<%= leaderboard %>">
+        <input type="radio" autocomplete="off"><%= leaderboard %>
+      </label>
+    <% end %>
+  </div>
+</div>
+
+<div class="filter-row">
+  <label for="class" class="btn-group-label" title="Player Class">Class</label>
+  <%= render "layouts/class_selection" %>
+</div>
+
+<div class="filter-row">
+  <label for="specs" class="btn-group-label" title="Player Spec">Spec</label>
+  <%= render "layouts/spec_selection", :use_anchors => false %>
+</div>
+
+<%= render "layouts/faction_filter" %>

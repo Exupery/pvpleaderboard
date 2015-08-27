@@ -38,12 +38,20 @@ var ready = function() {
     var active = $(".class-selector.active").first();
     if (active && active.data("value") != $(this).data("value")) {
       $(".spec-selector").removeClass("active");
-      $(".btn-submit").prop("disabled", true);
+      if (isRequired("spec")) {
+        $(".btn-submit").prop("disabled", true);
+      }
     }
   });
 
   $(".spec-selector").click(function() {
-    if ($(".class-selector.active").length == 1) {
+    if (isRequired("spec") && $(".class-selector.active").length == 1) {
+      $(".btn-submit").prop("disabled", false);
+    }
+  });
+
+  $(".leaderboard-btn").click(function() {
+    if (isRequired("leaderboard")) {
       $(".btn-submit").prop("disabled", false);
     }
   });
@@ -103,7 +111,12 @@ var ready = function() {
 
   $("#filter-form").submit(function(e) {
     e.preventDefault();
-    submitFilterForm();
+    submitFilterForm("/pvp/filter/results");
+  });
+
+  $("#leaderboard-filter-form").submit(function(e) {
+    e.preventDefault();
+    submitFilterForm("/leaderboards/filter/results");
   });
 
   if (window.location.hash) {
@@ -192,10 +205,10 @@ function includeFragments(fragment) {
   });
 }
 
-function submitFilterForm() {
+function submitFilterForm(path) {
   var params = createFilterQueryString();
   if (params) {
-    window.location.href = "/pvp/filter/results" + params;
+    window.location.href = path + params;
   }
 }
 
@@ -203,17 +216,31 @@ function createFilterQueryString() {
   var params = "?"
 
   var clazz = getFirstValue(".class-selector.active");
-  if (!clazz) {
+  if (!clazz && isRequired("class")) {
     showErrorModal();
     return null;
+  } else {
+    params += "class=" + clazz
   }
 
   var spec = getFirstValue(".spec-selector.active");
-  if (!spec) {
+  if (!spec && isRequired("spec")) {
     showErrorModal();
     return null;
+  } else if (spec && clazz) {
+    params += "&spec=" + spec
   }
-  params += "class=" + clazz + "&spec=" + spec;
+
+  var leaderboard = getFirstValue(".leaderboard-btn.active");
+  if (!leaderboard && isRequired("leaderboard")) {
+    showErrorModal();
+    return null;
+  } else if (leaderboard) {
+    if (params.length > 1) {
+      params += "&"
+    }
+    params += "leaderboard=" + leaderboard
+  }
 
   params += queryParam("leaderboards", getAllValues(".leaderboards-btn.active"));
   params += queryParam("factions", getAllValues(".factions-btn.active"));
@@ -227,12 +254,12 @@ function createFilterQueryString() {
   return params;
 }
 
-function queryParam(key, value) {
-  if (isEmptyOrAny(value)) {
-    return "";
-  }
+function isRequired(filter) {
+  return $(".filter-form").data("required").toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+}
 
-  return "&" + key + "=" + value;
+function queryParam(key, value) {
+  return (isEmptyOrAny(value)) ? "" : "&" + key + "=" + value;
 }
 
 function getFirstValue(selector) {

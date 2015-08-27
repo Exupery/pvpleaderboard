@@ -237,4 +237,8 @@
   <loc>https://www.pvpleaderboard.com/leaderboards/rbg</loc>
   <changefreq>daily</changefreq>
 </url>
+<url>
+  <loc>https://www.pvpleaderboard.com/leaderboards/filter</loc>
+  <changefreq>weekly</changefreq>
+</url>
 </urlset>

@@ -21,6 +21,7 @@ class LeaderboardFilterController < ApplicationController
     end
 
     @leaderboard = players_on_leaderboard
+    @last = 0
   end
 
   private
