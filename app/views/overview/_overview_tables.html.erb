@@ -143,7 +143,7 @@
           <% percents = object_percent_counts @guilds %>
           <% @guilds.each do |slug, guild| %>
             <tr>
-              <td><%= guild.name %></td>
+              <td class="force-wrap"><%= guild.name %></td>
               <td><%= guild.realm %></td>
               <td title="<%= guild.faction %>"><img src="/images/<%= guild.faction.downcase %>.png" class="img-responsive center" alt="<%= guild.faction %>"></td>
               <td><%= guild.count %></td>
