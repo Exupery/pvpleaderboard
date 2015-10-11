@@ -268,7 +268,7 @@ th {
 .table-bordered>thead>tr>th,
 .table-bordered>tbody>tr>td {
 	border-color: #E4A703;
-	padding: 0.65em;
+	padding: 0.35em;
 }
 
 .table-hover tr:hover td,
