@@ -1,4 +1,13 @@
 <div class="jumbotron center-text">
 	<h1>PvP Leaderboard</h1>
 	<h3 class="middle center">See which talents, glyphs, stats, and gear top WoW PvPers are selecting. Updates daily based on the U.S. <a href="https://us.battle.net/wow/en/pvp/leaderboards/2v2">2v2</a>, <a href="https://us.battle.net/wow/en/pvp/leaderboards/3v3">3v3</a>, <a href="https://us.battle.net/wow/en/pvp/leaderboards/5v5">5v5</a>, and <a href="https://us.battle.net/wow/en/pvp/leaderboards/rbg">RBG</a> PvP leaderboards.</h3>
+  <div class="margin-top-2em">
+    <h4>Select a class and spec to begin:</h4>
+    <div>
+      <%= render "layouts/class_selection" %>
+    </div>
+    <div class="margin-top-1em">
+      <%= render "layouts/spec_selection", :use_anchors => true %>
+    </div>
+  </div>
 </div>
