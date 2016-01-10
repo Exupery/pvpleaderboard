@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "leaderboards/:bracket/more" => "leaderboards#more"
 
   get "realms" => "realms#show"
+  get "realms/:bracket" => "realms#show"
 
   ## OLD ROUTES BEGIN
   get "filter", to: redirect("/pvp/filter")
