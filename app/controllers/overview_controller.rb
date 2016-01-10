@@ -1,6 +1,8 @@
 class OverviewController < ApplicationController
   protect_from_forgery with: :exception
 
+  @@DEFAULT_LIMIT = 50
+
   def overview
     bracket = get_bracket
   	title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
@@ -15,15 +17,35 @@ class OverviewController < ApplicationController
     @guilds = Hash.new(nil)
 
     find_counts bracket
+    set_bracket bracket
+  end
 
-  	case bracket
-  	when nil
-  		@bracket = "All Leaderboards"
-  	when "rbg"
-  		@bracket = "Rated Battlegrounds"
-  	else
-  		@bracket = bracket
-  	end
+  protected
+
+  def set_bracket bracket
+    case bracket
+    when nil
+      @bracket = "All Leaderboards"
+    when "rbg"
+      @bracket = "Rated Battlegrounds"
+    else
+      @bracket = bracket
+    end
+  end
+
+  def realm_counts(bracket, limit)
+    cache_key = "realm_counts_#{bracket}_#{limit}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT realms.name AS realm, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN realms ON players.realm_slug=realms.slug GROUP BY realm ORDER BY COUNT(*) DESC LIMIT #{limit}")
+    rows.each do |row|
+      h[row["realm"]] = row["count"].to_i
+    end
+
+    Rails.cache.write(cache_key, h)
+    return h
   end
 
   private
@@ -61,7 +83,7 @@ class OverviewController < ApplicationController
       @races = race_counts bracket
       @classes = class_counts bracket
       @specs = spec_counts bracket
-      @realms = realm_counts bracket
+      @realms = realm_counts bracket, @@DEFAULT_LIMIT
       @guilds = guild_counts "bracket_#{bracket}"
     end
   end
@@ -120,21 +142,6 @@ class OverviewController < ApplicationController
     rows = ActiveRecord::Base.connection.execute("SELECT specs.name AS spec, specs.icon, classes.name AS class, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN specs ON players.spec_id=specs.id JOIN classes ON specs.class_id=classes.id GROUP BY spec, specs.icon, class ORDER BY spec ASC")
     rows.each do |row|
       h[row["class"] + row["spec"]] = SpecInfo.new(row["spec"], row["count"].to_i, row["icon"], row["class"])
-    end
-
-    Rails.cache.write(cache_key, h)
-    return h
-  end
-
-  def realm_counts bracket
-    cache_key = "realm_counts_#{bracket}"
-    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
-
-    h = Hash.new
-
-    rows = ActiveRecord::Base.connection.execute("SELECT realms.name AS realm, COUNT(*) FROM bracket_#{bracket} JOIN players ON player_id=players.id JOIN realms ON players.realm_slug=realms.slug GROUP BY realm ORDER BY COUNT(*) DESC LIMIT 50")
-    rows.each do |row|
-      h[row["realm"]] = row["count"].to_i
     end
 
     Rails.cache.write(cache_key, h)
