@@ -73,7 +73,7 @@ class OverviewController < ApplicationController
           end
         end
 
-        (realm_counts b).each do |r, c|
+        (realm_counts(b, @@DEFAULT_LIMIT)).each do |r, c|
           @realms[r] += c
         end
       end
@@ -83,7 +83,7 @@ class OverviewController < ApplicationController
       @races = race_counts bracket
       @classes = class_counts bracket
       @specs = spec_counts bracket
-      @realms = realm_counts bracket, @@DEFAULT_LIMIT
+      @realms = realm_counts(bracket, @@DEFAULT_LIMIT)
       @guilds = guild_counts "bracket_#{bracket}"
     end
   end
