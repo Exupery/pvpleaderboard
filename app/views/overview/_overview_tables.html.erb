@@ -106,25 +106,7 @@
     </div>
 
     <div role="tabpanel" class="tab-pane" id="tab-pane-realm">
-      <table class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[2,1],[1,1],[0,0]]">
-        <thead>
-          <tr>
-            <th>Realm</th>
-            <th>Count</th>
-            <th>Percent</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% percents = percent_counts @realms %>
-          <% @realms.each do |r, c| %>
-            <tr>
-              <td><%= r %></td>
-              <td><%= c %></td>
-              <td><%= percents[r] %>%</td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render "realm_table" %>
       <h4>Showing only top 50 realms</h4>
     </div>
 
