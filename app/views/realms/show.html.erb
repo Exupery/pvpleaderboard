@@ -1,1 +1,7 @@
-<h1>Realms</h1>
+<%= render "layouts/bracket_selection", :path => "realms" %>
+
+<h1>Players per Realm - <%= @bracket %></h1>
+
+<%= render "overview/realm_table" %>
+
+<%= render "layouts/last_updated" %>

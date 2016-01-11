@@ -241,4 +241,24 @@
   <loc>https://www.pvpleaderboard.com/leaderboards/filter</loc>
   <changefreq>weekly</changefreq>
 </url>
+<url>
+  <loc>https://www.pvpleaderboard.com/realms</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/realms/2v2</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/realms/3v3</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/realms/5v5</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/realms/rbg</loc>
+  <changefreq>daily</changefreq>
+</url>
 </urlset>
