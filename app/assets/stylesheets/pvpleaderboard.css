@@ -102,6 +102,7 @@ a:hover {
 .dropdown-right li {
   text-align: right;
   padding-right: 1.4em;
+  padding-left: 1em;
 }
 
 .dropdown-menu .divider,
@@ -229,6 +230,22 @@ th:focus {
 
 .filter-row {
 	text-align: left;
+}
+
+.filter-row ul {
+  height: auto;
+  max-height: 20vh;
+  min-height: 125px;
+  overflow-x: hidden;
+}
+
+#realm-select {
+  width: 40%;
+  min-width: 150px;
+}
+
+#realm-select button {
+  width: 100%;
 }
 
 .table {

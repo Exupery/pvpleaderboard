@@ -219,7 +219,7 @@ function createFilterQueryString() {
   if (!clazz && isRequired("class")) {
     showErrorModal();
     return null;
-  } else {
+  } else if (clazz) {
     params += "class=" + clazz
   }
 
@@ -250,6 +250,7 @@ function createFilterQueryString() {
   params += queryParam("rbg-achievements", getAllValues(".rbg-achievements-btn.active"));
   params += queryParam("races", getAllValues(".races-btn.active"));
   params += queryParam("hks", getAllValues("#hk-count"));
+  params += queryParam("realm", getAllValues("#realm"));
 
   return params;
 }
@@ -321,5 +322,5 @@ function adjustForTimezone() {
 }
 
 function urlify(str) {
-  return str.toString().trim().toLowerCase().replace(/[\s_]/g, "-");
+  return str.toString().trim().toLowerCase().replace(/[\s_]/g, "-").replace(/[']/g, "");
 }

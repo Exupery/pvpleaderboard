@@ -21,3 +21,17 @@
 </div>
 
 <%= render "layouts/faction_filter" %>
+<div class="filter-row">
+  <label for="realm-select" class="btn-group-label">Realm</label>
+  <div id="realm-select" class="input-group">
+    <% selected = Realms.list[@selected[:realm]] if @selected[:realm] %>
+    <% txt = selected || "ANY" %>
+    <% active = selected ? "active" : "" %>
+    <button id="btn-realm" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><div id="realm" class="dropdown-text inline-block" data-value="<%= selected %>" data-default="ANY"><%= txt %></div><span class="caret"></span></button>
+    <ul class="dropdown-menu dropdown-right" role="menu">
+      <% Realms.list.each do |slug, realm| %>
+        <li data-target="realm" data-target-button="btn-realm"><%= realm %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

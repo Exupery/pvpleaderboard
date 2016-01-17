@@ -17,6 +17,7 @@ module FilterUtils extend ActiveSupport::Concern
     where += factions_clause if @selected[:factions]
     where += cr_clause if (@selected[:"cr-bracket"] && @selected[:"current-rating"])
     where += races_clause if @selected[:races]
+    where += realm_clause if @selected[:realm]
     where += " AND players.honorable_kills > #{@selected[:hks].to_i}" if (@selected[:hks] && @selected[:hks].to_i > 0)
 
     return where.start_with?(" AND ") ? where.sub(" AND ", "") : where
@@ -40,6 +41,10 @@ module FilterUtils extend ActiveSupport::Concern
     end
 
     return a.empty? ? "" : " AND players.race_id IN (#{a.join(",")})"
+  end
+
+  def realm_clause
+    return Realms.list[@selected[:realm]].nil? ? "" : " AND players.realm_slug='#{@selected[:realm]}'"
   end
 
   def cr_clause
