@@ -154,7 +154,7 @@ class OverviewController < ApplicationController
 
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT guild, realms.name AS realm, factions.name AS faction, COUNT(*) FROM #{bracket} JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id JOIN realms ON players.realm_slug=realms.slug WHERE guild != '' GROUP BY guild,realms.name,factions.name ORDER BY COUNT(*) DESC LIMIT 50")
+    rows = ActiveRecord::Base.connection.execute("SELECT guild, realms.name AS realm, factions.name AS faction, COUNT(*) FROM #{bracket} JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id JOIN realms ON players.realm_slug=realms.slug WHERE guild != '' GROUP BY guild,realms.name,factions.name ORDER BY COUNT(*) DESC LIMIT 100")
     rows.each do |row|
       h[row["guild"] + row["realm"] + row["faction"]] = GuildInfo.new(row["guild"], row["realm"], row["faction"], row["count"].to_i)
     end
