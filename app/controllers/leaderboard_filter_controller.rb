@@ -13,6 +13,7 @@ class LeaderboardFilterController < ApplicationController
   def results
     @title = "Leaderboard Filter Results"
     @description = "World of Warcraft PvP leaderboard player filter results"
+    @filtered = true
 
     @bracket = get_bracket
     if @bracket.nil?

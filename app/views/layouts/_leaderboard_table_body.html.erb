@@ -1,6 +1,9 @@
+<% fr = 0 %>
 <% @leaderboard.each do |player| %>
+  <% fr = fr + 1 %>
   <tr data-ranking="<%= player.ranking %>">
-    <td><%= player.ranking %></td>
+    <% filtered_ranking = @filtered ? "Filtered Ranking: #{fr}" : "" %>
+    <td title="<%= filtered_ranking %>"><%= player.ranking %></td>
     <td><%= player.rating %></td>
     <td><a href="<%= player.armory_link %>"><%= player.name %></a></td>
     <td title="<%= player.faction %>"><img src="/images/<%= player.faction.downcase %>.png" class="img-responsive center" alt="<%= player.faction %>"></td>
