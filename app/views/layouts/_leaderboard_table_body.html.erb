@@ -14,7 +14,7 @@
     </td>
     <td title="<%= player.class %>"><%= render "layouts/class_link", class_name: player.class %></td>
     <td title="<%= player.spec %>"><%= render "layouts/spec_link", class_name: player.class, spec_name: player.spec, spec_icon: player.spec_icon %></td>
-    <td><span class="wins"><%= player.wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= player.losses %></span></td>
-    <td><%= player.win_ratio %>%</td>
+    <td class="hide-when-narrow"><span class="wins"><%= player.wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= player.losses %></span></td>
+    <td class="hide-when-narrow"><%= player.win_ratio %>%</td>
   </tr>
 <% end %>

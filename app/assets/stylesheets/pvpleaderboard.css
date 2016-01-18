@@ -302,6 +302,13 @@ th {
 	cursor: pointer;
 }
 
+@media screen and (max-width: 480px) {
+  th.hide-when-narrow,
+  td.hide-when-narrow {
+    display: none;
+  }
+}
+
 #talent-build img {
 	width: 5vw;
   max-width: 2.5em;
