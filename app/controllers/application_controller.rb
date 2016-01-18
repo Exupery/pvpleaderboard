@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   @@BRACKETS = ["2v2", "3v3", "5v5", "rbg"]
 
   def index
-  	@description = "See which talents, glyphs, stats, and gear top World of Warcraft PvPers are selecting"
+    expires_in 1.week, public: true
+    @description = "See which talents, glyphs, stats, and gear top World of Warcraft PvPers are selecting"
   end
 
   def get_bracket

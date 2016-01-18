@@ -1,9 +1,13 @@
 class OverviewController < ApplicationController
+  include Utils
   protect_from_forgery with: :exception
 
   @@DEFAULT_LIMIT = 50
 
   def overview
+    expires_in 1.day, public: true
+    fresh_when last_modified: last_players_update
+
     bracket = get_bracket
   	title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
   	@title = "#{title_bracket || 'Leaderboard'} Overview"

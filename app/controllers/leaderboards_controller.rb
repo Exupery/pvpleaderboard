@@ -1,6 +1,9 @@
 class LeaderboardsController < ApplicationController
 
   def show
+    expires_in 1.day, public: true
+    fresh_when last_modified: last_players_update
+
     @bracket = get_bracket
     title_bracket = @bracket.eql?("rbg") ? "RBG" : @bracket
     if title_bracket
