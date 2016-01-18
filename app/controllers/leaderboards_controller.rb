@@ -5,7 +5,7 @@ class LeaderboardsController < ApplicationController
     title_bracket = @bracket.eql?("rbg") ? "RBG" : @bracket
     if title_bracket
       @title = "#{title_bracket} Leaderboard"
-      @description = "World of Warcraft #{title_bracket} PvP leaderboard"
+      @description = "Players currently on the World of Warcraft #{title_bracket} PvP leaderboard"
     else
       @title = "Leaderboard Selection"
       @description = "World of Warcraft PvP leaderboards"

@@ -7,7 +7,7 @@ class LeaderboardFilterController < ApplicationController
 
   def filter
     @title = "Leaderboard Filter"
-    @description = "World of Warcraft PvP leaderboard player filter"
+    @description = "Filter World of Warcraft PvP leaderboards by class, realm, achievements, and more"
   end
 
   def results

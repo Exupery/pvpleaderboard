@@ -7,7 +7,7 @@ class OverviewController < ApplicationController
     bracket = get_bracket
   	title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
   	@title = "#{title_bracket || 'Leaderboard'} Overview"
-  	@description = "World of Warcraft PvP leaderboard overview"
+    @description = "World of Warcraft PvP leaderboard representation by class, spec, race, faction, realm, and guild"
 
   	@factions = Hash.new(0)
     @races = Hash.new(0)
