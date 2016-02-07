@@ -9,7 +9,7 @@ class OverviewController < ApplicationController
     fresh_when last_modified: last_players_update
 
     bracket = get_bracket
-  	title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
+  	title_bracket = get_title_bracket bracket
   	@title = "#{title_bracket || 'Leaderboard'} Overview"
     @description = "World of Warcraft PvP leaderboard representation by class, spec, race, faction, realm, and guild"
 

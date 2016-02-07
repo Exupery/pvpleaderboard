@@ -5,7 +5,7 @@ class LeaderboardsController < ApplicationController
     fresh_when last_modified: last_players_update
 
     @bracket = get_bracket
-    title_bracket = @bracket.eql?("rbg") ? "RBG" : @bracket
+    title_bracket = get_title_bracket @bracket
     if title_bracket
       @title = "#{title_bracket} Leaderboard"
       @description = "Players currently on the World of Warcraft #{title_bracket} PvP leaderboard"

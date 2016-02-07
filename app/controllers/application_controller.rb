@@ -18,4 +18,8 @@ class ApplicationController < ActionController::Base
     return bracket
   end
 
+  def get_title_bracket bracket
+    title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
+  end
+
 end

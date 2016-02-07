@@ -2,7 +2,7 @@ class RealmsController < OverviewController
 
   def show
     bracket = get_bracket
-    title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
+    title_bracket = get_title_bracket bracket
     @title = "Realms - #{title_bracket || 'All Brackets'}"
     @description = "World of Warcraft PvP leaderboard players per realm"
 
@@ -23,7 +23,7 @@ class RealmsController < OverviewController
 
   def details
     bracket = get_bracket
-    title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
+    title_bracket = get_title_bracket bracket
     @realm_slug = "todo"
     @realm_name = "TODO"
     @title = "#{@realm_name} - #{title_bracket || 'All Brackets'}"
