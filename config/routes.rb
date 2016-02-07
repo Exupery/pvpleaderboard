@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   get "realms" => "realms#show"
   get "realms/:bracket" => "realms#show"
+  get "realms/:realm_slug/:bracket" => "realms#details"
 
   ## OLD ROUTES BEGIN
   get "filter", to: redirect("/pvp/filter")
