@@ -19,7 +19,7 @@ class RealmsControllerTest < ActionController::TestCase
   end
 
   test "should show details for a realm" do
-    ["2v2", "3v3", "5v5", "rbg", "all"].each do |bracket|
+    ["2v2", "3v3", "5v5", "rbg"].each do |bracket|
       get(:details, {"bracket" => bracket, "realm_slug" => "realm0"})
       assert_response :success
 

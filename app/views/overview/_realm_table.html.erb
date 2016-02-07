@@ -10,7 +10,13 @@
     <% percents = percent_counts @realms %>
     <% @realms.each do |r, c| %>
       <tr>
-        <td><%= r %></td>
+        <td>
+        <% if params[:bracket] %>
+          <a href="/realms/<%= urlify r.gsub(/'/, "") %>/<%= params[:bracket] %>"><%= r %></a>
+        <% else %>
+          <%= r %>
+        <% end %>
+        </td>
         <td><%= c %></td>
         <td><%= percents[r] %>%</td>
       </tr>

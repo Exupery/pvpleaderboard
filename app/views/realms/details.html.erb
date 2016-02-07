@@ -1,5 +1,10 @@
-<%= render "layouts/bracket_selection", :path => "realms/#{@realm_slug}" %>
+<%= render "layouts/bracket_selection", :path => "realms/#{@realm_slug}", :exclude_all => true %>
 
-<h1><%= @realm_name %> - <%= @bracket %></h1>
-
-<%= render "layouts/last_updated" %>
+<% if @leaderboard.empty? %>
+    <h1>No players from <%= @realm_name %> currently on the <%= @bracket %> leaderboard</h1>
+  <% else %>
+    <h1><%= @realm_name %> - <%= @bracket %></h1>
+    <% heading = "#{@leaderboard.size} player#{'s' if @leaderboard.size != 1}" %>
+    <h2 id="leaderboard-heading" data-default="<%= heading %>"><%= heading %></h2>
+    <%= render "layouts/leaderboard" %>
+  <% end %>

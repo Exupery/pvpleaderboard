@@ -1,4 +1,5 @@
 class RealmsController < OverviewController
+  include FilterUtils
 
   def show
     bracket = get_bracket
@@ -9,6 +10,10 @@ class RealmsController < OverviewController
     @realms = Hash.new(0)
 
     if bracket.nil?
+      if params[:bracket] && params[:bracket].downcase != "all"
+        redirect_to "/realms"
+        return nil
+      end
       @@BRACKETS.each do |b|
         (realm_counts(b, "ALL")).each do |r, c|
           @realms[r] += c
@@ -34,6 +39,8 @@ class RealmsController < OverviewController
     @description = "World of Warcraft PvP leaderboard players on #{@realm_name}"
 
     set_bracket bracket
+    @leaderboard = filter_leaderboard(bracket, "WHERE slug='#{@realm_slug}'")
+    @last = 0
   end
 
 end
