@@ -17,4 +17,19 @@ class RealmsControllerTest < ActionController::TestCase
       assert_not_empty assigns(:realms)
     end
   end
+
+  test "should show details for a realm" do
+    ["2v2", "3v3", "5v5", "rbg", "all"].each do |bracket|
+      get(:details, {"bracket" => bracket, "realm_slug" => "realm0"})
+      assert_response :success
+
+      assert_not_nil assigns(:realm_name)
+      assert_not_nil assigns(:realm_slug)
+    end
+  end
+
+  test "should redirect if invalid realm" do
+    get(:details, {"bracket" => "3v3", "realm_slug" => "NOT_A_VALID_REALM"})
+    assert_response :redirect
+  end
 end

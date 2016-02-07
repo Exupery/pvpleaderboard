@@ -24,8 +24,12 @@ class RealmsController < OverviewController
   def details
     bracket = get_bracket
     title_bracket = get_title_bracket bracket
-    @realm_slug = "todo"
-    @realm_name = "TODO"
+    @realm_slug = params[:realm_slug].downcase.gsub(/'/, "").gsub(/\s/, "-") if params[:realm_slug]
+    @realm_name = Realms.list[@realm_slug]
+    if @realm_name.nil?
+      redirect_to "/realms/#{bracket}"
+      return nil
+    end
     @title = "#{@realm_name} - #{title_bracket || 'All Brackets'}"
     @description = "World of Warcraft PvP leaderboard players on #{@realm_name}"
 
