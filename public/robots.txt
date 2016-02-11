@@ -1,8 +1,9 @@
 # It can't be bargained with.
 # It can't be reasoned with.
 # It doesn't feel pity, or remorse, or fear.
-
 User-agent: *
-Disallow: /javascripts/
-
+Disallow: /realms/2v2/
+Disallow: /realms/3v3/
+Disallow: /realms/5v5/
+Disallow: /realms/rbg/
 Sitemap: https://www.pvpleaderboard.com/sitemap.xml
