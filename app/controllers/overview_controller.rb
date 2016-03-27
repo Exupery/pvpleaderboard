@@ -8,8 +8,8 @@ class OverviewController < ApplicationController
     expires_in 1.day, public: true
     fresh_when(last_modified: last_players_update) if Rails.env.production?
 
-    bracket = get_bracket
-  	title_bracket = get_title_bracket bracket
+    @bracket = get_bracket
+  	title_bracket = get_title_bracket @bracket
   	@title = "#{title_bracket || 'Leaderboard'} Overview"
     @description = "World of Warcraft PvP leaderboard representation by class, spec, race, faction, realm, and guild"
 
@@ -20,22 +20,11 @@ class OverviewController < ApplicationController
     @realms = Hash.new(0)
     @guilds = Hash.new(nil)
 
-    find_counts bracket
-    set_bracket bracket
+    find_counts @bracket
+    @bracket_fullname = get_bracket_fullname @bracket
   end
 
   protected
-
-  def set_bracket bracket
-    case bracket
-    when nil
-      @bracket = "All Leaderboards"
-    when "rbg"
-      @bracket = "Rated Battlegrounds"
-    else
-      @bracket = bracket
-    end
-  end
 
   def realm_counts(bracket, limit)
     cache_key = "realm_counts_#{bracket}_#{limit}"

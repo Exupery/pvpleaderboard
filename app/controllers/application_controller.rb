@@ -19,7 +19,12 @@ class ApplicationController < ActionController::Base
   end
 
   def get_title_bracket bracket
-    title_bracket = bracket.eql?("rbg") ? "RBG" : bracket
+    return bracket.eql?("rbg") ? "RBG" : bracket
+  end
+
+  def get_bracket_fullname bracket
+    return "All Leaderboards" if bracket.nil?
+    return bracket.downcase.eql?("rbg") ? "Rated Battlegrounds" : bracket
   end
 
 end

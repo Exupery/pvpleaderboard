@@ -11,8 +11,8 @@
     <% @realms.each do |r, c| %>
       <tr>
         <td>
-        <% if params[:bracket] %>
-          <a href="/realms/<%= urlify r.gsub(/'/, "") %>/<%= params[:bracket] %>"><%= r %></a>
+        <% if @bracket %>
+          <a href="/realms/<%= urlify r.gsub(/'/, "") %>/<%= @bracket %>"><%= r %></a>
         <% else %>
           <%= r %>
         <% end %>
