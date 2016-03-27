@@ -309,6 +309,13 @@ th {
   }
 }
 
+@media screen and (max-width: 720px) {
+  th.show-when-wide,
+  td.show-when-wide {
+    display: none;
+  }
+}
+
 #talent-build img {
 	width: 5vw;
   max-width: 2.5em;

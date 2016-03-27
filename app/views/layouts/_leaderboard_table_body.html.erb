@@ -6,6 +6,9 @@
     <td title="<%= filtered_ranking %>"><%= player.ranking %></td>
     <td><%= player.rating %></td>
     <td><a href="<%= player.armory_link %>"><%= player.name %></a></td>
+    <td class="show-when-wide">
+      <a href="/realms/<%= player.realm_slug %>/<%= @bracket %>"><%= player.realm %></a>
+    </td>
     <td title="<%= player.faction %>"><img src="/images/<%= player.faction.downcase %>.png" class="img-responsive center" alt="<%= player.faction %>"></td>
     <% race_and_gender = "#{player.race} #{player.gender}".titleize %>
     <td title="<%= race_and_gender %>">
