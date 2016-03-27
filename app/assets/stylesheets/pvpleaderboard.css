@@ -44,6 +44,11 @@ a:hover {
 	color: #B4C8B9;
 }
 
+a:focus {
+  color: #F6E4B3;
+  text-decoration: underline;
+}
+
 .no-a-style,
 .no-a-style:focus,
 .no-a-style:hover {
