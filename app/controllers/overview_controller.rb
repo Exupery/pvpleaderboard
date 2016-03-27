@@ -6,7 +6,7 @@ class OverviewController < ApplicationController
 
   def overview
     expires_in 1.day, public: true
-    fresh_when last_modified: last_players_update
+    fresh_when(last_modified: last_players_update) if Rails.env.production?
 
     bracket = get_bracket
   	title_bracket = get_title_bracket bracket
