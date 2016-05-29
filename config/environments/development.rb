@@ -44,4 +44,5 @@ Rails.application.configure do
 
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger::DEBUG
+  config.action_view.logger = nil
 end
