@@ -134,6 +134,11 @@ var ready = function() {
     }
   });
 
+  $("#toggle-show-all").click(function() {
+    checkAndAddLeaderboardEntries("#leaderboard-table", true);
+    $(this).prop("disabled", true);
+  });
+
   $(window).scroll(function() {
     windowScroll();
   });
@@ -155,28 +160,32 @@ function windowScroll() {
 function onLeaderboardScroll(table, minPos) {
   var pos = $(window).scrollTop() / $(table).height();
   if (pos > minPos) {
-    var minRanking = 0;
-    $(table + " tr").each(function() {
-      var ranking = $(this).data("ranking");
-      if (ranking > minRanking) {
-        minRanking = ranking;
-      }
-    });
-    if (minRanking < $(table).data("last")) {
-      if (!windowScroll.fetching[minRanking]) {
-        windowScroll.fetching[minRanking] = true;
-        addLeaderboardEntries(table, minRanking);
-      }
-    } else {
-      $(window).unbind("scroll");
-      $("#loading").hide();
-    }
+    checkAndAddLeaderboardEntries(table, false);
   }
 }
 
-function addLeaderboardEntries(table, minRanking) {
+function checkAndAddLeaderboardEntries(table, showAll) {
+  var minRanking = 0;
+  $(table + " tr").each(function() {
+    var ranking = $(this).data("ranking");
+    if (ranking > minRanking) {
+      minRanking = ranking;
+    }
+  });
+  if (minRanking < $(table).data("last")) {
+    if (!windowScroll.fetching[minRanking]) {
+      windowScroll.fetching[minRanking] = true;
+      addLeaderboardEntries(table, minRanking, showAll);
+    }
+  } else {
+    $(window).unbind("scroll");
+    $("#loading").hide();
+  }
+}
+
+function addLeaderboardEntries(table, minRanking, showAll) {
   $.ajax({
-    url: "/leaderboards/" + $(table).data("bracket") + "/more?min=" + minRanking,
+    url: "/leaderboards/" + $(table).data("bracket") + "/more?min=" + minRanking + "&all=" + showAll,
     dataType: "html",
     cache: false
   }).done(function(response) {
@@ -192,6 +201,7 @@ function addLeaderboardRows(rows, table, minRanking) {
     $("#leaderboard-display-count").text($(table + " tbody tr").length);
     if ($("#leaderboard-display-count").text() == $("#leaderboard-total-count").text()) {
       $("#leaderboard-scroll-msg").html("&nbsp;");
+      $("#toggle-show-all").prop("disabled", true);
     }
   }  else {
     setTimeout(onLeaderboardScroll, 1000, table, 0.9);

@@ -195,6 +195,16 @@ th:focus {
 	background: #613130;
 }
 
+.btn-default[disabled],
+.btn-default[disabled].active,
+.btn-default[disabled].focus,
+.btn-default[disabled]:active,
+.btn-default[disabled]:focus,
+.btn-default[disabled]:hover {
+  background-color: inherit;
+  border-color: inherit;
+}
+
 .btn-group>.btn:hover {
 	color: #E4A703;
 	background-color: #302620;

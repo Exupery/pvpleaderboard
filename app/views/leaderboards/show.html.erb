@@ -11,7 +11,8 @@
 
   <% if @active_bracket %>
     <h3>Showing <span id="leaderboard-display-count"><%= @leaderboard.size %></span> of <span id="leaderboard-total-count"><%= @total %></span></h3>
-    <h5 id="leaderboard-scroll-msg">Scroll down to view more</h5>
+    <button id="toggle-show-all" class="btn btn-default" type="button" data-text="Show All">Show All</button>
+    <h5 id="leaderboard-scroll-msg">(or scroll down to view more)</h5>
     <%= render "layouts/leaderboard" %>
   <% end %>
 </div>
