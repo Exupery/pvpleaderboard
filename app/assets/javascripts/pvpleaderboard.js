@@ -18,10 +18,12 @@ var ready = function() {
 
   $("#leaderboard-table").bind("sortBegin", function() {
     $("#leaderboard-heading").text("Sorting...");
+    $(this).css({"opacity": 0.5, "pointer-events": "none"});
   });
 
   $("#leaderboard-table").bind("sortEnd", function() {
     $("#leaderboard-heading").text($("#leaderboard-heading").data("default"));
+    $(this).css({"opacity": 1, "pointer-events": "auto"});
   });
 
   $(".btn").click(function() {
