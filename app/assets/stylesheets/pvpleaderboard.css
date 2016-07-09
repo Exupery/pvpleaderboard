@@ -239,6 +239,11 @@ th:focus {
 	min-width: 22em;
 }
 
+.results-note {
+  width: 60%;
+  min-width: 22em;
+}
+
 .middle {
 	max-width: 600px;
 }

@@ -28,10 +28,10 @@ class ClassesController < ApplicationController
     end
     spec = spec_slugs[full_slug]
 
-    class_and_spec = "#{spec[:name]} #{clazz[:name]}"
-    @title = class_and_spec
-    @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear for #{class_and_spec}"
-    @heading = class_and_spec
+    @class_and_spec = "#{spec[:name]} #{clazz[:name]}"
+    @title = @class_and_spec
+    @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear for #{@class_and_spec}"
+    @heading = @class_and_spec
 
     @class_id = clazz[:id]
     @spec_id = spec[:id]
