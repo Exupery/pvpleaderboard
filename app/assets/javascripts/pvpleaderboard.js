@@ -147,6 +147,7 @@ var ready = function() {
   windowScroll.fetching = {};
 
   adjustForTimezone();
+  checkShowFilterOption();
 };
 /* Needed so jQuery's ready plays well with Rails turbolinks */
 $(document).ready(ready);
@@ -300,6 +301,14 @@ function isEmptyOrAny(value) {
 
   var str = urlify(value);
   return (str == "" || str == "any");
+}
+
+function checkShowFilterOption() {
+  var url = window.location.href;
+  var showFilter = url.match(/show-filter=(.+)/i);
+  if (showFilter && showFilter[1].toLowerCase() == "true") {
+    $("#filters").collapse("show");
+  }
 }
 
 function toggleCollapser(id, collapsed) {

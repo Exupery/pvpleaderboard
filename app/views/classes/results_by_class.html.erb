@@ -9,5 +9,5 @@
 
 <div class="margin-top-2em">
   <%= render "layouts/results" if @class_id %>
-  <h3 class="center results-note" data-no-turbolink="true">Results above based on ALL <%= @class_and_spec %>s on the leaderboard of ANY bracket, <a href=<%= "/pvp/filter/results?class=#{params[:class]}&spec=#{params[:spec]}" %>>filtering</a> is available to narrow the scope.</h3>
+  <h3 class="center results-note" data-no-turbolink="true">Results above based on ALL <%= @class_and_spec %>s on the leaderboard of ANY bracket, <a href=<%= "/pvp/filter/results?class=#{params[:class]}&spec=#{params[:spec]}&show-filter=true" %>>filtering</a> is available to narrow the scope.</h3>
 </div>
