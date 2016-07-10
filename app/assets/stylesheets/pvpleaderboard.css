@@ -271,8 +271,13 @@ th:focus {
 .table {
 	background-color: #302620;
 	width: auto;
-	font-size: 1em;
-	font-size: calc(1vw + 8px);
+	font-size: 1.1em;
+}
+
+@media screen and (max-width: 840px) {
+  .table {
+    font-size: calc(1vw + 8px);
+  }
 }
 
 .table-small-font {
@@ -332,6 +337,13 @@ th {
 @media screen and (max-width: 720px) {
   th.show-when-wide,
   td.show-when-wide {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  th.show-when-extra-wide,
+  td.show-when-extra-wide {
     display: none;
   }
 }
