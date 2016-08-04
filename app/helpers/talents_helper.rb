@@ -21,6 +21,7 @@ module TalentsHelper
 	private
 
 	def fill_missing hash
+		## TODO FILL MISSING BY SPEC
 		@class_talents.each do |id, talent|
 			k = "#{talent[:tier]}-#{talent[:col]}"
 			if !hash.has_key?(k)
