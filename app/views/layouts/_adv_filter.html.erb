@@ -9,7 +9,7 @@
         <% active = @selected[:"cr-bracket"].nil? ? "" : "active" %>
         <button id="btn-cr-bracket" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="cr-bracket" class="dropdown-text" data-value="<%= @selected[:"cr-bracket"] %>" data-default="Bracket"><%= txt %></span><span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
-          <% ["2v2", "3v3", "5v5", "RBG"].each do |bracket| %>
+          <% ["2v2", "3v3", "RBG"].each do |bracket| %>
             <li data-target="cr-bracket" data-target-button="btn-cr-bracket"><%= bracket %></li>
           <% end %>
           <li class="divider"></li>

@@ -5,8 +5,6 @@ class FilterController < ApplicationController
   protect_from_forgery with: :exception
   before_action :get_selected
 
-  @@brackets = ["2v2", "3v3", "5v5", "rbg"]
-
   def filter
     @title = "Filter"
     @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear"
@@ -94,7 +92,7 @@ class FilterController < ApplicationController
 
   def cr_join leaderboard
     bracket = @selected[:"cr-bracket"].downcase
-    if @@brackets.include?(bracket)
+    if @@BRACKETS.include?(bracket)
       return " JOIN bracket_#{bracket} AS cr_bracket ON #{leaderboard}.player_id=cr_bracket.player_id"
     end
 
@@ -105,7 +103,7 @@ class FilterController < ApplicationController
     tables = Array.new
 
     if !@selected[:leaderboards].nil?
-      @@brackets.each do |bracket|
+      @@BRACKETS.each do |bracket|
         tables.push("bracket_#{bracket}") if @selected[:leaderboards].include? bracket
       end
     end

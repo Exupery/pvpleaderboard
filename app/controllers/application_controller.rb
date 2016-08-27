@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  @@BRACKETS = ["2v2", "3v3", "5v5", "rbg"]
+  @@BRACKETS = ["2v2", "3v3", "rbg"]
 
   def index
     expires_in 1.week, public: true

@@ -1,6 +1,6 @@
 <% exclude_all = false if exclude_all.nil?%>
 <div class="btn-group btn-group-lg" role="group" aria-label="Brackets">
-  <% ["2v2", "3v3", "5v5", "RBG", "All"].each do |b| %>
+  <% ["2v2", "3v3", "RBG", "All"].each do |b| %>
     <% next if exclude_all && b == "All" %>
     <% active = (b[0] == @bracket_fullname[0]) ? "active" : "" %>
     <a href="/<%= path %>/<%= b.downcase %>" type="button" class="btn btn-default include-fragment <%= active %>" role="button"><%= b %></a>

@@ -62,7 +62,7 @@ module FilterUtils extend ActiveSupport::Concern
   def cr_clause
     bracket = @selected[:"cr-bracket"].downcase
     cr = @selected[:"current-rating"].to_i
-    return "" if (!["2v2", "3v3", "5v5", "rbg"].include?(bracket) || cr <= 0)
+    return "" if (!["2v2", "3v3", "rbg"].include?(bracket) || cr <= 0)
 
     return " AND cr_bracket.rating > #{cr}"
   end

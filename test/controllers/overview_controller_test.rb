@@ -9,7 +9,7 @@ class OverviewControllerTest < ActionController::TestCase
   end
 
   test "should show overview" do
-    ["2v2", "3v3", "5v5", "rbg", "all"].each do |bracket|
+    ["2v2", "3v3", "rbg", "all"].each do |bracket|
       get(:overview, {"bracket" => bracket})
       assert_response :success
 
