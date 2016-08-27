@@ -37,8 +37,6 @@ class ClassesController < ApplicationController
     @spec_id = spec[:id]
 
     @talent_counts = get_talent_counts
-    @stat_counts = get_stat_counts
-    @gear = get_most_equipped_gear_by_spec(@class_id, @spec_id)
 
     @total = total_player_count(@class_id, @spec_id)
   end
@@ -60,20 +58,4 @@ class ClassesController < ApplicationController
     return h
   end
 
-  def get_stat_counts
-    cache_key = "stat_counts_#{@class_id}_#{@spec_id}"
-    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
-
-    h = Hash.new
-    cols = get_stat_cols
-    return h if cols.empty?
-
-    rows = ActiveRecord::Base.connection.execute("SELECT #{cols} FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_stats ON players.id=players_stats.player_id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id}")
-    rows.each do |row|
-      h.merge!(parse_stats_row row)
-    end
-
-    Rails.cache.write(cache_key, h)
-    return h
-  end
 end

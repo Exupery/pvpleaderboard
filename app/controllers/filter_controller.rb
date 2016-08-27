@@ -26,8 +26,6 @@ class FilterController < ApplicationController
     ids = player_ids.to_a.join(",")
 
     @talent_counts = get_talent_counts ids
-    @stat_counts = get_stat_counts ids
-    @gear = get_most_equipped_gear_by_player_ids ids
   end
 
   private
@@ -38,19 +36,6 @@ class FilterController < ApplicationController
     rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM players JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.id IN (#{ids}) GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
-    end
-
-    return h
-  end
-
-  def get_stat_counts ids
-    h = Hash.new
-    cols = get_stat_cols
-    return h if cols.empty?
-
-    rows = ActiveRecord::Base.connection.execute("SELECT #{cols} FROM players JOIN players_stats ON players.id=players_stats.player_id WHERE players.id IN (#{ids})")
-    rows.each do |row|
-      h.merge!(parse_stats_row row)
     end
 
     return h
