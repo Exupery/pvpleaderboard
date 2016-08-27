@@ -41,3 +41,7 @@ monk:
 druid:
   id: 11
   name: Druid
+
+demon-hunter:
+  id: 12
+  name: Demon Hunter

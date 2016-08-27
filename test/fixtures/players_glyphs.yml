@@ -1,5 +1,0 @@
-<% 1000.times do |n| %>
-playerglyph<%= n %>:
-  player_id: <%= n %>
-  glyph_id: <%= n % 68 %>
-<% end %>

@@ -22,7 +22,7 @@
   [257, 5, "Holy"],
   [258, 5, "Shadow"],
   [259, 4, "Assassination"],
-  [260, 4, "Combat"],
+  [260, 4, "Outlaw"],
   [261, 4, "Subtlety"],
   [262, 7, "Elemental"],
   [263, 7, "Enhancement"],
@@ -32,7 +32,9 @@
   [267, 9, "Destruction"],
   [268, 10, "Brewmaster"],
   [269, 10, "Windwalker"],
-  [270, 10, "Mistweaver"]
+  [270, 10, "Mistweaver"],
+  [577, 12, "Havoc"],
+  [581, 12, "Vengeance"],
 ] %>
 
 <% 1000.times do |n| %>
@@ -48,4 +50,5 @@ player<%= n %>:
   gender: <%= n % 2 %>
   achievement_points: <%= n * 10 %>
   honorable_kills: <%= n * 5000 %>
+  thumbnail: <%= "thumbnail#{n}" %>
 <% end %>
