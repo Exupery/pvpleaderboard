@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def index
     expires_in 1.week, public: true
-    @description = "See which talents, glyphs, stats, and gear top World of Warcraft PvPers are selecting"
+    @description = "See which talents top World of Warcraft PvPers are selecting"
   end
 
   def get_bracket

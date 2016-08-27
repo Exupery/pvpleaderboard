@@ -29,11 +29,6 @@ Rails.application.routes.draw do
   get "talents/:class/:spec", to: redirect { |path_params, req|
     "/pvp/#{path_params[:class]}/#{path_params[:spec]}" }
 
-  get "glyphs", to: redirect("/pvp")
-  get "glyphs/:class", to: redirect { |path_params, req| "/pvp/#{path_params[:class]}" }
-  get "glyphs/:class/:spec", to: redirect { |path_params, req|
-    "/pvp/#{path_params[:class]}/#{path_params[:spec]}" }
-
   get "stats", to: redirect("/pvp")
   get "stats/:class", to: redirect { |path_params, req| "/pvp/#{path_params[:class]}" }
   get "stats/:class/:spec", to: redirect { |path_params, req|

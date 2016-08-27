@@ -7,12 +7,12 @@ class FilterController < ApplicationController
 
   def filter
     @title = "Filter"
-    @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear"
+    @description = "World of Warcraft PvP leaderboard filter"
   end
 
   def results
     @title = "Filter Results"
-    @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear Filter Results"
+    @description = "World of Warcraft PvP leaderboard filter results"
 
     redirect_to "/pvp/filter" if (@selected[:class].nil? || @selected[:spec].nil?)
 
@@ -26,8 +26,6 @@ class FilterController < ApplicationController
     ids = player_ids.to_a.join(",")
 
     @talent_counts = get_talent_counts ids
-    @major_glyph_counts = get_glyph_counts(ids, Glyphs.MAJOR_ID)
-    @minor_glyph_counts = get_glyph_counts(ids, Glyphs.MINOR_ID)
     @stat_counts = get_stat_counts ids
     @gear = get_most_equipped_gear_by_player_ids ids
   end
@@ -40,17 +38,6 @@ class FilterController < ApplicationController
     rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM players JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.id IN (#{ids}) GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
-    end
-
-    return h
-  end
-
-  def get_glyph_counts(ids, type_id)
-    h = Hash.new
-
-    rows = ActiveRecord::Base.connection.execute("SELECT glyphs.id AS glyph, COUNT(*) AS count FROM players JOIN players_glyphs ON players.id=players_glyphs.player_id JOIN glyphs ON players_glyphs.glyph_id=glyphs.id WHERE players.id IN (#{ids}) AND glyphs.type_id=#{type_id} GROUP BY glyph")
-    rows.each do |row|
-      h[row["glyph"]] = row["count"].to_i
     end
 
     return h

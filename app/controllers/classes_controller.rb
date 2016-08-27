@@ -4,7 +4,7 @@ class ClassesController < ApplicationController
 
   def select_class
     @title = "Class / Spec Selection"
-    @description = "WoW PvP leaderboard Talents, Glyphs, and Stats by class and spec"
+    @description = "WoW PvP leaderboard talents by class and spec"
 
     @heading = "Select a Class and Spec"
 
@@ -30,15 +30,13 @@ class ClassesController < ApplicationController
 
     @class_and_spec = "#{spec[:name]} #{clazz[:name]}"
     @title = @class_and_spec
-    @description = "World of Warcraft PvP leaderboard Talents, Glyphs, Stats, and Gear for #{@class_and_spec}"
+    @description = "World of Warcraft PvP leaderboard talents for #{@class_and_spec}"
     @heading = @class_and_spec
 
     @class_id = clazz[:id]
     @spec_id = spec[:id]
 
     @talent_counts = get_talent_counts
-    @major_glyph_counts = get_glyph_counts Glyphs.MAJOR_ID
-    @minor_glyph_counts = get_glyph_counts Glyphs.MINOR_ID
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_spec(@class_id, @spec_id)
 
@@ -56,21 +54,6 @@ class ClassesController < ApplicationController
     rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
-    end
-
-    Rails.cache.write(cache_key, h)
-    return h
-  end
-
-  def get_glyph_counts type_id
-    cache_key = "glyph_#{type_id}_counts_#{@class_id}_#{@spec_id}"
-    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
-
-    h = Hash.new
-
-    rows = ActiveRecord::Base.connection.execute("SELECT glyphs.id AS glyph, COUNT(*) AS count FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_glyphs ON players.id=players_glyphs.player_id JOIN glyphs ON players_glyphs.glyph_id=glyphs.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND glyphs.type_id=#{type_id} GROUP BY glyph")
-    rows.each do |row|
-      h[row["glyph"]] = row["count"].to_i
     end
 
     Rails.cache.write(cache_key, h)

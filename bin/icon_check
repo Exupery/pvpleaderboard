@@ -3,7 +3,7 @@
 require "pg"
 
 BASE_PATH = "public/images/icons/"
-TABLES = [ "glyphs", "specs", "talents" ]
+TABLES = [ "specs", "talents" ]
 
 db = PG.connect(
   host: ENV["PVP_DB_HOST"],
