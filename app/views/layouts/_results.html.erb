@@ -2,11 +2,15 @@
 
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#tab-pane-talents" aria-controls="talents" role="tab" data-toggle="tab" data-fragment="talents">Talents</a></li>
+    <li role="presentation"><a href="#tab-pane-pvp-talents" aria-controls="pvp-talents" role="tab" data-toggle="tab" data-fragment="pvp-talents">PvP Talents</a></li>
   </ul>
 
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="tab-pane-talents">
       <%= render "layouts/talents_table", :talents => talent_counts_table(@class_id, @spec_id) %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-pvp-talents">
+      <%= render "layouts/pvp_talents_table" %>
     </div>
   </div>
 
