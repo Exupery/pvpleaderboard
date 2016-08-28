@@ -1,9 +1,9 @@
 module TalentsHelper
 	include Utils
 
-	def talent_counts_table class_id
+	def talent_counts_table(class_id, spec_id)
 		h = Hash.new
-		@class_talents = Talents.get_talents class_id
+		@class_talents = Talents.get_talents(class_id, spec_id)
 
 		@talent_counts.each do |id, count|
 			talent = @class_talents[id]
@@ -21,7 +21,6 @@ module TalentsHelper
 	private
 
 	def fill_missing hash
-		## TODO FILL MISSING BY SPEC
 		@class_talents.each do |id, talent|
 			k = "#{talent[:tier]}-#{talent[:col]}"
 			if !hash.has_key?(k)

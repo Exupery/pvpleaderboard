@@ -22,6 +22,8 @@ class FilterController < ApplicationController
 
     clazz = Classes.list[slugify @selected[:class]]
     @class_id = clazz[:id] if clazz
+    spec = Specs.slugs["#{slugify @selected[:class]}_#{slugify @selected[:spec]}"]
+    @spec_id = spec[:id]
 
     ids = player_ids.to_a.join(",")
 
