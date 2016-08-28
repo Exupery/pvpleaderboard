@@ -1,4 +1,4 @@
-<div data-no-turbolink="true">
+<div data-turbolinks="false">
 	<% style = (params[:class] && !Classes.list[slugify params[:class]].nil?) ? "display: none;" : "" %>
   <div id="specs" class="btn-group btn-group-lg spec-group placeholder-spec-group show-on-reset" style="<%= style %>" role="group" aria-label="Specializations" data-toggle="buttons">
     <% (1..3).each do |i| %>
