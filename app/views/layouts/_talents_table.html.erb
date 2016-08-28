@@ -7,7 +7,7 @@
           <% talent = talents[k] %>
           <% highest = talent[:highest] ? "most-selected" : "" %>
           <td id="<%= k %>" class="<%= highest %>">
-            <a href="https://www.wowhead.com/spell=<%= talent[:id] %>" rel="spell=<%= talent[:id] %>&amp;lvl=100" target="_blank" class="no-a-style">
+            <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=110" target="_blank" class="no-a-style">
               <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
               <div><%= talent[:name] %></div>
               <div><%= talent[:percent] %>%</div>
