@@ -42,7 +42,7 @@ module TalentsHelper
 					high_col = c
 				end
 			end
-			hash["#{t}-#{high_col}"][:highest] = true
+			hash["#{t}-#{high_col}"][:highest] = true if highest > 0
 		end
 	end
 
