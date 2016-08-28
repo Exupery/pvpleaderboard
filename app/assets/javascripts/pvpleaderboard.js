@@ -269,7 +269,11 @@ function createFilterQueryString() {
 }
 
 function isRequired(filter) {
-  return $(".filter-form").data("required").toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+  if ($(".filter-form") && $(".filter-form").data("required")) {
+    return $(".filter-form").data("required").toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+  } else {
+    return false;
+  }
 }
 
 function queryParam(key, value) {
