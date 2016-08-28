@@ -236,7 +236,11 @@ th:focus {
 	padding: 0.2em;
 }
 
-.filter-form,
+.filter-form {
+  width: calc(100% - 50vw);
+  min-width: 20em;
+}
+
 .results-panel {
 	width: calc(100% - 60vw);
 	min-width: 22em;
@@ -362,7 +366,7 @@ th {
 }
 
 .results-panel table {
-	width: 100%;
+  width: 100%;
 }
 
 .most-selected {
