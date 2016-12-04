@@ -4,7 +4,7 @@ module OverviewHelper
 	def percent_counts hash
 		h = Hash.new
 		total = 0
-		hash.each do |k, v|
+		hash.each do |_, v|
 			total += v
 		end
 		hash.each do |k, v|

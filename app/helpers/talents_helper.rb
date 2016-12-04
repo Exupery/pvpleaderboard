@@ -21,7 +21,7 @@ module TalentsHelper
 	private
 
 	def fill_missing hash
-		@class_talents.each do |id, talent|
+		@class_talents.each do |_id, talent|
 			k = "#{talent[:tier]}-#{talent[:col]}"
 			if !hash.has_key?(k)
 				talent[:percent] = 0

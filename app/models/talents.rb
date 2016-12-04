@@ -13,7 +13,7 @@ class Talents
       end
     end
 
-    h.delete_if do |id, talent|
+    h.delete_if do |_id, talent|
       talent[:spec_id] == 0 && (tier_col["#{talent[:tier]}-#{talent[:col]}"][:spec_id] != talent[:spec_id])
     end
 
