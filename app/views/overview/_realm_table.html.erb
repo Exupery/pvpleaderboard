@@ -12,7 +12,7 @@
       <tr>
         <td>
         <% if @bracket %>
-          <a href="/realms/<%= urlify r.gsub(/'/, "") %>/<%= @bracket %>"><%= r %></a>
+          <a href="/realms/<%= urlify r.delete("'") %>/<%= @bracket %>"><%= r %></a>
         <% else %>
           <%= r %>
         <% end %>

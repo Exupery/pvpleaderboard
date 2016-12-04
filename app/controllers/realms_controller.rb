@@ -29,7 +29,7 @@ class RealmsController < OverviewController
   def details
     @bracket = get_bracket
     title_bracket = get_title_bracket @bracket
-    @realm_slug = params[:realm_slug].downcase.gsub(/'/, "").gsub(/\s/, "-") if params[:realm_slug]
+    @realm_slug = params[:realm_slug].downcase.delete("'").gsub(/\s/, "-") if params[:realm_slug]
     @realm_name = Realms.list[@realm_slug]
 
     if @bracket.nil?
