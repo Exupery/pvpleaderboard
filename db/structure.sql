@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.4
--- Dumped by pg_dump version 9.5.4
+-- Dumped from database version 9.5.5
+-- Dumped by pg_dump version 9.5.5
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -49,54 +49,6 @@ CREATE TABLE achievements (
 ALTER TABLE achievements OWNER TO frost;
 
 --
--- Name: bracket_2v2; Type: TABLE; Schema: public; Owner: frost
---
-
-CREATE TABLE bracket_2v2 (
-    ranking integer NOT NULL,
-    player_id integer NOT NULL,
-    rating smallint NOT NULL,
-    season_wins smallint,
-    season_losses smallint,
-    last_update timestamp without time zone DEFAULT now()
-);
-
-
-ALTER TABLE bracket_2v2 OWNER TO frost;
-
---
--- Name: bracket_3v3; Type: TABLE; Schema: public; Owner: frost
---
-
-CREATE TABLE bracket_3v3 (
-    ranking integer NOT NULL,
-    player_id integer NOT NULL,
-    rating smallint NOT NULL,
-    season_wins smallint,
-    season_losses smallint,
-    last_update timestamp without time zone DEFAULT now()
-);
-
-
-ALTER TABLE bracket_3v3 OWNER TO frost;
-
---
--- Name: bracket_rbg; Type: TABLE; Schema: public; Owner: frost
---
-
-CREATE TABLE bracket_rbg (
-    ranking integer NOT NULL,
-    player_id integer NOT NULL,
-    rating smallint NOT NULL,
-    season_wins smallint,
-    season_losses smallint,
-    last_update timestamp without time zone DEFAULT now()
-);
-
-
-ALTER TABLE bracket_rbg OWNER TO frost;
-
---
 -- Name: classes; Type: TABLE; Schema: public; Owner: frost
 --
 
@@ -121,6 +73,24 @@ CREATE TABLE factions (
 ALTER TABLE factions OWNER TO frost;
 
 --
+-- Name: leaderboards; Type: TABLE; Schema: public; Owner: frost
+--
+
+CREATE TABLE leaderboards (
+    bracket character(3) NOT NULL,
+    region character(2) NOT NULL,
+    ranking integer NOT NULL,
+    player_id integer NOT NULL,
+    rating smallint NOT NULL,
+    season_wins smallint,
+    season_losses smallint,
+    last_update timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE leaderboards OWNER TO frost;
+
+--
 -- Name: metadata; Type: TABLE; Schema: public; Owner: frost
 --
 
@@ -134,23 +104,6 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO frost;
 
 --
--- Name: player_ids_all_brackets; Type: VIEW; Schema: public; Owner: frost
---
-
-CREATE VIEW player_ids_all_brackets AS
- SELECT bracket_2v2.player_id
-   FROM bracket_2v2
-UNION
- SELECT bracket_3v3.player_id
-   FROM bracket_3v3
-UNION
- SELECT bracket_rbg.player_id
-   FROM bracket_rbg;
-
-
-ALTER TABLE player_ids_all_brackets OWNER TO frost;
-
---
 -- Name: players; Type: TABLE; Schema: public; Owner: frost
 --
 
@@ -161,7 +114,7 @@ CREATE TABLE players (
     spec_id integer,
     faction_id integer,
     race_id integer,
-    realm_slug character varying(64) NOT NULL,
+    realm_id integer NOT NULL,
     guild character varying(64),
     gender smallint,
     achievement_points integer,
@@ -237,8 +190,10 @@ ALTER TABLE races OWNER TO frost;
 --
 
 CREATE TABLE realms (
+    id integer NOT NULL,
     slug character varying(64) NOT NULL,
     name character varying(64) NOT NULL,
+    region character(2) NOT NULL,
     battlegroup character varying(64),
     timezone character varying(64),
     type character varying(16)
@@ -246,6 +201,27 @@ CREATE TABLE realms (
 
 
 ALTER TABLE realms OWNER TO frost;
+
+--
+-- Name: realms_id_seq; Type: SEQUENCE; Schema: public; Owner: frost
+--
+
+CREATE SEQUENCE realms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE realms_id_seq OWNER TO frost;
+
+--
+-- Name: realms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: frost
+--
+
+ALTER SEQUENCE realms_id_seq OWNED BY realms.id;
+
 
 --
 -- Name: specs; Type: TABLE; Schema: public; Owner: frost
@@ -315,6 +291,13 @@ ALTER TABLE ONLY players ALTER COLUMN id SET DEFAULT nextval('players_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: frost
 --
 
+ALTER TABLE ONLY realms ALTER COLUMN id SET DEFAULT nextval('realms_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: frost
+--
+
 ALTER TABLE ONLY talents ALTER COLUMN id SET DEFAULT nextval('talents_id_seq'::regclass);
 
 
@@ -324,54 +307,6 @@ ALTER TABLE ONLY talents ALTER COLUMN id SET DEFAULT nextval('talents_id_seq'::r
 
 ALTER TABLE ONLY achievements
     ADD CONSTRAINT achievements_pkey PRIMARY KEY (id);
-
-
---
--- Name: bracket_2v2_pkey; Type: CONSTRAINT; Schema: public; Owner: frost
---
-
-ALTER TABLE ONLY bracket_2v2
-    ADD CONSTRAINT bracket_2v2_pkey PRIMARY KEY (ranking);
-
-
---
--- Name: bracket_2v2_player_id_key; Type: CONSTRAINT; Schema: public; Owner: frost
---
-
-ALTER TABLE ONLY bracket_2v2
-    ADD CONSTRAINT bracket_2v2_player_id_key UNIQUE (player_id);
-
-
---
--- Name: bracket_3v3_pkey; Type: CONSTRAINT; Schema: public; Owner: frost
---
-
-ALTER TABLE ONLY bracket_3v3
-    ADD CONSTRAINT bracket_3v3_pkey PRIMARY KEY (ranking);
-
-
---
--- Name: bracket_3v3_player_id_key; Type: CONSTRAINT; Schema: public; Owner: frost
---
-
-ALTER TABLE ONLY bracket_3v3
-    ADD CONSTRAINT bracket_3v3_player_id_key UNIQUE (player_id);
-
-
---
--- Name: bracket_rbg_pkey; Type: CONSTRAINT; Schema: public; Owner: frost
---
-
-ALTER TABLE ONLY bracket_rbg
-    ADD CONSTRAINT bracket_rbg_pkey PRIMARY KEY (ranking);
-
-
---
--- Name: bracket_rbg_player_id_key; Type: CONSTRAINT; Schema: public; Owner: frost
---
-
-ALTER TABLE ONLY bracket_rbg
-    ADD CONSTRAINT bracket_rbg_player_id_key UNIQUE (player_id);
 
 
 --
@@ -407,6 +342,22 @@ ALTER TABLE ONLY factions
 
 
 --
+-- Name: leaderboards_bracket_region_player_id_key; Type: CONSTRAINT; Schema: public; Owner: frost
+--
+
+ALTER TABLE ONLY leaderboards
+    ADD CONSTRAINT leaderboards_bracket_region_player_id_key UNIQUE (bracket, region, player_id);
+
+
+--
+-- Name: leaderboards_pkey; Type: CONSTRAINT; Schema: public; Owner: frost
+--
+
+ALTER TABLE ONLY leaderboards
+    ADD CONSTRAINT leaderboards_pkey PRIMARY KEY (bracket, region, ranking);
+
+
+--
 -- Name: metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: frost
 --
 
@@ -423,11 +374,11 @@ ALTER TABLE ONLY players_achievements
 
 
 --
--- Name: players_name_realm_slug_key; Type: CONSTRAINT; Schema: public; Owner: frost
+-- Name: players_name_realm_id_key; Type: CONSTRAINT; Schema: public; Owner: frost
 --
 
 ALTER TABLE ONLY players
-    ADD CONSTRAINT players_name_realm_slug_key UNIQUE (name, realm_slug);
+    ADD CONSTRAINT players_name_realm_id_key UNIQUE (name, realm_id);
 
 
 --
@@ -463,19 +414,19 @@ ALTER TABLE ONLY races
 
 
 --
--- Name: realms_name_key; Type: CONSTRAINT; Schema: public; Owner: frost
---
-
-ALTER TABLE ONLY realms
-    ADD CONSTRAINT realms_name_key UNIQUE (name);
-
-
---
 -- Name: realms_pkey; Type: CONSTRAINT; Schema: public; Owner: frost
 --
 
 ALTER TABLE ONLY realms
-    ADD CONSTRAINT realms_pkey PRIMARY KEY (slug);
+    ADD CONSTRAINT realms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: realms_slug_region_key; Type: CONSTRAINT; Schema: public; Owner: frost
+--
+
+ALTER TABLE ONLY realms
+    ADD CONSTRAINT realms_slug_region_key UNIQUE (slug, region);
 
 
 --
@@ -518,45 +469,10 @@ CREATE INDEX achievements_name_idx ON achievements USING btree (name);
 
 
 --
--- Name: bracket_2v2_last_update_idx; Type: INDEX; Schema: public; Owner: frost
+-- Name: leaderboards_rating_idx; Type: INDEX; Schema: public; Owner: frost
 --
 
-CREATE INDEX bracket_2v2_last_update_idx ON bracket_2v2 USING btree (last_update DESC);
-
-
---
--- Name: bracket_2v2_rating_idx; Type: INDEX; Schema: public; Owner: frost
---
-
-CREATE INDEX bracket_2v2_rating_idx ON bracket_2v2 USING btree (rating);
-
-
---
--- Name: bracket_3v3_last_update_idx; Type: INDEX; Schema: public; Owner: frost
---
-
-CREATE INDEX bracket_3v3_last_update_idx ON bracket_3v3 USING btree (last_update DESC);
-
-
---
--- Name: bracket_3v3_rating_idx; Type: INDEX; Schema: public; Owner: frost
---
-
-CREATE INDEX bracket_3v3_rating_idx ON bracket_3v3 USING btree (rating);
-
-
---
--- Name: bracket_rbg_last_update_idx; Type: INDEX; Schema: public; Owner: frost
---
-
-CREATE INDEX bracket_rbg_last_update_idx ON bracket_rbg USING btree (last_update DESC);
-
-
---
--- Name: bracket_rbg_rating_idx; Type: INDEX; Schema: public; Owner: frost
---
-
-CREATE INDEX bracket_rbg_rating_idx ON bracket_rbg USING btree (rating);
+CREATE INDEX leaderboards_rating_idx ON leaderboards USING btree (rating);
 
 
 --
@@ -602,27 +518,11 @@ CREATE INDEX talents_tier_col_idx ON talents USING btree (tier, col);
 
 
 --
--- Name: bracket_2v2_player_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: frost
+-- Name: leaderboards_player_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: frost
 --
 
-ALTER TABLE ONLY bracket_2v2
-    ADD CONSTRAINT bracket_2v2_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id);
-
-
---
--- Name: bracket_3v3_player_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: frost
---
-
-ALTER TABLE ONLY bracket_3v3
-    ADD CONSTRAINT bracket_3v3_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id);
-
-
---
--- Name: bracket_rbg_player_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: frost
---
-
-ALTER TABLE ONLY bracket_rbg
-    ADD CONSTRAINT bracket_rbg_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id);
+ALTER TABLE ONLY leaderboards
+    ADD CONSTRAINT leaderboards_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id);
 
 
 --
@@ -666,11 +566,11 @@ ALTER TABLE ONLY players
 
 
 --
--- Name: players_realm_slug_fkey; Type: FK CONSTRAINT; Schema: public; Owner: frost
+-- Name: players_realm_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: frost
 --
 
 ALTER TABLE ONLY players
-    ADD CONSTRAINT players_realm_slug_fkey FOREIGN KEY (realm_slug) REFERENCES realms(slug);
+    ADD CONSTRAINT players_realm_id_fkey FOREIGN KEY (realm_id) REFERENCES realms(id);
 
 
 --
@@ -726,4 +626,3 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-
