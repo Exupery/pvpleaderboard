@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.2.3"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7.1'
+gem 'rails', '5.0.1'
 
 gem 'pg'
 # Use SCSS for stylesheets
@@ -39,5 +39,9 @@ end
 
 group :production do
 	gem 'rails_12factor'
+end
+
+group :test do
+  gem 'rails-controller-testing'
 end
 
