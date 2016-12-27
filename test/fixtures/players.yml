@@ -41,11 +41,11 @@
 player<%= n %>:
   id: <%= n %>
   name: <%= "player#{n}" %>
-  class_id: <%= specs[n % 34][1] %>
-  spec_id: <%= specs[n % 34][0] %>
+  class_id: <%= specs[n % 36][1] %>
+  spec_id: <%= specs[n % 36][0] %>
   faction_id: <%= n % 2 %>
   race_id: <%= n % 10 %>
-  realm_slug: <%= "realm#{n % 10}" %>
+  realm_id: <%= n % 100 %>
   guild: <%= "guild#{n % 20}" %>
   gender: <%= n % 2 %>
   achievement_points: <%= n * 10 %>

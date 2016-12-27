@@ -1,0 +1,14 @@
+<% ["US", "EU"].each do |region| %>
+  <% ["2v2", "3v3", "rbg"].each do |bracket| %>
+    <% 1000.times do |n| %>
+    <%= bracket %>_entry<%= n %>:
+      bracket: <%= bracket %>
+      region: <%= region %>
+      ranking: <%= n + 1 %>
+      player_id: <%= n %>
+      rating: <%= 3000 - n %>
+      season_wins: <%= 1000 - n %>
+      season_losses: <%= n %>
+    <% end %>
+  <% end %>
+<% end %>
