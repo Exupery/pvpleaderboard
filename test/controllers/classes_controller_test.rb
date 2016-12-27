@@ -9,15 +9,15 @@ class ClassesControllerTest < ActionController::TestCase
   end
 
   test "should redirect if invalid class or spec" do
-    get(:results_by_class, {"class" => "murloc", "spec" => "spec13"})
+    get(:results_by_class, params: {class: "murloc", spec: "spec13"})
     assert_response :redirect
 
-    get(:results_by_class, {"class" => "hunter", "spec" => "pirate"})
+    get(:results_by_class, params: {class: "hunter", spec: "pirate"})
     assert_response :redirect
   end
 
   test "should find results" do
-    get(:results_by_class, {"class" => "hunter", "spec" => "beast-mastery"})
+    get(:results_by_class, params: {class: "hunter", spec: "beast-mastery"})
     assert_response :success
 
     assert_not_nil assigns(:class_id)

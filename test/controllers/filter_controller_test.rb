@@ -12,15 +12,15 @@ class FilterControllerTest < ActionController::TestCase
     get :results
     assert_response :redirect
 
-    get(:results, {"class" => "death-knight"})
+    get(:results, params: {class: "death-knight"})
     assert_response :redirect
 
-    get(:results, {"spec" => "frost"})
+    get(:results, params: {spec: "frost"})
     assert_response :redirect
   end
 
   test "should get selected params" do
-    get(:results, {"class" => "death-knight", "spec" => "frost"})
+    get(:results, params: {class: "death-knight", spec: "frost"})
     assert_response :success
     assert_not_nil assigns(:selected)
     assert_not_empty assigns(:selected)
@@ -28,7 +28,7 @@ class FilterControllerTest < ActionController::TestCase
   end
 
   test "should find filtered results" do
-    get(:results, {"class" => "death-knight", "spec" => "frost"})
+    get(:results, params: {class: "death-knight", spec: "frost"})
     assert_response :success
     assert_not_nil assigns(:class_id)
     assert_not_nil assigns(:talent_counts)

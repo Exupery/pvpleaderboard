@@ -10,7 +10,7 @@ class OverviewControllerTest < ActionController::TestCase
 
   test "should show overview" do
     ["2v2", "3v3", "rbg", "all"].each do |bracket|
-      get(:overview, {"bracket" => bracket})
+      get(:overview, params: {bracket: bracket})
       assert_response :success
 
       assert_not_nil assigns(:factions)

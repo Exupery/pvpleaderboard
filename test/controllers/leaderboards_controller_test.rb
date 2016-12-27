@@ -10,7 +10,7 @@ class LeaderboardsControllerTest < ActionController::TestCase
 
   test "should show leaderboard" do
     ["2v2", "3v3", "rbg"].each do |bracket|
-      get(:show, {"bracket" => bracket})
+      get(:show, params: {bracket: bracket})
       assert_response :success
 
       assert_not_nil assigns(:bracket)
