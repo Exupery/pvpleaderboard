@@ -41,6 +41,7 @@ class LeaderboardFilterControllerTest < ActionController::TestCase
       assert_response :success
       assert_not_nil assigns(:leaderboard)
       assert_not_empty assigns(:leaderboard)
+      assert_not_equal(0, @controller.instance_variable_get(:@leaderboard).size, "No players returned for #{params}")
     end
   end
 end

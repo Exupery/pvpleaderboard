@@ -68,7 +68,7 @@ class FilterController < ApplicationController
     else
       brackets = Array.new
       @@BRACKETS.each do |bracket|
-        brackets.push("'bracket'") if @selected[:leaderboards].include? bracket
+        brackets.push("'#{bracket}'") if @selected[:leaderboards].include? bracket
       end
       return "AND leaderboards.bracket IN (#{brackets.join(",")})"
     end

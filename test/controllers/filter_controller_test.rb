@@ -31,9 +31,10 @@ class FilterControllerTest < ActionController::TestCase
     base_params = {class: "death-knight", spec: "frost"}
     test_params = [
       base_params,
-      base_params.merge({factions: "horde"}),
-      base_params.merge({races: "undead"}),
+      base_params.merge({factions: "alliance"}),
+      base_params.merge({races: "tauren"}),
       base_params.merge({realm: "realm0"}),
+      base_params.merge({leaderboards: "3v3"}),
       base_params.merge({"cr-bracket": "2v2", "current-rating": 2000}),
       base_params.merge({hks: "4077"}),
     ]
@@ -44,6 +45,8 @@ class FilterControllerTest < ActionController::TestCase
       assert_response :success
       assert_not_nil assigns(:class_id)
       assert_not_nil assigns(:talent_counts)
+      assert_not_nil assigns(:total)
+      assert_not_equal(0, @controller.instance_variable_get(:@total), "No players returned for #{params}")
     end
   end
 end
