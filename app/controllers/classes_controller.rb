@@ -49,7 +49,8 @@ class ClassesController < ApplicationController
 
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} GROUP BY talent")
+    region_clause = "AND leaderboards.region='US'" ## TODO ADD MULTIREGION SUPPORT
+    rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} #{region_clause} GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
     end

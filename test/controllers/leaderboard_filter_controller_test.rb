@@ -26,10 +26,21 @@ class LeaderboardFilterControllerTest < ActionController::TestCase
   end
 
   test "should find filtered results" do
-    get(:results, params: {class: "paladin", leaderboard: "2v2"})
-    assert_response :success
-    assert_not_nil assigns(:leaderboard)
+    base_params = {class: "paladin", leaderboard: "2v2"}
+    test_params = [
+      base_params,
+      base_params.merge({factions: "alliance"}),
+      base_params.merge({races: "human"}),
+      base_params.merge({realm: "realm0"}),
+      base_params.merge({hks: "4077"}),
+    ]
 
-    assert_not_empty assigns(:leaderboard)
+    test_params.each do |params|
+      get(:results, params: params)
+
+      assert_response :success
+      assert_not_nil assigns(:leaderboard)
+      assert_not_empty assigns(:leaderboard)
+    end
   end
 end

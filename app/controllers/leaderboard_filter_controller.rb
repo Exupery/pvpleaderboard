@@ -38,6 +38,7 @@ class LeaderboardFilterController < ApplicationController
     if (@selected[:"arena-achievements"] || @selected[:"rbg-achievements"])
       ids = Set.new
       ids = narrow_by_achievements players.map {|p| p.id}
+      ids = narrow_by_cr ids if @selected[:"cr-bracket"]
       return players.find_all {|p| ids.include? p.id}
     end
 

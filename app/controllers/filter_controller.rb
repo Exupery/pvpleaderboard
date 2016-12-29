@@ -49,42 +49,29 @@ class FilterController < ApplicationController
     where = (@selected[:class] && @selected[:spec]) ? create_where_clause : ""
     return ids if where.empty?
 
-    get_bracket_tables.each do |bracket_table|
-      current_rating_join = cr_join bracket_table if @selected[:"cr-bracket"]
-      rows = ActiveRecord::Base.connection.execute("SELECT #{bracket_table}.player_id FROM #{bracket_table} JOIN players ON players.id=#{bracket_table}.player_id #{current_rating_join} WHERE #{where}")
-      rows.each do |row|
-        ids.add(row["player_id"])
-      end
+    rows = ActiveRecord::Base.connection.execute("SELECT leaderboards.player_id FROM leaderboards JOIN players ON players.id=leaderboards.player_id WHERE #{where} #{bracket_clause} #{region_clause}")
+    rows.each do |row|
+      ids.add(row["player_id"])
     end
 
     return ids if ids.empty?
 
     ids = narrow_by_achievements ids if (@selected[:"arena-achievements"] || @selected[:"rbg-achievements"])
+    ids = narrow_by_cr ids if @selected[:"cr-bracket"]
 
     return ids
   end
 
-  def cr_join leaderboard
-    bracket = @selected[:"cr-bracket"].downcase
-    if @@BRACKETS.include?(bracket)
-      return " JOIN bracket_#{bracket} AS cr_bracket ON #{leaderboard}.player_id=cr_bracket.player_id"
-    end
-
-    return ""
-  end
-
-  def get_bracket_tables
-    tables = Array.new
-
-    if !@selected[:leaderboards].nil?
+  def bracket_clause
+    if @selected[:leaderboards].nil?
+      return ""
+    else
+      brackets = Array.new
       @@BRACKETS.each do |bracket|
-        tables.push("bracket_#{bracket}") if @selected[:leaderboards].include? bracket
+        brackets.push("'bracket'") if @selected[:leaderboards].include? bracket
       end
+      return "AND leaderboards.bracket IN (#{brackets.join(",")})"
     end
-
-    tables.push("player_ids_all_brackets") if tables.empty?
-
-    return tables
   end
 
   def get_selected

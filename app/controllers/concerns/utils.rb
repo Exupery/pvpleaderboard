@@ -16,7 +16,7 @@ module Utils extend ActiveSupport::Concern
 
 		total = 0
 
-		rows = ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS total FROM player_ids_all_brackets JOIN players ON player_ids_all_brackets.player_id=players.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id}")
+		rows = ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS total FROM leaderboards JOIN players ON leaderboards.player_id=players.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id}")
 		rows.each do |row|
       total = row["total"].to_i
     end

@@ -1,7 +1,7 @@
 <% ["US", "EU"].each do |region| %>
   <% ["2v2", "3v3", "rbg"].each do |bracket| %>
     <% 1000.times do |n| %>
-    <%= bracket %>_entry<%= n %>:
+    <%= region %>_<%= bracket %>_entry<%= n %>:
       bracket: <%= bracket %>
       region: <%= region %>
       ranking: <%= n + 1 %>

@@ -28,9 +28,22 @@ class FilterControllerTest < ActionController::TestCase
   end
 
   test "should find filtered results" do
-    get(:results, params: {class: "death-knight", spec: "frost"})
-    assert_response :success
-    assert_not_nil assigns(:class_id)
-    assert_not_nil assigns(:talent_counts)
+    base_params = {class: "death-knight", spec: "frost"}
+    test_params = [
+      base_params,
+      base_params.merge({factions: "horde"}),
+      base_params.merge({races: "undead"}),
+      base_params.merge({realm: "realm0"}),
+      base_params.merge({"cr-bracket": "2v2", "current-rating": 2000}),
+      base_params.merge({hks: "4077"}),
+    ]
+
+    test_params.each do |params|
+      get(:results, params: params)
+
+      assert_response :success
+      assert_not_nil assigns(:class_id)
+      assert_not_nil assigns(:talent_counts)
+    end
   end
 end
