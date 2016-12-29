@@ -17,5 +17,5 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV['HEROKU_POSTGRESQL_COBALT_URL'] %>
+  url: <%= ENV['HEROKU_POSTGRESQL_PUCE_URL'] %>
   sslmode: require
