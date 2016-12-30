@@ -45,6 +45,7 @@ class FilterControllerTest < ActionController::TestCase
       assert_response :success
       assert_not_nil assigns(:class_id)
       assert_not_nil assigns(:talent_counts)
+      assert_not_empty assigns(:talent_counts)
       assert_not_nil assigns(:total)
       assert_not_equal(0, @controller.instance_variable_get(:@total), "No players returned for #{params}")
     end
