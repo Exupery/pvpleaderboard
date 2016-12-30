@@ -25,9 +25,7 @@ class FilterController < ApplicationController
     spec = Specs.slugs["#{slugify @selected[:class]}_#{slugify @selected[:spec]}"]
     @spec_id = spec[:id]
 
-    ids = player_ids.to_a.join(",")
-
-    @talent_counts = get_talent_counts ids
+    @talent_counts = get_talent_counts player_ids
   end
 
   private
@@ -35,7 +33,7 @@ class FilterController < ApplicationController
   def get_talent_counts ids
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM players JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.id IN (#{ids}) GROUP BY talent")
+    rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM players JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.id IN (#{ids.to_a.join(",")}) GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
     end
