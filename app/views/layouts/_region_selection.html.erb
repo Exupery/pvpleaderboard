@@ -1,0 +1,6 @@
+<div class="btn-group btn-group-lg margin-0-5em" role="group" aria-label="Regions">
+  <% Regions.with_all.each do |r| %>
+    <% active = (r == @region || (r == "All" && @region.nil?)) ? "active" : "" %>
+    <a href="<%= (path % {:bracket => @bracket.nil? ? 'all' : @bracket, :region => r}).downcase %>" type="button" class="btn btn-default include-fragment <%= active %>" role="button"><%= r %></a>
+  <% end %>
+</div>

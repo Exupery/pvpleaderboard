@@ -1,7 +1,9 @@
 <div class="expands">
-  <%= render "layouts/bracket_selection", :path => "overview" %>
+  <% path = "/overview/%{bracket}/%{region}" %>
+  <%= render "layouts/bracket_selection", :path => path %>
+  <%= render "layouts/region_selection", :path => path %>
 
-	<h1>Overview for <%= @bracket_fullname %></h1>
+  <h1>Overview for <%= @bracket_fullname %></h1>
 
 	<%= render "overview_tables" %>
 </div>

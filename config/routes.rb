@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get "overview" => "overview#overview"
   get "overview/:bracket" => "overview#overview"
+  get "overview/:bracket/:region" => "overview#overview"
 
   get "pvp" => "classes#select_class"
   get "pvp/filter" => "filter#filter"

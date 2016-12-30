@@ -1,8 +1,8 @@
 <% exclude_all = false if exclude_all.nil?%>
-<div class="btn-group btn-group-lg" role="group" aria-label="Brackets">
+<div class="btn-group btn-group-lg margin-0-5em" role="group" aria-label="Brackets">
   <% ["2v2", "3v3", "RBG", "All"].each do |b| %>
     <% next if exclude_all && b == "All" %>
-    <% active = (b[0] == @bracket_fullname[0]) ? "active" : "" %>
-    <a href="/<%= path %>/<%= b.downcase %>" type="button" class="btn btn-default include-fragment <%= active %>" role="button"><%= b %></a>
+    <% active = ((b == "All" && @bracket.nil?) || (!@bracket.nil? && b.casecmp(@bracket) == 0)) ? "active" : "" %>
+    <a href="<%= (path % {:bracket => b, :region => @region}).downcase %>" type="button" class="btn btn-default include-fragment <%= active %>" role="button"><%= b %></a>
   <% end %>
 </div>

@@ -10,8 +10,10 @@ class OverviewController < ApplicationController
 
     @bracket = get_bracket
   	title_bracket = get_title_bracket @bracket
-  	@title = "#{title_bracket || 'Leaderboard'} Overview"
-    @description = "World of Warcraft PvP leaderboard representation by class, spec, race, faction, realm, and guild"
+    @region = get_region
+    title_region = get_title_region @region
+    @title = "#{title_region}#{title_bracket || 'Leaderboard'} Overview"
+    @description = "World of Warcraft PvP #{title_region + title_bracket + ' ' unless title_bracket.nil?}leaderboard representation by class, spec, race, faction, realm, and guild"
 
   	@factions = Hash.new(0)
     @races = Hash.new(0)
@@ -20,20 +22,21 @@ class OverviewController < ApplicationController
     @realms = Hash.new(0)
     @guilds = Hash.new(nil)
 
+    @region_clause = @region.nil? ? nil : "AND leaderboards.region='#{@region}'"
+
     find_counts @bracket
-    @bracket_fullname = get_bracket_fullname @bracket
+    @bracket_fullname = get_bracket_fullname(@bracket, @region)
   end
 
   protected
 
-  def realm_counts(bracket, limit)
-    cache_key = "realm_counts_#{bracket}_#{limit}" ## TODO INCLUDE REGION IN CACHE KEY
+  def realm_counts(region, bracket, limit)
+    cache_key = "realm_counts_#{region.nil? ? 'all' : region}_#{bracket}_#{limit}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
     h = Hash.new
 
-    region_clause = "AND leaderboards.region='US'" ## TODO ADD MULTIREGION SUPPORT
-    rows = ActiveRecord::Base.connection.execute("SELECT realms.name AS realm, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN realms ON players.realm_id=realms.id WHERE leaderboards.bracket='#{bracket}' #{region_clause} GROUP BY realm ORDER BY COUNT(*) DESC LIMIT #{limit}")
+    rows = ActiveRecord::Base.connection.execute("SELECT realms.name AS realm, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN realms ON players.realm_id=realms.id WHERE leaderboards.bracket='#{bracket}' #{@region_clause} GROUP BY realm ORDER BY COUNT(*) DESC LIMIT #{limit}")
     rows.each do |row|
       h[row["realm"]] = row["count"].to_i
     end
@@ -67,7 +70,7 @@ class OverviewController < ApplicationController
           end
         end
 
-        (realm_counts(b, @@DEFAULT_LIMIT)).each do |r, c|
+        (realm_counts(@region, b, @@DEFAULT_LIMIT)).each do |r, c|
           @realms[r] += c
         end
       end
@@ -77,19 +80,18 @@ class OverviewController < ApplicationController
       @races = race_counts bracket
       @classes = class_counts bracket
       @specs = spec_counts bracket
-      @realms = realm_counts(bracket, @@DEFAULT_LIMIT)
+      @realms = realm_counts(@region, bracket, @@DEFAULT_LIMIT)
       @guilds = guild_counts bracket
     end
   end
 
   def faction_counts bracket
-    cache_key = "faction_counts_#{bracket}"
+    cache_key = "faction_counts_#{@region}_#{bracket}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
   	h = Hash.new
 
-    region_clause = "AND leaderboards.region='US'" ## TODO ADD MULTIREGION SUPPORT
-    rows = ActiveRecord::Base.connection.execute("SELECT factions.name AS faction, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id WHERE leaderboards.bracket='#{bracket}' #{region_clause} GROUP BY faction ORDER BY faction ASC")
+    rows = ActiveRecord::Base.connection.execute("SELECT factions.name AS faction, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id WHERE leaderboards.bracket='#{bracket}' #{@region_clause} GROUP BY faction ORDER BY faction ASC")
   	rows.each do |row|
   		h[row["faction"]] = row["count"].to_i
   	end
@@ -99,13 +101,12 @@ class OverviewController < ApplicationController
 	end
 
   def race_counts bracket
-    cache_key = "race_counts_#{bracket}"
+    cache_key = "race_counts_#{@region}_#{bracket}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
     h = Hash.new
 
-    region_clause = "AND leaderboards.region='US'" ## TODO ADD MULTIREGION SUPPORT
-    rows = ActiveRecord::Base.connection.execute("SELECT races.name AS race, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN races ON players.race_id=races.id WHERE leaderboards.bracket='#{bracket}' #{region_clause} GROUP BY race ORDER BY race ASC")
+    rows = ActiveRecord::Base.connection.execute("SELECT races.name AS race, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN races ON players.race_id=races.id WHERE leaderboards.bracket='#{bracket}' #{@region_clause} GROUP BY race ORDER BY race ASC")
     rows.each do |row|
       h[row["race"]] = row["count"].to_i
     end
@@ -115,13 +116,12 @@ class OverviewController < ApplicationController
   end
 
   def class_counts bracket
-    cache_key = "class_counts_#{bracket}"
+    cache_key = "class_counts_#{@region}_#{bracket}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
     h = Hash.new
 
-    region_clause = "AND leaderboards.region='US'" ## TODO ADD MULTIREGION SUPPORT
-    rows = ActiveRecord::Base.connection.execute("SELECT classes.name AS class, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN classes ON players.class_id=classes.id WHERE leaderboards.bracket='#{bracket}' #{region_clause} GROUP BY class ORDER BY class ASC")
+    rows = ActiveRecord::Base.connection.execute("SELECT classes.name AS class, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN classes ON players.class_id=classes.id WHERE leaderboards.bracket='#{bracket}' #{@region_clause} GROUP BY class ORDER BY class ASC")
     rows.each do |row|
       h[row["class"]] = row["count"].to_i
     end
@@ -131,13 +131,12 @@ class OverviewController < ApplicationController
   end
 
   def spec_counts bracket
-    cache_key = "spec_counts_#{bracket}"
+    cache_key = "spec_counts_#{@region}_#{bracket}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
     h = Hash.new
 
-    region_clause = "AND leaderboards.region='US'" ## TODO ADD MULTIREGION SUPPORT
-    rows = ActiveRecord::Base.connection.execute("SELECT specs.name AS spec, specs.icon, classes.name AS class, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN specs ON players.spec_id=specs.id JOIN classes ON specs.class_id=classes.id WHERE leaderboards.bracket='#{bracket}' #{region_clause} GROUP BY spec, specs.icon, class ORDER BY spec ASC")
+    rows = ActiveRecord::Base.connection.execute("SELECT specs.name AS spec, specs.icon, classes.name AS class, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN specs ON players.spec_id=specs.id JOIN classes ON specs.class_id=classes.id WHERE leaderboards.bracket='#{bracket}' #{@region_clause} GROUP BY spec, specs.icon, class ORDER BY spec ASC")
     rows.each do |row|
       h[row["class"] + row["spec"]] = SpecInfo.new(row["spec"], row["count"].to_i, row["icon"], row["class"])
     end
@@ -147,15 +146,14 @@ class OverviewController < ApplicationController
   end
 
   def guild_counts bracket
-    cache_key = "guild_counts_#{bracket}"
+    cache_key = "guild_counts_#{@region}_#{bracket}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
     h = Hash.new
 
     bracket_clause = (bracket.nil?) ? "" : "AND bracket='#{bracket}'"
-    region_clause = "AND leaderboards.region='US'" ## TODO ADD MULTIREGION SUPPORT
 
-    rows = ActiveRecord::Base.connection.execute("SELECT guild, realms.name AS realm, factions.name AS faction, COUNT(*) FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN factions ON players.faction_id=factions.id JOIN realms ON players.realm_id=realms.id WHERE guild != '' AND guild IS NOT NULL #{bracket_clause} #{region_clause} GROUP BY guild, realms.name, factions.name ORDER BY COUNT(*) DESC LIMIT 100")
+    rows = ActiveRecord::Base.connection.execute("SELECT guild, realms.name AS realm, factions.name AS faction, COUNT(*) FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN factions ON players.faction_id=factions.id JOIN realms ON players.realm_id=realms.id WHERE guild != '' AND guild IS NOT NULL #{bracket_clause} #{@region_clause} GROUP BY guild, realms.name, factions.name ORDER BY COUNT(*) DESC LIMIT 100")
     rows.each do |row|
       h[row["guild"] + row["realm"] + row["faction"]] = GuildInfo.new(row["guild"], row["realm"], row["faction"], row["count"].to_i)
     end

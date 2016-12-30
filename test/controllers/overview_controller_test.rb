@@ -30,4 +30,24 @@ class OverviewControllerTest < ActionController::TestCase
       assert_not_empty assigns(:bracket_fullname)
     end
   end
+
+  test "should show overview for region" do
+    Regions.list.each do |region|
+      ["2v2", "3v3", "rbg", "all"].each do |bracket|
+        get(:overview, params: {bracket: bracket, region: region})
+        assert_response :success
+
+        assert_not_nil assigns(:region)
+        assert_not_nil assigns(:region_clause)
+        assert_not_empty assigns(:region)
+      end
+    end
+  end
+
+  test "should show overview for all region" do
+    get(:overview, params: {bracket: "2v2", region: "All"})
+
+    assert_nil assigns(:region)
+    assert_nil assigns(:region_clause)
+  end
 end

@@ -70,6 +70,10 @@ a:focus {
 	margin-top: 2em;
 }
 
+.margin-0-5em {
+  margin: 0.5em;
+}
+
 .expands {
 	min-height: calc(100vh - 235px);
 }
