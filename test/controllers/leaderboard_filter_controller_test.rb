@@ -17,16 +17,17 @@ class LeaderboardFilterControllerTest < ActionController::TestCase
   end
 
   test "should get selected params" do
-    get(:results, params: {class: "paladin", leaderboard: "2v2"})
+    get(:results, params: {class: "paladin", leaderboard: "2v2", region: "EU"})
     assert_response :success
     assert_not_nil assigns(:selected)
     assert_not_empty assigns(:selected)
-    assert_not_nil  assigns(:selected)[:class]
-    assert_not_nil  assigns(:selected)[:leaderboard]
+    assert_not_nil assigns(:selected)[:class]
+    assert_not_nil assigns(:selected)[:leaderboard]
+    assert_not_nil assigns(:selected)[:region]
   end
 
   test "should find filtered results" do
-    base_params = {class: "paladin", leaderboard: "2v2"}
+    base_params = {class: "paladin", leaderboard: "2v2", region: "US"}
     test_params = [
       base_params,
       base_params.merge({factions: "alliance"}),

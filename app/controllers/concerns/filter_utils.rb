@@ -58,7 +58,7 @@ module FilterUtils extend ActiveSupport::Concern
   end
 
   def realm_clause
-    return Realms.list[@selected[:realm]].nil? ? "" : " AND realms.slug='#{@selected[:realm]}'"
+    return Realms.list[@selected[:realm] + @region].nil? ? "" : " AND realms.slug='#{@selected[:realm]}'"
   end
 
   def region_clause

@@ -11,6 +11,18 @@
 </div>
 
 <div class="filter-row">
+  <label for="region" class="btn-group-label" title="Region (required)">Region <span class="text-muted">(required)</span></label>
+  <div id="region" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Region" data-toggle="buttons">
+    <% Regions.list.each do |region| %>
+      <% active = (urlify(region) == @selected[:region]) ? "active" : "" %>
+      <label class="btn region-btn <%= active %>" data-value="<%= region %>">
+        <input type="radio" autocomplete="off"><%= region %>
+      </label>
+    <% end %>
+  </div>
+</div>
+
+<div class="filter-row">
   <label for="class" class="btn-group-label" title="Player Class">Class</label>
   <%= render "layouts/class_selection" %>
 </div>
@@ -24,13 +36,13 @@
 <div class="filter-row">
   <label for="realm-select" class="btn-group-label">Realm</label>
   <div id="realm-select" class="input-group">
-    <% selected = Realms.list[@selected[:realm]] if @selected[:realm] %>
-    <% txt = selected || "ANY" %>
+    <% selected = Realms.list[@selected[:realm] + @region] if @selected[:realm] %>
+    <% txt = selected ? selected.name : "ANY" %>
     <% active = selected ? "active" : "" %>
-    <button id="btn-realm" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><div id="realm" class="dropdown-text inline-block" data-value="<%= selected %>" data-default="ANY"><%= txt %></div><span class="caret"></span></button>
+    <button id="btn-realm" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><div id="realm" class="dropdown-text inline-block" data-value="<%= selected.slug unless selected.nil? %>" data-default="ANY"><%= txt %></div><span class="caret"></span></button>
     <ul class="dropdown-menu dropdown-right" role="menu">
-      <% Realms.list.each do |slug, realm| %>
-        <li data-target="realm" data-target-button="btn-realm"><%= realm %></li>
+      <% Realms.list.values.uniq{ |r| r.slug }.each do |realm| %>
+        <li data-target="realm" data-target-button="btn-realm" data-value="<%= realm.slug %>"><%= realm.name %></li>
       <% end %>
     </ul>
   </div>

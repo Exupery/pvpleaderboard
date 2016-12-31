@@ -53,7 +53,13 @@ var ready = function() {
   });
 
   $(".leaderboard-btn").click(function() {
-    if (isRequired("leaderboard")) {
+    if (isRequired("leaderboard") && $(".region-btn.active").length == 1) {
+      $(".btn-submit").prop("disabled", false);
+    }
+  });
+
+  $(".region-btn").click(function() {
+    if (isRequired("region") && $(".leaderboard-btn.active").length == 1) {
       $(".btn-submit").prop("disabled", false);
     }
   });
@@ -104,7 +110,8 @@ var ready = function() {
 
     var txt = $(this).text();
     txtTarget.text(txt);
-    txtTarget.data("value", txt);
+    var value = $(this).data("value");
+    txtTarget.attr("data-value", value);
   });
 
   $(".form-resetter").click(function() {
@@ -245,14 +252,15 @@ function createFilterQueryString() {
   }
 
   var leaderboard = getFirstValue(".leaderboard-btn.active");
-  if (!leaderboard && isRequired("leaderboard")) {
+  var region = getFirstValue(".region-btn.active");
+  if ((!leaderboard && isRequired("leaderboard")) || (!region && isRequired("region"))) {
     showErrorModal();
     return null;
-  } else if (leaderboard) {
+  } else if (leaderboard && region) {
     if (params.length > 1) {
       params += "&"
     }
-    params += "leaderboard=" + leaderboard
+    params += "leaderboard=" + leaderboard + "&region=" + region
   }
 
   params += queryParam("leaderboards", getAllValues(".leaderboards-btn.active"));

@@ -16,7 +16,8 @@ class LeaderboardFilterController < ApplicationController
     @filtered = true
 
     @bracket = get_bracket
-    if @bracket.nil?
+    @region = get_region
+    if @bracket.nil? || @region.nil?
       redirect_to "/leaderboards/filter"
       return nil
     end
@@ -29,9 +30,9 @@ class LeaderboardFilterController < ApplicationController
 
   def players_on_leaderboard
     where = create_where_clause
-    where = "WHERE #{where}" unless where.empty?
+    where = "WHERE #{where.empty? ? 'TRUE' : where}"
 
-    players = filter_leaderboard(@bracket, where)
+    players = filter_leaderboard(@bracket, @region, where)
 
     return players if players.empty?
 
@@ -48,7 +49,7 @@ class LeaderboardFilterController < ApplicationController
   def get_selected
     @selected = Hash.new
 
-    filters = [:leaderboard, :class, :spec, :factions, :"arena-achievements", :"rbg-achievements", :races, :hks, :realm]
+    filters = [:leaderboard, :region, :class, :spec, :factions, :"arena-achievements", :"rbg-achievements", :races, :hks, :realm]
 
     filters.each do |filter|
       @selected[filter] = urlify params[filter]

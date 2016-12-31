@@ -9,6 +9,7 @@ class LeaderboardsController < ApplicationController
 
     @bracket = get_bracket
     title_bracket = get_title_bracket @bracket
+    @region = get_region   ## TODO
     if title_bracket
       @title = "#{title_bracket} Leaderboard"
       @description = "Players currently on the World of Warcraft #{title_bracket} PvP leaderboard"
