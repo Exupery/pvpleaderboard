@@ -2,10 +2,8 @@ class RealmsController < OverviewController
   include FilterUtils
 
   def show
-    @bracket = get_bracket
-    title_bracket = get_title_bracket @bracket
-    @title = "Realms - #{title_bracket || 'All Brackets'}"
-    @description = "World of Warcraft PvP leaderboard players per realm"
+    @title = "Realms - #{@title_region}#{@title_bracket || 'All Brackets'}"
+    @description = "World of Warcraft PvP #{@title_region + @title_bracket + ' ' unless @title_bracket.nil?}leaderboard players per realm"
 
     @realms = Hash.new(0)
 
@@ -15,20 +13,16 @@ class RealmsController < OverviewController
         return nil
       end
       @@BRACKETS.each do |b|
-        (realm_counts(b, "ALL")).each do |r, c|
+        (realm_counts(@region, b, "ALL")).each do |r, c|
           @realms[r] += c
         end
       end
     else
-      @realms = realm_counts(@bracket, "ALL")
+      @realms = realm_counts(@region, @bracket, "ALL")
     end
-
-    @bracket_fullname = get_bracket_fullname @bracket
   end
 
   def details
-    @bracket = get_bracket
-    title_bracket = get_title_bracket @bracket
     @realm_slug = params[:realm_slug].downcase.delete("'").gsub(/\s/, "-") if params[:realm_slug]
     @realm_name = Realms.list[@realm_slug]
 
@@ -40,10 +34,9 @@ class RealmsController < OverviewController
       return nil
     end
 
-    @title = "#{@realm_name} - #{title_bracket || 'All Brackets'}"
+    @title = "#{@realm_name} - #{@title_bracket || 'All Brackets'}"
     @description = "World of Warcraft PvP leaderboard players on #{@realm_name}"
 
-    @bracket_fullname = get_bracket_fullname @bracket
     @leaderboard = filter_leaderboard(@bracket, "WHERE slug='#{@realm_slug}'")
     @last = 0
   end

@@ -1,6 +1,7 @@
 class OverviewController < ApplicationController
   include Utils
   protect_from_forgery with: :exception
+  before_action :assign_fields
 
   @@DEFAULT_LIMIT = 50
 
@@ -8,12 +9,8 @@ class OverviewController < ApplicationController
     expires_in 1.day, public: true
     fresh_when(last_modified: last_players_update) if Rails.env.production?
 
-    @bracket = get_bracket
-  	title_bracket = get_title_bracket @bracket
-    @region = get_region
-    title_region = get_title_region @region
-    @title = "#{title_region}#{title_bracket || 'Leaderboard'} Overview"
-    @description = "World of Warcraft PvP #{title_region + title_bracket + ' ' unless title_bracket.nil?}leaderboard representation by class, spec, race, faction, realm, and guild"
+    @title = "#{@title_region}#{@title_bracket || 'Leaderboard'} Overview"
+    @description = "World of Warcraft PvP #{@title_region + @title_bracket + ' ' unless @title_bracket.nil?}leaderboard representation by class, spec, race, faction, realm, and guild"
 
   	@factions = Hash.new(0)
     @races = Hash.new(0)
@@ -22,10 +19,7 @@ class OverviewController < ApplicationController
     @realms = Hash.new(0)
     @guilds = Hash.new(nil)
 
-    @region_clause = @region.nil? ? nil : "AND leaderboards.region='#{@region}'"
-
     find_counts @bracket
-    @bracket_fullname = get_bracket_fullname(@bracket, @region)
   end
 
   protected
@@ -160,6 +154,16 @@ class OverviewController < ApplicationController
 
     Rails.cache.write(cache_key, h)
     return h
+  end
+
+  def assign_fields
+    @bracket = get_bracket
+    @title_bracket = get_title_bracket @bracket
+    @region = get_region
+    @title_region = get_title_region @region
+
+    @bracket_fullname = get_bracket_fullname(@bracket, @region)
+    @region_clause = @region.nil? ? nil : "AND leaderboards.region='#{@region}'"
   end
 end
 

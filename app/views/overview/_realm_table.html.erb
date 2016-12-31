@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th>Realm</th>
+      <% #<th>Region</th> TODO DISPLAY REGION %>
       <th>Count</th>
       <th>Percent</th>
     </tr>
@@ -11,8 +12,8 @@
     <% @realms.each do |r, c| %>
       <tr>
         <td>
-        <% if @bracket %>
-          <a href="/realms/<%= urlify r.delete("'") %>/<%= @bracket %>"><%= r %></a>
+        <% if @bracket && @region %>
+          <a href="/realms/<%= @bracket %>/<%= @region.downcase %>/<%= urlify r.delete("'") %>"><%= r %></a>
         <% else %>
           <%= r %>
         <% end %>

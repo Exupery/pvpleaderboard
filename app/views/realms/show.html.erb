@@ -1,4 +1,6 @@
-<%= render "layouts/bracket_selection", :path => "realms" %>
+<% path = "/realms/%{bracket}/%{region}" %>
+<%= render "layouts/bracket_selection", :path => path %>
+<%= render "layouts/region_selection", :path => path %>
 
 <h1>Players per Realm - <%= @bracket_fullname %></h1>
 
