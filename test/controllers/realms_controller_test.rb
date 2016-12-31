@@ -40,8 +40,7 @@ class RealmsControllerTest < ActionController::TestCase
         get(:details, params: {bracket: bracket, region: region, realm_slug: "realm0"})
         assert_response :success
 
-        assert_not_nil assigns(:realm_name)
-        assert_not_nil assigns(:realm_slug)
+        assert_not_nil assigns(:realm)
       end
     end
   end

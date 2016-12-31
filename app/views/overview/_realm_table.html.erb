@@ -2,24 +2,28 @@
   <thead>
     <tr>
       <th>Realm</th>
-      <% #<th>Region</th> TODO DISPLAY REGION %>
+      <th>Region</th>
       <th>Count</th>
       <th>Percent</th>
     </tr>
   </thead>
   <tbody>
-    <% percents = percent_counts @realms %>
-    <% @realms.each do |r, c| %>
+    <% percentHash = Hash.new %>
+    <% @realms.each { |k, h| percentHash[k] = h[:count] } %>
+    <% percents = percent_counts percentHash %>
+    <% @realms.each do |k, h| %>
+      <% r = h[:realm] %>
       <tr>
         <td>
-        <% if @bracket && @region %>
-          <a href="/realms/<%= @bracket %>/<%= @region.downcase %>/<%= urlify r.delete("'") %>"><%= r %></a>
+        <% if @bracket %>
+          <a href="/realms/<%= @bracket %>/<%= r.region.downcase %>/<%= urlify r.slug %>"><%= r.name %></a>
         <% else %>
-          <%= r %>
+          <%= r.name %>
         <% end %>
         </td>
-        <td><%= c %></td>
-        <td><%= percents[r] %>%</td>
+        <td><%= r.region %></td>
+        <td><%= h[:count] %></td>
+        <td><%= percents[k] %>%</td>
       </tr>
     <% end %>
   </tbody>

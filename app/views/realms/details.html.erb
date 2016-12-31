@@ -1,9 +1,9 @@
-<%= render "layouts/bracket_selection", :path => "realms/#{@realm_slug}", :exclude_all => true %>
+<%= render "layouts/bracket_selection", :path => "/realms/%{bracket}/%{region}/#{@realm.slug}", :exclude_all => true %>
 
 <% if @leaderboard.empty? %>
-    <h1>No players from <%= @realm_name %> currently on the <%= @bracket_fullname %> leaderboard</h1>
+    <h1>No players from <%= @realm.name %> currently on the <%= @bracket_fullname %> leaderboard</h1>
   <% else %>
-    <h1><%= @realm_name %> - <%= @bracket_fullname %></h1>
+    <h1><%= @realm.name %> <%= @bracket_fullname %></h1>
     <% heading = "#{@leaderboard.size} player#{'s' if @leaderboard.size != 1}" %>
     <h2 id="leaderboard-heading" data-default="<%= heading %>"><%= heading %></h2>
     <%= render "layouts/leaderboard" %>

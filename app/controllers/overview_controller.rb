@@ -16,7 +16,7 @@ class OverviewController < ApplicationController
     @races = Hash.new(0)
     @classes = Hash.new(0)
     @specs = Hash.new(nil)
-    @realms = Hash.new(0)
+    @realms = Hash.new(nil)
     @guilds = Hash.new(nil)
 
     find_counts @bracket
@@ -30,9 +30,11 @@ class OverviewController < ApplicationController
 
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT realms.name AS realm, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN realms ON players.realm_id=realms.id WHERE leaderboards.bracket='#{bracket}' #{@region_clause} GROUP BY realm ORDER BY COUNT(*) DESC LIMIT #{limit}")
+    rows = ActiveRecord::Base.connection.execute("SELECT realms.slug AS slug, realms.region AS region, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN realms ON players.realm_id=realms.id WHERE leaderboards.bracket='#{bracket}' #{@region_clause} GROUP BY slug, realms.region ORDER BY COUNT(*) DESC LIMIT #{limit}")
     rows.each do |row|
-      h[row["realm"]] = row["count"].to_i
+      key = row["slug"] + row["region"]
+      next unless Realms.list.has_key?(key)
+      h[key] = {realm: Realms.list[key], count: row["count"].to_i}
     end
 
     Rails.cache.write(cache_key, h)
@@ -64,8 +66,12 @@ class OverviewController < ApplicationController
           end
         end
 
-        (realm_counts(@region, b, @@DEFAULT_LIMIT)).each do |r, c|
-          @realms[r] += c
+        (realm_counts(@region, b, @@DEFAULT_LIMIT)).each do |k, h|
+          if @realms.has_key?(k)
+            @realms[k][:count] += h[:count]
+          else
+            @realms[k] = h
+          end
         end
       end
       @guilds = guild_counts nil

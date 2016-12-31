@@ -1,5 +1,15 @@
 include Utils
 
+class Realm
+  attr_reader :slug, :name, :region
+
+  def initialize(slug, name, region)
+    @slug = slug
+    @name = name
+    @region = region
+  end
+end
+
 class Realms
 	@@realms = nil
 
@@ -12,9 +22,11 @@ class Realms
 	def self.get_realms
 		h = Hash.new()
 
-		rows = ActiveRecord::Base.connection.execute("SELECT slug, name FROM realms ORDER BY name ASC")
+		rows = ActiveRecord::Base.connection.execute("SELECT slug, name, region FROM realms ORDER BY name ASC")
     rows.each do |row|
-      h[row["slug"]] = row["name"]
+      slug = row["slug"]
+      region = row["region"]
+      h[slug + region] = Realm.new(slug, row["name"], region)
     end
 
     @@realms = h

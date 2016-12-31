@@ -1,6 +1,6 @@
 <% ["US", "EU"].each do |region| %>
   <% 100.times do |n| %>
-  realm<%= n %>:
+  realm<%= region %><%= n %>:
     slug: <%= "realm#{n}" %>
     name: <%= "Realm#{n}" %>
     region: <%= region %>
