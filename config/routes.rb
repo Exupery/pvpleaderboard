@@ -30,9 +30,5 @@ Rails.application.routes.draw do
   get "talents/:class", to: redirect { |path_params, req| "/pvp/#{path_params[:class]}" }
   get "talents/:class/:spec", to: redirect { |path_params, req|
     "/pvp/#{path_params[:class]}/#{path_params[:spec]}" }
-
-  get "realms/:realm_slug/2v2", to: redirect { |path_params, req| "/realms/2v2/us/#{path_params[:realm_slug]}" }
-  get "realms/:realm_slug/3v3", to: redirect { |path_params, req| "/realms/3v3/us/#{path_params[:realm_slug]}" }
-  get "realms/:realm_slug/rbg", to: redirect { |path_params, req| "/realms/rbg/us/#{path_params[:realm_slug]}" }
   ## OLD ROUTES END
 end

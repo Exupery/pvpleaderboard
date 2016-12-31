@@ -5,6 +5,15 @@ class RealmsController < OverviewController
     @title = "Realms - #{@title_region}#{@title_bracket || 'All Brackets'}"
     @description = "World of Warcraft PvP #{@title_region + @title_bracket + ' ' unless @title_bracket.nil?}leaderboard players per realm"
 
+    ## Original (pre multi-region support) paths were realms/:realm_slug/:bracket so redirect
+    ## if the current bracket location is a valid US realm slug and the current region is
+    ## a valid bracket. [Cannot be done via routing due to ambiguity].
+    if (params[:bracket] && Realms.list.include?(params[:bracket].downcase + "US")) &&
+      (params[:region] && @@BRACKETS.include?(params[:region].downcase))
+      redirect_to "/realms/#{params[:region].downcase}/us/#{params[:bracket].downcase}", :status => 301
+      return nil
+    end
+
     @realms = Hash.new(nil)
 
     if @bracket.nil?

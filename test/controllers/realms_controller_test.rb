@@ -49,4 +49,9 @@ class RealmsControllerTest < ActionController::TestCase
     get(:details, params: {bracket: "3v3", region: "us", realm_slug: "NOT_A_VALID_REALM"})
     assert_response :redirect
   end
+
+  test "should redirect old realm detail path" do
+    get(:show, params: {bracket: "realm0", region: "3v3"})
+    assert_response :redirect
+  end
 end
