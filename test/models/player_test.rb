@@ -34,6 +34,7 @@ class PlayerTest < ActiveSupport::TestCase
     hash["spec_icon"] = "ability_hunter_bestialdiscipline"
     hash["realm"] = "ENCOM"
     hash["realm_slug"] = "ENCOM"
+    hash["region"] = "US"
     hash["guild"] = "Tyranny"
 
     return Player.new hash

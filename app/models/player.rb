@@ -1,5 +1,5 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :guild
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild
 
   def initialize hash
     @id = hash["id"]
@@ -16,6 +16,7 @@ class Player
     @spec_icon = hash["spec_icon"]
     @realm = hash["realm"]
     @realm_slug = hash["realm_slug"]
+    @region = hash["region"]
     @guild = hash["guild"]
   end
 
@@ -26,7 +27,7 @@ class Player
   end
 
   def armory_link
-    return "https://us.battle.net/wow/en/character/#{@realm_slug}/#{@name}/advanced"
+    return "https://#{@region.downcase}.battle.net/wow/en/character/#{@realm_slug}/#{@name}/advanced"
   end
 
 end
