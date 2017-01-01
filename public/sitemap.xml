@@ -218,15 +218,27 @@
   <changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/2v2</loc>
+  <loc>https://www.pvpleaderboard.com/leaderboards/2v2/us</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/3v3</loc>
+  <loc>https://www.pvpleaderboard.com/leaderboards/3v3/us</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/rbg</loc>
+  <loc>https://www.pvpleaderboard.com/leaderboards/rbg/us</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/leaderboards/2v2/eu</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/leaderboards/3v3/eu</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.pvpleaderboard.com/leaderboards/rbg/eu</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>

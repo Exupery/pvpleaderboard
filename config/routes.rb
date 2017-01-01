@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   get "leaderboards" => "leaderboards#show"
   get "leaderboards/filter" => "leaderboard_filter#filter"
   get "leaderboards/filter/results" => "leaderboard_filter#results"
-  get "leaderboards/:bracket" => "leaderboards#show"
-  get "leaderboards/:bracket/more" => "leaderboards#more"
+  get "leaderboards/:bracket/:region" => "leaderboards#show"
+  get "leaderboards/:bracket/:region/more" => "leaderboards#more"
 
   get "realms" => "realms#show"
   get "realms/:bracket" => "realms#show"
@@ -33,5 +33,7 @@ Rails.application.routes.draw do
 
   get "overview", to: redirect("/statistics")
   get "overview/:bracket", to: redirect { |path_params, req| "/statistics/#{path_params[:bracket]}" }
+
+  get "leaderboards/:bracket", to: redirect { |path_params, req| "/leaderboards/#{path_params[:bracket]}/us" }
   ## OLD ROUTES END
 end

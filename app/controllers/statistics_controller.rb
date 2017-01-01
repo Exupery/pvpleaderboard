@@ -1,7 +1,6 @@
-class StatisticsController < ApplicationController
+class StatisticsController < BracketRegionController
   include Utils
   protect_from_forgery with: :exception
-  before_action :assign_fields
 
   @@DEFAULT_LIMIT = 50
 
@@ -45,7 +44,7 @@ class StatisticsController < ApplicationController
 
   def find_counts bracket
     if bracket.nil?
-      @@BRACKETS.each do |b| ## REFACTOR BLOCK
+      @@BRACKETS.each do |b| ## TODO REFACTOR BLOCK (LOOP NO LONGER NEEDED?)
         (faction_counts b).each do |f, c|
           @factions[f] += c
         end
@@ -162,15 +161,6 @@ class StatisticsController < ApplicationController
     return h
   end
 
-  def assign_fields
-    @bracket = get_bracket
-    @title_bracket = get_title_bracket @bracket
-    @region = get_region
-    @title_region = get_title_region @region
-
-    @bracket_fullname = get_bracket_fullname(@bracket, @region)
-    @region_clause = @region.nil? ? nil : "AND leaderboards.region='#{@region}'"
-  end
 end
 
 class SpecInfo

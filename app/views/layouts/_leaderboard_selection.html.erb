@@ -1,0 +1,9 @@
+<% path = "/leaderboards/%{bracket}/%{region}" %>
+<% Regions.list.each do |r| %>
+  <div class="btn-group btn-group-lg margin-0-5em" role="group" aria-label="Brackets" data-turbolinks="false">
+    <% ["2v2", "3v3", "RBG"].each do |b| %>
+      <% active = (is_active_bracket(b, r)) ? "active" : "" %>
+      <a href="<%= (path % {:bracket => b, :region => r}).downcase %>" type="button" class="btn btn-default <%= active %>" role="button"><%= r %> <%= b %></a>
+    <% end %>
+  </div>
+<% end %>

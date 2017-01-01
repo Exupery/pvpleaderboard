@@ -14,10 +14,14 @@
     <li class="dropdown <%= is_active "/leaderboards" %>" data-turbolinks="false">
       <a href="/leaderboards" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Leaderboards <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <% ["2v2", "3v3", "RBG"].each do |bracket| %>
-        <li class="<%= is_active "/leaderboards/#{urlify bracket}" %>"><a href="/leaderboards/<%= urlify bracket %>"><%= bracket %></a></li>
+        <% pathFormat = "/leaderboards/%{bracket}/%{region}" %>
+        <% Regions.list.each do |region| %>
+          <% ["2v2", "3v3", "RBG"].each do |bracket| %>
+            <% path = pathFormat % {:bracket => urlify(bracket), :region => region.downcase} %>
+            <li class="<%= is_active path %>"><a href="<%= path %>"><%= region %> <%= bracket %></a></li>
+          <% end %>
+          <li class="divider"></li>
         <% end %>
-        <li class="divider"></li>
         <li class="<%= is_active "/leaderboards/filter" %>"><a href="/leaderboards/filter">Filter</a></li>
       </ul>
     </li>

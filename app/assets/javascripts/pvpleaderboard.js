@@ -47,22 +47,31 @@ var ready = function() {
   });
 
   $(".spec-selector").click(function() {
-    if (isRequired("spec") && $(".class-selector.active").length == 1) {
-      $(".btn-submit").prop("disabled", false);
+    if (isRequired("spec") && isActive(".class-selector.active")) {
+      enableSubmit();
     }
   });
 
   $(".leaderboard-btn").click(function() {
-    if (isRequired("leaderboard") && $(".region-btn.active").length == 1) {
-      $(".btn-submit").prop("disabled", false);
+    if (isRequired("leaderboard") && isActive(".region-btn.active")) {
+      enableSubmit();
     }
   });
 
   $(".region-btn").click(function() {
-    if (isRequired("region") && $(".leaderboard-btn.active").length == 1) {
-      $(".btn-submit").prop("disabled", false);
+    if (isRequired("region") && isActive(".leaderboard-btn.active")) {
+      enableSubmit();
     }
   });
+
+  if ($(".filter-form").length == 1) {
+    var classSpec = isRequired("spec") && isActive(".class-selector.active") && isActive(".spec-selector.active");
+    var leaderboardRegion = isRequired("leaderboard") && isRequired("region")
+      && isActive(".leaderboard-btn.active") && isActive(".region-btn.active");
+    if (classSpec || leaderboardRegion) {
+      enableSubmit();
+    }
+  }
 
   $(".class-selector-group").mouseleave(function() {
     if ($(".class-selector").hasClass("active")) {
@@ -195,7 +204,7 @@ function checkAndAddLeaderboardEntries(table, showAll) {
 
 function addLeaderboardEntries(table, minRanking, showAll) {
   $.ajax({
-    url: "/leaderboards/" + $(table).data("bracket") + "/more?min=" + minRanking + "&all=" + showAll,
+    url: "/leaderboards/" + $(table).data("bracket") + "/" + $(table).data("region") + "/more?min=" + minRanking + "&all=" + showAll,
     dataType: "html",
     cache: false
   }).done(function(response) {
@@ -329,6 +338,14 @@ function toggleCollapser(id, collapsed) {
   var toggler = $("#" + id);
   toggler.width(toggler.width());
   toggler.text(text + " " + $(toggler).data("text"));
+}
+
+function enableSubmit() {
+  $(".btn-submit").prop("disabled", false);
+}
+
+function isActive(selector) {
+  return $(selector).length == 1;
 }
 
 function resetForm(target) {

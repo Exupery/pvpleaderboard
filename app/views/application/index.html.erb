@@ -1,13 +1,16 @@
 <div class="jumbotron center-text">
 	<h1>PvP Leaderboard</h1>
-	<h3 class="middle center">See which talents top WoW PvPers are selecting. Updates daily based on the U.S. <a href="https://worldofwarcraft.com/en-us/game/pvp/leaderboards/2v2">2v2</a>, <a href="https://worldofwarcraft.com/en-us/game/pvp/leaderboards/3v3">3v3</a>, and <a href="https://worldofwarcraft.com/en-us/game/pvp/leaderboards/battlegrounds">RBG</a> PvP leaderboards.</h3>
+	<h3 class="middle center">View and filter PvP leaderboards or see which talents top WoW PvPers are selecting.</h3>
+  <h4>Updates daily based on the U.S. and E.U. 2v2, 3v3, and Rated Battleground leaderboards.</h4>
   <div class="margin-top-2em">
-    <h4>Select a class and spec to begin:</h4>
+    <h4>Select a class and spec to view talents:</h4>
     <div>
       <%= render "layouts/class_selection" %>
     </div>
     <div class="margin-top-1em">
       <%= render "layouts/spec_selection", :use_anchors => true %>
     </div>
+    <h4 class="margin-top-1em">Or select a ladder to view:</h4>
+    <%= render "layouts/leaderboard_selection" %>
   </div>
 </div>
