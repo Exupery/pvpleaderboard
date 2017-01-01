@@ -1,264 +1,391 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-<url>
-  <loc>https://www.pvpleaderboard.com/</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/death-knight</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/druid</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/hunter</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/mage</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/monk</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/paladin</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/priest</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/rogue</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/shaman</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/warlock</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/warrior</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/death-knight/blood</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/death-knight/frost</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/death-knight/unholy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/druid/balance</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/druid/feral</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/druid/guardian</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/druid/restoration</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/hunter/beast-mastery</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/hunter/marksmanship</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/hunter/survival</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/mage/arcane</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/mage/fire</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/mage/frost</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/monk/brewmaster</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/monk/mistweaver</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/monk/windwalker</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/paladin/holy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/paladin/protection</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/paladin/retribution</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/priest/discipline</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/priest/holy</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/priest/shadow</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/rogue/assassination</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/rogue/combat</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/rogue/subtlety</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/shaman/elemental</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/shaman/enhancement</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/shaman/restoration</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/warlock/affliction</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/warlock/demonology</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/warlock/destruction</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/warrior/arms</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/warrior/fury</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/warrior/protection</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/pvp/filter</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/statistics</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/statistics/2v2</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/statistics/3v3</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/statistics/rbg</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/leaderboards</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/2v2/us</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/3v3/us</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/rbg/us</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/2v2/eu</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/3v3/eu</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/rbg/eu</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/leaderboards/filter</loc>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/realms</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/realms/2v2</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/realms/3v3</loc>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>https://www.pvpleaderboard.com/realms/rbg</loc>
-  <changefreq>daily</changefreq>
-</url>
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <url>
+    <loc>https://www.pvpleaderboard.com/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/paladin/retribution</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/paladin/protection</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/paladin/holy</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/shaman/restoration</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/priest/shadow</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/monk/windwalker</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/demon-hunter/vengeance</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/death-knight/unholy</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/demon-hunter/havoc</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/hunter/survival</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/shaman/enhancement</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/shaman/elemental</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/priest/discipline</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/druid/restoration</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/priest/holy</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/monk/brewmaster</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/death-knight/blood</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/druid/balance</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/hunter/beast-mastery</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/monk/mistweaver</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/druid/feral</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/rogue/assassination</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/rogue/outlaw</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/warrior/fury</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/death-knight/frost</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/warrior/arms</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/mage/fire</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/warlock/demonology</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/hunter/marksmanship</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/mage/arcane</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/druid/guardian</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/rogue/subtlety</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/warrior/protection</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/leaderboards/filter</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/mage/frost</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/warlock/affliction</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/warlock/destruction</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/leaderboards/2v2/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/leaderboards/2v2/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/warrior</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/rogue</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/monk</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/druid</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/leaderboards/rbg/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/leaderboards/rbg/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/leaderboards</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/warlock</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/priest</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/leaderboards/3v3/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/mage</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/demon-hunter</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/leaderboards/3v3/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/filter</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/shaman</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/paladin</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/hunter</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/pvp/death-knight</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/all/all</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/all/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/3v3/</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/all/</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/2v2/</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/all/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/rbg/</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/all</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/rbg/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/2v2/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/3v3</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/3v3/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/3v3/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/2v2</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/3v3/all</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/all/</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/2v2/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/2v2/</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/rbg/</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/rbg</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/all/all</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/all/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/all/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/3v3/</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/rbg/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/rbg/all</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/3v3/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/3v3/all</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/3v3/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/2v2/all</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/2v2/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/2v2/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/statistics/2v2/all</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/rbg/eu</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/rbg/all</loc>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.pvpleaderboard.com/realms/rbg/us</loc>
+    <changefreq>daily</changefreq>
+  </url>
 </urlset>
