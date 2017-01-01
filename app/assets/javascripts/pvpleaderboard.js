@@ -264,6 +264,7 @@ function createFilterQueryString() {
   }
 
   params += queryParam("leaderboards", getAllValues(".leaderboards-btn.active"));
+  params += queryParam("regions", getAllValues(".regions-btn.active"));
   params += queryParam("factions", getAllValues(".factions-btn.active"));
   params += queryParam("cr-bracket", getAllValues("#cr-bracket"));
   params += queryParam("current-rating", getAllValues("#current-rating"));

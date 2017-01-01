@@ -61,10 +61,6 @@ module FilterUtils extend ActiveSupport::Concern
     return Realms.list[@selected[:realm] + @region].nil? ? "" : " AND realms.slug='#{@selected[:realm]}'"
   end
 
-  def region_clause
-    return "AND leaderboards.region='US'" ## TODO ADD MULTIREGION SUPPORT
-  end
-
   def narrow_by_cr ids
     if @selected[:"cr-bracket"]
       bracket = @selected[:"cr-bracket"].downcase

@@ -35,6 +35,7 @@ class FilterControllerTest < ActionController::TestCase
       base_params.merge({races: "tauren"}),
       base_params.merge({realm: "realm0"}),
       base_params.merge({leaderboards: "3v3"}),
+      base_params.merge({regions: "EU"}),
       base_params.merge({"cr-bracket": "2v2", "current-rating": 2000}),
       base_params.merge({hks: "4077"}),
     ]

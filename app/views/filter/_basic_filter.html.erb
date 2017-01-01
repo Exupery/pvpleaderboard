@@ -24,4 +24,20 @@
   </div>
 </div>
 
+<div class="filter-row">
+  <label for="regions" class="btn-group-label" title="Regions">Region(s)</span></label>
+  <div id="regions" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Regions" data-toggle="buttons">
+    <% active = @selected[:regions].nil? ? "active" : "" %>
+    <label class="btn <%= active %> unactivater regions-any default-option" data-unactivate="regions-btn">
+      <input type="checkbox" autocomplete="off">ANY
+    </label>
+    <% Regions.list.each do |region| %>
+      <% active = (@selected[:regions].upcase.include?(region) if @selected[:regions]) ? "active" : "" %>
+      <label class="btn regions-btn unactivater <%= active %>" data-value="<%= region %>" data-unactivate="regions-any">
+        <input type="checkbox" autocomplete="off"><%= region %>
+      </label>
+    <% end %>
+  </div>
+</div>
+
 <%= render "layouts/faction_filter" %>

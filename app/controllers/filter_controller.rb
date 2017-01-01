@@ -60,6 +60,18 @@ class FilterController < ApplicationController
     return ids
   end
 
+  def region_clause
+    if @selected[:regions].nil?
+      return ""
+    else
+      regions = Array.new
+      Regions.list.each do |region|
+        regions.push("'#{region}'") if @selected[:regions].upcase.include? region
+      end
+      return "AND leaderboards.region IN (#{regions.join(",")})"
+    end
+  end
+
   def bracket_clause
     if @selected[:leaderboards].nil?
       return ""
@@ -75,7 +87,7 @@ class FilterController < ApplicationController
   def get_selected
     @selected = Hash.new
 
-    filters = [:class, :spec, :leaderboards, :factions, :"cr-bracket", :"current-rating", :"arena-achievements", :"rbg-achievements", :races, :hks]
+    filters = [:class, :spec, :leaderboards, :factions, :"cr-bracket", :"current-rating", :"arena-achievements", :"rbg-achievements", :races, :hks, :regions]
 
     filters.each do |filter|
       @selected[filter] = urlify params[filter]
