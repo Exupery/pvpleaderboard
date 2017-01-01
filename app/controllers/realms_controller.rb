@@ -1,4 +1,4 @@
-class RealmsController < OverviewController
+class RealmsController < StatisticsController
   include FilterUtils
 
   def show

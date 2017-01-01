@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   root "application#index"
 
-  get "overview" => "overview#overview"
-  get "overview/:bracket" => "overview#overview"
-  get "overview/:bracket/:region" => "overview#overview"
+  get "statistics" => "statistics#show"
+  get "statistics/:bracket" => "statistics#show"
+  get "statistics/:bracket/:region" => "statistics#show"
 
   get "pvp" => "classes#select_class"
   get "pvp/filter" => "filter#filter"
@@ -30,5 +30,8 @@ Rails.application.routes.draw do
   get "talents/:class", to: redirect { |path_params, req| "/pvp/#{path_params[:class]}" }
   get "talents/:class/:spec", to: redirect { |path_params, req|
     "/pvp/#{path_params[:class]}/#{path_params[:spec]}" }
+
+  get "overview", to: redirect("/statistics")
+  get "overview/:bracket", to: redirect { |path_params, req| "/statistics/#{path_params[:bracket]}" }
   ## OLD ROUTES END
 end

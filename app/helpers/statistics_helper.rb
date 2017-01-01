@@ -1,4 +1,4 @@
-module OverviewHelper
+module StatisticsHelper
 	include Utils
 
 	def percent_counts hash

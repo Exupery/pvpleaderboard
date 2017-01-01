@@ -1,15 +1,15 @@
-class OverviewController < ApplicationController
+class StatisticsController < ApplicationController
   include Utils
   protect_from_forgery with: :exception
   before_action :assign_fields
 
   @@DEFAULT_LIMIT = 50
 
-  def overview
+  def show
     expires_in 1.day, public: true
     fresh_when(last_modified: last_players_update) if Rails.env.production?
 
-    @title = "#{@title_region}#{@title_bracket || 'Leaderboard'} Overview"
+    @title = "#{@title_region}#{@title_bracket || 'Leaderboard'} Statistics"
     @description = "World of Warcraft PvP #{@title_region + @title_bracket + ' ' unless @title_bracket.nil?}leaderboard representation by class, spec, race, faction, realm, and guild"
 
   	@factions = Hash.new(0)

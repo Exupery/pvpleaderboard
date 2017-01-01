@@ -198,19 +198,19 @@
   <changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/overview</loc>
+  <loc>https://www.pvpleaderboard.com/statistics</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/overview/2v2</loc>
+  <loc>https://www.pvpleaderboard.com/statistics/2v2</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/overview/3v3</loc>
+  <loc>https://www.pvpleaderboard.com/statistics/3v3</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>https://www.pvpleaderboard.com/overview/rbg</loc>
+  <loc>https://www.pvpleaderboard.com/statistics/rbg</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
