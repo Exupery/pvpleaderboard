@@ -14,8 +14,9 @@ TABLES.each do |table|
       icon_file = "#{BASE_PATH + icon_name}.png"
 
       if !(File.exist?(icon_file))
+        puts "MISSING:" if !has_missing
         has_missing = true
-        puts "MISSING: #{icon_name}"
+        puts icon_name
       end
     end
   end
