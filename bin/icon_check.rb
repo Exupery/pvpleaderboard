@@ -5,11 +5,7 @@ require "pg"
 BASE_PATH = "public/images/icons/"
 TABLES = [ "specs", "talents" ]
 
-db = PG.connect(
-  host: ENV["PVP_DB_HOST"],
-  user: ENV["PVP_DB_USER"],
-  password: ENV["PVP_DB_PASSWORD"],
-  dbname: ENV["PVP_DB_NAME"])
+db = PG.connect(ENV["POSTGRESQL_DEV_URL"])
 has_missing = false
 TABLES.each do |table|
   db.exec("SELECT DISTINCT(icon) FROM #{table}") do |result|
