@@ -10,10 +10,10 @@
         <button id="btn-cr-bracket" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="cr-bracket" class="dropdown-text" data-value="<%= @selected[:"cr-bracket"] %>" data-default="Bracket"><%= txt %></span><span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
           <% ["2v2", "3v3", "RBG"].each do |bracket| %>
-            <li data-target="cr-bracket" data-target-button="btn-cr-bracket"><%= bracket %></li>
+            <li data-target="cr-bracket" data-target-button="btn-cr-bracket" data-value="<%= bracket %>"><%= bracket %></li>
           <% end %>
           <li class="divider"></li>
-          <li data-target="cr-bracket" data-target-button="btn-cr-bracket">ANY</li>
+          <li data-target="cr-bracket" data-target-button="btn-cr-bracket" data-value="any">ANY</li>
         </ul>
       </div>
 
@@ -23,7 +23,7 @@
         <button id="btn-current-rating" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="current-rating" class="dropdown-text" data-value="<%= @selected[:"current-rating"] %>" data-default="Rating"><%= txt %></span><span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
           <% (2000..3000).step(100) do |rating| %>
-            <li data-target="current-rating" data-target-button="btn-current-rating"><%= rating %></li>
+            <li data-target="current-rating" data-target-button="btn-current-rating" data-value="<%= rating %>"><%= rating %></li>
           <% end %>
         </ul>
       </div>
@@ -81,7 +81,7 @@
     <button id="btn-hk-count" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><div id="hk-count" class="dropdown-text inline-block" data-value="<%= selected %>" data-default="HKs"><%= txt %></div><span class="caret"></span></button>
     <ul class="dropdown-menu dropdown-right" role="menu">
       <% [5000, 10000, 25000, 50000, 100000, 250000].each do |hks| %>
-        <li data-target="hk-count" data-target-button="btn-hk-count"><%= hks %></li>
+        <li data-target="hk-count" data-target-button="btn-hk-count" data-value="<%= hks %>"><%= hks %></li>
       <% end %>
     </ul>
   </div>

@@ -112,7 +112,8 @@ var ready = function() {
     btn.width(btn.width());
     btn.addClass("active");
 
-    var txtTarget = $("#" + $(this).data("target"));
+    var txtTargetId = "#" + $(this).data("target");
+    var txtTarget = $(txtTargetId);
     var width = txtTarget.width();
     txtTarget.css("margin-right", "0");
     txtTarget.width(width);
@@ -120,7 +121,7 @@ var ready = function() {
     var txt = $(this).text();
     txtTarget.text(txt);
     var value = $(this).data("value");
-    txtTarget.attr("data-value", value);
+    document.querySelector(txtTargetId).dataset.value = value;
   });
 
   $(".form-resetter").click(function() {
