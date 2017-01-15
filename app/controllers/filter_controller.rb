@@ -55,7 +55,7 @@ class FilterController < ApplicationController
     return ids if ids.empty?
 
     ids = narrow_by_achievements ids if (@selected[:"arena-achievements"] || @selected[:"rbg-achievements"])
-    ids = narrow_by_cr ids if @selected[:"cr-bracket"]
+    ids = narrow_by_cr ids if @selected[:"current-rating"]
 
     return ids
   end

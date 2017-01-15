@@ -62,12 +62,15 @@ module FilterUtils extend ActiveSupport::Concern
   end
 
   def narrow_by_cr ids
-    if @selected[:"cr-bracket"]
-      bracket = @selected[:"cr-bracket"].downcase
+    if @selected[:"current-rating"]
+      if @selected[:"cr-bracket"]
+        bracket = @selected[:"cr-bracket"].downcase
+        bracket_clause = "AND bracket='#{bracket}'" if Brackets.list.include?(bracket)
+      end
       cr = @selected[:"current-rating"].to_i
-      if Brackets.list.include?(bracket) and cr > 0
+      if cr > 0
         cr_ids = Set.new
-        rows = ActiveRecord::Base.connection.execute("SELECT player_id FROM leaderboards WHERE rating > #{cr} AND bracket='#{bracket}'")
+        rows = ActiveRecord::Base.connection.execute("SELECT player_id FROM leaderboards WHERE rating > #{cr} #{bracket_clause}")
         rows.each do |row|
           cr_ids.add(row["player_id"])
         end
