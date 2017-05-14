@@ -27,7 +27,8 @@ class Player
   end
 
   def armory_link
-    return "https://#{@region.downcase}.battle.net/wow/en/character/#{@realm_slug}/#{@name}/advanced"
+    locale = @region == "US" ? "en-us" : "en-gb"
+    return "https://worldofwarcraft.com/#{locale}/character/#{@realm_slug}/#{@name}"
   end
 
 end
