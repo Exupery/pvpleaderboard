@@ -180,10 +180,7 @@ ALTER TABLE ONLY factions
     ADD CONSTRAINT factions_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY leaderboards
-    ADD CONSTRAINT leaderboards_bracket_region_player_id_key UNIQUE (bracket, region, player_id);
-
-ALTER TABLE ONLY leaderboards
-    ADD CONSTRAINT leaderboards_pkey PRIMARY KEY (bracket, region, ranking);
+    ADD CONSTRAINT leaderboards_pkey PRIMARY KEY (bracket, region, player_id);
 
 ALTER TABLE ONLY metadata
     ADD CONSTRAINT metadata_pkey PRIMARY KEY (key);
@@ -225,6 +222,8 @@ ALTER TABLE ONLY talents
     ADD CONSTRAINT talents_pkey PRIMARY KEY (spell_id, spec_id);
 
 CREATE INDEX achievements_name_idx ON achievements USING btree (name);
+
+CREATE INDEX leaderboards_rating_idx ON leaderboards USING btree (ranking);
 
 CREATE INDEX leaderboards_rating_idx ON leaderboards USING btree (rating);
 
