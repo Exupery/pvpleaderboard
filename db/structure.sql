@@ -223,7 +223,7 @@ ALTER TABLE ONLY talents
 
 CREATE INDEX achievements_name_idx ON achievements USING btree (name);
 
-CREATE INDEX leaderboards_rating_idx ON leaderboards USING btree (ranking);
+CREATE INDEX leaderboards_ranking_idx ON leaderboards USING btree (ranking);
 
 CREATE INDEX leaderboards_rating_idx ON leaderboards USING btree (rating);
 
