@@ -36,7 +36,7 @@ class LeaderboardsController < BracketRegionController
   private
 
   def players_on_leaderboard(min_rank, max_results)
-    cache_key = "#{@region}_{@bracket}_players_#{min_rank}_#{max_results}"
+    cache_key = "#{@region}_#{@bracket}_players_#{min_rank}_#{max_results}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
     players = Array.new
     limit = max_results.nil? ? "" : "LIMIT #{max_results}"
