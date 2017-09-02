@@ -23,7 +23,7 @@
           <% percents = percent_counts @classes %>
           <% @classes.each do |cl, c| %>
             <tr>
-              <td title="<%= cl %>"><%= render "layouts/class_link", class_name: cl %></td>
+              <td title="<%= cl %>"><a href="/pvp/<%= urlify cl %>"><img src="/images/classes/<%= slugify cl %>.png" class="img-responsive center" alt="<%= cl %>"></a></td>
               <td><%= c %></td>
               <td><%= percents[cl] %>%</td>
             </tr>
@@ -47,8 +47,8 @@
           <% @specs.each do |slug, info| %>
             <tr>
               <% spec = info.name %>
-              <td title="<%= spec %>"><%= render "layouts/spec_link", class_name: info.class_name, spec_name: info.name, spec_icon: info.icon %></td>
-              <td title="<%= info.class_name %>"><%= render "layouts/class_link", class_name: info.class_name %></td>
+              <td title="<%= spec %>"><a href="/pvp/<%= urlify info.class_name %>/<%= urlify info.name %>"><img src="/images/icons/<%= info.icon %>.png" class="img-responsive center" alt="<%= info.name %>"></a></td>
+              <td title="<%= info.class_name %>"><a href="/pvp/<%= urlify info.class_name %>"><img src="/images/classes/<%= slugify info.class_name %>.png" class="img-responsive center" alt="<%= info.class_name %>"></a></td>
               <td><%= info.count %></td>
               <td><%= percents[slug] %>%</td>
             </tr>

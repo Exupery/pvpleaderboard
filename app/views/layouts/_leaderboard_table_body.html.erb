@@ -16,8 +16,8 @@
       <% race_slug = slugify player.race %>
       <img src="/images/races/<%= race_slug %>_<%= player.gender %>.png" class="img-responsive center inline-block" alt="<%= race_and_gender %>">
     </td>
-    <td title="<%= player.class %>"><%= render "layouts/class_link", class_name: player.class %></td>
-    <td title="<%= player.spec %>"><%= render "layouts/spec_link", class_name: player.class, spec_name: player.spec, spec_icon: player.spec_icon %></td>
+    <td title="<%= player.class %>"><a href="/pvp/<%= urlify player.class %>"><img src="/images/classes/<%= slugify player.class %>.png" class="img-responsive center" alt="<%= player.class %>"></a></td>
+    <td title="<%= player.spec %>"><a href="/pvp/<%= urlify player.class %>/<%= urlify player.spec %>"><img src="/images/icons/<%= player.spec_icon %>.png" class="img-responsive center" alt="<%= player.spec %>"></a></td>
     <td class="show-when-extra-wide"><%= player.guild %></td>
     <td class="hide-when-narrow"><span class="wins"><%= player.wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= player.losses %></span></td>
     <td class="hide-when-narrow"><%= player.win_ratio %>%</td>
