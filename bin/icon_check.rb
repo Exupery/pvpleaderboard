@@ -5,6 +5,7 @@ require "pg"
 BASE_PATH = "public/images/"
 ICONS = "icons/"
 CLASSES = "classes/"
+RACES = "races/"
 TABLES = [ "specs", "talents" ]
 
 db = PG.connect(ENV["POSTGRESQL_DEV_URL"])
@@ -38,6 +39,16 @@ db.exec("SELECT name FROM classes") do |result|
     icon_file = "#{BASE_PATH + CLASSES + icon_name}.png"
 
     check(icon_name, icon_file)
+  end
+end
+["female", "male"].each do |gender|
+  db.exec("SELECT name FROM races") do |result|
+    result.each do |row|
+      icon_name = row["name"].downcase.gsub(/\s/, "_") + "_" + gender
+      icon_file = "#{BASE_PATH + RACES + icon_name}.png"
+
+      check(icon_name, icon_file)
+    end
   end
 end
 
