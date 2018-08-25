@@ -2,7 +2,7 @@
 	<ul class="nav navbar-nav">
 		<li class="<%= is_active "/" %>"><a href="/">Home</a></li>
     <li class="dropdown <%= is_active "/pvp" %>" data-turbolinks="false">
-      <a href="/pvp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Talents&nbsp;<span class="caret"></span></a>
+      <a href="/pvp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Classes&nbsp;<span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
         <% Classes.list.each do |slug, clazz| %>
         <li class="<%= is_active "/pvp/#{urlify slug}" %>"><a href="/pvp/<%= urlify slug %>"><%= clazz[:name] %></a></li>
