@@ -2,15 +2,19 @@
 
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#tab-pane-talents" aria-controls="talents" role="tab" data-toggle="tab" data-fragment="talents">Talents</a></li>
-    <li role="presentation"><a href="#tab-pane-honor-talents" aria-controls="honor-talents" role="tab" data-toggle="tab" data-fragment="honor-talents">Honor Talents</a></li>
+    <li role="presentation"><a href="#tab-pane-stats" aria-controls="stats" role="tab" data-toggle="tab" data-fragment="stats">Stats</a></li>
+    <li role="presentation"><a href="#tab-pane-gear" aria-controls="gear" role="tab" data-toggle="tab" data-fragment="gear">Gear</a></li>
   </ul>
 
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="tab-pane-talents">
       <%= render "layouts/talents_table", :talents => talent_counts_table(@class_id, @spec_id) %>
     </div>
-    <div role="tabpanel" class="tab-pane" id="tab-pane-honor-talents">
-      <%= render "layouts/honor_talents_table" %>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-stats">
+      <%= render "layouts/stats_table", :counts => @stat_counts %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-gear">
+      <%= render "layouts/gear_table", :gear => @gear %>
     </div>
   </div>
 
