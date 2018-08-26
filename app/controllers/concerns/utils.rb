@@ -35,6 +35,25 @@ module Utils extend ActiveSupport::Concern
  		return h
   end
 
+  # Any given spec uses only one of Intellect, Agility, or Strength
+  # Remove the two that are not highest from the provided hash
+  def remove_unused_stats hash
+    avg_agility = hash["agility"][:avg]
+    avg_intellect = hash["intellect"][:avg]
+    avg_strength = hash["strength"][:avg]
+
+    if (avg_agility > avg_intellect && avg_agility > avg_strength)
+      hash.delete("intellect")
+      hash.delete("strength")
+    elsif (avg_intellect > avg_agility && avg_intellect > avg_strength)
+      hash.delete("agility")
+      hash.delete("strength")
+    elsif (avg_strength > avg_agility && avg_strength > avg_intellect)
+      hash.delete("agility")
+      hash.delete("intellect")
+    end
+  end
+
   def get_slots
     return @@normal_slots + @@two_slots
   end

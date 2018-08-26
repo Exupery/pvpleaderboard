@@ -71,6 +71,8 @@ class ClassesController < ApplicationController
       h.merge!(parse_stats_row row)
     end
 
+    remove_unused_stats h
+
     Rails.cache.write(cache_key, h)
     return h
   end

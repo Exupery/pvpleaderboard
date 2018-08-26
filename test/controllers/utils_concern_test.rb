@@ -28,4 +28,28 @@ class UtilsConcernTest < ActionController::TestCase
     assert_kind_of(DateTime, last_players_update)
     assert_not_equal("0", last_players_update.strftime("%Q"))
   end
+
+  test "should remove unused primary stats" do
+    high = { :avg => 999 }
+    low = { :avg => 0 }
+
+    agility_highest = { "agility" => high, "intellect" => low, "strength" => low }
+    intellect_highest = { "agility" => low, "intellect" => high, "strength" => low }
+    strength_highest = { "agility" => low, "intellect" => low, "strength" => high }
+
+    remove_unused_stats agility_highest
+    assert agility_highest.has_key? "agility"
+    assert_not agility_highest.has_key? "intellect"
+    assert_not agility_highest.has_key? "strength"
+
+    remove_unused_stats intellect_highest
+    assert intellect_highest.has_key? "intellect"
+    assert_not intellect_highest.has_key? "agility"
+    assert_not intellect_highest.has_key? "strength"
+
+    remove_unused_stats strength_highest
+    assert strength_highest.has_key? "strength"
+    assert_not strength_highest.has_key? "agility"
+    assert_not strength_highest.has_key? "intellect"
+  end
 end
