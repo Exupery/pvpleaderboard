@@ -42,7 +42,6 @@ CREATE TABLE public.achievements (
 );
 
 
-ALTER TABLE public.achievements OWNER TO frost;
 
 --
 -- Name: classes; Type: TABLE; Schema: public
@@ -54,7 +53,6 @@ CREATE TABLE public.classes (
 );
 
 
-ALTER TABLE public.classes OWNER TO frost;
 
 --
 -- Name: factions; Type: TABLE; Schema: public
@@ -66,7 +64,6 @@ CREATE TABLE public.factions (
 );
 
 
-ALTER TABLE public.factions OWNER TO frost;
 
 --
 -- Name: items; Type: TABLE; Schema: public
@@ -79,7 +76,6 @@ CREATE TABLE public.items (
 );
 
 
-ALTER TABLE public.items OWNER TO frost;
 
 --
 -- Name: leaderboards; Type: TABLE; Schema: public
@@ -97,7 +93,6 @@ CREATE TABLE public.leaderboards (
 );
 
 
-ALTER TABLE public.leaderboards OWNER TO frost;
 
 --
 -- Name: metadata; Type: TABLE; Schema: public
@@ -110,7 +105,6 @@ CREATE TABLE public.metadata (
 );
 
 
-ALTER TABLE public.metadata OWNER TO frost;
 
 --
 -- Name: players; Type: TABLE; Schema: public
@@ -133,7 +127,6 @@ CREATE TABLE public.players (
 );
 
 
-ALTER TABLE public.players OWNER TO frost;
 
 --
 -- Name: players_achievements; Type: TABLE; Schema: public
@@ -146,7 +139,6 @@ CREATE TABLE public.players_achievements (
 );
 
 
-ALTER TABLE public.players_achievements OWNER TO frost;
 
 --
 -- Name: players_id_seq; Type: SEQUENCE; Schema: public
@@ -160,7 +152,6 @@ CREATE SEQUENCE public.players_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.players_id_seq OWNER TO frost;
 
 --
 -- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public
@@ -198,7 +189,6 @@ CREATE TABLE public.players_items (
 );
 
 
-ALTER TABLE public.players_items OWNER TO frost;
 
 --
 -- Name: players_stats; Type: TABLE; Schema: public
@@ -220,7 +210,6 @@ CREATE TABLE public.players_stats (
 );
 
 
-ALTER TABLE public.players_stats OWNER TO frost;
 
 --
 -- Name: players_talents; Type: TABLE; Schema: public
@@ -232,7 +221,6 @@ CREATE TABLE public.players_talents (
 );
 
 
-ALTER TABLE public.players_talents OWNER TO frost;
 
 --
 -- Name: races; Type: TABLE; Schema: public
@@ -245,7 +233,6 @@ CREATE TABLE public.races (
 );
 
 
-ALTER TABLE public.races OWNER TO frost;
 
 --
 -- Name: realms; Type: TABLE; Schema: public
@@ -262,7 +249,6 @@ CREATE TABLE public.realms (
 );
 
 
-ALTER TABLE public.realms OWNER TO frost;
 
 --
 -- Name: realms_id_seq; Type: SEQUENCE; Schema: public
@@ -276,7 +262,6 @@ CREATE SEQUENCE public.realms_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.realms_id_seq OWNER TO frost;
 
 --
 -- Name: realms_id_seq; Type: SEQUENCE OWNED BY; Schema: public
@@ -300,7 +285,6 @@ CREATE TABLE public.specs (
 );
 
 
-ALTER TABLE public.specs OWNER TO frost;
 
 --
 -- Name: talents; Type: TABLE; Schema: public
@@ -319,7 +303,6 @@ CREATE TABLE public.talents (
 );
 
 
-ALTER TABLE public.talents OWNER TO frost;
 
 --
 -- Name: talents_id_seq; Type: SEQUENCE; Schema: public
@@ -333,7 +316,6 @@ CREATE SEQUENCE public.talents_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.talents_id_seq OWNER TO frost;
 
 --
 -- Name: talents_id_seq; Type: SEQUENCE OWNED BY; Schema: public
