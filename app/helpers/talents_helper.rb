@@ -15,6 +15,7 @@ module TalentsHelper
 
     fill_missing h if h.size < 21
     assign_highest h
+    normalize h
     return h
   end
 
@@ -43,6 +44,22 @@ module TalentsHelper
         end
       end
       hash["#{t}-#{high_col}"][:highest] = true if highest > 0
+    end
+  end
+
+  # Adjust percentages if row doesn't isn't near 100.
+  # This can occur if a large number of players of
+  # a class/spec don't have talents selected (e.g. they
+  # were reset by Blizzard following major class revamp)
+  def normalize hash
+    (0..6).each do |tier|
+      talent = -> row { hash["#{tier}-#{row}"] }
+      total = talent.(0)[:percent] + talent.(1)[:percent] + talent.(2)[:percent]
+      next if total == 0 # don't normalize if NO talents selected (e.g. immediately after a talent refund)
+      if (total < 95) then
+        mod = 100 / total
+        (0..2).each { |row| talent.(row)[:percent] = (talent.(row)[:percent] * mod).round(1) }
+      end
     end
   end
 
