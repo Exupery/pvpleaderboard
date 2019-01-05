@@ -58,7 +58,10 @@ module TalentsHelper
       next if total == 0 # don't normalize if NO talents selected (e.g. immediately after a talent refund)
       if (total < 95) then
         mod = 100 / total
-        (0..2).each { |row| talent.(row)[:percent] = (talent.(row)[:percent] * mod).round(1) }
+        (0..2).each { |row|
+          per = (talent.(row)[:percent] * mod).round(1)
+          talent.(row)[:percent] = per > 0.1 ? per : 0
+        }
       end
     end
   end
