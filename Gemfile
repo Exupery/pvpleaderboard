@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.4.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.1.1'
+gem 'rails', '5.2.2'
 
 gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
