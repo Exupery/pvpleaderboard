@@ -392,27 +392,32 @@ th {
   max-width: 3.5em;
   min-width: 32px;
   font-size: 0.6em;
-  -webkit-filter: brightness(0.95);
   filter: brightness(0.95);
 }
 
 .btn-group img:hover {
-  -webkit-filter: brightness(1.8);
   filter: brightness(1.8);
 }
 
 .btn-group a.active img,
 .btn-group label.active img,
 .filter-form .btn-group .btn.active img {
-  -webkit-filter: sepia(1);
   filter: sepia(1);
 }
 
 .btn-group a.active img:hover,
 .btn-group label.active img:hover,
 .filter-form .btn-group .btn.active img:hover {
-  -webkit-filter: sepia(0.6);
   filter: sepia(0.6);
+}
+
+.social-img {
+  width: 36px;
+  margin: 0.25em;
+}
+
+.social-img:hover {
+  filter: hue-rotate(336deg) brightness(90%) invert(14%);
 }
 
 .navbar,
