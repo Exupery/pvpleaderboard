@@ -50,8 +50,9 @@ module FilterUtils extend ActiveSupport::Concern
 
     # Pandas (and potential future races) can be either faction (and thus mutiple slugs/ids)
     # so iterating through the races and using include on the param string instead of tokenizing
+    selected_races = @selected[:races].split(" ")
     Races.list.each do |_slug, hash|
-      a.push(hash[:id]) if @selected[:races].include?(urlify hash[:name])
+      a.push(hash[:id]) if selected_races.include?(urlify hash[:name])
     end
 
     return a.empty? ? "" : " AND players.race_id IN (#{a.join(",")})"

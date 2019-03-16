@@ -47,3 +47,8 @@ blood_elf:
   id: 10
   name: Blood Elf
   side: horde
+
+zandalari_troll:
+  id: 11
+  name: Zandalari Troll
+  side: horde

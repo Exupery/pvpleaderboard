@@ -51,7 +51,7 @@ class LeaderboardFilterController < ApplicationController
     filters = [:leaderboard, :region, :class, :spec, :factions, :"arena-achievements", :"rbg-achievements", :races, :hks, :realm]
 
     filters.each do |filter|
-      @selected[filter] = urlify params[filter]
+      @selected[filter] = dashify params[filter]
     end
   end
 end

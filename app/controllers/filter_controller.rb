@@ -106,7 +106,7 @@ class FilterController < ApplicationController
     filters = [:class, :spec, :leaderboards, :factions, :"cr-bracket", :"current-rating", :"arena-achievements", :"rbg-achievements", :races, :hks, :regions]
 
     filters.each do |filter|
-      @selected[filter] = urlify params[filter]
+      @selected[filter] = dashify params[filter]
     end
   end
 

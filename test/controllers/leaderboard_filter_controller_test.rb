@@ -45,4 +45,22 @@ class LeaderboardFilterControllerTest < ActionController::TestCase
       assert_not_equal(0, @controller.instance_variable_get(:@leaderboard).size, "No players returned for #{params}")
     end
   end
+
+  test "should not include on partial race match" do
+    base_params = {class: "druid", leaderboard: "3v3", region: "US"}
+    troll_params = base_params.merge({races: "troll"})
+    zandalari_troll_params = base_params.merge({races: "zandalari-troll"})
+
+    get(:results, params: troll_params)
+    troll = @controller.instance_variable_get(:@leaderboard)
+    troll.each do | player |
+      assert_equal("Troll", player.race)
+    end
+
+    get(:results, params: zandalari_troll_params)
+    zandalari = @controller.instance_variable_get(:@leaderboard)
+    zandalari.each do | player |
+      assert_equal("Zandalari Troll", player.race)
+    end
+  end
 end

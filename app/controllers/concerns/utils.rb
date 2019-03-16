@@ -81,6 +81,11 @@ module Utils extend ActiveSupport::Concern
 		return txt.downcase.gsub(/[_\s]/, "-")
   end
 
+  def dashify txt
+    return nil if txt.nil?
+    return txt.downcase.gsub(/[_]/, "-")
+  end
+
   def whereify set
     return set.to_a.join(",")
   end
