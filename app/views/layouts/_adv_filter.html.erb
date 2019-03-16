@@ -63,8 +63,9 @@
     <label class="btn <%= active %> unactivater races-any default-option" data-unactivate="races-btn">
       <input type="checkbox" autocomplete="off">ANY
     </label>
+    <% selected_races = @selected[:races].nil? ? "" : @selected[:races].split(" ") %>
     <% Races.names.each do |race| %>
-      <% active = (@selected[:races].include?(urlify race) if @selected[:races]) ? "active" : "" %>
+      <% active = (selected_races.include?(urlify race) if @selected[:races]) ? "active" : "" %>
       <label class="btn races-btn unactivater <%= active %>" data-unactivate="races-any" data-value="<%= race %>">
         <input type="checkbox" autocomplete="off"><%= race %>
       </label>
