@@ -77,13 +77,13 @@ module Utils extend ActiveSupport::Concern
 	end
 
 	def urlify txt
-		return nil if txt.nil?
-		return txt.downcase.gsub(/[_\s]/, "-")
+	  return nil if txt.nil?
+	  return txt.downcase.gsub(/[_\s]/, "-").gsub(/'/, "")
   end
 
   def dashify txt
     return nil if txt.nil?
-    return txt.downcase.gsub(/[_]/, "-")
+    return txt.downcase.gsub(/[_]/, "-").gsub(/'/, "")
   end
 
   def whereify set
