@@ -117,7 +117,7 @@ module FilterUtils extend ActiveSupport::Concern
     rbg_alliance = Array.new
     rbg_horde = Array.new
     ctr = 0
-    @selected[:"rbg-achievements"].split("-").each do |achiev|
+    @selected[:"rbg-achievements"].split(/[\-\s]/).each do |achiev|
       if ctr.even?
         rbg_alliance.push(achiev)
       else
