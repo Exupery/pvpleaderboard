@@ -22,6 +22,12 @@ Rails.application.routes.draw do
   get "realms/:bracket/:region" => "realms#show"
   get "realms/:bracket/:region/:realm_slug" => "realms#details"
 
+  # Go to realms page if no player provided
+  get "players" => "realms#show"
+  get "players/:region" => "realms#show"
+  get "players/:region/:realm_slug" => "realms#details"
+  get "players/:region/:realm_slug/:player" => "player#show"
+
   ## OLD ROUTES BEGIN
   get "filter", to: redirect("/pvp/filter")
   get "filter/results", to: redirect { |path_params, req| "/pvp/filter/results?#{req.query_string}" }

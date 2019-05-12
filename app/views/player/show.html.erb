@@ -1,0 +1,50 @@
+<% if @player.nil? %>
+  <h1><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</h1>
+<% else %>
+  <h1><a href="<%= @player.armory_link %>" title="Armory"><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</a></h1>
+<% end %>
+
+<% if @player.nil? %>
+  <h1>Player not found</h1>
+<% else %>
+  <% if !@player.guild.nil? %>
+    <h3>&lt;<%= @player.guild %>&gt;</h3>
+  <% end %>
+  <div class="margin-bottom-1em">
+    <% race_and_gender = "#{@player.race} #{@player.gender}".titleize %>
+    <img src="/images/<%= @player.faction.downcase %>.png" class="img-responsive inline-block" alt="<%= @player.faction %>" title="<%= @player.faction %>">
+    <img src="/images/races/<%= slugify @player.race %>_<%= @player.gender %>.png" class="img-responsive inline-block" alt="<%= race_and_gender %>" title="<%= race_and_gender %>">
+    <a href="/pvp/<%= urlify @player.class %>"><img src="/images/classes/<%= slugify @player.class %>.png" class="img-responsive inline-block" alt="<%= @player.class %>" title="<%= @player.class %>"></a>
+    <a href="/pvp/<%= urlify @player.class %>/<%= urlify @player.spec %>"><img src="/images/icons/<%= @player.spec_icon %>.png" class="img-responsive inline-block" alt="<%= @player.spec %>" title="<%= @player.spec %>"></a>
+  </div>
+
+  <h2>Character Ratings</h2>
+  <table class="table table-bordered table-condensed table-responsive table-hover center">
+    <thead>
+      <tr>
+        <th>Bracket</th>
+        <th>Current Rating</th>
+        <th title="Season Wins - Losses">W - L</th>
+        <th title="Season Win Percent">Win %</th>
+        <th title="Highest ever rating on this character">Highest Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% ["2v2", "3v3", "RBG"].each do |b| %>
+        <% ratings = @player.ratings[b.downcase] %>
+        <% wins = ratings["wins"] %>
+        <% losses = ratings["losses"] %>
+        <% total = wins + losses %>
+        <% win_ratio = total > 0 ? (wins.to_f / total * 100).round(1).to_s + "%" : "" %>
+        <tr>
+          <td><%= b %></td>
+          <td><%= ratings["current_rating"] %></td>
+          <td><span class="wins"><%= wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= losses %></span></td>
+          <td class="hide-when-narrow"><%= win_ratio %></td>
+          <td title="<%= ratings["time"] %>"><%= ratings["high"] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% end %>

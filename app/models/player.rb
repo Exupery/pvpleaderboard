@@ -1,5 +1,5 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :thumbnail, :ratings
 
   def initialize hash
     @id = hash["id"]
@@ -18,6 +18,10 @@ class Player
     @realm_slug = hash["realm_slug"]
     @region = hash["region"]
     @guild = hash["guild"]
+
+    # Player audit-only attributes
+    @thumbnail = hash["thumbnail"]
+    @ratings = hash["ratings"]
   end
 
   def win_ratio

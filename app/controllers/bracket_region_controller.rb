@@ -9,5 +9,10 @@ class BracketRegionController < ApplicationController
 
     @bracket_fullname = get_bracket_fullname(@bracket, @region)
     @region_clause = @region.nil? ? nil : "AND leaderboards.region='#{@region}'"
+
+    if !@region.nil? && !params[:realm_slug].nil?
+      @realm_slug = params[:realm_slug].downcase.delete("'").gsub(/\s/, "-")
+      @realm = Realms.list[@realm_slug + @region.upcase]
+    end
   end
 end

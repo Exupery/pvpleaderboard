@@ -40,8 +40,6 @@ class RealmsController < StatisticsController
       redirect_to "/realms"
       return nil
     end
-    @realm_slug = params[:realm_slug].downcase.delete("'").gsub(/\s/, "-") if params[:realm_slug]
-    @realm = Realms.list[@realm_slug + @region.upcase]
 
     if @realm.nil?
       redirect_to "/realms/#{@bracket}/#{@region}"
