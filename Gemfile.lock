@@ -178,7 +178,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   listen
-  minitest (~> 5.10, != 5.10.2)
+  minitest
   pg
   puma
   rails (= 5.2.3)

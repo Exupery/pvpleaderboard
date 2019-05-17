@@ -23,7 +23,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'puma'
 gem 'dalli'
-gem 'minitest', '~> 5.10', '!= 5.10.2' # TODO delete after https://github.com/rails/rails/issues/29031 resolved
+gem 'minitest'
 gem 'httparty'
 
 group :development do
