@@ -5,7 +5,7 @@ require "httparty"
 class PlayerController < BracketRegionController
   protect_from_forgery with: :exception
 
-  @@URI = "https://%s.api.blizzard.com/wow/character/%s/%s?fields=pvp,statistics,achievements,talents&access_token=%s"
+  @@URI = "https://%s.api.blizzard.com/wow/character/%s/%s?fields=pvp,statistics,achievements,talents,guild&access_token=%s"
   @@OAUTH_URI = "https://us.battle.net/oauth/token"
   @@OAUTH_ID = ENV["BATTLE_NET_CLIENT_ID"]
   @@OAUTH_SECRET = ENV["BATTLE_NET_SECRET"]
@@ -54,6 +54,7 @@ class PlayerController < BracketRegionController
 
     hash["name"] = json["name"]
     hash["thumbnail"] = json["thumbnail"]
+    hash["guild"] = get_guild json["guild"]
 
     spec = get_spec(json["talents"])
     hash["spec"] = spec["name"]
@@ -83,6 +84,11 @@ class PlayerController < BracketRegionController
     row.each do |row| name = row["name"] end
     Rails.cache.write(cache_key, name, :expires_in => 30.days) unless name.nil?
     return name
+  end
+
+  def get_guild json
+    return nil if json.nil?
+    return json["name"]
   end
 
   def assign_ratings(hash, pvp, statistics)
