@@ -1,5 +1,5 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :thumbnail, :ratings
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :avatar_image, :main_image, :ratings
 
   def initialize hash
     @id = hash["id"]
@@ -20,7 +20,8 @@ class Player
     @guild = hash["guild"]
 
     # Player audit-only attributes
-    @thumbnail = hash["thumbnail"]
+    @avatar_image = image_link hash["thumbnail"]
+    @main_image = @avatar_image.sub("avatar", "main") unless @avatar_image.nil?
     @ratings = hash["ratings"]
   end
 
@@ -33,6 +34,14 @@ class Player
   def armory_link
     locale = @region == "US" ? "en-us" : "en-gb"
     return "https://worldofwarcraft.com/#{locale}/character/#{@realm_slug}/#{@name}"
+  end
+
+  private
+
+  def image_link thumbnail
+    return nil if thumbnail.nil?
+    locale = @region == "US" ? "us" : "eu"
+    return "https://render-#{locale}.worldofwarcraft.com/character/#{thumbnail}"
   end
 
 end

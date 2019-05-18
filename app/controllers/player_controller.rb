@@ -21,6 +21,7 @@ class PlayerController < BracketRegionController
     @description = "World of Warcraft PvP details for #{@player_name} of #{@realm.name}"
 
     @player = get_player
+    @image = @player.main_image if @player
   end
 
   private
