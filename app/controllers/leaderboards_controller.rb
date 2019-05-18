@@ -19,6 +19,7 @@ class LeaderboardsController < BracketRegionController
       @title = "Leaderboard Selection"
       @description = "World of Warcraft PvP leaderboards"
     end
+    @image = "#{request.base_url}/images/leaderboard.png"
   end
 
   def more
