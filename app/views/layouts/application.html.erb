@@ -8,6 +8,7 @@
 <meta name="description" content="<%= @description %>"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="NOODP">
+<% @image_url = @image.nil? ? "https://www.pvpleaderboard.com/images/filter.png" : @image %>
 <%= render "layouts/twitter_tags" %>
 <%= render "layouts/og_tags" %>
 <link href="//fonts.googleapis.com/css?family=Caudex" rel="stylesheet">
