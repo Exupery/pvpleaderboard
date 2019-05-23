@@ -1,5 +1,5 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :avatar_image, :main_image, :ratings
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :avatar_image, :main_image, :ratings, :titles
 
   def initialize hash
     @id = hash["id"]
@@ -23,6 +23,7 @@ class Player
     @avatar_image = image_link hash["thumbnail"]
     @main_image = @avatar_image.sub("avatar", "main") unless @avatar_image.nil?
     @ratings = hash["ratings"]
+    @titles = trim_titles(hash["titles"]) if hash["titles"]
   end
 
   def win_ratio
@@ -42,6 +43,21 @@ class Player
     return nil if thumbnail.nil?
     locale = @region == "US" ? "us" : "eu"
     return "https://render-#{locale}.worldofwarcraft.com/character/#{thumbnail}"
+  end
+
+  # Trims the list to the highest title for each
+  # season if more than one earned in a season
+  def trim_titles titles
+    h = Hash.new
+    titles.each do |title|
+      if h.include? title.season
+        h[title.season] = title if title > h[title.season]
+      else
+        h[title.season] = title
+      end
+    end
+
+    return h.values.sort {|a, b| b.date <=> a.date}
   end
 
 end

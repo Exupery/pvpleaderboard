@@ -68,6 +68,8 @@ class PlayerController < BracketRegionController
     hash["ratings"] = Hash.new
     assign_ratings(hash, json["pvp"], json["statistics"])
 
+    hash["titles"] = get_titles json["achievements"]
+
     return hash
   end
 
@@ -126,6 +128,26 @@ class PlayerController < BracketRegionController
   def get_date time
     return nil if time.nil? || time <= 0
     return Time.at(time / 1000).to_date.strftime("%-d %B %Y")
+  end
+
+  def get_titles json
+    titles  = Array.new
+    return titles if json.nil?
+
+    completed_ids = json["achievementsCompleted"]
+    timestamps = json["achievementsCompletedTimestamp"]
+
+    pvp_achievements = Achievement.get_pvp_achievements
+    completed_ids.each_index do |i|
+      id = completed_ids[i]
+      next unless pvp_achievements.has_key? id
+      time = timestamps[i]
+      achievement = pvp_achievements[id]
+      title = Title.new(achievement.name, achievement.description, time)
+      titles.push title
+    end
+
+    return titles
   end
 
   def create_uri
