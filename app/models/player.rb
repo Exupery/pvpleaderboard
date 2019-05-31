@@ -57,7 +57,29 @@ class Player
       end
     end
 
-    return h.values.sort {|a, b| b.date <=> a.date}
+    time_sorted = h.values.sort {|a, b| b.date <=> a.date}
+    return cleanup_r1 time_sorted
+  end
+
+  # In BFA it was changed so titles were earned during
+  # the season instead of after it ended except for R1
+  # so we need to handle a player earning a Season X
+  # title before being awareded their Season X - 1 R1
+  def cleanup_r1 titles
+    return titles if titles.length < 2
+
+    title_a = titles[0]
+    title_b = titles[1]
+    if title_a.season.start_with?(title_b.season.slice(0, 3))
+      title_a_season_num = title_a.season.slice(/[0-9]/)
+      title_b_season_num = title_b.season.slice(/[0-9]/)
+      if title_a_season_num < title_b_season_num
+        titles[0] = title_b
+        titles[1] = title_a
+      end
+    end
+
+    return titles
   end
 
 end
