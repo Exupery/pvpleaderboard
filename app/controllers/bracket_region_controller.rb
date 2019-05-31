@@ -13,6 +13,12 @@ class BracketRegionController < ApplicationController
     if !@region.nil? && !params[:realm_slug].nil?
       @realm_slug = params[:realm_slug].downcase.delete("'").gsub(/\s/, "-")
       @realm = Realms.list[@realm_slug + @region.upcase]
+      # Blizzard's realm slugs use `-` for a space (e.g. emerald-dream for Emerald Dream)
+      # but there are some realms with a dash in the name (e.g. Azjol-Nerub) where they
+      # remove the dash for the slug so if we didn't find the realm with a dash try
+      # again after removing it (this should be an uncommon case as there are over a
+      # hundred realms with a space but only a handful with a dash in the actual name)
+      @realm = Realms.list[@realm_slug.delete!("-") + @region.upcase] if @realm.nil? && @realm_slug.include?("-")
     end
   end
 end
