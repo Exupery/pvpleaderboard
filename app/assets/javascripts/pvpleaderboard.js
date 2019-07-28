@@ -138,6 +138,22 @@ var ready = function() {
     submitFilterForm("/leaderboards/filter/results");
   });
 
+  $(".audit-group>#character").on("input", function(e) {
+    var shouldDisable = e.target.value == null || e.target.value.length == 0;
+    $("#find-player-btn").prop("disabled", shouldDisable);
+  });
+
+  $(".audit-group>input").keydown(function(e) {
+    if (e.key == "Enter") {
+      submitAuditForm();
+    }
+  });
+
+  $("#find-player-btn").click(function(e) {
+    e.preventDefault();
+    submitAuditForm();
+  });
+
   if (window.location.hash) {
     var tab = (window.location.hash).replace(/#/, "");
     $("a[href='#tab-pane-" + tab + "']").tab("show");
@@ -235,6 +251,17 @@ function includeFragments(fragment) {
   });
 }
 
+function submitAuditForm() {
+  var region = getFirstValue(".region-btn.active");
+  var realm = getInputValue("#realm");
+  var character = getInputValue("#character");
+  if (!region || !realm || !character) {
+    // TODO DISPLAY ERROR FOR MISSING INFO
+    return;
+  }
+  window.location.href = "/players/" + region + "/" + realm + "/" + character;
+}
+
 function submitFilterForm(path) {
   var params = createFilterQueryString();
   if (params) {
@@ -297,6 +324,11 @@ function isRequired(filter) {
 
 function queryParam(key, value) {
   return (isEmptyOrAny(value)) ? "" : "&" + key + "=" + value;
+}
+
+function getInputValue(selector) {
+  var value = $(selector).val();
+  return (isEmptyOrAny(value)) ? null : urlify(value);
 }
 
 function getFirstValue(selector) {

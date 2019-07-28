@@ -24,6 +24,13 @@ class PlayerController < BracketRegionController
     @image = @player.main_image if @player
   end
 
+  def search
+    @title = "Player Audit"
+    @description = "View a player's PvP ratings and history."
+
+    render "search"
+  end
+
   private
 
   def get_player

@@ -23,9 +23,9 @@ Rails.application.routes.draw do
   get "realms/:bracket/:region/:realm_slug" => "realms#details"
 
   # Go to realms page if no player provided
-  get "players" => "realms#show"
-  get "players/:region" => "realms#show"
-  get "players/:region/:realm_slug" => "realms#details"
+  get "players" => "player#search"
+  get "players/:region" => "player#search"
+  get "players/:region/:realm_slug" => "player#search"
   get "players/:region/:realm_slug/:player" => "player#show"
 
   ## OLD ROUTES BEGIN

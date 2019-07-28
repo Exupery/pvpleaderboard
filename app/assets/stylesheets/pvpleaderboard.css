@@ -560,6 +560,15 @@ th.tablesorter-headerAsc:hover,
   margin-right: 30%;
 }
 
+.audit-group {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.audit-group label {
+  display: block;
+}
+
 /* PACE */
 .pace {
   -webkit-pointer-events: none;
