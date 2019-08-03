@@ -17,8 +17,9 @@ class PlayerController < BracketRegionController
     redirect_to "/players" if params[:player].nil?
 
     @player_name = params[:player].capitalize
-    @title = "#{@player_name} - #{@realm.name}"
-    @description = "World of Warcraft PvP details for #{@player_name} of #{@realm.name}"
+    @realm_name = @realm.nil? ? params[:realm_slug] : @realm.name
+    @title = "#{@player_name} - #{@realm_name}"
+    @description = "World of Warcraft PvP details for #{@player_name} of #{@realm_name}"
 
     @player = get_player
     @image = @player.main_image if @player
@@ -159,7 +160,7 @@ class PlayerController < BracketRegionController
 
   def create_uri
     oauth_token = create_token
-    return nil if oauth_token.nil?
+    return nil if oauth_token.nil? or @region.nil? or @realm.nil?
     return @@URI % [@region.downcase, urlify(@realm.name), CGI.escape(@player_name), oauth_token]
   end
 

@@ -1,5 +1,5 @@
 <% if @player.nil? %>
-  <h1><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</h1>
+  <h1><%= @player_name %> - <%= @realm_name %> (<%= @region %>)</h1>
 <% else %>
   <h1><a href="<%= @player.armory_link %>" title="Armory"><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</a></h1>
 <% end %>
