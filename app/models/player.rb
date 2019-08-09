@@ -68,14 +68,22 @@ class Player
   def cleanup_r1 titles
     return titles if titles.length < 2
 
-    title_a = titles[0]
-    title_b = titles[1]
+    for i in 1..titles.length-1 do
+      swap_if_needed(titles, i-1, i)
+    end
+
+    return titles
+  end
+
+  def swap_if_needed(titles, pos1, pos2)
+    title_a = titles[pos1]
+    title_b = titles[pos2]
     if title_a.season.start_with?(title_b.season.slice(0, 3))
       title_a_season_num = title_a.season.slice(/[0-9]/)
       title_b_season_num = title_b.season.slice(/[0-9]/)
       if title_a_season_num < title_b_season_num
-        titles[0] = title_b
-        titles[1] = title_a
+        titles[pos1] = title_b
+        titles[pos2] = title_a
       end
     end
 
