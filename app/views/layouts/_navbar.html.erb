@@ -25,6 +25,16 @@
         <li class="<%= is_active "/leaderboards/filter" %>"><a href="/leaderboards/filter">Filter</a></li>
       </ul>
     </li>
+    <li class="dropdown <%= is_active "/players" %>" data-turbolinks="false">
+      <a href="/players" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Players&nbsp;<span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <% pathFormat = "/players/%{region}" %>
+        <% Regions.list.each do |region| %>
+          <% path = pathFormat % {:region => region.downcase} %>
+          <li class="<%= is_active path %>"><a href="<%= path %>"><%= region %></a></li>
+        <% end %>
+      </ul>
+    </li>
     <li class="<%= is_active "/statistics" %>"><a href="/statistics">Statistics</a></li>
 	</ul>
 </nav>
