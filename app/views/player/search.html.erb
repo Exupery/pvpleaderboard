@@ -12,7 +12,8 @@
 
 <div class="audit-group">
   <label for="realm" class="left-text" title="Realm">Realm</label>
-  <input type="search" class="form-control btn-group btn-group-lg btn-group-filter" id="realm" size="20" value="<%= @realm.nil? ? '' : @realm.name %>">
+  <% region = @region.nil? ? "" : @region %>
+  <input type="search" list="<%= region %>-realms" autocomplete=off class="form-control btn-group btn-group-lg btn-group-filter" id="realm" size="20" value="<%= @realm.nil? ? '' : @realm.name %>">
 </div>
 
 <div class="audit-group">
@@ -24,3 +25,12 @@
   <% disabled = !params[:player].nil? ? "" : "disabled=\"disabled\"" %>
   <input id="find-player-btn" class="btn btn-primary" type="submit" value="Find" <%= disabled %>>
 </div>
+
+<% Regions.list.each do |region| %>
+<datalist id="<%= region %>-realms">
+  <% Realms.list.each do |key, realm| %>
+    <% next if realm.region != region %>
+    <option><%= realm.name %></option>
+  <% end %>
+</datalist>
+<% end %>

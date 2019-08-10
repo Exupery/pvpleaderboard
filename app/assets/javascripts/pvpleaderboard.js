@@ -149,6 +149,10 @@ var ready = function() {
     }
   });
 
+  $(".audit-group .region-btn").click(function(e) {
+    $("#realm").attr("list", $(e.target).data("value") + "-realms");
+  });
+
   $("#find-player-btn").click(function(e) {
     e.preventDefault();
     submitAuditForm();
