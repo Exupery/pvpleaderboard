@@ -138,9 +138,12 @@ var ready = function() {
     submitFilterForm("/leaderboards/filter/results");
   });
 
-  $(".audit-group>#character").on("input", function(e) {
-    var shouldDisable = e.target.value == null || e.target.value.length == 0;
-    $("#find-player-btn").prop("disabled", shouldDisable);
+  $(".audit-group>#character, .audit-group>#realm").on("input", function(e) {
+    var realm = $(".audit-group>#realm").val();
+    var charName = $(".audit-group>#character").val();
+    var realmIsUnset = realm == null || realm == 0;
+    var nameIsUnset = charName == null || charName == 0;
+    $("#find-player-btn").prop("disabled", realmIsUnset || nameIsUnset);
   });
 
   $(".audit-group>input").keydown(function(e) {
