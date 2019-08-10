@@ -1,0 +1,36 @@
+<div class="audit-group">
+    <label for="region" class="left-text" title="Region">Region</label>
+    <div id="region" class="btn-group btn-group-filter" role="group" aria-label="Region" data-toggle="buttons">
+      <% Regions.list.each do |region| %>
+        <% active = !@region.nil? && region.casecmp(@region) == 0 ? "active" : "" %>
+        <label class="btn region-btn <%= active %>" data-value="<%= region %>">
+          <input type="radio" autocomplete="off"><%= region %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="audit-group">
+    <label for="realm" class="left-text" title="Realm">Realm</label>
+    <% region = @region.nil? ? "" : @region %>
+    <input type="search" list="<%= region %>-realms" autocomplete=off class="form-control btn-group btn-group-lg btn-group-filter" id="realm" size="20" value="<%= @realm.nil? ? '' : @realm.name %>">
+  </div>
+
+  <div class="audit-group">
+    <label for="character" class="left-text" title="Character">Character</label>
+    <input type="search" class="form-control btn-group btn-group-lg btn-group-filter" id="character" size="20" value="<%= @player_name.nil? ? '' : @player_name %>">
+  </div>
+
+  <div class="audit-group">
+    <% disabled = !params[:player].nil? ? "" : "disabled=\"disabled\"" %>
+    <input id="find-player-btn" class="btn btn-primary" type="submit" value="Find" <%= disabled %>>
+  </div>
+
+  <% Regions.list.each do |region| %>
+  <datalist id="<%= region %>-realms">
+    <% Realms.list.each do |key, realm| %>
+      <% next if realm.region != region %>
+      <option><%= realm.name %></option>
+    <% end %>
+  </datalist>
+  <% end %>
