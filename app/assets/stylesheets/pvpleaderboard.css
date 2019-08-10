@@ -415,6 +415,12 @@ th {
   filter: sepia(0.6);
 }
 
+.jumbotron .class-selector-group,
+#results-class-selector .class-selector-group {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
 .social-img {
   width: 36px;
   margin: 0.25em;
