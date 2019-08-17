@@ -66,8 +66,9 @@ class PlayerController < BracketRegionController
     hash["guild"] = get_guild json["guild"]
 
     spec = get_spec(json["talents"])
-    hash["spec"] = spec["name"]
-    hash["spec_icon"] = spec["icon"]
+    # Spec may be nil if very low level player who hasn't selected a spec yet
+    hash["spec"] = spec["name"] unless spec.nil?
+    hash["spec_icon"] = spec.nil? ? "placeholder" : spec["icon"]
 
     hash["faction"] = get_name("factions", json["faction"])
     hash["race"] = get_name("races", json["race"])
