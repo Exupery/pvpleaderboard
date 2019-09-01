@@ -2,16 +2,16 @@
 <% if @player.nil? %>
   <h1><%= @player_name %> - <%= @realm_name %> (<%= @region %>)</h1>
 <% else %>
-  <h1><a href="<%= @player.armory_link %>" title="Armory"><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</a></h1>
+  <h1 class="margin-bottom-0-25em"><a href="<%= @player.armory_link %>" title="Armory"><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</a></h1>
 <% end %>
 
 <% if @player.nil? %>
   <h1>Player not found</h1>
 <% else %>
   <% if !@player.guild.nil? %>
-    <h3>&lt;<%= @player.guild %>&gt;</h3>
+    <h4 class="margin-0-25em">&lt;<%= @player.guild %>&gt;</h4>
   <% end %>
-  <div class="margin-bottom-1em">
+  <div class="margin-0-5em">
     <% race_and_gender = "#{@player.race} #{@player.gender}".titleize %>
     <img src="/images/<%= @player.faction.downcase %>.png" class="img-responsive inline-block" alt="<%= @player.faction %>" title="<%= @player.faction %>">
     <img src="/images/races/<%= slugify @player.race %>_<%= @player.gender %>.png" class="img-responsive inline-block" alt="<%= race_and_gender %>" title="<%= race_and_gender %>">
@@ -19,7 +19,7 @@
     <a href="/pvp/<%= urlify @player.class %>/<%= urlify @player.spec %>"><img src="/images/icons/<%= @player.spec_icon %>.png" class="img-responsive inline-block" alt="<%= @player.spec %>" title="<%= @player.spec %>"></a>
   </div>
 
-  <h2>Character Ratings</h2>
+  <h3 class="margin-top-0-5em">Character Ratings</h3>
   <table class="table table-bordered table-condensed table-responsive table-hover center">
     <thead>
       <tr>
@@ -48,7 +48,7 @@
     </tbody>
   </table>
 
-  <h2>Seasonal Titles</h2>
+  <h3>Seasonal Titles</h3>
   <h5 class="use-40">(May be account-wide depending if character has 'Display Only Character Achievements to Others' enabled or not)</h5>
   <table class="table table-bordered table-condensed table-responsive table-hover center">
     <thead>

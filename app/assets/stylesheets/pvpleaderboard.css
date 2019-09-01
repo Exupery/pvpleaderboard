@@ -70,8 +70,20 @@ a:focus {
   margin-bottom: 1em;
 }
 
+.margin-bottom-0-25em {
+  margin-bottom: 0.25em;
+}
+
 .margin-top-2em {
   margin-top: 2em;
+}
+
+.margin-top-0-5em {
+  margin-top: 0.5em;
+}
+
+.margin-0-25em {
+  margin: 0.25em;
 }
 
 .margin-0-5em {
