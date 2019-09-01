@@ -1,5 +1,5 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :avatar_image, :main_image, :ratings, :titles
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :avatar_image, :main_image, :ratings, :titles, :ilvl, :neck_level
 
   def initialize hash
     @id = hash["id"]
@@ -24,6 +24,8 @@ class Player
     @main_image = @avatar_image.sub("avatar", "main") unless @avatar_image.nil?
     @ratings = hash["ratings"]
     @titles = trim_titles(hash["titles"]) if hash["titles"]
+    @ilvl = hash["ilvl"]
+    @neck_level = hash["neck_level"]
   end
 
   def win_ratio

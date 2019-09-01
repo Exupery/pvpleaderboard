@@ -11,6 +11,12 @@
   <% if !@player.guild.nil? %>
     <h4 class="margin-0-25em">&lt;<%= @player.guild %>&gt;</h4>
   <% end %>
+  <div class="margin-0-25em">
+    <h4 class="inline-block margin-none slightly-smaller-font-size">ILVL:</h4>
+    <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.ilvl %></h4>
+    <h4 class="inline-block margin-none slightly-smaller-font-size margin-left-1em">Neck Azerite Level:</h4>
+    <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.neck_level %></h4>
+  </div>
   <div class="margin-0-5em">
     <% race_and_gender = "#{@player.race} #{@player.gender}".titleize %>
     <img src="/images/<%= @player.faction.downcase %>.png" class="img-responsive inline-block" alt="<%= @player.faction %>" title="<%= @player.faction %>">

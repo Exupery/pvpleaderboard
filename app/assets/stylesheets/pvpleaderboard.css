@@ -74,6 +74,10 @@ a:focus {
   margin-bottom: 0.25em;
 }
 
+.margin-left-1em {
+  margin-left: 1em;
+}
+
 .margin-top-2em {
   margin-top: 2em;
 }
@@ -88,6 +92,11 @@ a:focus {
 
 .margin-0-5em {
   margin: 0.5em;
+}
+
+.margin-none {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .expands {
@@ -585,6 +594,14 @@ th.tablesorter-headerAsc:hover,
 
 .audit-group label {
   display: block;
+}
+
+.slightly-smaller-font-size {
+  font-size: 0.95em;
+}
+
+.slightly-larger-font-size {
+  font-size: 1.25em;
 }
 
 /* PACE */

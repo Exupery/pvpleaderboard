@@ -5,7 +5,7 @@ require "httparty"
 class PlayerController < BracketRegionController
   protect_from_forgery with: :exception
 
-  @@URI = "https://%s.api.blizzard.com/wow/character/%s/%s?fields=pvp,statistics,achievements,talents,guild&access_token=%s"
+  @@URI = "https://%s.api.blizzard.com/wow/character/%s/%s?fields=pvp,statistics,achievements,talents,guild,items&access_token=%s"
   @@OAUTH_URI = "https://us.battle.net/oauth/token"
   @@OAUTH_ID = ENV["BATTLE_NET_CLIENT_ID"]
   @@OAUTH_SECRET = ENV["BATTLE_NET_SECRET"]
@@ -78,6 +78,9 @@ class PlayerController < BracketRegionController
     assign_ratings(hash, json["pvp"], json["statistics"])
 
     hash["titles"] = get_titles json["achievements"]
+
+    hash["ilvl"] = json["items"]["averageItemLevelEquipped"]
+    hash["neck_level"] = get_neck_level json["items"]
 
     return hash
   end
@@ -157,6 +160,15 @@ class PlayerController < BracketRegionController
     end
 
     return titles
+  end
+
+  def get_neck_level json
+    neck = json["neck"]
+    return 0 if neck.nil?
+    azerite_item = neck["azeriteItem"]
+    return 0 if azerite_item.nil?
+
+    return azerite_item["azeriteLevel"]
   end
 
   def create_uri
