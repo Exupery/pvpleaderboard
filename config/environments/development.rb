@@ -55,6 +55,7 @@ Rails.application.configure do
   #config.logger = Logger.new(STDOUT)
   #config.logger.level = Logger::DEBUG
   #config.action_view.logger = nil
+  STDOUT.sync = true
   logger = ActiveSupport::Logger.new(STDOUT)
   logger.formatter = config.log_formatter
   config.logger = ActiveSupport::TaggedLogging.new(logger)
