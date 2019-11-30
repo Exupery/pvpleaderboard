@@ -13,7 +13,7 @@ end
 class Realms
 	@@realms = nil
 
-	def self.list
+  def self.list
 	  return @@realms
 	end
 
