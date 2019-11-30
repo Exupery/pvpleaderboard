@@ -242,10 +242,7 @@ CREATE TABLE public.realms (
     id integer NOT NULL,
     slug character varying(64) NOT NULL,
     name character varying(64) NOT NULL,
-    region character(2) NOT NULL,
-    battlegroup character varying(64),
-    timezone character varying(64),
-    type character varying(16)
+    region character(2) NOT NULL
 );
 
 

@@ -4,8 +4,5 @@
     slug: <%= "realm#{n}" %>
     name: <%= "Realm#{n}" %>
     region: <%= region %>
-    battlegroup: <%= "battlegroup#{n % 5}" %>
-    timezone: <%= "timezone#{n % 5}" %>
-    type: pvp
   <% end %>
 <% end %>
