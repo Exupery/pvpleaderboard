@@ -71,8 +71,7 @@ CREATE TABLE public.factions (
 
 CREATE TABLE public.items (
     id integer NOT NULL,
-    name character varying(128),
-    icon character varying(128)
+    name character varying(128)
 );
 
 
