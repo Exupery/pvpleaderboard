@@ -48,7 +48,7 @@ class LeaderboardFilterController < ApplicationController
   def get_selected
     @selected = Hash.new
 
-    filters = [:leaderboard, :region, :class, :spec, :factions, :"arena-achievements", :"rbg-achievements", :races, :hks, :realm]
+    filters = [:leaderboard, :region, :class, :spec, :factions, :"arena-achievements", :"rbg-achievements", :races, :realm]
 
     filters.each do |filter|
       @selected[filter] = dashify params[filter]

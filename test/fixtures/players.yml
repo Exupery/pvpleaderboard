@@ -49,6 +49,5 @@ player<%= n %>:
   guild: <%= "guild#{n % 20}" %>
   gender: <%= n % 2 %>
   achievement_points: <%= n * 10 %>
-  honorable_kills: <%= n * 5000 %>
   thumbnail: <%= "thumbnail#{n}" %>
 <% end %>

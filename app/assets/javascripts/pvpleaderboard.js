@@ -315,7 +315,6 @@ function createFilterQueryString() {
   params += queryParam("arena-achievements", getAllValues(".arena-achievements-btn.active"));
   params += queryParam("rbg-achievements", getAllValues(".rbg-achievements-btn.active"));
   params += queryParam("races", getAllValues(".races-btn.active"));
-  params += queryParam("hks", getAllValues("#hk-count"));
   params += queryParam("realm", getAllValues("#realm"));
 
   return params;

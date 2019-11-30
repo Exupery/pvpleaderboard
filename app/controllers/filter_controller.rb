@@ -103,7 +103,7 @@ class FilterController < ApplicationController
   def get_selected
     @selected = Hash.new
 
-    filters = [:class, :spec, :leaderboards, :factions, :"cr-bracket", :"current-rating", :"arena-achievements", :"rbg-achievements", :races, :hks, :regions]
+    filters = [:class, :spec, :leaderboards, :factions, :"cr-bracket", :"current-rating", :"arena-achievements", :"rbg-achievements", :races, :regions]
 
     filters.each do |filter|
       @selected[filter] = dashify params[filter]

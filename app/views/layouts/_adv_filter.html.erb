@@ -72,18 +72,3 @@
     <% end %>
   </div>
 </div>
-
-<div class="filter-row">
-  <label for="hks" class="btn-group-label">Minimum Honorable Kills</label>
-  <div id="hks" class="input-group">
-    <% selected = @selected[:hks].to_i if (@selected[:hks] && @selected[:hks].to_i > 0) %>
-    <% txt = selected || "HKs" %>
-    <% active = selected ? "active" : "" %>
-    <button id="btn-hk-count" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><div id="hk-count" class="dropdown-text inline-block" data-value="<%= selected %>" data-default="HKs"><%= txt %></div><span class="caret"></span></button>
-    <ul class="dropdown-menu dropdown-right" role="menu">
-      <% [5000, 10000, 25000, 50000, 100000, 250000].each do |hks| %>
-        <li data-target="hk-count" data-target-button="btn-hk-count" data-value="<%= hks %>"><%= hks %></li>
-      <% end %>
-    </ul>
-  </div>
-</div>

@@ -121,7 +121,6 @@ CREATE TABLE public.players (
     guild character varying(64),
     gender smallint,
     achievement_points integer,
-    honorable_kills integer,
     thumbnail character varying(128),
     last_update timestamp without time zone DEFAULT now() NOT NULL
 );

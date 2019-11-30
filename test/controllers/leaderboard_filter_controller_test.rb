@@ -33,7 +33,6 @@ class LeaderboardFilterControllerTest < ActionController::TestCase
       base_params.merge({factions: "alliance"}),
       base_params.merge({races: "human"}),
       base_params.merge({realm: "realm0"}),
-      base_params.merge({hks: "4077"}),
     ]
 
     test_params.each do |params|
