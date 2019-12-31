@@ -5,10 +5,10 @@
     <% filtered_ranking = @filtered ? "Filtered Ranking: #{fr}" : "" %>
     <td title="<%= filtered_ranking %>"><%= player.ranking %></td>
     <td><%= player.rating %></td>
-    <td><a href="<%= player.armory_link %>"><%= player.name %></a></td>
+    <td><a href="<%= player.armory_link %>" translate="no"><%= player.name %></a></td>
     <td class="show-when-wide">
       <% realm = Realms.list[player.realm_slug + @region] %>
-      <a href="/realms/<%= @bracket %>/<%= @region.downcase %>/<%= urlify realm.slug %>"><%= realm.name %></a>
+      <a href="/realms/<%= @bracket %>/<%= @region.downcase %>/<%= urlify realm.slug %>" translate="no"><%= realm.name %></a>
     </td>
     <td title="<%= player.faction %>"><img src="/images/<%= player.faction.downcase %>.png" class="img-responsive center" alt="<%= player.faction %>"></td>
     <% race_and_gender = "#{player.race} #{player.gender}".titleize %>
@@ -18,7 +18,7 @@
     </td>
     <td title="<%= player.class %>"><a href="/pvp/<%= urlify player.class %>"><img src="/images/classes/<%= slugify player.class %>.png" class="img-responsive center" alt="<%= player.class %>"></a></td>
     <td title="<%= player.spec %>"><a href="/pvp/<%= urlify player.class %>/<%= urlify player.spec %>"><img src="/images/icons/<%= player.spec_icon %>.png" class="img-responsive center" alt="<%= player.spec %>"></a></td>
-    <td class="show-when-extra-wide"><%= player.guild %></td>
+    <td class="show-when-extra-wide" translate="no"><%= player.guild %></td>
     <td class="hide-when-narrow"><span class="wins"><%= player.wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= player.losses %></span></td>
     <td class="hide-when-narrow"><%= player.win_ratio %>%</td>
   </tr>
