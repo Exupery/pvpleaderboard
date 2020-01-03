@@ -92,7 +92,7 @@ var ready = function() {
     $(".collapse .btn-group").each(function() {
       var first = $(this).children().first();
       var last = $(this).children().last();
-      if (first.offset()["top"] != last.offset()["top"]) {
+      if ((first.offset() && last.offset()) && (first.offset()["top"] != last.offset()["top"])) {
         first.css({"border-bottom-left-radius": 0, "margin-left": "-1px"});
         last.css("border-top-right-radius", 0);
       }
@@ -316,6 +316,7 @@ function createFilterQueryString() {
   params += queryParam("rbg-achievements", getAllValues(".rbg-achievements-btn.active"));
   params += queryParam("races", getAllValues(".races-btn.active"));
   params += queryParam("realm", getAllValues("#realm"));
+  params += queryParam("name", getInputValue("#char-name"));
 
   return params;
 }
@@ -396,6 +397,7 @@ function resetForm(target) {
   });
   $(target + " .hide-on-reset").hide();
   $(target + " .show-on-reset").show();
+  $(target + " .search-input").val("");
   $(".btn-submit").prop("disabled", true);
 }
 

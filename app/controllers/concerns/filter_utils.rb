@@ -32,6 +32,7 @@ module FilterUtils extend ActiveSupport::Concern
     where += factions_clause if @selected[:factions]
     where += races_clause if @selected[:races]
     where += realm_clause if @selected[:realm]
+    where += name_clause if @selected[:name]
 
     return where.start_with?(" AND ") ? where.sub(" AND ", "") : where
   end
@@ -59,6 +60,11 @@ module FilterUtils extend ActiveSupport::Concern
 
   def realm_clause
     return Realms.list[@selected[:realm] + @region].nil? ? "" : " AND realms.slug='#{@selected[:realm]}'"
+  end
+
+  def name_clause
+    name = @selected[:name].strip
+    return name.empty? ? "" : " AND players.name ILIKE '%#{name}%'"
   end
 
   def narrow_by_cr ids

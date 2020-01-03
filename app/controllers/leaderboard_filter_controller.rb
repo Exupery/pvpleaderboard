@@ -5,6 +5,8 @@ class LeaderboardFilterController < ApplicationController
   protect_from_forgery with: :exception
   before_action :get_selected
 
+  @@FILTERS = [:leaderboard, :region, :class, :spec, :factions, :"arena-achievements", :"rbg-achievements", :races, :realm, :name]
+
   def filter
     @title = "Leaderboard Filter"
     @description = "Filter World of Warcraft PvP leaderboards by class, realm, achievements, and more"
@@ -48,9 +50,7 @@ class LeaderboardFilterController < ApplicationController
   def get_selected
     @selected = Hash.new
 
-    filters = [:leaderboard, :region, :class, :spec, :factions, :"arena-achievements", :"rbg-achievements", :races, :realm]
-
-    filters.each do |filter|
+    @@FILTERS.each do |filter|
       @selected[filter] = dashify params[filter]
     end
   end
