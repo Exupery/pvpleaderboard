@@ -110,7 +110,7 @@ module Utils extend ActiveSupport::Concern
 
     rows = ActiveRecord::Base.connection.execute("SELECT last_update FROM metadata WHERE key='update_time'")
     rows.each do |row|
-      last = DateTime.parse(row["last_update"]) if row["last_update"]
+      last = DateTime.parse(row["last_update"].to_s) if row["last_update"]
     end
 
     return last

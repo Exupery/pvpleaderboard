@@ -1,6 +1,7 @@
 <% ["US", "EU"].each do |region| %>
   <% 100.times do |n| %>
   realm<%= region %><%= n %>:
+    id: <%= region == "US" ? n : n + 100 %>
     slug: <%= "realm#{n}" %>
     name: <%= "Realm#{n}" %>
     region: <%= region %>
