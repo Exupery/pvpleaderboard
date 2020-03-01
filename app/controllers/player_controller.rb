@@ -113,6 +113,7 @@ class PlayerController < BracketRegionController
     highest = Hash.new()
     statistics["statistics"].each do |cat|
       next unless cat["name"] == "Player vs. Player"
+      next if cat["sub_categories"].nil?
       cat["sub_categories"].each do |sub_cat|
         next unless sub_cat["name"] == "Rated Arenas"
         sub_cat["statistics"].each do |s|
