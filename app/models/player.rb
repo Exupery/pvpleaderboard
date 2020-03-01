@@ -1,5 +1,5 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :avatar_image, :main_image, :ratings, :titles, :ilvl, :neck_level
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :avatar_image, :main_image, :ratings, :titles, :ilvl, :neck_level, :cloak_rank
 
   def initialize hash
     @id = hash["id"]
@@ -20,12 +20,13 @@ class Player
     @guild = hash["guild"]
 
     # Player audit-only attributes
-    @avatar_image = image_link hash["thumbnail"]
-    @main_image = @avatar_image.sub("avatar", "main") unless @avatar_image.nil?
+    @main_image = hash["thumbnail"]
+    @avatar_image = @main_image.sub("inset", "avatar") unless @main_image.nil?
     @ratings = hash["ratings"]
     @titles = trim_titles(hash["titles"]) if hash["titles"]
     @ilvl = hash["ilvl"]
     @neck_level = hash["neck_level"]
+    @cloak_rank = hash["cloak_rank"]
   end
 
   def win_ratio
