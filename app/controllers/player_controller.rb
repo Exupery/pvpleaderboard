@@ -206,7 +206,7 @@ class PlayerController < BracketRegionController
   def create_uri path
     oauth_token = create_token
     return nil if oauth_token.nil? or @region.nil? or @realm.nil?
-    return @@URI % [@region.downcase, urlify(@realm.name), CGI.escape(@player_name.downcase), path, oauth_token, @region.downcase]
+    return @@URI % [@region.downcase, CGI.escape(urlify(@realm.name)), CGI.escape(@player_name.downcase), path, oauth_token, @region.downcase]
   end
 
   def create_token
