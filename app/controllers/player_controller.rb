@@ -106,16 +106,18 @@ class PlayerController < BracketRegionController
 
   def get_thumbnail
     json = get "/character-media"
-    return json["bust_url"]
+    return json.nil? ? "" : json["bust_url"]
   end
 
   def assign_ratings(hash, statistics)
     highest = Hash.new()
     stats = Hash.new()
-    if !statistics["categories"].nil?
-      stats = statistics["categories"]
-    elsif !statistics["statistics"].nil?
-      stats = statistics["statistics"]
+    unless statistics.nil?
+      if !statistics["categories"].nil?
+        stats = statistics["categories"]
+      elsif !statistics["statistics"].nil?
+        stats = statistics["statistics"]
+      end
     end
     stats.each do |cat|
       next unless cat["name"] == "Player vs. Player"
