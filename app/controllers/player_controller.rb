@@ -53,7 +53,7 @@ class PlayerController < BracketRegionController
     hash["realm_slug"] = @realm_slug
 
     profile = get("")
-    return nil if profile.nil?
+    return nil unless valid_response(profile)
 
     hash["name"] = profile["name"]
     hash["guild"] = get_guild profile["guild"]
@@ -106,13 +106,13 @@ class PlayerController < BracketRegionController
 
   def get_thumbnail
     json = get "/character-media"
-    return json.nil? ? "" : json["bust_url"]
+    return valid_response(json) ? json["render_url"] : nil
   end
 
   def assign_ratings(hash, statistics)
     highest = Hash.new()
     stats = Hash.new()
-    unless statistics.nil?
+    unless valid_response(statistics)
       if !statistics["categories"].nil?
         stats = statistics["categories"]
       elsif !statistics["statistics"].nil?
@@ -136,7 +136,7 @@ class PlayerController < BracketRegionController
 
     @@BRACKETS.each do |bracket|
       json = get "/pvp-bracket/#{bracket}"
-      if json.nil?
+      if !valid_response(json)
         hash["ratings"][bracket] = { "wins" => 0, "losses" => 0 }
         next
       end
@@ -159,7 +159,7 @@ class PlayerController < BracketRegionController
 
   def get_titles json
     titles  = Array.new
-    return titles if json.nil?
+    return titles unless valid_response(json)
 
     achievements = json["achievements"]
     pvp_achievements = Achievement.get_pvp_achievements
@@ -176,6 +176,7 @@ class PlayerController < BracketRegionController
   end
 
   def get_neck_level json
+    return 0 unless valid_response(json)
     equipped_items = json["equipped_items"]
 
     equipped_items.each do |item|
@@ -187,6 +188,7 @@ class PlayerController < BracketRegionController
   end
 
   def get_cloak_rank json
+    return 0 unless valid_response(json)
     equipped_items = json["equipped_items"]
 
     equipped_items.each do |item|
@@ -198,6 +200,13 @@ class PlayerController < BracketRegionController
     return 0
   end
 
+  def valid_response res
+    # Shenanigans necessary due to HTTParty not wanting Response.nil? calls
+    # https://github.com/jnunemaker/httparty/issues/568
+    return !res.body.nil? if res&.code == 200
+    return false
+  end
+
   def get path
     uri = create_uri path
     return nil if uri.nil?
@@ -207,7 +216,7 @@ class PlayerController < BracketRegionController
       Rails.cache.delete(@@OAUTH_CACHE_KEY)
       res = HTTParty.get(create_uri path)
     end
-    return res.code == 200 ? res : nil
+    return res
   end
 
   def create_uri path
