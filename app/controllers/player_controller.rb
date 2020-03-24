@@ -111,7 +111,12 @@ class PlayerController < BracketRegionController
 
   def assign_ratings(hash, statistics)
     highest = Hash.new()
-    stats = statistics.nil? ? Hash.new() : statistics["statistics"]
+    stats = Hash.new()
+    if !statistics["categories"].nil?
+      stats = statistics["categories"]
+    elsif !statistics["statistics"].nil?
+      stats = statistics["statistics"]
+    end
     stats.each do |cat|
       next unless cat["name"] == "Player vs. Player"
       next if cat["sub_categories"].nil?
