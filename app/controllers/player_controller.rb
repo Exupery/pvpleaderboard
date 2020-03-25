@@ -112,7 +112,7 @@ class PlayerController < BracketRegionController
   def assign_ratings(hash, statistics)
     highest = Hash.new()
     stats = Hash.new()
-    unless valid_response(statistics)
+    if valid_response(statistics)
       if !statistics["categories"].nil?
         stats = statistics["categories"]
       elsif !statistics["statistics"].nil?
@@ -136,15 +136,17 @@ class PlayerController < BracketRegionController
 
     @@BRACKETS.each do |bracket|
       json = get "/pvp-bracket/#{bracket}"
-      if !valid_response(json)
-        hash["ratings"][bracket] = { "wins" => 0, "losses" => 0 }
-        next
-      end
 
       h = Hash.new
-      h["current_rating"] = json["rating"]
-      h["wins"] = json["season_match_statistics"]["won"]
-      h["losses"] = json["season_match_statistics"]["lost"]
+      if valid_response(json)
+        h["current_rating"] = json["rating"]
+        h["wins"] = json["season_match_statistics"]["won"]
+        h["losses"] = json["season_match_statistics"]["lost"]
+      else
+        h["current_rating"] = nil
+        h["wins"] = 0
+        h["losses"] = 0
+      end
       h["high"] = highest[bracket]["high"].to_i if highest[bracket]
       h["time"] = get_date(highest[bracket]["time"]) if highest[bracket]
 
