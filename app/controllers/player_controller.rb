@@ -61,7 +61,7 @@ class PlayerController < BracketRegionController
     active = profile["active_spec"]
     # Spec may be nil if very low level player who hasn't selected a spec yet
     hash["spec"] = active["name"] unless active.nil?
-    hash["spec_icon"] = active.nil? ? "placeholder" : get_spec_icon(active["id"])
+    hash["spec_icon"] = (active.nil? || active["id"].nil?)  ? "placeholder" : get_spec_icon(active["id"])
 
     hash["faction"] = profile["faction"]["name"]
     hash["race"] = profile["race"]["name"]
