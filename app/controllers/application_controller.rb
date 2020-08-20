@@ -1,8 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  before_action :set_format
 
   @@BRACKETS = Brackets.list
   @@REGIONS = Regions.list
+
+  def set_format
+    request.format = "html"
+  end
 
   def index
     expires_in 1.week, public: true
