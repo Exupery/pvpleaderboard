@@ -180,6 +180,7 @@ class PlayerController < BracketRegionController
   def get_neck_level json
     return 0 unless valid_response(json)
     equipped_items = json["equipped_items"]
+    return 0 if equipped_items.nil?
 
     equipped_items.each do |item|
       next if item["name"] != "Heart of Azeroth"
@@ -192,6 +193,7 @@ class PlayerController < BracketRegionController
   def get_cloak_rank json
     return 0 unless valid_response(json)
     equipped_items = json["equipped_items"]
+    return 0 if equipped_items.nil?
 
     equipped_items.each do |item|
       next if item["name"] != "Ashjra'kamas, Shroud of Resolve"
