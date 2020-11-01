@@ -125,9 +125,9 @@ class PlayerController < BracketRegionController
       cat["sub_categories"].each do |sub_cat|
         next unless sub_cat["name"] == "Rated Arenas"
         sub_cat["statistics"].each do |s|
-          if s["name"] == "Highest 2 man personal rating"
+          if s["name"] == "Highest 2v2 personal rating"
             highest["2v2"] = { "high" => s["quantity"], "time" => s["last_updated_timestamp"] }
-          elsif s["name"] == "Highest 3 man personal rating"
+          elsif s["name"] == "Highest 3v3 personal rating"
             highest["3v3"] = { "high" => s["quantity"], "time" => s["last_updated_timestamp"] }
           end
         end
