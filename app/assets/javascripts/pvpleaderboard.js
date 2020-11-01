@@ -228,7 +228,7 @@ function checkAndAddLeaderboardEntries(table, showAll) {
 
 function addLeaderboardEntries(table, minRanking, showAll) {
   $.ajax({
-    url: "/leaderboards/" + $(table).data("bracket") + "/" + $(table).data("region") + "/more?min=" + minRanking + "&all=" + showAll,
+    url: `/leaderboards/${$(table).data("bracket")}/${$(table).data("region")}/more?min=${minRanking}&all=${showAll}`,
     dataType: "html",
     cache: false
   }).done(function(response) {

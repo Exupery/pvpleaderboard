@@ -28,9 +28,7 @@ class LeaderboardsController < BracketRegionController
     if @bracket && @region && params[:min]
       max_results = params[:all] == "true" ? nil : @@DEFAULT_MAX_RESULTS
       @leaderboard = players_on_leaderboard(params[:min], max_results)
-      respond_to do |format|
-        format.js { render partial: "layouts/leaderboard_table_body" }
-      end
+      render partial: "layouts/leaderboard_table_body"
     end
   end
 
