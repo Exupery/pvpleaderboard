@@ -5,7 +5,6 @@ talent<%= n %>:
   class_id: <%= (n % 11) + 1 %>
   spec_id: <%= 0 %>
   name: <%= "talent#{n}" %>
-  description: <%= "talentdescription#{n}" %>
   icon: <%= "talenticon#{n}" %>
   tier: <%= n % 7 %>
   col: <%= n % 3 %>

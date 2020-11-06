@@ -3,6 +3,4 @@ achiev<%= n %>:
   id: <%= n %>
   name: <%= "achievname#{n}" %>
   description: <%= "achievdescription#{n}" %>
-  icon: <%= "achievicon#{n}" %>
-  points: 10
 <% end %>

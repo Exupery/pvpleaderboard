@@ -43,7 +43,5 @@ spec<%= a[0] %>:
   class_id: <%= a[1] %>
   name: <%= a[2] %>
   role: <%= "role#{a[0] % 3}" %>
-  description: <%= "specdescription#{a[0]}" %>
-  background_image: <%= "specbackground#{a[0]}" %>
   icon: <%= "specicon#{a[0]}" %>
 <% end %>
