@@ -192,6 +192,7 @@ DEPENDENCIES
   minitest
   pg
   puma
+  rack (~> 2.2, >= 2.2.3)
   rails (= 6.0.3.4)
   rails-controller-testing
   sdoc (~> 1.0.0)
