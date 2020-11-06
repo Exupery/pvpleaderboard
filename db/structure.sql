@@ -2,14 +2,19 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.14
--- Dumped by pg_dump version 9.5.14
+-- Dumped from database version 10.14 (Ubuntu 10.14-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.14 (Ubuntu 10.14-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -
@@ -25,6 +30,25 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: purge_old_players(); Type: FUNCTION; Schema: public
+--
+
+CREATE FUNCTION public.purge_old_players() RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  DELETE FROM players_achievements WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
+  DELETE FROM players_pvp_talents WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
+  DELETE FROM players_talents WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
+  DELETE FROM players_stats WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
+  DELETE FROM players_items WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
+  DELETE FROM players WHERE DATE_PART('day', NOW() - players.last_update) > 30 AND id NOT IN (SELECT player_id FROM leaderboards);
+END; $$;
+
+
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -36,10 +60,9 @@ SET default_with_oids = false;
 CREATE TABLE public.achievements (
     id integer NOT NULL,
     name character varying(128),
-    description character varying(1024),
-    icon character varying(128),
-    points smallint
+    description character varying(1024)
 );
+
 
 
 
@@ -54,6 +77,7 @@ CREATE TABLE public.classes (
 
 
 
+
 --
 -- Name: factions; Type: TABLE; Schema: public
 --
@@ -62,6 +86,7 @@ CREATE TABLE public.factions (
     id integer NOT NULL,
     name character varying(32) NOT NULL
 );
+
 
 
 
@@ -76,20 +101,22 @@ CREATE TABLE public.items (
 
 
 
+
 --
 -- Name: leaderboards; Type: TABLE; Schema: public
 --
 
 CREATE TABLE public.leaderboards (
-    bracket character(3) NOT NULL,
     region character(2) NOT NULL,
-    ranking integer NOT NULL,
+    bracket character(3) NOT NULL,
     player_id integer NOT NULL,
+    ranking smallint NOT NULL,
     rating smallint NOT NULL,
     season_wins smallint,
     season_losses smallint,
     last_update timestamp without time zone DEFAULT now()
 );
+
 
 
 
@@ -105,6 +132,7 @@ CREATE TABLE public.metadata (
 
 
 
+
 --
 -- Name: players; Type: TABLE; Schema: public
 --
@@ -112,17 +140,17 @@ CREATE TABLE public.metadata (
 CREATE TABLE public.players (
     id integer NOT NULL,
     name character varying(32) NOT NULL,
+    realm_id integer NOT NULL,
+    blizzard_id integer NOT NULL,
     class_id integer,
     spec_id integer,
     faction_id integer,
     race_id integer,
-    realm_id integer NOT NULL,
-    guild character varying(64),
     gender smallint,
-    achievement_points integer,
-    thumbnail character varying(128),
+    guild character varying(64),
     last_update timestamp without time zone DEFAULT now() NOT NULL
 );
+
 
 
 
@@ -132,9 +160,9 @@ CREATE TABLE public.players (
 
 CREATE TABLE public.players_achievements (
     player_id integer NOT NULL,
-    achievement_id integer NOT NULL,
-    achieved_at timestamp without time zone
+    achievement_id integer NOT NULL
 );
+
 
 
 
@@ -143,11 +171,13 @@ CREATE TABLE public.players_achievements (
 --
 
 CREATE SEQUENCE public.players_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
 
 
 
@@ -164,8 +194,6 @@ ALTER SEQUENCE public.players_id_seq OWNED BY public.players.id;
 
 CREATE TABLE public.players_items (
     player_id integer NOT NULL,
-    average_item_level integer,
-    average_item_level_equipped integer,
     head integer,
     neck integer,
     shoulder integer,
@@ -188,6 +216,19 @@ CREATE TABLE public.players_items (
 
 
 
+
+--
+-- Name: players_pvp_talents; Type: TABLE; Schema: public
+--
+
+CREATE TABLE public.players_pvp_talents (
+    player_id integer NOT NULL,
+    pvp_talent_id integer NOT NULL
+);
+
+
+
+
 --
 -- Name: players_stats; Type: TABLE; Schema: public
 --
@@ -200,12 +241,13 @@ CREATE TABLE public.players_stats (
     stamina integer,
     critical_strike integer,
     haste integer,
-    mastery integer,
     versatility integer,
-    leech real,
-    dodge real,
-    parry real
+    mastery integer,
+    leech integer,
+    dodge integer,
+    parry integer
 );
+
 
 
 
@@ -220,15 +262,31 @@ CREATE TABLE public.players_talents (
 
 
 
+
+--
+-- Name: pvp_talents; Type: TABLE; Schema: public
+--
+
+CREATE TABLE public.pvp_talents (
+    id integer NOT NULL,
+    spell_id integer NOT NULL,
+    spec_id integer NOT NULL,
+    name character varying(128) NOT NULL,
+    icon character varying(128)
+);
+
+
+
+
 --
 -- Name: races; Type: TABLE; Schema: public
 --
 
 CREATE TABLE public.races (
     id integer NOT NULL,
-    name character varying(32) NOT NULL,
-    side character varying(32) NOT NULL
+    name character varying(32) NOT NULL
 );
+
 
 
 
@@ -245,25 +303,6 @@ CREATE TABLE public.realms (
 
 
 
---
--- Name: realms_id_seq; Type: SEQUENCE; Schema: public
---
-
-CREATE SEQUENCE public.realms_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-
---
--- Name: realms_id_seq; Type: SEQUENCE OWNED BY; Schema: public
---
-
-ALTER SEQUENCE public.realms_id_seq OWNED BY public.realms.id;
-
 
 --
 -- Name: specs; Type: TABLE; Schema: public
@@ -274,10 +313,9 @@ CREATE TABLE public.specs (
     class_id integer NOT NULL,
     name character varying(32) NOT NULL,
     role character varying(32),
-    description character varying(1024),
-    background_image character varying(128),
     icon character varying(128)
 );
+
 
 
 
@@ -289,9 +327,8 @@ CREATE TABLE public.talents (
     id integer NOT NULL,
     spell_id integer NOT NULL,
     class_id integer NOT NULL,
-    spec_id integer DEFAULT 0 NOT NULL,
+    spec_id integer,
     name character varying(128) NOT NULL,
-    description character varying(1024),
     icon character varying(128),
     tier smallint,
     col smallint
@@ -299,49 +336,16 @@ CREATE TABLE public.talents (
 
 
 
---
--- Name: talents_id_seq; Type: SEQUENCE; Schema: public
---
-
-CREATE SEQUENCE public.talents_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
 
 --
--- Name: talents_id_seq; Type: SEQUENCE OWNED BY; Schema: public
---
-
-ALTER SEQUENCE public.talents_id_seq OWNED BY public.talents.id;
-
-
---
--- Name: id; Type: DEFAULT; Schema: public
+-- Name: players id; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY public.players ALTER COLUMN id SET DEFAULT nextval('public.players_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public
---
-
-ALTER TABLE ONLY public.realms ALTER COLUMN id SET DEFAULT nextval('public.realms_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public
---
-
-ALTER TABLE ONLY public.talents ALTER COLUMN id SET DEFAULT nextval('public.talents_id_seq'::regclass);
-
-
---
--- Name: achievements_pkey; Type: CONSTRAINT; Schema: public
+-- Name: achievements achievements_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.achievements
@@ -349,7 +353,7 @@ ALTER TABLE ONLY public.achievements
 
 
 --
--- Name: classes_name_key; Type: CONSTRAINT; Schema: public
+-- Name: classes classes_name_key; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.classes
@@ -357,7 +361,7 @@ ALTER TABLE ONLY public.classes
 
 
 --
--- Name: classes_pkey; Type: CONSTRAINT; Schema: public
+-- Name: classes classes_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.classes
@@ -365,7 +369,7 @@ ALTER TABLE ONLY public.classes
 
 
 --
--- Name: factions_name_key; Type: CONSTRAINT; Schema: public
+-- Name: factions factions_name_key; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.factions
@@ -373,7 +377,7 @@ ALTER TABLE ONLY public.factions
 
 
 --
--- Name: factions_pkey; Type: CONSTRAINT; Schema: public
+-- Name: factions factions_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.factions
@@ -381,7 +385,7 @@ ALTER TABLE ONLY public.factions
 
 
 --
--- Name: items_pkey; Type: CONSTRAINT; Schema: public
+-- Name: items items_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.items
@@ -389,15 +393,15 @@ ALTER TABLE ONLY public.items
 
 
 --
--- Name: leaderboards_pkey; Type: CONSTRAINT; Schema: public
+-- Name: leaderboards leaderboards_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.leaderboards
-    ADD CONSTRAINT leaderboards_pkey PRIMARY KEY (bracket, region, player_id);
+    ADD CONSTRAINT leaderboards_pkey PRIMARY KEY (region, bracket, player_id);
 
 
 --
--- Name: metadata_pkey; Type: CONSTRAINT; Schema: public
+-- Name: metadata metadata_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.metadata
@@ -405,7 +409,7 @@ ALTER TABLE ONLY public.metadata
 
 
 --
--- Name: players_achievements_pkey; Type: CONSTRAINT; Schema: public
+-- Name: players_achievements players_achievements_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_achievements
@@ -413,7 +417,7 @@ ALTER TABLE ONLY public.players_achievements
 
 
 --
--- Name: players_items_pkey; Type: CONSTRAINT; Schema: public
+-- Name: players_items players_items_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_items
@@ -421,15 +425,7 @@ ALTER TABLE ONLY public.players_items
 
 
 --
--- Name: players_name_realm_id_key; Type: CONSTRAINT; Schema: public
---
-
-ALTER TABLE ONLY public.players
-    ADD CONSTRAINT players_name_realm_id_key UNIQUE (name, realm_id);
-
-
---
--- Name: players_pkey; Type: CONSTRAINT; Schema: public
+-- Name: players players_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players
@@ -437,7 +433,23 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_stats_pkey; Type: CONSTRAINT; Schema: public
+-- Name: players_pvp_talents players_pvp_talents_pkey; Type: CONSTRAINT; Schema: public
+--
+
+ALTER TABLE ONLY public.players_pvp_talents
+    ADD CONSTRAINT players_pvp_talents_pkey PRIMARY KEY (player_id, pvp_talent_id);
+
+
+--
+-- Name: players players_realm_id_blizzard_id_key; Type: CONSTRAINT; Schema: public
+--
+
+ALTER TABLE ONLY public.players
+    ADD CONSTRAINT players_realm_id_blizzard_id_key UNIQUE (realm_id, blizzard_id);
+
+
+--
+-- Name: players_stats players_stats_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_stats
@@ -445,7 +457,7 @@ ALTER TABLE ONLY public.players_stats
 
 
 --
--- Name: players_talents_pkey; Type: CONSTRAINT; Schema: public
+-- Name: players_talents players_talents_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_talents
@@ -453,15 +465,15 @@ ALTER TABLE ONLY public.players_talents
 
 
 --
--- Name: races_name_side_key; Type: CONSTRAINT; Schema: public
+-- Name: pvp_talents pvp_talents_pkey; Type: CONSTRAINT; Schema: public
 --
 
-ALTER TABLE ONLY public.races
-    ADD CONSTRAINT races_name_side_key UNIQUE (name, side);
+ALTER TABLE ONLY public.pvp_talents
+    ADD CONSTRAINT pvp_talents_pkey PRIMARY KEY (id);
 
 
 --
--- Name: races_pkey; Type: CONSTRAINT; Schema: public
+-- Name: races races_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.races
@@ -469,7 +481,7 @@ ALTER TABLE ONLY public.races
 
 
 --
--- Name: realms_pkey; Type: CONSTRAINT; Schema: public
+-- Name: realms realms_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.realms
@@ -477,7 +489,7 @@ ALTER TABLE ONLY public.realms
 
 
 --
--- Name: realms_slug_region_key; Type: CONSTRAINT; Schema: public
+-- Name: realms realms_slug_region_key; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.realms
@@ -485,15 +497,7 @@ ALTER TABLE ONLY public.realms
 
 
 --
--- Name: specs_class_id_name_key; Type: CONSTRAINT; Schema: public
---
-
-ALTER TABLE ONLY public.specs
-    ADD CONSTRAINT specs_class_id_name_key UNIQUE (class_id, name);
-
-
---
--- Name: specs_pkey; Type: CONSTRAINT; Schema: public
+-- Name: specs specs_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.specs
@@ -501,26 +505,11 @@ ALTER TABLE ONLY public.specs
 
 
 --
--- Name: talents_id_key; Type: CONSTRAINT; Schema: public
+-- Name: talents talents_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.talents
-    ADD CONSTRAINT talents_id_key UNIQUE (id);
-
-
---
--- Name: talents_pkey; Type: CONSTRAINT; Schema: public
---
-
-ALTER TABLE ONLY public.talents
-    ADD CONSTRAINT talents_pkey PRIMARY KEY (spell_id, spec_id);
-
-
---
--- Name: achievements_name_idx; Type: INDEX; Schema: public
---
-
-CREATE INDEX achievements_name_idx ON public.achievements USING btree (name);
+    ADD CONSTRAINT talents_pkey PRIMARY KEY (id);
 
 
 --
@@ -559,10 +548,10 @@ CREATE INDEX players_guild_idx ON public.players USING btree (guild);
 
 
 --
--- Name: players_last_update_idx; Type: INDEX; Schema: public
+-- Name: pvp_talents_spec_id_idx; Type: INDEX; Schema: public
 --
 
-CREATE INDEX players_last_update_idx ON public.players USING btree (last_update DESC);
+CREATE INDEX pvp_talents_spec_id_idx ON public.pvp_talents USING btree (spec_id);
 
 
 --
@@ -580,7 +569,7 @@ CREATE INDEX talents_tier_col_idx ON public.talents USING btree (tier, col);
 
 
 --
--- Name: leaderboards_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: leaderboards leaderboards_player_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.leaderboards
@@ -588,7 +577,7 @@ ALTER TABLE ONLY public.leaderboards
 
 
 --
--- Name: players_achievements_achievement_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players_achievements players_achievements_achievement_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_achievements
@@ -596,7 +585,7 @@ ALTER TABLE ONLY public.players_achievements
 
 
 --
--- Name: players_achievements_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players_achievements players_achievements_player_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_achievements
@@ -604,7 +593,7 @@ ALTER TABLE ONLY public.players_achievements
 
 
 --
--- Name: players_class_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players players_class_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players
@@ -612,7 +601,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_faction_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players players_faction_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players
@@ -620,7 +609,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_items_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players_items players_items_player_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_items
@@ -628,7 +617,23 @@ ALTER TABLE ONLY public.players_items
 
 
 --
--- Name: players_race_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players_pvp_talents players_pvp_talents_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
+
+ALTER TABLE ONLY public.players_pvp_talents
+    ADD CONSTRAINT players_pvp_talents_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id);
+
+
+--
+-- Name: players_pvp_talents players_pvp_talents_pvp_talent_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
+
+ALTER TABLE ONLY public.players_pvp_talents
+    ADD CONSTRAINT players_pvp_talents_pvp_talent_id_fkey FOREIGN KEY (pvp_talent_id) REFERENCES public.pvp_talents(id);
+
+
+--
+-- Name: players players_race_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players
@@ -636,7 +641,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_realm_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players players_realm_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players
@@ -644,7 +649,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_spec_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players players_spec_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players
@@ -652,7 +657,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_stats_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players_stats players_stats_player_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_stats
@@ -660,7 +665,7 @@ ALTER TABLE ONLY public.players_stats
 
 
 --
--- Name: players_talents_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players_talents players_talents_player_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_talents
@@ -668,7 +673,7 @@ ALTER TABLE ONLY public.players_talents
 
 
 --
--- Name: players_talents_talent_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: players_talents players_talents_talent_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.players_talents
@@ -676,7 +681,15 @@ ALTER TABLE ONLY public.players_talents
 
 
 --
--- Name: specs_class_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: pvp_talents pvp_talents_spec_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
+
+ALTER TABLE ONLY public.pvp_talents
+    ADD CONSTRAINT pvp_talents_spec_id_fkey FOREIGN KEY (spec_id) REFERENCES public.specs(id);
+
+
+--
+-- Name: specs specs_class_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.specs
@@ -684,7 +697,7 @@ ALTER TABLE ONLY public.specs
 
 
 --
--- Name: talents_class_id_fkey; Type: FK CONSTRAINT; Schema: public
+-- Name: talents talents_class_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.talents
@@ -692,13 +705,11 @@ ALTER TABLE ONLY public.talents
 
 
 --
--- Name: SCHEMA public; Type: ACL; Schema: -
+-- Name: talents talents_spec_id_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
+ALTER TABLE ONLY public.talents
+    ADD CONSTRAINT talents_spec_id_fkey FOREIGN KEY (spec_id) REFERENCES public.specs(id);
 
 
 --
