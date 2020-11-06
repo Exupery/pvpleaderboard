@@ -19,10 +19,10 @@ class Races
   def self.get_races
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT id, name, side FROM races ORDER BY name ASC")
+    rows = ActiveRecord::Base.connection.execute("SELECT id, name FROM races ORDER BY name ASC")
     rows.each do |row|
-      slug = slugify "#{row["name"]}_#{row["side"]}"
-      h[slug] = {:id => row["id"], :name => row["name"], :side => row["side"]}
+      slug = slugify row["name"]
+      h[slug] = {:id => row["id"], :name => row["name"]}
     end
 
     return h

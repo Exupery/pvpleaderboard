@@ -3,7 +3,6 @@ talent<%= n %>:
   id: <%= n %>
   spell_id: <%= n %>
   class_id: <%= (n % 11) + 1 %>
-  spec_id: <%= 0 %>
   name: <%= "talent#{n}" %>
   icon: <%= "talenticon#{n}" %>
   tier: <%= n % 7 %>

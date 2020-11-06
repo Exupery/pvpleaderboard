@@ -1,15 +1,13 @@
 include Utils
 
 class Spec
-  attr_reader :id, :class_name, :name, :role, :description, :background_image, :icon, :slug
+  attr_reader :id, :class_name, :name, :role, :icon, :slug
 
-  def initialize(id, class_name, name, role, description, background_image, icon)
+  def initialize(id, class_name, name, role, icon)
     @id = id
     @class_name = class_name
     @name = name
     @role = role
-    @description = description
-    @background_image = background_image
     @icon = icon
     @slug = slugify name
   end
