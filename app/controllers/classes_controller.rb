@@ -37,6 +37,7 @@ class ClassesController < ApplicationController
     @spec_id = spec[:id]
 
     @talent_counts = get_talent_counts
+    @pvp_talent_counts = get_pvp_talent_counts
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_spec(@class_id, @spec_id)
 
@@ -54,6 +55,21 @@ class ClassesController < ApplicationController
     rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
+    end
+
+    Rails.cache.write(cache_key, h)
+    return h
+  end
+
+  def get_pvp_talent_counts
+    cache_key = "pvp_talent_counts_#{@spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT pvp_talents.id AS pvp_talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_pvp_talents ON players.id=players_pvp_talents.player_id JOIN pvp_talents ON players_pvp_talents.pvp_talent_id=pvp_talents.id WHERE pvp_talents.spec_id=#{@spec_id} GROUP BY pvp_talent ORDER BY count DESC")
+    rows.each do |row|
+      h[row["pvp_talent"]] = row["count"].to_i
     end
 
     Rails.cache.write(cache_key, h)

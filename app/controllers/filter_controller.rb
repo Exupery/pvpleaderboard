@@ -26,6 +26,7 @@ class FilterController < ApplicationController
     @spec_id = spec[:id]
 
     @talent_counts = get_talent_counts player_ids
+    @pvp_talent_counts = get_pvp_talent_counts player_ids
     @stat_counts = get_stat_counts player_ids
     @gear = get_most_equipped_gear_by_player_ids player_ids
   end
@@ -38,6 +39,17 @@ class FilterController < ApplicationController
     rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM players JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.id IN (#{whereify(ids)}) GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
+    end
+
+    return h
+  end
+
+  def get_pvp_talent_counts ids
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT pvp_talents.id AS pvp_talent, COUNT(*) AS count FROM players JOIN players_pvp_talents ON players.id=players_pvp_talents.player_id JOIN pvp_talents ON players_pvp_talents.pvp_talent_id=pvp_talents.id WHERE players.id IN (#{whereify(ids)}) GROUP BY pvp_talent ORDER BY count DESC")
+    rows.each do |row|
+      h[row["pvp_talent"]] = row["count"].to_i
     end
 
     return h

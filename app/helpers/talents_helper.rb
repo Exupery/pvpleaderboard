@@ -19,6 +19,27 @@ module TalentsHelper
     return h
   end
 
+  def pvp_talent_counts_table(spec_id)
+    h = Hash.new
+    @pvp_talents = Pvptalents.get_talents(spec_id)
+
+    @pvp_talent_counts.each do |id, count|
+      pvp_talent = @pvp_talents[id]
+      next if pvp_talent.nil?
+      pvp_talent[:percent] = (count.to_f / @total * 100).round(1)
+      h[id] = pvp_talent
+    end
+
+    @pvp_talents.each do |id, pvp_talent|
+      if !h.key?(id)
+        pvp_talent[:percent] = 0
+        h[id] = pvp_talent
+      end
+    end
+
+    return h
+  end
+
   private
 
   def fill_missing hash
