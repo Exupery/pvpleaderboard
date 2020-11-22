@@ -32,6 +32,7 @@ class ClassesController < ApplicationController
     @title = @class_and_spec
     @description = "World of Warcraft PvP leaderboard talents, covenants, soulbinds, and conduits for #{@class_and_spec}"
     @heading = @class_and_spec
+    @image = "#{request.base_url}/images/classes/#{class_slug}.png"
 
     @class_id = clazz[:id]
     @spec_id = spec[:id]
