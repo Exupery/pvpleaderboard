@@ -18,13 +18,13 @@
       <%= render "layouts/pvp_talents_table", :pvp_talents => pvp_talent_counts_table(@spec_id) %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-covenants">
-      <%= render "layouts/covenants_table", :pvp_talents => pvp_talent_counts_table(@spec_id) %>
+      <%= render "layouts/covenants_table" %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-soulbinds">
-      <%= render "layouts/soulbinds_table", :pvp_talents => pvp_talent_counts_table(@spec_id) %>
+      <%= render "layouts/soulbinds_table" %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-conduits">
-      <%= render "layouts/conduits_table", :pvp_talents => pvp_talent_counts_table(@spec_id) %>
+      <%= render "layouts/conduits_table" %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-stats">
       <%= render "layouts/stats_table", :counts => @stat_counts %>
