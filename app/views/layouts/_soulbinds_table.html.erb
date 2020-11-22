@@ -1,0 +1,16 @@
+<table id="soulbinds-table" class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[1,1]]">
+  <thead>
+    <tr>
+      <th>Soulbind</th>
+      <th title="Percent that have selected this soulbind">&percnt;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @soulbind_counts.each do |soulbind, count| %>
+      <tr>
+        <td><%= soulbind %></td>
+        <td><%= get_percent count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

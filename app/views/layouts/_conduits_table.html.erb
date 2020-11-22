@@ -1,0 +1,20 @@
+<table id="conduits-table" class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[1,1]]">
+  <thead>
+    <tr>
+      <th>Conduit</th>
+      <th title="Percent that have selected this conduit">&percnt;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @conduit_counts.each do |conduit, count| %>
+      <tr>
+        <td>
+          <a href="https://www.wowhead.com/spell=<%= conduit.spell_id %>" rel="spell=<%=conduit.spell_id %>&amp;lvl=60" target="_blank" class="no-a-style">
+            <%= conduit.name %>
+          </a>
+        </td>
+        <td><%= get_percent count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

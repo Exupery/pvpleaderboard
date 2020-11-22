@@ -6,7 +6,7 @@ BASE_PATH = "public/images/"
 ICONS = "icons/"
 CLASSES = "classes/"
 RACES = "races/"
-TABLES = [ "specs", "talents", "pvp_talents" ]
+TABLES = [ "specs", "talents", "pvp_talents", "covenants" ]
 
 db = PG.connect(ENV["POSTGRESQL_DEV_URL"])
 $has_missing = false

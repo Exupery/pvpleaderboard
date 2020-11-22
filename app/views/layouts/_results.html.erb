@@ -3,6 +3,9 @@
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#tab-pane-talents" aria-controls="talents" role="tab" data-toggle="tab" data-fragment="talents">Talents</a></li>
     <li role="presentation"><a href="#tab-pane-pvp-talents" aria-controls="pvp-talents" role="tab" data-toggle="tab" data-fragment="pvp-talents">PvP Talents</a></li>
+    <li role="presentation"><a href="#tab-pane-covenants" aria-controls="covenants" role="tab" data-toggle="tab" data-fragment="covenants">Covenants</a></li>
+    <li role="presentation"><a href="#tab-pane-soulbinds" aria-controls="soulbinds" role="tab" data-toggle="tab" data-fragment="soulbinds">Soulbinds</a></li>
+    <li role="presentation"><a href="#tab-pane-conduits" aria-controls="conduits" role="tab" data-toggle="tab" data-fragment="conduits">Conduits</a></li>
     <li role="presentation"><a href="#tab-pane-stats" aria-controls="stats" role="tab" data-toggle="tab" data-fragment="stats">Stats</a></li>
     <li role="presentation"><a href="#tab-pane-gear" aria-controls="gear" role="tab" data-toggle="tab" data-fragment="gear">Gear</a></li>
   </ul>
@@ -13,6 +16,15 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-pvp-talents">
       <%= render "layouts/pvp_talents_table", :pvp_talents => pvp_talent_counts_table(@spec_id) %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-covenants">
+      <%= render "layouts/covenants_table", :pvp_talents => pvp_talent_counts_table(@spec_id) %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-soulbinds">
+      <%= render "layouts/soulbinds_table", :pvp_talents => pvp_talent_counts_table(@spec_id) %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-conduits">
+      <%= render "layouts/conduits_table", :pvp_talents => pvp_talent_counts_table(@spec_id) %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-stats">
       <%= render "layouts/stats_table", :counts => @stat_counts %>

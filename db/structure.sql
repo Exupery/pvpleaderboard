@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.14 (Ubuntu 10.14-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.14 (Ubuntu 10.14-0ubuntu0.18.04.1)
+-- Dumped from database version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -17,21 +17,21 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -
+--
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -
+--
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
--- Name: purge_old_players(); Type: FUNCTION; Schema: public
+--
 --
 
 CREATE FUNCTION public.purge_old_players() RETURNS void
@@ -54,7 +54,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: achievements; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.achievements (
@@ -67,7 +67,7 @@ CREATE TABLE public.achievements (
 
 
 --
--- Name: classes; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.classes (
@@ -79,7 +79,33 @@ CREATE TABLE public.classes (
 
 
 --
--- Name: factions; Type: TABLE; Schema: public
+--
+--
+
+CREATE TABLE public.conduits (
+    id integer NOT NULL,
+    spell_id integer NOT NULL,
+    name character varying(128) NOT NULL
+);
+
+
+
+
+--
+--
+--
+
+CREATE TABLE public.covenants (
+    id integer NOT NULL,
+    name character varying(32) NOT NULL,
+    icon character varying(128)
+);
+
+
+
+
+--
+--
 --
 
 CREATE TABLE public.factions (
@@ -91,7 +117,7 @@ CREATE TABLE public.factions (
 
 
 --
--- Name: items; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.items (
@@ -103,7 +129,7 @@ CREATE TABLE public.items (
 
 
 --
--- Name: leaderboards; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.leaderboards (
@@ -121,7 +147,7 @@ CREATE TABLE public.leaderboards (
 
 
 --
--- Name: metadata; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.metadata (
@@ -134,7 +160,7 @@ CREATE TABLE public.metadata (
 
 
 --
--- Name: players; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.players (
@@ -155,7 +181,7 @@ CREATE TABLE public.players (
 
 
 --
--- Name: players_achievements; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.players_achievements (
@@ -167,7 +193,31 @@ CREATE TABLE public.players_achievements (
 
 
 --
--- Name: players_id_seq; Type: SEQUENCE; Schema: public
+--
+--
+
+CREATE TABLE public.players_conduits (
+    player_id integer NOT NULL,
+    conduit_id integer NOT NULL
+);
+
+
+
+
+--
+--
+--
+
+CREATE TABLE public.players_covenants (
+    player_id integer NOT NULL,
+    covenant_id integer NOT NULL
+);
+
+
+
+
+--
+--
 --
 
 CREATE SEQUENCE public.players_id_seq
@@ -182,14 +232,14 @@ CREATE SEQUENCE public.players_id_seq
 
 
 --
--- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public
+--
 --
 
 ALTER SEQUENCE public.players_id_seq OWNED BY public.players.id;
 
 
 --
--- Name: players_items; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.players_items (
@@ -218,7 +268,7 @@ CREATE TABLE public.players_items (
 
 
 --
--- Name: players_pvp_talents; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.players_pvp_talents (
@@ -230,7 +280,19 @@ CREATE TABLE public.players_pvp_talents (
 
 
 --
--- Name: players_stats; Type: TABLE; Schema: public
+--
+--
+
+CREATE TABLE public.players_soulbinds (
+    player_id integer NOT NULL,
+    soulbind_id integer NOT NULL
+);
+
+
+
+
+--
+--
 --
 
 CREATE TABLE public.players_stats (
@@ -252,7 +314,7 @@ CREATE TABLE public.players_stats (
 
 
 --
--- Name: players_talents; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.players_talents (
@@ -264,7 +326,7 @@ CREATE TABLE public.players_talents (
 
 
 --
--- Name: pvp_talents; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.pvp_talents (
@@ -279,7 +341,7 @@ CREATE TABLE public.pvp_talents (
 
 
 --
--- Name: races; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.races (
@@ -291,7 +353,7 @@ CREATE TABLE public.races (
 
 
 --
--- Name: realms; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.realms (
@@ -305,7 +367,19 @@ CREATE TABLE public.realms (
 
 
 --
--- Name: specs; Type: TABLE; Schema: public
+--
+--
+
+CREATE TABLE public.soulbinds (
+    id integer NOT NULL,
+    name character varying(64) NOT NULL
+);
+
+
+
+
+--
+--
 --
 
 CREATE TABLE public.specs (
@@ -320,7 +394,7 @@ CREATE TABLE public.specs (
 
 
 --
--- Name: talents; Type: TABLE; Schema: public
+--
 --
 
 CREATE TABLE public.talents (
@@ -338,14 +412,14 @@ CREATE TABLE public.talents (
 
 
 --
--- Name: players id; Type: DEFAULT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players ALTER COLUMN id SET DEFAULT nextval('public.players_id_seq'::regclass);
 
 
 --
--- Name: achievements achievements_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.achievements
@@ -353,7 +427,7 @@ ALTER TABLE ONLY public.achievements
 
 
 --
--- Name: classes classes_name_key; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.classes
@@ -361,7 +435,7 @@ ALTER TABLE ONLY public.classes
 
 
 --
--- Name: classes classes_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.classes
@@ -369,7 +443,23 @@ ALTER TABLE ONLY public.classes
 
 
 --
--- Name: factions factions_name_key; Type: CONSTRAINT; Schema: public
+--
+--
+
+ALTER TABLE ONLY public.conduits
+    ADD CONSTRAINT conduits_pkey PRIMARY KEY (id);
+
+
+--
+--
+--
+
+ALTER TABLE ONLY public.covenants
+    ADD CONSTRAINT covenants_pkey PRIMARY KEY (id);
+
+
+--
+--
 --
 
 ALTER TABLE ONLY public.factions
@@ -377,7 +467,7 @@ ALTER TABLE ONLY public.factions
 
 
 --
--- Name: factions factions_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.factions
@@ -385,7 +475,7 @@ ALTER TABLE ONLY public.factions
 
 
 --
--- Name: items items_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.items
@@ -393,7 +483,7 @@ ALTER TABLE ONLY public.items
 
 
 --
--- Name: leaderboards leaderboards_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.leaderboards
@@ -401,7 +491,7 @@ ALTER TABLE ONLY public.leaderboards
 
 
 --
--- Name: metadata metadata_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.metadata
@@ -409,7 +499,7 @@ ALTER TABLE ONLY public.metadata
 
 
 --
--- Name: players_achievements players_achievements_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_achievements
@@ -417,7 +507,23 @@ ALTER TABLE ONLY public.players_achievements
 
 
 --
--- Name: players_items players_items_pkey; Type: CONSTRAINT; Schema: public
+--
+--
+
+ALTER TABLE ONLY public.players_conduits
+    ADD CONSTRAINT players_conduits_pkey PRIMARY KEY (player_id, conduit_id);
+
+
+--
+--
+--
+
+ALTER TABLE ONLY public.players_covenants
+    ADD CONSTRAINT players_covenants_pkey PRIMARY KEY (player_id, covenant_id);
+
+
+--
+--
 --
 
 ALTER TABLE ONLY public.players_items
@@ -425,7 +531,7 @@ ALTER TABLE ONLY public.players_items
 
 
 --
--- Name: players players_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players
@@ -433,7 +539,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_pvp_talents players_pvp_talents_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_pvp_talents
@@ -441,7 +547,7 @@ ALTER TABLE ONLY public.players_pvp_talents
 
 
 --
--- Name: players players_realm_id_blizzard_id_key; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players
@@ -449,7 +555,15 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_stats players_stats_pkey; Type: CONSTRAINT; Schema: public
+--
+--
+
+ALTER TABLE ONLY public.players_soulbinds
+    ADD CONSTRAINT players_soulbinds_pkey PRIMARY KEY (player_id, soulbind_id);
+
+
+--
+--
 --
 
 ALTER TABLE ONLY public.players_stats
@@ -457,7 +571,7 @@ ALTER TABLE ONLY public.players_stats
 
 
 --
--- Name: players_talents players_talents_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_talents
@@ -465,7 +579,7 @@ ALTER TABLE ONLY public.players_talents
 
 
 --
--- Name: pvp_talents pvp_talents_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.pvp_talents
@@ -473,7 +587,7 @@ ALTER TABLE ONLY public.pvp_talents
 
 
 --
--- Name: races races_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.races
@@ -481,7 +595,7 @@ ALTER TABLE ONLY public.races
 
 
 --
--- Name: realms realms_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.realms
@@ -489,7 +603,7 @@ ALTER TABLE ONLY public.realms
 
 
 --
--- Name: realms realms_slug_region_key; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.realms
@@ -497,7 +611,15 @@ ALTER TABLE ONLY public.realms
 
 
 --
--- Name: specs specs_pkey; Type: CONSTRAINT; Schema: public
+--
+--
+
+ALTER TABLE ONLY public.soulbinds
+    ADD CONSTRAINT soulbinds_pkey PRIMARY KEY (id);
+
+
+--
+--
 --
 
 ALTER TABLE ONLY public.specs
@@ -505,7 +627,7 @@ ALTER TABLE ONLY public.specs
 
 
 --
--- Name: talents talents_pkey; Type: CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.talents
@@ -513,63 +635,63 @@ ALTER TABLE ONLY public.talents
 
 
 --
--- Name: leaderboards_ranking_idx; Type: INDEX; Schema: public
+--
 --
 
 CREATE INDEX leaderboards_ranking_idx ON public.leaderboards USING btree (ranking);
 
 
 --
--- Name: leaderboards_rating_idx; Type: INDEX; Schema: public
+--
 --
 
 CREATE INDEX leaderboards_rating_idx ON public.leaderboards USING btree (rating);
 
 
 --
--- Name: players_class_id_spec_id_idx; Type: INDEX; Schema: public
+--
 --
 
 CREATE INDEX players_class_id_spec_id_idx ON public.players USING btree (class_id, spec_id);
 
 
 --
--- Name: players_faction_id_race_id_idx; Type: INDEX; Schema: public
+--
 --
 
 CREATE INDEX players_faction_id_race_id_idx ON public.players USING btree (faction_id, race_id);
 
 
 --
--- Name: players_guild_idx; Type: INDEX; Schema: public
+--
 --
 
 CREATE INDEX players_guild_idx ON public.players USING btree (guild);
 
 
 --
--- Name: pvp_talents_spec_id_idx; Type: INDEX; Schema: public
+--
 --
 
 CREATE INDEX pvp_talents_spec_id_idx ON public.pvp_talents USING btree (spec_id);
 
 
 --
--- Name: talents_class_id_spec_id_idx; Type: INDEX; Schema: public
+--
 --
 
 CREATE INDEX talents_class_id_spec_id_idx ON public.talents USING btree (class_id, spec_id);
 
 
 --
--- Name: talents_tier_col_idx; Type: INDEX; Schema: public
+--
 --
 
 CREATE INDEX talents_tier_col_idx ON public.talents USING btree (tier, col);
 
 
 --
--- Name: leaderboards leaderboards_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.leaderboards
@@ -577,7 +699,7 @@ ALTER TABLE ONLY public.leaderboards
 
 
 --
--- Name: players_achievements players_achievements_achievement_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_achievements
@@ -585,7 +707,7 @@ ALTER TABLE ONLY public.players_achievements
 
 
 --
--- Name: players_achievements players_achievements_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_achievements
@@ -593,7 +715,7 @@ ALTER TABLE ONLY public.players_achievements
 
 
 --
--- Name: players players_class_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players
@@ -601,7 +723,39 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players players_faction_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
+--
+
+ALTER TABLE ONLY public.players_conduits
+    ADD CONSTRAINT players_conduits_conduit_id_fkey FOREIGN KEY (conduit_id) REFERENCES public.conduits(id);
+
+
+--
+--
+--
+
+ALTER TABLE ONLY public.players_conduits
+    ADD CONSTRAINT players_conduits_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
+
+
+--
+--
+--
+
+ALTER TABLE ONLY public.players_covenants
+    ADD CONSTRAINT players_covenants_covenant_id_fkey FOREIGN KEY (covenant_id) REFERENCES public.covenants(id);
+
+
+--
+--
+--
+
+ALTER TABLE ONLY public.players_covenants
+    ADD CONSTRAINT players_covenants_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
+
+
+--
+--
 --
 
 ALTER TABLE ONLY public.players
@@ -609,7 +763,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_items players_items_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_items
@@ -617,7 +771,7 @@ ALTER TABLE ONLY public.players_items
 
 
 --
--- Name: players_pvp_talents players_pvp_talents_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_pvp_talents
@@ -625,7 +779,7 @@ ALTER TABLE ONLY public.players_pvp_talents
 
 
 --
--- Name: players_pvp_talents players_pvp_talents_pvp_talent_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_pvp_talents
@@ -633,7 +787,7 @@ ALTER TABLE ONLY public.players_pvp_talents
 
 
 --
--- Name: players players_race_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players
@@ -641,7 +795,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players players_realm_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players
@@ -649,7 +803,23 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players players_spec_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
+--
+
+ALTER TABLE ONLY public.players_soulbinds
+    ADD CONSTRAINT players_soulbinds_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
+
+
+--
+--
+--
+
+ALTER TABLE ONLY public.players_soulbinds
+    ADD CONSTRAINT players_soulbinds_soulbind_id_fkey FOREIGN KEY (soulbind_id) REFERENCES public.soulbinds(id);
+
+
+--
+--
 --
 
 ALTER TABLE ONLY public.players
@@ -657,7 +827,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- Name: players_stats players_stats_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_stats
@@ -665,7 +835,7 @@ ALTER TABLE ONLY public.players_stats
 
 
 --
--- Name: players_talents players_talents_player_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_talents
@@ -673,7 +843,7 @@ ALTER TABLE ONLY public.players_talents
 
 
 --
--- Name: players_talents players_talents_talent_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.players_talents
@@ -681,7 +851,7 @@ ALTER TABLE ONLY public.players_talents
 
 
 --
--- Name: pvp_talents pvp_talents_spec_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.pvp_talents
@@ -689,7 +859,7 @@ ALTER TABLE ONLY public.pvp_talents
 
 
 --
--- Name: specs specs_class_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.specs
@@ -697,7 +867,7 @@ ALTER TABLE ONLY public.specs
 
 
 --
--- Name: talents talents_class_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.talents
@@ -705,7 +875,7 @@ ALTER TABLE ONLY public.talents
 
 
 --
--- Name: talents talents_spec_id_fkey; Type: FK CONSTRAINT; Schema: public
+--
 --
 
 ALTER TABLE ONLY public.talents

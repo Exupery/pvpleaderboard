@@ -30,7 +30,7 @@ class ClassesController < ApplicationController
 
     @class_and_spec = "#{spec[:name]} #{clazz[:name]}"
     @title = @class_and_spec
-    @description = "World of Warcraft PvP leaderboard talents for #{@class_and_spec}"
+    @description = "World of Warcraft PvP leaderboard talents, covenants, soulbinds, and conduits for #{@class_and_spec}"
     @heading = @class_and_spec
 
     @class_id = clazz[:id]
@@ -38,6 +38,9 @@ class ClassesController < ApplicationController
 
     @talent_counts = get_talent_counts
     @pvp_talent_counts = get_pvp_talent_counts
+    @covenant_counts = get_covenant_counts
+    @soulbind_counts = get_soulbind_counts
+    @conduit_counts = get_conduit_counts
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_spec(@class_id, @spec_id)
 
@@ -70,6 +73,53 @@ class ClassesController < ApplicationController
     rows = ActiveRecord::Base.connection.execute("SELECT pvp_talents.id AS pvp_talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_pvp_talents ON players.id=players_pvp_talents.player_id JOIN pvp_talents ON players_pvp_talents.pvp_talent_id=pvp_talents.id WHERE pvp_talents.spec_id=#{@spec_id} GROUP BY pvp_talent ORDER BY count DESC")
     rows.each do |row|
       h[row["pvp_talent"]] = row["count"].to_i
+    end
+
+    Rails.cache.write(cache_key, h)
+    return h
+  end
+
+  def get_covenant_counts
+    cache_key = "covenant_counts_#{@spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT covenants.name AS covenant_name, covenants.icon AS covenant_icon, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_covenants ON players.id=players_covenants.player_id JOIN covenants ON players_covenants.covenant_id=covenants.id WHERE players.spec_id=#{@spec_id} GROUP BY covenants.name, covenants.icon ORDER BY count DESC")
+    rows.each do |row|
+      covenant = Covenant.new(row["covenant_name"], row["covenant_icon"])
+      h[covenant] = row["count"].to_i
+    end
+
+    Rails.cache.write(cache_key, h)
+    return h
+  end
+
+  def get_soulbind_counts
+    cache_key = "soulbind_counts_#{@spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT soulbinds.name AS soulbind, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_soulbinds ON players.id=players_soulbinds.player_id JOIN soulbinds ON players_soulbinds.soulbind_id=soulbinds.id WHERE players.spec_id=#{@spec_id} GROUP BY soulbind ORDER BY count DESC")
+    rows.each do |row|
+      h[row["soulbind"]] = row["count"].to_i
+    end
+
+    Rails.cache.write(cache_key, h)
+    return h
+  end
+
+  def get_conduit_counts
+    cache_key = "conduit_counts_#{@spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT conduits.name AS conduit, conduits.spell_id AS spell_id, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_conduits ON players.id=players_conduits.player_id JOIN conduits ON players_conduits.conduit_id=conduits.id WHERE players.spec_id=#{@spec_id} GROUP BY conduit, spell_id ORDER BY count DESC")
+    rows.each do |row|
+      conduit = Conduit.new(row["conduit"], row["spell_id"])
+      h[conduit] = row["count"].to_i
     end
 
     Rails.cache.write(cache_key, h)
