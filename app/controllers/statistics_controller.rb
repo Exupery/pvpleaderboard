@@ -11,12 +11,13 @@ class StatisticsController < BracketRegionController
     @title = "#{@title_region}#{@title_bracket || 'Leaderboard'} Statistics"
     @description = "World of Warcraft PvP #{@title_region + @title_bracket + ' ' unless @title_bracket.nil?}leaderboard representation by class, spec, race, faction, realm, and guild"
 
-  	@factions = Hash.new(0)
+    @factions = Hash.new(0)
     @races = Hash.new(0)
     @classes = Hash.new(0)
     @specs = Hash.new(nil)
     @realms = Hash.new(nil)
     @guilds = Hash.new(nil)
+    @covenants = Hash.new(nil)
 
     find_counts @bracket
   end
@@ -74,6 +75,7 @@ class StatisticsController < BracketRegionController
         end
       end
       @guilds = guild_counts nil
+      @covenants = covenant_counts nil
     else
       @factions = faction_counts bracket
       @races = race_counts bracket
@@ -81,6 +83,7 @@ class StatisticsController < BracketRegionController
       @specs = spec_counts bracket
       @realms = realm_counts(@region, bracket, @@DEFAULT_LIMIT)
       @guilds = guild_counts bracket
+      @covenants = covenant_counts bracket
     end
   end
 
@@ -88,16 +91,16 @@ class StatisticsController < BracketRegionController
     cache_key = "faction_counts_#{@region}_#{bracket}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
-  	h = Hash.new
+    h = Hash.new
 
     rows = ActiveRecord::Base.connection.execute("SELECT factions.name AS faction, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id WHERE leaderboards.bracket='#{bracket}' #{@region_clause} GROUP BY faction ORDER BY faction ASC")
-  	rows.each do |row|
-  		h[row["faction"]] = row["count"].to_i
-  	end
+    rows.each do |row|
+      h[row["faction"]] = row["count"].to_i
+    end
 
     Rails.cache.write(cache_key, h)
-  	return h
-	end
+    return h
+  end
 
   def race_counts bracket
     cache_key = "race_counts_#{@region}_#{bracket}"
@@ -155,6 +158,24 @@ class StatisticsController < BracketRegionController
     rows = ActiveRecord::Base.connection.execute("SELECT guild, realms.name AS realm, factions.name AS faction, COUNT(*) FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN factions ON players.faction_id=factions.id JOIN realms ON players.realm_id=realms.id WHERE guild != '' AND guild IS NOT NULL #{bracket_clause} #{@region_clause} GROUP BY guild, realms.name, factions.name ORDER BY COUNT(*) DESC LIMIT 100")
     rows.each do |row|
       h[row["guild"] + row["realm"] + row["faction"]] = GuildInfo.new(row["guild"], row["realm"], row["faction"], row["count"].to_i)
+    end
+
+    Rails.cache.write(cache_key, h)
+    return h
+  end
+
+  def covenant_counts bracket
+    cache_key = "covenant_counts_#{@region}_#{bracket}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    h = Hash.new
+
+    bracket_clause = (bracket.nil?) ? "bracket IS NOT NULL" : "bracket='#{bracket}'"
+
+    rows = ActiveRecord::Base.connection.execute("SELECT covenants.name AS covenant_name, covenants.icon AS covenant_icon, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN players_covenants ON players.id=players_covenants.player_id JOIN covenants ON players_covenants.covenant_id=covenants.id WHERE #{bracket_clause} #{@region_clause} GROUP BY covenant_name, covenant_icon ORDER BY count DESC")
+    rows.each do |row|
+      covenant = Covenant.new(row["covenant_name"], row["covenant_icon"])
+      h[covenant] = row["count"].to_i
     end
 
     Rails.cache.write(cache_key, h)
