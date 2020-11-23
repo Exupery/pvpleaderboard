@@ -18,6 +18,12 @@
     </td>
     <td title="<%= player.class %>"><a href="/pvp/<%= urlify player.class %>"><img src="/images/classes/<%= slugify player.class %>.png" class="img-responsive center" alt="<%= player.class %>"></a></td>
     <td title="<%= player.spec %>"><a href="/pvp/<%= urlify player.class %>/<%= urlify player.spec %>"><img src="/images/icons/<%= player.spec_icon %>.png" class="img-responsive center" alt="<%= player.spec %>"></a></td>
+    <% covenant = player.covenant %>
+    <% if covenant.nil? %>
+    <td title="No covenant" class="hide-when-narrow"><img src="/images/icons/placeholder.png" class="img-responsive center" alt="No covenant"></td>
+    <% else %>
+    <td title="<%= covenant.name %>"><img src="/images/icons/<%= covenant.icon %>.png" class="img-responsive center" alt="<%= covenant.name %>"></td>
+    <% end %>
     <td class="show-when-extra-wide" translate="no"><%= player.guild %></td>
     <td class="hide-when-narrow"><span class="wins"><%= player.wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= player.losses %></span></td>
     <td class="hide-when-narrow"><%= player.win_ratio %>%</td>

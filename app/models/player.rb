@@ -1,5 +1,7 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image, :ratings, :titles, :ilvl, :neck_level, :cloak_rank
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image, :ratings, :titles, :ilvl, :neck_level, :cloak_rank, :covenant
+
+  @@covenants = nil
 
   def initialize hash
     @id = hash["id"]
@@ -18,6 +20,7 @@ class Player
     @realm_slug = hash["realm_slug"]
     @region = hash["region"]
     @guild = hash["guild"]
+    @covenant = get_covenant hash["covenant_id"]
 
     # Player audit-only attributes
     @main_image = hash["thumbnail"]
@@ -91,5 +94,19 @@ class Player
 
     return titles
   end
+
+  def get_covenant id
+    return nil if id.nil?
+    return @@covenants[id] unless @@covenants.nil?
+
+		@@covenants = Hash.new
+
+		rows = ActiveRecord::Base.connection.execute("SELECT id, name, icon FROM covenants")
+    rows.each do |row|
+      @@covenants[row["id"]] = Covenant.new(row["name"], row["icon"])
+    end
+
+    return @@covenants[id]
+	end
 
 end
