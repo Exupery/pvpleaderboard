@@ -14,10 +14,11 @@
   <div class="margin-0-25em">
     <h4 class="inline-block margin-none slightly-smaller-font-size">ILVL:</h4>
     <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.ilvl %></h4>
-    <h4 class="inline-block margin-none slightly-smaller-font-size margin-left-1em">Neck Azerite Level:</h4>
-    <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.neck_level %></h4>
-    <h4 class="inline-block margin-none slightly-smaller-font-size margin-left-1em">Cloak Rank:</h4>
-    <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.cloak_rank %></h4>
+    <h4 class="inline-block margin-none slightly-smaller-font-size margin-left-1em">Covenant:</h4>
+    <% covenant = @player.covenant.nil? ? "None" : @player.covenant.name %>
+    <h4 class="inline-block margin-none slightly-larger-font-size"><%= covenant %></h4>
+    <h4 class="inline-block margin-none slightly-smaller-font-size margin-left-1em">Renown Level:</h4>
+    <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.renown_level %></h4>
   </div>
   <div class="margin-0-5em">
     <% race_and_gender = "#{@player.race} #{@player.gender}".titleize %>

@@ -1,5 +1,5 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image, :ratings, :titles, :ilvl, :neck_level, :cloak_rank, :covenant
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image, :ratings, :titles, :ilvl, :covenant, :renown_level
 
   @@covenants = nil
 
@@ -27,8 +27,7 @@ class Player
     @ratings = hash["ratings"]
     @titles = trim_titles(hash["titles"]) if hash["titles"]
     @ilvl = hash["ilvl"]
-    @neck_level = hash["neck_level"]
-    @cloak_rank = hash["cloak_rank"]
+    @renown_level = hash["renown_level"]
   end
 
   def win_ratio

@@ -76,8 +76,8 @@ class PlayerController < BracketRegionController
     hash["titles"] = get_titles get "/achievements"
 
     equipment = get "/equipment"
-    hash["neck_level"] = get_neck_level equipment
-    hash["cloak_rank"] = get_cloak_rank equipment
+    hash["covenant_id"] = get_covenant profile["covenant_progress"]
+    hash["renown_level"] = get_renown_level profile["covenant_progress"]
     hash["ilvl"] = profile["equipped_item_level"]
 
     return hash
@@ -177,31 +177,16 @@ class PlayerController < BracketRegionController
     return titles
   end
 
-  def get_neck_level json
-    return 0 unless valid_response(json)
-    equipped_items = json["equipped_items"]
-    return 0 if equipped_items.nil?
-
-    equipped_items.each do |item|
-      next if item["name"] != "Heart of Azeroth"
-      return item["azerite_details"]["level"]["value"]
-    end
-
-    return 0
+  def get_covenant json
+    return nil if json.nil?
+    chosen_covenant = json["chosen_covenant"]
+    return chosen_covenant.nil? ? nil : chosen_covenant["id"]
   end
 
-  def get_cloak_rank json
-    return 0 unless valid_response(json)
-    equipped_items = json["equipped_items"]
-    return 0 if equipped_items.nil?
-
-    equipped_items.each do |item|
-      next if item["name"] != "Ashjra'kamas, Shroud of Resolve"
-      txt = item["name_description"]["display_string"]
-      return txt.split(" ")[1]
-    end
-
-    return 0
+  def get_renown_level json
+    return 0 if json.nil?
+    renown_level = json["renown_level"]
+    return renown_level.nil? ? 0 : renown_level
   end
 
   def valid_response res
