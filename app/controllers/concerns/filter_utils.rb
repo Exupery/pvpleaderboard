@@ -75,10 +75,10 @@ module FilterUtils extend ActiveSupport::Concern
       end
       cr = @selected[:"current-rating"].to_i
       if cr > 0
-        cr_ids = Set.new
+        cr_ids = Array.new
         rows = ActiveRecord::Base.connection.execute("SELECT player_id FROM leaderboards WHERE rating > #{cr} #{bracket_clause}")
         rows.each do |row|
-          cr_ids.add(row["player_id"])
+          cr_ids.push(row["player_id"])
         end
 
         return ids.intersection cr_ids
