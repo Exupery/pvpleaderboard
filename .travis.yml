@@ -1,8 +1,0 @@
-language: ruby
-rvm:
-  - 2.7.0
-services:
-  - postgresql
-before_script:
-  - psql -c 'create database pvptest;' -U postgres
-

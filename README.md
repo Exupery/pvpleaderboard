@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/Exupery/pvpleaderboard.svg)](https://travis-ci.org/Exupery/pvpleaderboard)
 # PvPLeaderboard
 
 [PvPLeaderboard](https://www.pvpleaderboard.com/) shows the talent choices made by the best [World of Warcraft](https://worldofwarcraft.com/) PvP players as well as a breakdown of the PvP leaderboards by class, spec, race, and faction.
