@@ -106,7 +106,12 @@ class PlayerController < BracketRegionController
 
   def get_thumbnail
     json = get "/character-media"
-    return valid_response(json) ? json["render_url"] : nil
+    return nil unless valid_response(json)
+    return nil if json["assets"].nil?
+    json["assets"].each do |asset|
+      return asset["value"] if asset["key"] == "main"
+    end
+    return nil
   end
 
   def assign_ratings(hash, statistics)
