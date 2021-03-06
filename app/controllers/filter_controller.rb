@@ -33,6 +33,7 @@ class FilterController < ApplicationController
     @conduit_counts = get_conduit_counts
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_player_ids player_ids
+    @legendary_counts = get_legendary_counts
   end
 
   private
@@ -89,6 +90,18 @@ class FilterController < ApplicationController
     rows.each do |row|
       conduit = Conduit.new(row["conduit"], row["spell_id"])
       h[conduit] = row["count"].to_i
+    end
+
+    return h
+  end
+
+  def get_legendary_counts
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT players_legendaries.spell_id AS id, players_legendaries.legendary_name AS name, COUNT(*) AS count FROM players JOIN players_legendaries ON players.id=players_legendaries.player_id WHERE players.id IN (#{@whereified_ids}) GROUP BY spell_id, legendary_name ORDER BY count DESC")
+    rows.each do |row|
+      legendary = Legendary.new(row["id"], row["name"])
+      h[legendary] = row["count"].to_i
     end
 
     return h

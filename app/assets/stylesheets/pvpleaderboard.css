@@ -271,7 +271,7 @@ th:focus {
 }
 
 .results-panel {
-  width: calc(100% - 50vw);
+  width: calc(100% - 40vw);
   min-width: 22em;
 }
 

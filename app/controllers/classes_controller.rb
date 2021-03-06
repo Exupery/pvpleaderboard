@@ -44,6 +44,7 @@ class ClassesController < ApplicationController
     @conduit_counts = get_conduit_counts
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_spec(@class_id, @spec_id)
+    @legendary_counts = get_legendary_counts
 
     @total = total_player_count(@class_id, @spec_id)
   end
@@ -121,6 +122,22 @@ class ClassesController < ApplicationController
     rows.each do |row|
       conduit = Conduit.new(row["conduit"], row["spell_id"])
       h[conduit] = row["count"].to_i
+    end
+
+    Rails.cache.write(cache_key, h)
+    return h
+  end
+
+  def get_legendary_counts
+    cache_key = "legendary_counts_#{@spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    h = Hash.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT players_legendaries.spell_id AS id, players_legendaries.legendary_name AS name, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_legendaries ON players.id=players_legendaries.player_id WHERE players.spec_id=#{@spec_id} GROUP BY spell_id, legendary_name ORDER BY count DESC")
+    rows.each do |row|
+      legendary = Legendary.new(row["id"], row["name"])
+      h[legendary] = row["count"].to_i
     end
 
     Rails.cache.write(cache_key, h)
