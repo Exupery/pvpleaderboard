@@ -3,6 +3,6 @@
   <% ["2v2", "3v3", "RBG", "All"].each do |b| %>
     <% next if exclude_all && b == "All" %>
     <% active = ((b == "All" && @bracket.nil?) || (!@bracket.nil? && b.casecmp(@bracket) == 0)) ? "active" : "" %>
-    <a href="<%= (path % {:bracket => b, :region => @region}).downcase %>" type="button" class="btn btn-default include-fragment <%= active %>" role="button"><%= b %></a>
+    <a href="<%= (path % {:bracket => b, :region => @region.nil? ? 'all' : @region, :rating => @min_rating != 0 ? @min_rating : nil}).downcase %>" type="button" class="btn btn-default include-fragment <%= active %>" role="button"><%= b %></a>
   <% end %>
 </div>

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "statistics" => "statistics#show"
   get "statistics/:bracket" => "statistics#show"
   get "statistics/:bracket/:region" => "statistics#show"
+  get "statistics/:bracket/:region/:rating" => "statistics#show"
 
   get "pvp" => "classes#select_class"
   get "pvp/filter" => "filter#filter"

@@ -1,7 +1,8 @@
 <div class="expands">
-  <% path = "/statistics/%{bracket}/%{region}" %>
+  <% path = "/statistics/%{bracket}/%{region}/%{rating}" %>
   <%= render "layouts/bracket_selection", :path => path %>
   <%= render "layouts/region_selection", :path => path %>
+  <%= render "layouts/rating_selection", :path => path %>
 
   <h1>Statistics for <%= @bracket_fullname %></h1>
 

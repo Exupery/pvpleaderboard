@@ -22,7 +22,7 @@ class RealmsController < StatisticsController
         return nil
       end
       @@BRACKETS.each do |b|
-        (realm_counts(@region, b, "ALL")).each do |k, h|
+        (realm_counts(@region, b, 0, "ALL")).each do |k, h|
           if @realms.has_key?(k)
             @realms[k][:count] += h[:count]
           else
@@ -31,7 +31,7 @@ class RealmsController < StatisticsController
         end
       end
     else
-      @realms = realm_counts(@region, @bracket, "ALL")
+      @realms = realm_counts(@region, @bracket, 0, "ALL")
     end
   end
 
