@@ -18,7 +18,7 @@ class LeaderboardFilterController < ApplicationController
     @filtered = true
 
     @bracket = get_bracket
-    @region = get_region
+    @region = get_leaderboard_region
     if @bracket.nil? || @region.nil?
       redirect_to "/leaderboards/filter"
       return nil

@@ -3,6 +3,8 @@ class Player
 
   @@covenants = nil
 
+  @@armory_locales = { "US" => "en-us", "EU" => "en-gb", "KR" => "ko_kr", "TW" => "zh-tw" }
+
   def initialize hash
     @id = hash["id"]
     @ranking = hash["ranking"]
@@ -37,17 +39,11 @@ class Player
   end
 
   def armory_link
-    locale = @region == "US" ? "en-us" : "en-gb"
+    locale = @@armory_locales[@region]
     return "https://worldofwarcraft.com/#{locale}/character/#{@realm_slug}/#{@name}"
   end
 
   private
-
-  def image_link thumbnail
-    return nil if thumbnail.nil?
-    locale = @region == "US" ? "us" : "eu"
-    return "https://render-#{locale}.worldofwarcraft.com/character/#{thumbnail}"
-  end
 
   # Trims the list to the highest title for each
   # season if more than one earned in a season

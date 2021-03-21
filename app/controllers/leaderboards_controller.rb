@@ -24,7 +24,7 @@ class LeaderboardsController < BracketRegionController
 
   def more
     @bracket = get_bracket
-    @region = get_region
+    @region = get_leaderboard_region
     if @bracket && @region && params[:min]
       max_results = params[:all] == "true" ? nil : @@DEFAULT_MAX_RESULTS
       @leaderboard = players_on_leaderboard(params[:min], max_results)

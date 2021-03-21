@@ -33,18 +33,28 @@ class ApplicationController < ActionController::Base
     return (get_title_region region) + (bracket.downcase.eql?("rbg") ? "Rated Battlegrounds" : bracket)
   end
 
-  def get_region
-    region = params[:region]
-    if region
-      region.upcase!
-      region = nil unless @@REGIONS.include?(region)
-    end
+  def get_player_region
+    return get_region Regions.with_asia
+  end
 
-    return region
+  def get_leaderboard_region
+    return get_region @@REGIONS
   end
 
   def get_title_region region
     return region.nil? ? "" : "#{region} "
+  end
+
+  private
+
+  def get_region regions
+    region = params[:region]
+    if region
+      region.upcase!
+      region = nil unless regions.include?(region)
+    end
+
+    return region
   end
 
 end

@@ -4,7 +4,7 @@ class BracketRegionController < ApplicationController
   def assign_fields
     @bracket = get_bracket
     @title_bracket = get_title_bracket @bracket
-    @region = get_region
+    @region = request.env["PATH_INFO"].start_with?("/players") ? get_player_region : get_leaderboard_region
     @title_region = get_title_region @region
 
     @bracket_fullname = get_bracket_fullname(@bracket, @region)

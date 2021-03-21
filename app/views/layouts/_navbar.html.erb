@@ -29,7 +29,7 @@
       <a href="/players" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Players&nbsp;<span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
         <% pathFormat = "/players/%{region}" %>
-        <% Regions.list.each do |region| %>
+        <% Regions.with_asia.each do |region| %>
           <% path = pathFormat % {:region => region.downcase} %>
           <li class="<%= is_active path %>"><a href="<%= path %>"><%= region %></a></li>
         <% end %>
