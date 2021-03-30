@@ -16,7 +16,7 @@ module Utils extend ActiveSupport::Concern
     cols = ""
 		@@stats.each do |stat|
 			cols += "," if !cols.empty?
-			cols += "MIN(#{stat}) AS min_#{stat}, AVG(#{stat}) AS avg_#{stat}, MAX(#{stat}) AS max_#{stat}"
+			cols += "MIN(#{stat}) AS min_#{stat}, PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY #{stat}) AS med_#{stat}, MAX(#{stat}) AS max_#{stat}"
     end
     @@stat_cols = cols
 
@@ -28,7 +28,7 @@ module Utils extend ActiveSupport::Concern
  		@@stats.each do |stat|
   		h[stat] = Hash.new
   		h[stat][:min] = row["min_#{stat}"].to_i
-  		h[stat][:avg] = row["avg_#{stat}"].to_i
+      h[stat][:med] = row["med_#{stat}"].to_i
   		h[stat][:max] = row["max_#{stat}"].to_i
     end
 
@@ -38,17 +38,17 @@ module Utils extend ActiveSupport::Concern
   # Any given spec uses only one of Intellect, Agility, or Strength
   # Remove the two that are not highest from the provided hash
   def remove_unused_stats hash
-    avg_agility = hash["agility"][:avg]
-    avg_intellect = hash["intellect"][:avg]
-    avg_strength = hash["strength"][:avg]
+    med_agility = hash["agility"][:med]
+    med_intellect = hash["intellect"][:med]
+    med_strength = hash["strength"][:med]
 
-    if (avg_agility > avg_intellect && avg_agility > avg_strength)
+    if (med_agility > med_intellect && med_agility > med_strength)
       hash.delete("intellect")
       hash.delete("strength")
-    elsif (avg_intellect > avg_agility && avg_intellect > avg_strength)
+    elsif (med_intellect > med_agility && med_intellect > med_strength)
       hash.delete("agility")
       hash.delete("strength")
-    elsif (avg_strength > avg_agility && avg_strength > avg_intellect)
+    elsif (med_strength > med_agility && med_strength > med_intellect)
       hash.delete("agility")
       hash.delete("intellect")
     end

@@ -30,8 +30,8 @@ class UtilsConcernTest < ActionController::TestCase
   end
 
   test "should remove unused primary stats" do
-    high = { :avg => 999 }
-    low = { :avg => 0 }
+    high = { :med => 999 }
+    low = { :med => 0 }
 
     agility_highest = { "agility" => high, "intellect" => low, "strength" => low }
     intellect_highest = { "agility" => low, "intellect" => high, "strength" => low }

@@ -3,7 +3,7 @@
     <tr>
       <th>Stat</th>
       <th>Min</th>
-      <th>Average</th>
+      <th>Median</th>
       <th>Max</th>
     </tr>
   </thead>
@@ -12,7 +12,7 @@
       <tr>
         <td><%= s.gsub(/[_]/, " ").titleize %></td>
         <td><%= h[:min] %></td>
-        <td><%= h[:avg] %></td>
+        <td><%= h[:med] %></td>
         <td><%= h[:max] %></td>
       </tr>
     <% end %>
