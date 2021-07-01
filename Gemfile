@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.7.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '6.1.3.2'
+gem 'rails', '6.1.4'
 
 gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
@@ -11,6 +11,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
+gem 'execjs', '< 2.8'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
