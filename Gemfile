@@ -23,7 +23,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 1.0.0', group: :doc
 
 gem 'puma'
-gem 'dalli'
+gem 'dalli', '< 3.0'
 gem 'minitest'
 gem 'httparty'
 gem 'rack', '~> 2.2', '>= 2.2.3'

@@ -72,7 +72,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
-    dalli (3.0.0)
+    dalli (2.7.11)
     erubi (1.10.0)
     execjs (2.7.0)
     ffi (1.15.4)
@@ -187,7 +187,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails
-  dalli
+  dalli (< 3.0)
   execjs (< 2.8)
   httparty
   jbuilder (~> 2.0)
