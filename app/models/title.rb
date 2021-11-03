@@ -2,9 +2,20 @@ class Title
   include Comparable
   attr_reader :name, :season, :date, :description
 
-  @@ARENA_TITLES = ["Combatant", "Challenger", "Rival", "Duelist", "Elite", "Gladiator"]
-  @@ALLIANCE_RBG_TITLES = ["Soldier of the Alliance", "Defender of the Alliance", "Guardian of the Alliance"]
-  @@HORDE_RBG_TITLES = ["Soldier of the Horde", "Defender of the Horde", "Guardian of the Horde"]
+  @@ARENA_TITLES = ["Combatant", "Combatant II", "Challenger", "Challenger II", "Rival", "Rival II", "Duelist", "Elite", "Gladiator"]
+  @@ARENA_TITLES_SET = @@ARENA_TITLES.to_set
+  @@ALLIANCE_RBG_TITLES = {
+    "Soldier of the Alliance" => "Challenger",
+    "Defender of the Alliance" => "Rival",
+    "Guardian of the Alliance" => "Duelist",
+    "Hero of the Alliance" => "Gladiator"
+  }
+  @@HORDE_RBG_TITLES = {
+    "Soldier of the Horde" => "Challenger",
+    "Defender of the Horde" => "Rival",
+    "Guardian of the Horde" => "Duelist",
+    "Hero of the Horde" => "Gladiator"
+  }
 
   def initialize(achievement_name, achievement_description, date)
     tokens = achievement_name.split /:\s+/
@@ -26,20 +37,18 @@ class Title
 
     # prioritize arena titles over RBG titles of same rank
     if this_rank == other_rank
-      return 1 if @@ARENA_TITLES.index @name and (@@ARENA_TITLES.index other.name).nil?
-      return -1 if (@@ARENA_TITLES.index @name).nil? and @@ARENA_TITLES.index other.name
+      return 1 if @@ARENA_TITLES_SET.include? @name and !(@@ARENA_TITLES_SET.include? other.name)
+      return -1 if !(@@ARENA_TITLES_SET.include? @name) and @@ARENA_TITLES_SET.include? other.name
     end
 
     return this_rank <=> other_rank
   end
 
   def convert_to_arena name
-    return name if @@ARENA_TITLES.index name
+    return name if @@ARENA_TITLES_SET.include? name
 
-    alliance = @@ALLIANCE_RBG_TITLES.index name
-    return @@ARENA_TITLES[alliance + 1] if alliance
+    return @@HORDE_RBG_TITLES[name] if @@HORDE_RBG_TITLES.has_key? name
 
-    horde = @@HORDE_RBG_TITLES.index name
-    return @@ARENA_TITLES[horde + 1] if horde
+    return @@ALLIANCE_RBG_TITLES[name] if @@ALLIANCE_RBG_TITLES.has_key? name
   end
 end
