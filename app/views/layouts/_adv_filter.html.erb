@@ -1,8 +1,8 @@
-<% if include_cr %>
 <div class="filter-row">
   <label for="cr" class="btn-group-label">Minimum Current Rating</label>
   <div id="cr" class="input-group">
 
+    <% if include_cr %>
       <div class="input-group-btn">
         <% txt = @selected[:"cr-bracket"] || "Bracket" %>
         <% txt.upcase! if (txt == "rbg" || txt == "any") %>
@@ -16,13 +16,14 @@
           <li data-target="cr-bracket" data-target-button="btn-cr-bracket" data-value="any">ANY</li>
         </ul>
       </div>
+    <% end %>
 
       <div class="input-group-btn">
         <% txt = @selected[:"current-rating"] || "Rating" %>
         <% active = @selected[:"current-rating"].nil? ? "" : "active" %>
         <button id="btn-current-rating" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="current-rating" class="dropdown-text" data-value="<%= @selected[:"current-rating"] %>" data-default="Rating"><%= txt %></span><span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
-          <% (2000..3000).step(100) do |rating| %>
+          <% (2000..3200).step(100) do |rating| %>
             <li data-target="current-rating" data-target-button="btn-current-rating" data-value="<%= rating %>"><%= rating %></li>
           <% end %>
         </ul>
@@ -30,7 +31,6 @@
 
     </div>
 </div>
-<% end %>
 
 <div class="filter-row">
   <label for="arena-achievements" class="btn-group-label">Arena Achievement(s)</label>

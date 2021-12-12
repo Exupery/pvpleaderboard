@@ -5,7 +5,7 @@ class LeaderboardFilterController < ApplicationController
   protect_from_forgery with: :exception
   before_action :get_selected
 
-  @@FILTERS = [:leaderboard, :region, :class, :spec, :factions, :"arena-achievements", :"rbg-achievements", :races, :realm, :name]
+  @@FILTERS = [:leaderboard, :region, :class, :spec, :factions, :"arena-achievements", :"rbg-achievements", :races, :realm, :name, :"current-rating"]
 
   def filter
     @title = "Leaderboard Filter"

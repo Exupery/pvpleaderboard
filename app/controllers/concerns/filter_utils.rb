@@ -29,6 +29,13 @@ module FilterUtils extend ActiveSupport::Concern
       where += " AND players.spec_id=#{spec[:id]}" if spec
     end
 
+    if @selected[:"current-rating"]
+      cr = @selected[:"current-rating"].to_i
+      if cr >= 2000
+        where += " AND rating > #{cr}"
+      end
+    end
+
     where += factions_clause if @selected[:factions]
     where += races_clause if @selected[:races]
     where += realm_clause if @selected[:realm]
