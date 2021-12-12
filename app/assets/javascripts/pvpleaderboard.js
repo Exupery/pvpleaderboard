@@ -317,6 +317,7 @@ function createFilterQueryString() {
   params += queryParam("races", getAllValues(".races-btn.active"));
   params += queryParam("realm", getAllValues("#realm"));
   params += queryParam("name", getInputValue("#char-name"));
+  params += queryParam("active-since", getAllValues("#active-since"));
 
   return params;
 }

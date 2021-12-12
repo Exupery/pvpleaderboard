@@ -33,6 +33,27 @@
 </div>
 
 <div class="filter-row">
+  <label for="activity" class="btn-group-label">Activity</label>
+  <div id="activity" class="input-group">
+    <span>Only include players that have logged in within the last</span>
+    <div class="input-group-btn">
+      <% txt = @selected[:"active-since"] || "" %>
+      <% active = @selected[:"active-since"].nil? ? "" : "active" %>
+      <button id="btn-active-since" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="active-since" class="dropdown-text" data-value="<%= @selected[:"active-since"] %>" data-default=""><%= txt %></span><span class="caret"></span></button>
+      <ul class="dropdown-menu" role="menu">
+        <% (1..12).step(1) do |weeks| %>
+          <li data-target="active-since" data-target-button="btn-active-since" data-value="<%= weeks %>"><%= weeks %></li>
+        <% end %>
+        <% (16..24).step(4) do |weeks| %>
+          <li data-target="active-since" data-target-button="btn-active-since" data-value="<%= weeks %>"><%= weeks %></li>
+        <% end %>
+      </ul>
+    </div>
+    <span>weeks</span>
+  </div>
+</div>
+
+<div class="filter-row">
   <label for="arena-achievements" class="btn-group-label">Arena Achievement(s)</label>
   <div id="arena-achievements" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Arena Achievements" data-toggle="buttons">
     <% arena_achievements().each do |id, achievement| %>

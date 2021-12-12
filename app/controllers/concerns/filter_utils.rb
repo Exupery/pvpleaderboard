@@ -36,6 +36,13 @@ module FilterUtils extend ActiveSupport::Concern
       end
     end
 
+    if @selected[:"active-since"]
+      weeks = @selected[:"active-since"].to_i
+      if weeks > 0
+        where += " AND DATE_PART('day', (SELECT NOW() - last_login)) < #{weeks * 7}"
+      end
+    end
+
     where += factions_clause if @selected[:factions]
     where += races_clause if @selected[:races]
     where += realm_clause if @selected[:realm]
