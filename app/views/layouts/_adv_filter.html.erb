@@ -35,7 +35,7 @@
 <div class="filter-row">
   <label for="activity" class="btn-group-label">Activity</label>
   <div id="activity" class="input-group">
-    <span>Only include players that have logged in within the last</span>
+    <span>Exclude players that have NOT logged in within the last</span>
     <div class="input-group-btn">
       <% txt = @selected[:"active-since"] || "" %>
       <% active = @selected[:"active-since"].nil? ? "" : "active" %>
