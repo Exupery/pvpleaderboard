@@ -318,6 +318,7 @@ function createFilterQueryString() {
   params += queryParam("realm", getAllValues("#realm"));
   params += queryParam("name", getInputValue("#char-name"));
   params += queryParam("active-since", getAllValues("#active-since"));
+  params += queryParam("exclude-alts", getAllValues(".exclude-alts-btn.active"));
 
   return params;
 }

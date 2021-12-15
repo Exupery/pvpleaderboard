@@ -46,7 +46,7 @@
     <div class="input-group-btn">
       <% txt = @selected[:"active-since"] || "" %>
       <% active = @selected[:"active-since"].nil? ? "" : "active" %>
-      <button id="btn-active-since" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="active-since" class="dropdown-text" data-value="<%= @selected[:"active-since"] %>" data-default=""><%= txt %></span><span class="caret"></span></button>
+      <button id="btn-active-since" type="button" class="btn btn-default dropdown-toggle <%= active %>" data-toggle="dropdown" aria-expanded="false"><span id="active-since" class="dropdown-text" data-value="<%= @selected[:"active-since"] %>" data-default="&#8734;"><%= txt %></span><span class="caret"></span></button>
       <ul class="dropdown-menu" role="menu">
         <% (1..12).step(1) do |weeks| %>
           <li data-target="active-since" data-target-button="btn-active-since" data-value="<%= weeks %>"><%= weeks %></li>
@@ -54,11 +54,25 @@
         <% (16..24).step(4) do |weeks| %>
           <li data-target="active-since" data-target-button="btn-active-since" data-value="<%= weeks %>"><%= weeks %></li>
         <% end %>
+        <li data-target="active-since" data-target-button="btn-active-since" data-value="">&#8734;</li>
       </ul>
     </div>
     <span>weeks</span>
   </div>
 </div>
+
+<% if not class_filter %>
+<div class="filter-row">
+  <% note = "Excluding alts will return only the HIGHEST rated character that is a guaranteed match for an account - due to limitations in Blizzard's API about 1% of leaderboard characters will not get matched to an account and thus a very small number of alts may slip through" %>
+  <label for="exclude-alts" class="btn-group-label" title="<%= note %>">Alts</label>
+  <div id="exclude-alts" class="btn-group btn-group-lg btn-group-filter" role="group" aria-label="Exclude Alts" data-toggle="buttons">
+      <label class="btn exclude-alts-btn active default-option" title="Include all characters" data-value="false">
+        <input type="radio" autocomplete="off">Include</label>
+      <label class="btn exclude-alts-btn" title="<%= note %>" data-value="true">
+        <input type="radio" autocomplete="off">Exclude</label>
+  </div>
+</div>
+<% end %>
 
 <div class="filter-row">
   <label for="arena-achievements" class="btn-group-label">Arena Achievement(s)</label>
