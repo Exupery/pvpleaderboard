@@ -2,7 +2,7 @@
   <button id="toggle-filters" class="btn btn-default btn-collapse margin-top-1em" type="button" data-toggle="collapse" data-text="Filters" data-target="#filters" aria-expanded="false" aria-controls="collapse-filters">Show Filters</button>
 
   <div id="filters" class="collapse" data-toggler="toggle-filters">
-    <%= render "layouts/filter_form", form_id: "filter-form", include_cr: true, required: "Class and spec" %>
+    <%= render "layouts/filter_form", form_id: "filter-form", class_filter: true, required: "Class and spec" %>
   </div>
 
   <% if @total == 0 %>

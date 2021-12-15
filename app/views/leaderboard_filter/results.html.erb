@@ -2,7 +2,7 @@
   <button id="toggle-filters" class="btn btn-default btn-collapse margin-top-1em" type="button" data-toggle="collapse" data-text="Filters" data-target="#filters" aria-expanded="false" aria-controls="collapse-filters">Show Filters</button>
 
   <div id="filters" class="collapse" data-toggler="toggle-filters">
-    <%= render "layouts/filter_form", form_id: "leaderboard-filter-form", include_cr: false, required: "Leaderboard and region" %>
+    <%= render "layouts/filter_form", form_id: "leaderboard-filter-form", class_filter: false, required: "Leaderboard and region" %>
   </div>
 
   <% if @leaderboard.empty? %>

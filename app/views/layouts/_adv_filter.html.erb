@@ -2,7 +2,7 @@
   <label for="cr" class="btn-group-label">Minimum Current Rating</label>
   <div id="cr" class="input-group">
 
-    <% if include_cr %>
+    <% if class_filter %>
       <div class="input-group-btn">
         <% txt = @selected[:"cr-bracket"] || "Bracket" %>
         <% txt.upcase! if (txt == "rbg" || txt == "any") %>
