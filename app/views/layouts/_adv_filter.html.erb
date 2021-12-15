@@ -1,3 +1,10 @@
+<% if not class_filter %>
+<div class="filter-row">
+  <label for="char-name" class="btn-group-label" title="Character name">Name <span class="text-muted">(full or partial)</span></label>
+  <input type="search" class="form-control btn-group btn-group-lg btn-group-filter search-input" id="char-name" size="20" value="<%= @selected[:name] unless @selected[:name].nil? %>">
+</div>
+<% end %>
+
 <div class="filter-row">
   <label for="cr" class="btn-group-label">Minimum Current Rating</label>
   <div id="cr" class="input-group">
