@@ -38,7 +38,7 @@ class PlayerController < BracketRegionController
     cache_key = "#{@region}_#{@realm_slug}_#{@player_name}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
-    player_hash = create_player_hash
+    player_hash = get_player_with_retry cache_key
     return nil if player_hash.nil?
     player = Player.new(player_hash)
 
@@ -46,7 +46,23 @@ class PlayerController < BracketRegionController
     return player
   end
 
-  def create_player_hash
+  def get_player_with_retry player_id
+    # Blizzard's player API often flakes out but works on retry
+    cnt = 0
+    while cnt < 3
+      begin
+        return get_player_details cnt
+      rescue Exception => e
+        cnt += 1
+        logger.warn("Attempt #{cnt} failed for #{player_id}: #{e.to_s}")
+        sleep(0.5)
+      end
+    end
+
+    return nil
+  end
+
+  def get_player_details delme
     hash = Hash.new
 
     hash["region"] = @region
