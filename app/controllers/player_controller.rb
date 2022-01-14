@@ -220,7 +220,7 @@ class PlayerController < BracketRegionController
   def get path
     uri = create_uri path
     return nil if uri.nil?
-    res = HTTParty.get(uri)
+    res = HTTParty.get(uri, timeout: 5)
     if res.code == 401
       # On 401 clear oauth token cache to force a new one and try again
       Rails.cache.delete(@@OAUTH_CACHE_KEY)
