@@ -2,7 +2,7 @@
 <% if @player.nil? %>
   <h1><%= @player_name %> - <%= @realm_name %> (<%= @region %>)</h1>
 <% else %>
-  <h1 class="margin-bottom-0-25em"><a href="<%= @player.armory_link %>" title="Armory"><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</a></h1>
+  <h1 class="margin-top-0-25em margin-bottom-0-25em"><a href="<%= @player.armory_link %>" title="Armory"><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</a></h1>
 <% end %>
 
 <% if @player.nil? %>
@@ -16,7 +16,8 @@
     <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.ilvl %></h4>
     <h4 class="inline-block margin-none slightly-smaller-font-size margin-left-1em">Covenant:</h4>
     <% covenant = @player.covenant.nil? ? "None" : @player.covenant.name %>
-    <h4 class="inline-block margin-none slightly-larger-font-size"><%= covenant %></h4>
+    <% soulbind = @soulbind.nil? ? "No Soulbind" : @soulbind %>
+    <h4 class="inline-block margin-none slightly-larger-font-size" title="<%= soulbind %>"><%= covenant %></h4>
     <h4 class="inline-block margin-none slightly-smaller-font-size margin-left-1em">Renown Level:</h4>
     <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.renown_level %></h4>
   </div>
@@ -28,7 +29,7 @@
     <a href="/pvp/<%= urlify @player.class %>/<%= urlify @player.spec %>"><img src="/images/icons/<%= @player.spec_icon %>.png" class="img-responsive inline-block" alt="<%= @player.spec %>" title="<%= @player.spec %>"></a>
   </div>
 
-  <h3 class="margin-top-0-5em">Character Ratings</h3>
+  <h3 class="margin-top-0-25em">Character Ratings</h3>
   <table class="table table-bordered table-condensed table-responsive table-hover center">
     <thead>
       <tr>
@@ -57,25 +58,89 @@
     </tbody>
   </table>
 
-  <h3>Seasonal Titles</h3>
-  <table class="table table-bordered table-condensed table-responsive table-hover center">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Season</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @player.titles.each do |t| %>
-        <tr>
-          <td title="<%= t.description %>"><%= t.name %></td>
-          <td><%= t.season %></td>
-          <td class="right-text"><%= Time.at(t.date / 1000).to_date.strftime("%-d %B %Y") %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <h5 class="use-40">(Season title data only available from Season 14 and later. May be account-wide depending if character has 'Display Only Character Achievements to Others' enabled or not)</h5>
+  <div class="audit-results-panel center" role="tabpanel">
+
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#tab-pane-titles" aria-controls="titles" role="tab" data-toggle="tab" data-fragment="titles">Seasonal Titles</a></li>
+      <li role="presentation"><a href="#tab-pane-talents" aria-controls="talents" role="tab" data-toggle="tab" data-fragment="talents">Talents</a></li>
+      <li role="presentation"><a href="#tab-pane-pvp-talents" aria-controls="pvp-talents" role="tab" data-toggle="tab" data-fragment="pvp-talents">PvP Talents</a></li>
+      <li role="presentation"><a href="#tab-pane-conduits" aria-controls="conduits" role="tab" data-toggle="tab" data-fragment="conduits">Conduits</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="tab-pane-titles">
+        <table class="table table-bordered table-condensed table-responsive table-hover center">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Season</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @player.titles.each do |t| %>
+              <tr>
+                <td title="<%= t.description %>"><%= t.name %></td>
+                <td><%= t.season %></td>
+                <td class="right-text"><%= Time.at(t.date / 1000).to_date.strftime("%-d %B %Y") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <h5>(Season title data only available from Season 14 and later. May be account-wide depending if character has 'Display Only Character Achievements to Others' enabled or not)</h5>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="tab-pane-talents">
+        <table id="talents-audit" class="table table-bordered table-condensed table-responsive table-hover center">
+          <tbody>
+            <% @player.talents.each do |talent| %>
+              <tr>
+                <td>
+                  <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=60" target="_blank" class="no-a-style">
+                    <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
+                    <div><%= talent[:name] %></div>
+                  </a>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="tab-pane-pvp-talents">
+        <table id="pvp-talents-audit" class="table table-bordered table-condensed table-responsive table-hover center">
+          <tbody>
+            <% @player.pvp_talents.each do |pvp_talent| %>
+              <tr>
+                <td>
+                  <a href="https://www.wowhead.com/spell=<%= pvp_talent[:spell_id] %>" rel="spell=<%= pvp_talent[:spell_id] %>&amp;lvl=60" target="_blank" class="no-a-style">
+                    <img src="/images/icons/<%= pvp_talent[:icon] %>.png" class="img-responsive center" alt="<%= pvp_talent[:name] %>">
+                    <div><%= pvp_talent[:name] %></div>
+                  </a>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="tab-pane-conduits">
+        <table id="conduits-audit" class="table table-bordered table-condensed table-responsive table-hover center">
+          <tbody>
+            <% @player.conduits.each do |conduit| %>
+              <tr>
+                <td>
+                  <a href="https://www.wowhead.com/spell=<%= conduit[:spell_id] %>" rel="spell=<%= conduit[:spell_id] %>" target="_blank" class="no-a-style">
+                    <div><%= conduit[:name] %></div>
+                  </a>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
 
 <% end %>

@@ -82,6 +82,10 @@ a:focus {
   margin-top: 2em;
 }
 
+.margin-top-0-25em {
+  margin-top: 0.25em;
+}
+
 .margin-top-0-5em {
   margin-top: 0.5em;
 }
@@ -275,6 +279,11 @@ th:focus {
   min-width: 22em;
 }
 
+.audit-results-panel {
+  width: calc(100% - 54vw);
+  min-width: 22em;
+}
+
 .results-note {
   width: 60%;
   min-width: 12em;
@@ -394,7 +403,8 @@ th {
   margin-top: 0;
 }
 
-.results-panel table {
+.results-panel table,
+.audit-results-panel table {
   width: 100%;
 }
 
@@ -458,6 +468,7 @@ th {
   background-color: #302620;
   border-color: #302620;
   border-bottom-color: #E4A703;
+  margin-bottom: 10px;
 }
 
 .navbar a,

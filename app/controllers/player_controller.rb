@@ -22,7 +22,9 @@ class PlayerController < BracketRegionController
     @description = "World of Warcraft PvP details for #{@player_name} of #{@realm_name}"
 
     @player = get_player
-    @image = @player.main_image if @player
+    if @player
+      @image = @player.main_image
+    end
   end
 
   def search
@@ -95,6 +97,9 @@ class PlayerController < BracketRegionController
     hash["covenant_id"] = get_covenant profile["covenant_progress"]
     hash["renown_level"] = get_renown_level profile["covenant_progress"]
     hash["ilvl"] = profile["equipped_item_level"]
+
+    populate_talents(hash, hash["spec"])
+    populate_conduits hash
 
     return hash
   end
@@ -208,6 +213,104 @@ class PlayerController < BracketRegionController
     return 0 if json.nil?
     renown_level = json["renown_level"]
     return renown_level.nil? ? 0 : renown_level
+  end
+
+  def populate_talents(player_hash, spec)
+    player_hash["talents"] = Array.new
+    player_hash["pvp_talents"] = Array.new
+    return if spec.nil?
+    json = get "/specializations"
+    return unless valid_response(json)
+
+    talent_icons = get_talent_icons "talents"
+    pvp_talent_icons = get_talent_icons "pvp_talents"
+
+    json["specializations"].each do |s|
+      specialization = s["specialization"]
+      next unless specialization["name"] == spec
+
+      next if s["talents"].nil?
+      s["talents"].each do |talent|
+        id = talent["talent"]["id"]
+        name = talent["talent"]["name"]
+        spell_id = talent["spell_tooltip"]["spell"]["id"]
+        player_hash["talents"].push({:id => id, :spell_id => spell_id, :name => name, :icon => talent_icons[id]})
+      end
+
+      next if s["pvp_talent_slots"].nil?
+      s["pvp_talent_slots"].each do |slot|
+        selected = slot["selected"]
+        id = selected["talent"]["id"]
+        name = selected["talent"]["name"]
+        spell_id = selected["spell_tooltip"]["spell"]["id"]
+        player_hash["pvp_talents"].push({:id => id, :spell_id => spell_id, :name => name, :icon => pvp_talent_icons[id]})
+      end
+    end
+  end
+
+  def get_talent_icons tbl
+    cache_key = "#{tbl}_icons"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    talent_icons = Hash.new
+    rows = ActiveRecord::Base.connection.execute("SELECT id, icon FROM #{tbl}")
+    rows.each do |row|
+      talent_icons[row["id"]] = row["icon"]
+    end
+
+    Rails.cache.write(cache_key, talent_icons)
+    return talent_icons
+  end
+
+  def populate_conduits player_hash
+    json = get "/soulbinds"
+    if !valid_response(json) || json["soulbinds"].nil?
+      player_hash["conduits"] = Array.new
+      return
+    end
+
+    conduits = Array.new
+    souldbind_abilities = Array.new
+
+    soulbinds = json["soulbinds"]
+    soulbinds.each do |soulbind|
+      next if !soulbind["is_active"]
+      @soulbind = soulbind["soulbind"]["name"]
+
+      soulbind["traits"].each do |trait|
+        if !trait["trait"].nil?
+          souldbind_abilities.push({:id => trait["id"], :name => trait["name"]})
+        elsif !trait["conduit_socket"].nil?
+          begin
+            conduit = trait["conduit_socket"]["socket"]["conduit"]
+            conduits.push({:id => conduit["id"], :name => conduit["name"]})
+          rescue Exception => e
+            next
+          end
+        end
+      end
+    end
+
+    spell_ids = get_conduit_spell_ids
+    conduits.each do |conduit|
+      conduit[:spell_id] = spell_ids[conduit[:id]]
+    end
+
+    player_hash["conduits"] = conduits
+  end
+
+  def get_conduit_spell_ids
+    cache_key = "conduit_spell_ids"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    conduit_spell_ids = Hash.new
+    rows = ActiveRecord::Base.connection.execute("SELECT id, spell_id FROM conduits")
+    rows.each do |row|
+      conduit_spell_ids[row["id"]] = row["spell_id"]
+    end
+
+    Rails.cache.write(cache_key, conduit_spell_ids)
+    return conduit_spell_ids
   end
 
   def valid_response res

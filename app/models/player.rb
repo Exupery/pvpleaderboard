@@ -1,5 +1,7 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image, :ratings, :titles, :ilvl, :covenant, :renown_level
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class,
+    :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image, :ratings, :titles, :ilvl,
+    :talents, :pvp_talents, :covenant, :renown_level, :conduits
 
   @@covenants = nil
 
@@ -22,14 +24,17 @@ class Player
     @realm_slug = hash["realm_slug"]
     @region = hash["region"]
     @guild = hash["guild"]
-    @covenant = get_covenant hash["covenant_id"]
+    @covenant = get_covenant hash["covenant_id"] #SL
 
     # Player audit-only attributes
     @main_image = hash["thumbnail"]
     @ratings = hash["ratings"]
     @titles = trim_titles(hash["titles"]) if hash["titles"]
     @ilvl = hash["ilvl"]
-    @renown_level = hash["renown_level"]
+    @talents = hash["talents"]
+    @pvp_talents = hash["pvp_talents"]
+    @renown_level = hash["renown_level"] #SL
+    @conduits = hash["conduits"] #SL
   end
 
   def win_ratio
