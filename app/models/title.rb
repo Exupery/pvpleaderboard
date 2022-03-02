@@ -2,7 +2,7 @@ class Title
   include Comparable
   attr_reader :name, :season, :date, :description
 
-  @@ARENA_TITLES = ["Combatant", "Combatant II", "Challenger", "Challenger II", "Rival", "Rival II", "Duelist", "Elite", "Gladiator"]
+  @@ARENA_TITLES = ["Combatant", "Combatant I", "Combatant II", "Challenger", "Challenger I", "Challenger II", "Rival", "Rival I", "Rival II", "Duelist", "Elite", "Gladiator"]
   @@ARENA_TITLES_SET = @@ARENA_TITLES.to_set
   @@ALLIANCE_RBG_TITLES = {
     "Soldier of the Alliance" => "Challenger",
