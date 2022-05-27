@@ -26,7 +26,7 @@ gem 'puma'
 gem 'dalli', '< 3.0'
 gem 'minitest'
 gem 'httparty'
-gem 'rack', '~> 2.2', '>= 2.2.3'
+gem 'rack', '~> 2.2'
 
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
