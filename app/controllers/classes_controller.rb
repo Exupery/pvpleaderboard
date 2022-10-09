@@ -62,7 +62,23 @@ class ClassesController < ApplicationController
       h[row["talent"]] = row["count"].to_i
     end
 
-    Rails.cache.write(cache_key, h)
+    ## Resolving the updater bug that results in no talents
+    ## for a spec has proven quite difficult - so until that
+    ## is fixed at least make sure we're not caching the bogus
+    ## data. (Or maybe the caching IS the issue?)
+    nonzero = false
+    h.each do |t, cnt|
+      if cnt > 0 then
+        nonzero = true
+        break
+      end
+    end
+    if nonzero
+      Rails.cache.write(cache_key, h)
+    else
+      logger.warn("No talent counts found for #{@class_id}_#{@spec_id}")
+    end
+
     return h
   end
 
