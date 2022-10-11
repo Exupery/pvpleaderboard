@@ -1,9 +1,9 @@
 --
--- PostgreSQL database dump
+--
 --
 
--- Dumped from database version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+--
+--
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -43,7 +43,9 @@ BEGIN
   DELETE FROM players_talents WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
   DELETE FROM players_stats WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
   DELETE FROM players_items WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
+  DELETE FROM players_legendaries WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
   DELETE FROM players WHERE DATE_PART('day', NOW() - players.last_update) > 30 AND id NOT IN (SELECT player_id FROM leaderboards);
+  DELETE FROM items WHERE DATE_PART('day', NOW() - items.last_update) > 30;
 END; $$;
 
 
@@ -122,7 +124,9 @@ CREATE TABLE public.factions (
 
 CREATE TABLE public.items (
     id integer NOT NULL,
-    name character varying(128)
+    name character varying(128),
+    quality character varying(64),
+    last_update timestamp without time zone DEFAULT now()
 );
 
 
@@ -174,7 +178,9 @@ CREATE TABLE public.players (
     race_id integer,
     gender smallint,
     guild character varying(64),
-    last_update timestamp without time zone DEFAULT now() NOT NULL
+    last_update timestamp without time zone DEFAULT now() NOT NULL,
+    last_login timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone NOT NULL,
+    profile_id text
 );
 
 
@@ -262,6 +268,19 @@ CREATE TABLE public.players_items (
     trinket2 integer,
     mainhand integer,
     offhand integer
+);
+
+
+
+
+--
+--
+--
+
+CREATE TABLE public.players_legendaries (
+    player_id integer NOT NULL,
+    spell_id integer NOT NULL,
+    legendary_name character varying(256) NOT NULL
 );
 
 
@@ -519,7 +538,7 @@ ALTER TABLE ONLY public.players_conduits
 --
 
 ALTER TABLE ONLY public.players_covenants
-    ADD CONSTRAINT players_covenants_pkey PRIMARY KEY (player_id, covenant_id);
+    ADD CONSTRAINT players_covenants_pkey PRIMARY KEY (player_id);
 
 
 --
@@ -528,6 +547,14 @@ ALTER TABLE ONLY public.players_covenants
 
 ALTER TABLE ONLY public.players_items
     ADD CONSTRAINT players_items_pkey PRIMARY KEY (player_id);
+
+
+--
+--
+--
+
+ALTER TABLE ONLY public.players_legendaries
+    ADD CONSTRAINT players_legendaries_pkey PRIMARY KEY (player_id);
 
 
 --
@@ -559,7 +586,7 @@ ALTER TABLE ONLY public.players
 --
 
 ALTER TABLE ONLY public.players_soulbinds
-    ADD CONSTRAINT players_soulbinds_pkey PRIMARY KEY (player_id, soulbind_id);
+    ADD CONSTRAINT players_soulbinds_pkey PRIMARY KEY (player_id);
 
 
 --
@@ -774,6 +801,14 @@ ALTER TABLE ONLY public.players_items
 --
 --
 
+ALTER TABLE ONLY public.players_legendaries
+    ADD CONSTRAINT players_legendaries_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
+
+
+--
+--
+--
+
 ALTER TABLE ONLY public.players_pvp_talents
     ADD CONSTRAINT players_pvp_talents_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id);
 
@@ -883,6 +918,6 @@ ALTER TABLE ONLY public.talents
 
 
 --
--- PostgreSQL database dump complete
+--
 --
 
