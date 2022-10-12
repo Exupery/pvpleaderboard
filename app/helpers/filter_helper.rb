@@ -1,6 +1,6 @@
 module FilterHelper
   def arena_achievements
-    ids = [401, 405, 404, 1159, 1160, 1161, 5266, 5267, 2093, 2092, 2091]
+    ids = [5266, 5267, 2091]
 
     return find ids
   end
@@ -8,7 +8,7 @@ module FilterHelper
   def rbg_achievements
     h = Hash.new
 
-    join_ids = {5329 => 5326, 5339 => 5353, 5341 => 5355, 5343 => 5356, 6942 => 6941}
+    join_ids = {5341 => 5355, 5343 => 5356, 6942 => 6941}
     achievements = find join_ids.keys + join_ids.values
 
     join_ids.each do |first, second|
