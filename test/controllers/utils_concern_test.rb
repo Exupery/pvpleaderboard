@@ -1,8 +1,8 @@
 require "test_helper"
 include Utils
 
-class UtilsConcernTest < ActionController::TestCase
-  test "should slugify" do
+class UtilsConcernTest < ActionDispatch::IntegrationTest
+  def test_slugify
     assert_equal("foo_bar", slugify("FOO bar"))
     assert_equal("foo_bar", slugify("FOO-bar"))
     assert_equal("foo_bar", slugify("FOO_bar"))
@@ -10,7 +10,7 @@ class UtilsConcernTest < ActionController::TestCase
     assert_nil slugify(nil)
   end
 
-  test "should urlify" do
+  def test_urlify
     assert_equal("foo-bar", urlify("FOO bar"))
     assert_equal("foo-bar", urlify("FOO-bar"))
     assert_equal("foo-bar", urlify("FOO_bar"))
@@ -18,18 +18,18 @@ class UtilsConcernTest < ActionController::TestCase
     assert_nil urlify(nil)
   end
 
-  test "should get leaderboard player count" do
+  def test_get_leaderboard_player_count
     assert_not_equal(0, total_player_count(10, 270))
     assert_equal(0, total_player_count(-999, -999))
   end
 
-  test "should get last updated time" do
+  def test_get_last_updated_time
     assert_not_nil last_players_update
     assert_kind_of(DateTime, last_players_update)
     assert_not_equal("0", last_players_update.strftime("%Q"))
   end
 
-  test "should remove unused primary stats" do
+  def test_remove_unused_primary_stats
     high = { :med => 999 }
     low = { :med => 0 }
 

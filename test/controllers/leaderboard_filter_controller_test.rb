@@ -1,23 +1,23 @@
 require 'test_helper'
 
-class LeaderboardFilterControllerTest < ActionController::TestCase
-  test "should set title and description" do
-    get :filter
+class LeaderboardFilterControllerTest < ActionDispatch::IntegrationTest
+  def test_set_title_and_description
+    get "/leaderboards/filter"
     assert_response :success
     assert_not_nil assigns(:title)
     assert_not_nil assigns(:description)
   end
 
-  test "should redirect if no leaderboard" do
-    get :results
+  def test_redirect_if_no_leaderboard
+    get "/leaderboards/filter/results"
     assert_response :redirect
 
-    get(:results, params: {leaderboard: nil})
+    get("/leaderboards/filter/results", params: {leaderboard: nil})
     assert_response :redirect
   end
 
-  test "should get selected params" do
-    get(:results, params: {class: "paladin", leaderboard: "2v2", region: "EU"})
+  def test_get_selected_params
+    get("/leaderboards/filter/results", params: {class: "paladin", leaderboard: "2v2", region: "EU"})
     assert_response :success
     assert_not_nil assigns(:selected)
     assert_not_empty assigns(:selected)
@@ -26,7 +26,7 @@ class LeaderboardFilterControllerTest < ActionController::TestCase
     assert_not_nil assigns(:selected)[:region]
   end
 
-  test "should find filtered results" do
+  def test_find_filtered_results
     base_params = {class: "paladin", leaderboard: "2v2", region: "US"}
     test_params = [
       base_params,
@@ -36,7 +36,7 @@ class LeaderboardFilterControllerTest < ActionController::TestCase
     ]
 
     test_params.each do |params|
-      get(:results, params: params)
+      get("/leaderboards/filter/results", params: params)
 
       assert_response :success
       assert_not_nil assigns(:leaderboard)
@@ -45,18 +45,18 @@ class LeaderboardFilterControllerTest < ActionController::TestCase
     end
   end
 
-  test "should not include on partial race match" do
+  def test_not_include_on_partial_race_match
     base_params = {class: "druid", leaderboard: "3v3", region: "US"}
     troll_params = base_params.merge({races: "troll"})
     zandalari_troll_params = base_params.merge({races: "zandalari-troll"})
 
-    get(:results, params: troll_params)
+    get("/leaderboards/filter/results", params: troll_params)
     troll = @controller.instance_variable_get(:@leaderboard)
     troll.each do | player |
       assert_equal("Troll", player.race)
     end
 
-    get(:results, params: zandalari_troll_params)
+    get("/leaderboards/filter/results", params: zandalari_troll_params)
     zandalari = @controller.instance_variable_get(:@leaderboard)
     zandalari.each do | player |
       assert_equal("Zandalari Troll", player.race)

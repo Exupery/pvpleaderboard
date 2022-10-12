@@ -1,16 +1,16 @@
 require 'test_helper'
 
-class RealmsControllerTest < ActionController::TestCase
-  test "should set title and description" do
-    get :show
+class RealmsControllerTest < ActionDispatch::IntegrationTest
+  def test_set_title_and_description
+    get "/realms"
     assert_response :success
     assert_not_nil assigns(:title)
     assert_not_nil assigns(:description)
   end
 
-  test "should show counts for all realms" do
+  def test_show_counts_for_all_realms
     ["2v2", "3v3", "rbg", "all"].each do |bracket|
-      get(:show, params: {bracket: bracket})
+      get("/realms", params: {bracket: bracket})
       assert_response :success
 
       assert_not_nil assigns(:realms)
@@ -20,10 +20,10 @@ class RealmsControllerTest < ActionController::TestCase
     end
   end
 
-  test "should show counts for all regions" do
+  def test_show_counts_for_all_regions
     Regions.list.each do |region|
       ["2v2", "3v3", "rbg", "all"].each do |bracket|
-        get(:show, params: {bracket: bracket, region: region})
+        get("/realms", params: {bracket: bracket, region: region})
         assert_response :success
 
         assert_not_nil assigns(:realms)
@@ -34,10 +34,10 @@ class RealmsControllerTest < ActionController::TestCase
     end
   end
 
-  test "should show details for a realm" do
+  def test_show_details_for_a_realm
     Regions.list.each do |region|
       ["2v2", "3v3", "rbg"].each do |bracket|
-        get(:details, params: {bracket: bracket, region: region, realm_slug: "realm0"})
+        get("/realms", params: {bracket: bracket, region: region, realm_slug: "realm0"})
         assert_response :success
 
         assert_not_nil assigns(:realm)
@@ -45,13 +45,13 @@ class RealmsControllerTest < ActionController::TestCase
     end
   end
 
-  test "should redirect if invalid realm" do
-    get(:details, params: {bracket: "3v3", region: "us", realm_slug: "NOT_A_VALID_REALM"})
+  def test_redirect_if_invalid_realm
+    get "/realms/3v3/us/NOT_A_VALID_REALM"
     assert_response :redirect
   end
 
-  test "should redirect old realm detail path" do
-    get(:show, params: {bracket: "realm0", region: "3v3"})
+  def test_redirect_old_realm_detail_path
+    get("/realms", params: {bracket: "realm0", region: "3v3"})
     assert_response :redirect
   end
 end

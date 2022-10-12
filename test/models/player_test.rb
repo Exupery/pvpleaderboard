@@ -6,13 +6,13 @@ class PlayerTest < ActiveSupport::TestCase
     @player = create_player
   end
 
-  test "should calculate win ratio" do
+  def test_calculate_win_ratio
     assert_not_nil @player
     assert_not_nil @player.win_ratio
     assert @player.win_ratio == 66.7
   end
 
-  test "should create an armory link" do
+  def test_create_an_armory_link
     assert_not_nil @player
     assert_not_nil @player.armory_link
     assert @player.armory_link == "https://worldofwarcraft.com/en-us/character/ENCOM/Tron"

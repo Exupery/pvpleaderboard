@@ -12,7 +12,7 @@ class TitleTest < ActiveSupport::TestCase
     @rank_one = create_title "Foo Gladiator"
   end
 
-  test "should sort by title name" do
+  def test_sort_by_title_name
     # Check hierarchy
     assert @combatant < @challenger
     assert @challenger < @rival

@@ -1,33 +1,33 @@
 require "test_helper"
 
-class FilterControllerTest < ActionController::TestCase
-  test "should set title and description" do
-    get :filter
+class FilterControllerTest < ActionDispatch::IntegrationTest
+  def test_set_title_and_description
+    get "/pvp/filter"
     assert_response :success
     assert_not_nil assigns(:title)
     assert_not_nil assigns(:description)
   end
 
-  test "should redirect if no class or spec" do
-    get :results
+  def test_redirect_if_no_class_or_spec
+    get "/pvp/filter/results"
     assert_response :redirect
 
-    get(:results, params: {class: "death-knight"})
+    get("/pvp/filter/results", params: {class: "death-knight"})
     assert_response :redirect
 
-    get(:results, params: {spec: "frost"})
+    get("/pvp/filter/results", params: {spec: "frost"})
     assert_response :redirect
   end
 
-  test "should get selected params" do
-    get(:results, params: {class: "death-knight", spec: "frost"})
+  def test_get_selected_params
+    get("/pvp/filter/results", params: {class: "death-knight", spec: "frost"})
     assert_response :success
     assert_not_nil assigns(:selected)
     assert_not_empty assigns(:selected)
     assert_not_nil  assigns(:selected)[:class]
   end
 
-  test "should find filtered results" do
+  def test_find_filtered_results
     base_params = {class: "death-knight", spec: "frost"}
     test_params = [
       base_params,
@@ -40,7 +40,7 @@ class FilterControllerTest < ActionController::TestCase
     ]
 
     test_params.each do |params|
-      get(:results, params: params)
+      get("/pvp/filter/results", params: params)
 
       assert_response :success
       assert_not_nil assigns(:class_id)

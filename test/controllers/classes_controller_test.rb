@@ -1,23 +1,25 @@
 require "test_helper"
 
-class ClassesControllerTest < ActionController::TestCase
-  test "should set title and description" do
-    get :select_class
-    assert_response :success
+class ClassesControllerTest < ActionDispatch::IntegrationTest
+  def test_set_title_and_description
+    get "/pvp/warlock"
+    assert_equal 200, status
     assert_not_nil assigns(:title)
     assert_not_nil assigns(:description)
   end
 
-  test "should redirect if invalid class or spec" do
-    get(:results_by_class, params: {class: "murloc", spec: "spec13"})
-    assert_response :redirect
-
-    get(:results_by_class, params: {class: "hunter", spec: "pirate"})
+  def test_redirect_if_invalid_class
+    get "/pvp/murloc/affliction"
     assert_response :redirect
   end
 
-  test "should find results" do
-    get(:results_by_class, params: {class: "hunter", spec: "beast-mastery"})
+  def test_redirect_if_invalid_spec
+    get "/pvp/rogue/pirate"
+    assert_response :redirect
+  end
+
+  def test_find_results
+    get "/pvp/hunter/beast-mastery"
     assert_response :success
 
     assert_not_nil assigns(:class_id)

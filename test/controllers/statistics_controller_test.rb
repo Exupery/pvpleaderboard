@@ -1,16 +1,16 @@
 require "test_helper"
 
-class StatisticsControllerTest < ActionController::TestCase
-  test "should set title and description" do
-    get :show
+class StatisticsControllerTest < ActionDispatch::IntegrationTest
+  def test_set_title_and_description
+    get "/statistics"
     assert_response :success
     assert_not_nil assigns(:title)
     assert_not_nil assigns(:description)
   end
 
-  test "should show statistics" do
+  def test_show_statistics
     ["2v2", "3v3", "rbg", "all"].each do |bracket|
-      get(:show, params: {bracket: bracket})
+      get("/statistics", params: {bracket: bracket})
       assert_response :success
 
       assert_not_nil assigns(:factions)
@@ -31,10 +31,10 @@ class StatisticsControllerTest < ActionController::TestCase
     end
   end
 
-  test "should show statistics for region" do
+  def test_show_statistics_for_region
     Regions.list.each do |region|
       ["2v2", "3v3", "rbg", "all"].each do |bracket|
-        get(:show, params: {bracket: bracket, region: region})
+        get("/statistics", params: {bracket: bracket, region: region})
         assert_response :success
 
         assert_not_nil assigns(:region)
@@ -44,8 +44,8 @@ class StatisticsControllerTest < ActionController::TestCase
     end
   end
 
-  test "should show statistics for all region" do
-    get(:show, params: {bracket: "2v2", region: "All"})
+  def test_show_statistics_for_all_region
+    get("/statistics", params: {bracket: "2v2", region: "All"})
 
     assert_nil assigns(:region)
     assert_nil assigns(:region_clause)
