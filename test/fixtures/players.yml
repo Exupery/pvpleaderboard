@@ -37,7 +37,7 @@
   [581, 12, "Vengeance"],
 ] %>
 
-<% 1000.times do |n| %>
+<% 1200.times do |n| %>
 player<%= n %>:
   id: <%= n %>
   name: <%= "player#{n}" %>
@@ -49,4 +49,5 @@ player<%= n %>:
   race_id: <%= (n % 11) + 1 %>
   gender: <%= n % 2 %>
   guild: <%= "guild#{n % 20}" %>
+  last_login : <%= Time.now %>
 <% end %>

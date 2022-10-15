@@ -1,5 +1,5 @@
-<% 1000.times do |n| %>
+<% 1200.times do |n| %>
 playerachiev<%= n %>:
   player_id: <%= n %>
-  achievement_id: <%= n % 10 %>
+  achievement_id: 5341
 <% end %>

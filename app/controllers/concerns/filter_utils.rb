@@ -87,28 +87,27 @@ module FilterUtils extend ActiveSupport::Concern
   end
 
   def narrow_by_cr ids
-    if @selected[:"current-rating"]
-      if @selected[:"cr-bracket"]
-        bracket = @selected[:"cr-bracket"].downcase
-        bracket_clause = "AND bracket='#{bracket}'" if Brackets.list.include?(bracket)
-      end
-      cr = @selected[:"current-rating"].to_i
-      if cr > 0
-        cr_ids = Array.new
-        rows = ActiveRecord::Base.connection.execute("SELECT player_id FROM leaderboards WHERE rating > #{cr} #{bracket_clause}")
-        rows.each do |row|
-          cr_ids.push(row["player_id"])
-        end
+    return ids unless @selected[:"current-rating"]
 
-        return ids.intersection cr_ids
-      end
+    if @selected[:"cr-bracket"]
+      bracket = @selected[:"cr-bracket"].downcase
+      bracket_clause = "AND bracket='#{bracket}'" if Brackets.list.include?(bracket)
     end
+    cr = @selected[:"current-rating"].to_i
+    if cr > 0
+      cr_ids = Array.new
+      rows = ActiveRecord::Base.connection.execute("SELECT player_id FROM leaderboards WHERE rating > #{cr} #{bracket_clause}")
+      rows.each do |row|
+        cr_ids.push(row["player_id"])
+      end
 
-    return ids
+      return ids.intersection cr_ids
+    end
   end
 
   def narrow_by_achievements ids
     id_array = ids.to_a
+    return Set.new unless (@selected[:"arena-achievements"] || @selected[:"rbg-achievements"])
 
     arena_narrowed = Set.new
     if @selected[:"arena-achievements"]
@@ -133,8 +132,6 @@ module FilterUtils extend ActiveSupport::Concern
 
       return @selected[:"arena-achievements"] ? (arena_narrowed & rbg_narrowed) : rbg_narrowed
     end
-
-    return Set.new
   end
 
   def rbg_achievement_id_pairs
