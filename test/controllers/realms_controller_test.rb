@@ -37,12 +37,17 @@ class RealmsControllerTest < ActionDispatch::IntegrationTest
   def test_show_details_for_a_realm
     Regions.list.each do |region|
       ["2v2", "3v3", "rbg"].each do |bracket|
-        get("/realms", params: {bracket: bracket, region: region, realm_slug: "realm0"})
+        get "/realms/#{bracket}/#{region}/realm0"
         assert_response :success
 
         assert_not_nil assigns(:realm)
       end
     end
+  end
+
+  def test_redirect_if_invalid_bracket
+    get "/realms/NOT_A_VALID_BRACKET/us/tichondrius"
+    assert_response :redirect
   end
 
   def test_redirect_if_invalid_realm
