@@ -53,7 +53,7 @@ class PlayerController < BracketRegionController
     cnt = 0
     while cnt < 3
       begin
-        return get_player_details cnt
+        return get_player_details
       rescue Exception => e
         cnt += 1
         logger.warn("Attempt #{cnt} failed for #{player_id}: #{e.to_s}")
@@ -64,7 +64,7 @@ class PlayerController < BracketRegionController
     return nil
   end
 
-  def get_player_details delme
+  def get_player_details
     hash = Hash.new
 
     hash["region"] = @region
@@ -91,7 +91,9 @@ class PlayerController < BracketRegionController
     hash["ratings"] = Hash.new
     assign_ratings(hash, get("/achievements/statistics"))
 
-    hash["titles"] = get_titles get "/achievements"
+    achievJson = get "/achievements"
+    hash["titles"] = get_titles achievJson
+    hash["achiev_dates"] = get_achiev_dates achievJson
 
     equipment = get "/equipment"
     hash["covenant_id"] = get_covenant profile["covenant_progress"]
@@ -190,7 +192,7 @@ class PlayerController < BracketRegionController
     return titles unless valid_response(json)
 
     achievements = json["achievements"]
-    pvp_achievements = Achievement.get_pvp_achievements
+    pvp_achievements = Achievement.get_seasonal_achievements
     achievements.each do |a|
       id = a["id"]
       next unless pvp_achievements.has_key? id
@@ -201,6 +203,24 @@ class PlayerController < BracketRegionController
     end
 
     return titles
+  end
+
+  def get_achiev_dates json
+    achiev_dates  = Hash.new
+    return achiev_dates unless valid_response(json)
+
+    achievements = json["achievements"]
+    rating_achievements = PlayerAchievement.get_rating_achievements
+
+    achievements.each do |a|
+      id = a["id"]
+      next unless rating_achievements.has_key? id
+      time = a["completed_timestamp"]
+      achievement = rating_achievements[id]
+      achiev_dates[id] = PlayerAchievement.new(achievement, time)
+    end
+
+    return achiev_dates
   end
 
   def get_covenant json

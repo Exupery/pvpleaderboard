@@ -62,7 +62,8 @@ SET default_with_oids = false;
 CREATE TABLE public.achievements (
     id integer NOT NULL,
     name character varying(128),
-    description character varying(1024)
+    description character varying(1024),
+    icon character varying(128)
 );
 
 

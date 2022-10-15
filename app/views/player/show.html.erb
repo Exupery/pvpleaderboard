@@ -62,6 +62,7 @@
 
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#tab-pane-titles" aria-controls="titles" role="tab" data-toggle="tab" data-fragment="titles">Seasonal Titles</a></li>
+      <li role="presentation"><a href="#tab-pane-dates" aria-controls="dates" role="tab" data-toggle="tab" data-fragment="dates">Dates</a></li>
       <li role="presentation"><a href="#tab-pane-talents" aria-controls="talents" role="tab" data-toggle="tab" data-fragment="talents">Talents</a></li>
       <li role="presentation"><a href="#tab-pane-pvp-talents" aria-controls="pvp-talents" role="tab" data-toggle="tab" data-fragment="pvp-talents">PvP Talents</a></li>
       <li role="presentation"><a href="#tab-pane-conduits" aria-controls="conduits" role="tab" data-toggle="tab" data-fragment="conduits">Conduits</a></li>
@@ -88,6 +89,41 @@
           </tbody>
         </table>
         <h5>(Season title data only available from Season 14 and later. May be account-wide depending if character has 'Display Only Character Achievements to Others' enabled or not)</h5>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="tab-pane-dates">
+        <table class="table table-bordered table-condensed table-responsive table-hover center">
+          <thead>
+            <tr>
+              <th>Achievement</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @player.dates.each do |pa| %>
+              <% achiev = pa.achievement %>
+              <% date = Time.at(pa.raw_date / 1000).to_date.strftime("%-d %B %Y") %>
+              <tr>
+                <td>
+                  <a href="https://www.wowhead.com/achievement=<%= achiev.id %>" target="_blank" class="no-a-style">
+                    <div>
+                      <img src="/images/icons/<%= achiev.icon %>.png" class="img-responsive inline" alt="<%= achiev.description %>">
+                      <div class="inline"><%= achiev.name %></div>
+                    </div>
+                  </a>
+                </td>
+                <td class="right-text">
+                  <% if pa.char_date.nil? %>
+                    <div class="text-muted">(Earned on different character)</div>
+                    <div class="text-muted"><%= date %></div>
+                  <% else %>
+                    <%= date %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="tab-pane-talents">

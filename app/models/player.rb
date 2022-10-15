@@ -1,7 +1,8 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender, :class,
-    :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image, :ratings, :titles, :ilvl,
-    :talents, :pvp_talents, :covenant, :renown_level, :conduits
+  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender,
+    :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image,
+    :ratings, :titles, :ilvl, :talents, :pvp_talents, :covenant, :renown_level,
+    :conduits, :dates
 
   @@covenants = nil
 
@@ -33,6 +34,7 @@ class Player
     @ilvl = hash["ilvl"]
     @talents = hash["talents"]
     @pvp_talents = hash["pvp_talents"]
+    @dates = populate_dates hash["achiev_dates"]
     @renown_level = hash["renown_level"] #SL
     @conduits = hash["conduits"] #SL
   end
@@ -93,6 +95,25 @@ class Player
     end
 
     return titles
+  end
+
+  def populate_dates achiev_dates
+    a = Array.new
+    return a if (@ratings.nil? || @ratings.empty? || achiev_dates.nil?)
+    ordered = PlayerAchievement.ordered_rating_achievements
+    ordered.each do |id, hash|
+      if achiev_dates.include? id
+        achiev = achiev_dates[id]
+        if @ratings[hash["b"]]["high"] >= hash["r"]
+          achiev.char_date = achiev.raw_date
+        else
+          achiev.alt_date = achiev.raw_date
+        end
+        a.push achiev
+      end
+    end
+
+    return a
   end
 
   def get_covenant id
