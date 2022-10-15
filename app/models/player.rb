@@ -104,7 +104,9 @@ class Player
     ordered.each do |id, hash|
       if achiev_dates.include? id
         achiev = achiev_dates[id]
-        if @ratings[hash["b"]]["high"] >= hash["r"]
+        bracket = hash["b"]
+        highest = @ratings[bracket]["high"].nil? ? 0 : @ratings[bracket]["high"]
+        if highest >= hash["r"]
           achiev.char_date = achiev.raw_date
         else
           achiev.alt_date = achiev.raw_date
