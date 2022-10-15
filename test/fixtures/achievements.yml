@@ -1,6 +1,17 @@
-<% 10.times do |n| %>
+<% 100.times do |n| %>
 achiev<%= n %>:
   id: <%= n %>
   name: <%= "achievname#{n}" %>
   description: <%= "achievdescription#{n}" %>
 <% end %>
+<% 100.times do |n| %>
+<% sn = n + 100 %>
+achiev<%= sn %>:
+  id: <%= sn %>
+  name: <%= "season foo achievname#{sn}" %>
+  description: <%= "seasonalachievdescription#{sn}" %>
+<% end %>
+achiev<%= 5341 %>:
+  id: <%= 5341 %>
+  name: <%= "rbg achievname#{5341}" %>
+  description: <%= "rbgachievdescription#{5341}" %>
