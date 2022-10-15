@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 0) do
   create_table "achievements", id: :integer, default: nil, force: :cascade do |t|
     t.string "name", limit: 128
     t.string "description", limit: 1024
+    t.string "icon", limit: 128
   end
 
   create_table "classes", id: :integer, default: nil, force: :cascade do |t|
