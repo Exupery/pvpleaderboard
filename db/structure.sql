@@ -43,7 +43,6 @@ BEGIN
   DELETE FROM players_talents WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
   DELETE FROM players_stats WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
   DELETE FROM players_items WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
-  DELETE FROM players_legendaries WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
   DELETE FROM players WHERE DATE_PART('day', NOW() - players.last_update) > 30 AND id NOT IN (SELECT player_id FROM leaderboards);
   DELETE FROM items WHERE DATE_PART('day', NOW() - items.last_update) > 30;
 END; $$;
@@ -73,35 +72,23 @@ CREATE TABLE public.achievements (
 --
 --
 
+CREATE TABLE public.ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+
+
+--
+--
+--
+
 CREATE TABLE public.classes (
     id integer NOT NULL,
     name character varying(32) NOT NULL
-);
-
-
-
-
---
---
---
-
-CREATE TABLE public.conduits (
-    id integer NOT NULL,
-    spell_id integer NOT NULL,
-    name character varying(128) NOT NULL
-);
-
-
-
-
---
---
---
-
-CREATE TABLE public.covenants (
-    id integer NOT NULL,
-    name character varying(32) NOT NULL,
-    icon character varying(128)
 );
 
 
@@ -203,30 +190,6 @@ CREATE TABLE public.players_achievements (
 --
 --
 
-CREATE TABLE public.players_conduits (
-    player_id integer NOT NULL,
-    conduit_id integer NOT NULL
-);
-
-
-
-
---
---
---
-
-CREATE TABLE public.players_covenants (
-    player_id integer NOT NULL,
-    covenant_id integer NOT NULL
-);
-
-
-
-
---
---
---
-
 CREATE SEQUENCE public.players_id_seq
     AS integer
     START WITH 1
@@ -278,34 +241,9 @@ CREATE TABLE public.players_items (
 --
 --
 
-CREATE TABLE public.players_legendaries (
-    player_id integer NOT NULL,
-    spell_id integer NOT NULL,
-    legendary_name character varying(256) NOT NULL
-);
-
-
-
-
---
---
---
-
 CREATE TABLE public.players_pvp_talents (
     player_id integer NOT NULL,
     pvp_talent_id integer NOT NULL
-);
-
-
-
-
---
---
---
-
-CREATE TABLE public.players_soulbinds (
-    player_id integer NOT NULL,
-    soulbind_id integer NOT NULL
 );
 
 
@@ -390,9 +328,8 @@ CREATE TABLE public.realms (
 --
 --
 
-CREATE TABLE public.soulbinds (
-    id integer NOT NULL,
-    name character varying(64) NOT NULL
+CREATE TABLE public.schema_migrations (
+    version character varying NOT NULL
 );
 
 
@@ -421,11 +358,9 @@ CREATE TABLE public.talents (
     id integer NOT NULL,
     spell_id integer NOT NULL,
     class_id integer NOT NULL,
-    spec_id integer,
+    spec_id integer NOT NULL,
     name character varying(128) NOT NULL,
-    icon character varying(128),
-    tier smallint,
-    col smallint
+    icon character varying(128)
 );
 
 
@@ -450,6 +385,14 @@ ALTER TABLE ONLY public.achievements
 --
 --
 
+ALTER TABLE ONLY public.ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+--
+--
+
 ALTER TABLE ONLY public.classes
     ADD CONSTRAINT classes_name_key UNIQUE (name);
 
@@ -460,22 +403,6 @@ ALTER TABLE ONLY public.classes
 
 ALTER TABLE ONLY public.classes
     ADD CONSTRAINT classes_pkey PRIMARY KEY (id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.conduits
-    ADD CONSTRAINT conduits_pkey PRIMARY KEY (id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.covenants
-    ADD CONSTRAINT covenants_pkey PRIMARY KEY (id);
 
 
 --
@@ -530,32 +457,8 @@ ALTER TABLE ONLY public.players_achievements
 --
 --
 
-ALTER TABLE ONLY public.players_conduits
-    ADD CONSTRAINT players_conduits_pkey PRIMARY KEY (player_id, conduit_id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.players_covenants
-    ADD CONSTRAINT players_covenants_pkey PRIMARY KEY (player_id);
-
-
---
---
---
-
 ALTER TABLE ONLY public.players_items
     ADD CONSTRAINT players_items_pkey PRIMARY KEY (player_id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.players_legendaries
-    ADD CONSTRAINT players_legendaries_pkey PRIMARY KEY (player_id);
 
 
 --
@@ -580,14 +483,6 @@ ALTER TABLE ONLY public.players_pvp_talents
 
 ALTER TABLE ONLY public.players
     ADD CONSTRAINT players_realm_id_blizzard_id_key UNIQUE (realm_id, blizzard_id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.players_soulbinds
-    ADD CONSTRAINT players_soulbinds_pkey PRIMARY KEY (player_id);
 
 
 --
@@ -642,8 +537,8 @@ ALTER TABLE ONLY public.realms
 --
 --
 
-ALTER TABLE ONLY public.soulbinds
-    ADD CONSTRAINT soulbinds_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
 
 --
@@ -715,13 +610,6 @@ CREATE INDEX talents_class_id_spec_id_idx ON public.talents USING btree (class_i
 --
 --
 
-CREATE INDEX talents_tier_col_idx ON public.talents USING btree (tier, col);
-
-
---
---
---
-
 ALTER TABLE ONLY public.leaderboards
     ADD CONSTRAINT leaderboards_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id);
 
@@ -754,38 +642,6 @@ ALTER TABLE ONLY public.players
 --
 --
 
-ALTER TABLE ONLY public.players_conduits
-    ADD CONSTRAINT players_conduits_conduit_id_fkey FOREIGN KEY (conduit_id) REFERENCES public.conduits(id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.players_conduits
-    ADD CONSTRAINT players_conduits_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
-
-
---
---
---
-
-ALTER TABLE ONLY public.players_covenants
-    ADD CONSTRAINT players_covenants_covenant_id_fkey FOREIGN KEY (covenant_id) REFERENCES public.covenants(id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.players_covenants
-    ADD CONSTRAINT players_covenants_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
-
-
---
---
---
-
 ALTER TABLE ONLY public.players
     ADD CONSTRAINT players_faction_id_fkey FOREIGN KEY (faction_id) REFERENCES public.factions(id);
 
@@ -796,14 +652,6 @@ ALTER TABLE ONLY public.players
 
 ALTER TABLE ONLY public.players_items
     ADD CONSTRAINT players_items_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.players_legendaries
-    ADD CONSTRAINT players_legendaries_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
 
 
 --
@@ -836,22 +684,6 @@ ALTER TABLE ONLY public.players
 
 ALTER TABLE ONLY public.players
     ADD CONSTRAINT players_realm_id_fkey FOREIGN KEY (realm_id) REFERENCES public.realms(id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.players_soulbinds
-    ADD CONSTRAINT players_soulbinds_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
-
-
---
---
---
-
-ALTER TABLE ONLY public.players_soulbinds
-    ADD CONSTRAINT players_soulbinds_soulbind_id_fkey FOREIGN KEY (soulbind_id) REFERENCES public.soulbinds(id);
 
 
 --
@@ -908,14 +740,6 @@ ALTER TABLE ONLY public.specs
 
 ALTER TABLE ONLY public.talents
     ADD CONSTRAINT talents_class_id_fkey FOREIGN KEY (class_id) REFERENCES public.classes(id);
-
-
---
---
---
-
-ALTER TABLE ONLY public.talents
-    ADD CONSTRAINT talents_spec_id_fkey FOREIGN KEY (spec_id) REFERENCES public.specs(id);
 
 
 --

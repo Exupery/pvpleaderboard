@@ -25,16 +25,6 @@ ActiveRecord::Schema[7.0].define(version: 0) do
     t.index ["name"], name: "classes_name_key", unique: true
   end
 
-  create_table "conduits", id: :integer, default: nil, force: :cascade do |t|
-    t.integer "spell_id", null: false
-    t.string "name", limit: 128, null: false
-  end
-
-  create_table "covenants", id: :integer, default: nil, force: :cascade do |t|
-    t.string "name", limit: 32, null: false
-    t.string "icon", limit: 128
-  end
-
   create_table "factions", id: :integer, default: nil, force: :cascade do |t|
     t.string "name", limit: 32, null: false
     t.index ["name"], name: "factions_name_key", unique: true
@@ -88,15 +78,6 @@ ActiveRecord::Schema[7.0].define(version: 0) do
     t.integer "achievement_id", null: false
   end
 
-  create_table "players_conduits", primary_key: ["player_id", "conduit_id"], force: :cascade do |t|
-    t.integer "player_id", null: false
-    t.integer "conduit_id", null: false
-  end
-
-  create_table "players_covenants", primary_key: "player_id", id: :integer, default: nil, force: :cascade do |t|
-    t.integer "covenant_id", null: false
-  end
-
   create_table "players_items", primary_key: "player_id", id: :integer, default: nil, force: :cascade do |t|
     t.integer "head"
     t.integer "neck"
@@ -118,18 +99,9 @@ ActiveRecord::Schema[7.0].define(version: 0) do
     t.integer "offhand"
   end
 
-  create_table "players_legendaries", primary_key: "player_id", id: :integer, default: nil, force: :cascade do |t|
-    t.integer "spell_id", null: false
-    t.string "legendary_name", limit: 256, null: false
-  end
-
   create_table "players_pvp_talents", primary_key: ["player_id", "pvp_talent_id"], force: :cascade do |t|
     t.integer "player_id", null: false
     t.integer "pvp_talent_id", null: false
-  end
-
-  create_table "players_soulbinds", primary_key: "player_id", id: :integer, default: nil, force: :cascade do |t|
-    t.integer "soulbind_id", null: false
   end
 
   create_table "players_stats", primary_key: "player_id", id: :integer, default: nil, force: :cascade do |t|
@@ -170,10 +142,6 @@ ActiveRecord::Schema[7.0].define(version: 0) do
     t.index ["slug", "region"], name: "realms_slug_region_key", unique: true
   end
 
-  create_table "soulbinds", id: :integer, default: nil, force: :cascade do |t|
-    t.string "name", limit: 64, null: false
-  end
-
   create_table "specs", id: :integer, default: nil, force: :cascade do |t|
     t.integer "class_id", null: false
     t.string "name", limit: 32, null: false
@@ -184,13 +152,10 @@ ActiveRecord::Schema[7.0].define(version: 0) do
   create_table "talents", id: :integer, default: nil, force: :cascade do |t|
     t.integer "spell_id", null: false
     t.integer "class_id", null: false
-    t.integer "spec_id"
+    t.integer "spec_id", null: false
     t.string "name", limit: 128, null: false
     t.string "icon", limit: 128
-    t.integer "tier", limit: 2
-    t.integer "col", limit: 2
     t.index ["class_id", "spec_id"], name: "talents_class_id_spec_id_idx"
-    t.index ["tier", "col"], name: "talents_tier_col_idx"
   end
 
   add_foreign_key "leaderboards", "players", name: "leaderboards_player_id_fkey"
@@ -201,21 +166,13 @@ ActiveRecord::Schema[7.0].define(version: 0) do
   add_foreign_key "players", "specs", name: "players_spec_id_fkey"
   add_foreign_key "players_achievements", "achievements", name: "players_achievements_achievement_id_fkey"
   add_foreign_key "players_achievements", "players", name: "players_achievements_player_id_fkey"
-  add_foreign_key "players_conduits", "conduits", name: "players_conduits_conduit_id_fkey"
-  add_foreign_key "players_conduits", "players", name: "players_conduits_player_id_fkey", on_delete: :cascade
-  add_foreign_key "players_covenants", "covenants", name: "players_covenants_covenant_id_fkey"
-  add_foreign_key "players_covenants", "players", name: "players_covenants_player_id_fkey", on_delete: :cascade
   add_foreign_key "players_items", "players", name: "players_items_player_id_fkey"
-  add_foreign_key "players_legendaries", "players", name: "players_legendaries_player_id_fkey", on_delete: :cascade
   add_foreign_key "players_pvp_talents", "players", name: "players_pvp_talents_player_id_fkey"
   add_foreign_key "players_pvp_talents", "pvp_talents", name: "players_pvp_talents_pvp_talent_id_fkey"
-  add_foreign_key "players_soulbinds", "players", name: "players_soulbinds_player_id_fkey", on_delete: :cascade
-  add_foreign_key "players_soulbinds", "soulbinds", name: "players_soulbinds_soulbind_id_fkey"
   add_foreign_key "players_stats", "players", name: "players_stats_player_id_fkey"
   add_foreign_key "players_talents", "players", name: "players_talents_player_id_fkey"
   add_foreign_key "players_talents", "talents", name: "players_talents_talent_id_fkey"
   add_foreign_key "pvp_talents", "specs", name: "pvp_talents_spec_id_fkey"
   add_foreign_key "specs", "classes", name: "specs_class_id_fkey"
   add_foreign_key "talents", "classes", name: "talents_class_id_fkey"
-  add_foreign_key "talents", "specs", name: "talents_spec_id_fkey"
 end
