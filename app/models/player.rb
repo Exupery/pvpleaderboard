@@ -1,10 +1,8 @@
 class Player
   attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender,
     :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image,
-    :ratings, :titles, :ilvl, :talents, :pvp_talents, :covenant, :renown_level,
-    :conduits, :dates
+    :ratings, :titles, :ilvl, :talents, :pvp_talents, :dates
 
-  @@covenants = nil
 
   @@armory_locales = { "US" => "en-us", "EU" => "en-gb", "KR" => "ko_kr", "TW" => "zh-tw" }
 
@@ -25,7 +23,6 @@ class Player
     @realm_slug = hash["realm_slug"]
     @region = hash["region"]
     @guild = hash["guild"]
-    @covenant = get_covenant hash["covenant_id"] #SL
 
     # Player audit-only attributes
     @main_image = hash["thumbnail"]
@@ -35,8 +32,6 @@ class Player
     @talents = hash["talents"]
     @pvp_talents = hash["pvp_talents"]
     @dates = populate_dates hash["achiev_dates"]
-    @renown_level = hash["renown_level"] #SL
-    @conduits = hash["conduits"] #SL
   end
 
   def win_ratio
@@ -117,19 +112,5 @@ class Player
 
     return a
   end
-
-  def get_covenant id
-    return nil if id.nil?
-    return @@covenants[id] unless @@covenants.nil?
-
-		@@covenants = Hash.new
-
-		rows = ActiveRecord::Base.connection.execute("SELECT id, name, icon FROM covenants")
-    rows.each do |row|
-      @@covenants[row["id"]] = Covenant.new(row["name"], row["icon"])
-    end
-
-    return @@covenants[id]
-	end
 
 end

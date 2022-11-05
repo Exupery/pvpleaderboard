@@ -96,12 +96,9 @@ class PlayerController < BracketRegionController
     hash["achiev_dates"] = get_achiev_dates achievJson
 
     equipment = get "/equipment"
-    hash["covenant_id"] = get_covenant profile["covenant_progress"]
-    hash["renown_level"] = get_renown_level profile["covenant_progress"]
     hash["ilvl"] = profile["equipped_item_level"]
 
     populate_talents(hash, hash["spec"])
-    populate_conduits hash
 
     return hash
   end
@@ -223,18 +220,6 @@ class PlayerController < BracketRegionController
     return achiev_dates
   end
 
-  def get_covenant json
-    return nil if json.nil?
-    chosen_covenant = json["chosen_covenant"]
-    return chosen_covenant.nil? ? nil : chosen_covenant["id"]
-  end
-
-  def get_renown_level json
-    return 0 if json.nil?
-    renown_level = json["renown_level"]
-    return renown_level.nil? ? 0 : renown_level
-  end
-
   def populate_talents(player_hash, spec)
     player_hash["talents"] = Array.new
     player_hash["pvp_talents"] = Array.new
@@ -280,57 +265,6 @@ class PlayerController < BracketRegionController
 
     Rails.cache.write(cache_key, talent_icons)
     return talent_icons
-  end
-
-  def populate_conduits player_hash
-    json = get "/soulbinds"
-    if !valid_response(json) || json["soulbinds"].nil?
-      player_hash["conduits"] = Array.new
-      return
-    end
-
-    conduits = Array.new
-    souldbind_abilities = Array.new
-
-    soulbinds = json["soulbinds"]
-    soulbinds.each do |soulbind|
-      next if !soulbind["is_active"]
-      @soulbind = soulbind["soulbind"]["name"]
-
-      soulbind["traits"].each do |trait|
-        if !trait["trait"].nil?
-          souldbind_abilities.push({:id => trait["id"], :name => trait["name"]})
-        elsif !trait["conduit_socket"].nil?
-          begin
-            conduit = trait["conduit_socket"]["socket"]["conduit"]
-            conduits.push({:id => conduit["id"], :name => conduit["name"]})
-          rescue Exception => e
-            next
-          end
-        end
-      end
-    end
-
-    spell_ids = get_conduit_spell_ids
-    conduits.each do |conduit|
-      conduit[:spell_id] = spell_ids[conduit[:id]]
-    end
-
-    player_hash["conduits"] = conduits
-  end
-
-  def get_conduit_spell_ids
-    cache_key = "conduit_spell_ids"
-    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
-
-    conduit_spell_ids = Hash.new
-    rows = ActiveRecord::Base.connection.execute("SELECT id, spell_id FROM conduits")
-    rows.each do |row|
-      conduit_spell_ids[row["id"]] = row["spell_id"]
-    end
-
-    Rails.cache.write(cache_key, conduit_spell_ids)
-    return conduit_spell_ids
   end
 
   def valid_response res

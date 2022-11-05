@@ -14,12 +14,6 @@
   <div class="margin-0-25em">
     <h4 class="inline-block margin-none slightly-smaller-font-size">ILVL:</h4>
     <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.ilvl %></h4>
-    <h4 class="inline-block margin-none slightly-smaller-font-size margin-left-1em">Covenant:</h4>
-    <% covenant = @player.covenant.nil? ? "None" : @player.covenant.name %>
-    <% soulbind = @soulbind.nil? ? "No Soulbind" : @soulbind %>
-    <h4 class="inline-block margin-none slightly-larger-font-size" title="<%= soulbind %>"><%= covenant %></h4>
-    <h4 class="inline-block margin-none slightly-smaller-font-size margin-left-1em">Renown Level:</h4>
-    <h4 class="inline-block margin-none slightly-larger-font-size"><%= @player.renown_level %></h4>
   </div>
   <div class="margin-0-5em">
     <% race_and_gender = "#{@player.race} #{@player.gender}".titleize %>
@@ -65,7 +59,6 @@
       <li role="presentation"><a href="#tab-pane-dates" aria-controls="dates" role="tab" data-toggle="tab" data-fragment="dates">Dates</a></li>
       <li role="presentation"><a href="#tab-pane-talents" aria-controls="talents" role="tab" data-toggle="tab" data-fragment="talents">Talents</a></li>
       <li role="presentation"><a href="#tab-pane-pvp-talents" aria-controls="pvp-talents" role="tab" data-toggle="tab" data-fragment="pvp-talents">PvP Talents</a></li>
-      <li role="presentation"><a href="#tab-pane-conduits" aria-controls="conduits" role="tab" data-toggle="tab" data-fragment="conduits">Conduits</a></li>
     </ul>
 
     <div class="tab-content">
@@ -160,21 +153,6 @@
         </table>
       </div>
 
-      <div role="tabpanel" class="tab-pane" id="tab-pane-conduits">
-        <table id="conduits-audit" class="table table-bordered table-condensed table-responsive table-hover center">
-          <tbody>
-            <% @player.conduits.each do |conduit| %>
-              <tr>
-                <td>
-                  <a href="https://www.wowhead.com/spell=<%= conduit[:spell_id] %>" rel="spell=<%= conduit[:spell_id] %>" target="_blank" class="no-a-style">
-                    <div><%= conduit[:name] %></div>
-                  </a>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
     </div>
 
   </div>

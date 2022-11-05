@@ -5,7 +5,6 @@
     <li role="presentation"><a href="#tab-pane-spec" aria-controls="tab-pane-spec" role="tab" data-toggle="tab" data-fragment="spec">Spec</a></li>
     <li role="presentation"><a href="#tab-pane-race" aria-controls="tab-pane-race" role="tab" data-toggle="tab" data-fragment="race">Race</a></li>
     <li role="presentation"><a href="#tab-pane-faction" aria-controls="tab-pane-faction" role="tab" data-toggle="tab" data-fragment="faction">Faction</a></li>
-    <li role="presentation"><a href="#tab-pane-covenant" aria-controls="tab-pane-covenant" role="tab" data-toggle="tab" data-fragment="covenant">Covenant</a></li>
     <li role="presentation"><a href="#tab-pane-realm" aria-controls="tab-pane-realm" role="tab" data-toggle="tab" data-fragment="realm">Realm</a></li>
     <li role="presentation"><a href="#tab-pane-guild" aria-controls="tab-pane-guild" role="tab" data-toggle="tab" data-fragment="guild">Guild</a></li>
   </ul>
@@ -100,28 +99,6 @@
               <td title="<%= f %>"><img src="/images/<%= f.downcase %>.png" class="img-responsive center" alt="<%= f %>"></td>
               <td><%= c %></td>
               <td><%= percents[f] %>%</td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <div role="tabpanel" class="tab-pane" id="tab-pane-covenant">
-      <table class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[2,1],[1,1]]">
-        <thead>
-          <tr>
-            <th>Covenant</th>
-            <th>Count</th>
-            <th>Percent</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% percents = percent_counts @covenants %>
-          <% @covenants.each do |covenant, cnt| %>
-            <tr>
-              <td title="<%= covenant.name %>"><img src="/images/icons/<%= covenant.icon %>.png" class="img-responsive center" alt="<%= covenant.name %>"></td>
-              <td><%= cnt %></td>
-              <td><%= percents[covenant] %>%</td>
             </tr>
           <% end %>
         </tbody>
