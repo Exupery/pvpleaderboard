@@ -35,6 +35,8 @@
   [270, 10, "Mistweaver"],
   [577, 12, "Havoc"],
   [581, 12, "Vengeance"],
+  [1467, 13, "Devastation"],
+  [1468, 13, "Preservation"],
 ] %>
 
 <% 1200.times do |n| %>

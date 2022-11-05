@@ -45,3 +45,7 @@ druid:
 demon-hunter:
   id: 12
   name: Demon Hunter
+
+demon-hunter:
+  id: 13
+  name: Evoker
