@@ -1,10 +1,16 @@
-<% 300.times do |n| %>
-talent<%= n %>:
-  id: <%= n %>
-  spell_id: <%= n %>
-  class_id: <%= (n % 11) + 1 %>
-  name: <%= "talent#{n}" %>
-  icon: <%= "talenticon#{n}" %>
-  tier: <%= n % 7 %>
-  col: <%= n % 3 %>
+<% talent_id = 0 %>
+<% 12.times do |c| %>
+  <% 4.times do |s| %>
+    <% 10.times do |t| %>
+      <% id = "#{c}0#{s}0#{t}" %>
+      talent<%= talent_id %>:
+        id: <%= talent_id %>
+        spell_id: <%= id %>
+        class_id: <%= c + 1 %>
+        spec_id: <%= s %>
+        name: <%= "talent#{id}" %>
+        icon: <%= "talenticon#{id}" %>
+      <% talent_id = talent_id + 1 %>
+    <% end %>
+  <% end %>
 <% end %>

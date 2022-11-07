@@ -39,14 +39,14 @@
   [1468, 13, "Preservation"],
 ] %>
 
-<% 1200.times do |n| %>
+<% 2048.times do |n| %>
 player<%= n %>:
   id: <%= n %>
   name: <%= "player#{n}" %>
   realm_id: <%= (n % 100) + 1 %>
   blizzard_id: <%= n * 47 %>
-  class_id: <%= specs[n % 36][1] %>
-  spec_id: <%= specs[n % 36][0] %>
+  class_id: <%= specs[n % 38][1] %>
+  spec_id: <%= specs[n % 38][0] %>
   faction_id: <%= n % 2 %>
   race_id: <%= (n % 11) + 1 %>
   gender: <%= n % 2 %>

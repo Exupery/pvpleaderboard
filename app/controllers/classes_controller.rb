@@ -28,6 +28,8 @@ class ClassesController < ApplicationController
     end
     spec = spec_slugs[full_slug]
 
+    @class_name = clazz[:name]
+    @spec_name = spec[:name]
     @class_and_spec = "#{spec[:name]} #{clazz[:name]}"
     @title = @class_and_spec
     @description = "World of Warcraft PvP leaderboard talents, stats, and gear for #{@class_and_spec}"
@@ -37,7 +39,8 @@ class ClassesController < ApplicationController
     @class_id = clazz[:id]
     @spec_id = spec[:id]
 
-    @talent_counts = get_talent_counts
+    @class_talent_counts = get_class_talent_counts
+    @spec_talent_counts = get_spec_talent_counts
     @pvp_talent_counts = get_pvp_talent_counts
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_spec(@class_id, @spec_id)
@@ -47,13 +50,25 @@ class ClassesController < ApplicationController
 
   private
 
-  def get_talent_counts
-    cache_key = "talent_counts_#{@class_id}_#{@spec_id}"
+  def get_class_talent_counts
+    label = "class_#{@class_id}"
+    where = "players.class_id=#{@class_id} AND talents.spec_id=0"
+    return get_talent_counts(label, where)
+  end
+
+  def get_spec_talent_counts
+    label = "spec_#{@spec_id}"
+    where = "talents.spec_id=#{@spec_id}"
+    return get_talent_counts(label, where)
+  end
+
+  def get_talent_counts(label, where)
+    cache_key = "talent_counts_#{label}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} GROUP BY talent")
+    rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE #{where} GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
     end
@@ -72,7 +87,7 @@ class ClassesController < ApplicationController
     if nonzero
       Rails.cache.write(cache_key, h)
     else
-      logger.warn("No talent counts found for #{@class_id}_#{@spec_id}")
+      logger.warn("No talent counts found for #{label}")
     end
 
     return h

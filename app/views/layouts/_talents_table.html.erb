@@ -1,19 +1,22 @@
-<table id="talent-build" class="table table-bordered table-condensed table-responsive center">
+<table id="<%= label.downcase %>-talents-table" class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[1,1]]">
+  <thead>
+    <tr>
+      <th>Talent</th>
+      <th title="Percent that have selected this talent">&percnt;</th>
+    </tr>
+  </thead>
   <tbody>
-    <% (0..6).each do |t| %>
+    <% talents.each do |id, talent| %>
       <tr>
-        <% (0..2).each do |c| %>
-          <% k = "#{t}-#{c}" %>
-          <% talent = talents[k] %>
-          <% highest = talent[:highest] ? "most-selected" : "" %>
-          <td id="<%= k %>" class="<%= highest %>">
-            <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>" target="_blank" class="no-a-style">
-              <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
-              <div><%= talent[:name] %></div>
-              <div><%= talent[:percent] %>%</div>
-            </a>
-          </td>
-        <% end %>
+        <td>
+          <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=70" target="_blank" class="no-a-style">
+            <div>
+              <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive inline" alt="<%= talent[:name] %>">
+              <div class="inline"><%= talent[:name] %></div>
+            </div>
+          </a>
+        </td>
+        <td><%= talent[:percent] %></td>
       </tr>
     <% end %>
   </tbody>

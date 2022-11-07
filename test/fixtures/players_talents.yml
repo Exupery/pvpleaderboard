@@ -1,5 +1,7 @@
-<% 1000.times do |n| %>
-playertalent<%= n %>:
-  player_id: <%= n %>
-  talent_id: <%= n % 77 %>
+<% 100.times do |p| %>
+  <% 480.times do |n| %>
+  playertalent<%= "#{p}-#{n}" %>:
+    player_id: <%= p %>
+    talent_id: <%= n % 480 %>
+  <% end %>
 <% end %>
