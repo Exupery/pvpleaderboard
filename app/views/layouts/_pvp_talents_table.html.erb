@@ -9,9 +9,11 @@
     <% pvp_talents.each do |id, pvp_talent| %>
       <tr>
         <td>
-          <a href="https://www.wowhead.com/spell=<%= pvp_talent[:spell_id] %>" rel="spell=<%= pvp_talent[:spell_id] %>&amp;lvl=60" target="_blank" class="no-a-style">
-            <img src="/images/icons/<%= pvp_talent[:icon] %>.png" class="img-responsive center" alt="<%= pvp_talent[:name] %>">
-            <div><%= pvp_talent[:name] %></div>
+          <a href="https://www.wowhead.com/spell=<%= pvp_talent[:spell_id] %>" rel="spell=<%= pvp_talent[:spell_id] %>&amp;lvl=70" target="_blank" class="no-a-style">
+            <div>
+              <img src="/images/icons/<%= pvp_talent[:icon] %>.png" class="img-responsive inline" alt="<%= pvp_talent[:name] %>">
+              <div class="inline"><%= pvp_talent[:name] %></div>
+            </div>
           </a>
         </td>
         <td><%= pvp_talent[:percent] %></td>
