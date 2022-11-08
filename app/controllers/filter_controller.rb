@@ -36,11 +36,11 @@ class FilterController < ApplicationController
   private
 
   def get_class_talent_counts
-    return "players.class_id=#{@class_id} AND talents.spec_id=0"
+    return get_talent_counts "players.class_id=#{@class_id} AND talents.spec_id=0"
   end
 
   def get_spec_talent_counts
-    return "talents.spec_id=#{@spec_id}"
+    return get_talent_counts "talents.spec_id=#{@spec_id}"
   end
 
   def get_talent_counts where
