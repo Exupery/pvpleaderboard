@@ -1,6 +1,6 @@
 <% talent_id = 0 %>
 <% 12.times do |c| %>
-  <% 4.times do |s| %>
+  <% [0, 1, 2, 3, 4, 62, 63, 64, 65, 66].each do |s| %>
     <% 10.times do |t| %>
       <% id = "#{c}0#{s}0#{t}" %>
       talent<%= talent_id %>:

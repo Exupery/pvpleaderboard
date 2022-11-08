@@ -10,7 +10,7 @@ class TalentsTest < ActiveSupport::TestCase
   end
 
   def test_get_talents_for_spec
-    (1..3).each do |id|
+    (62..66).each do |id|
       spec_talents = Talents.get_spec_talents(id)
       assert_not_nil(spec_talents)
       assert_not_empty(spec_talents)

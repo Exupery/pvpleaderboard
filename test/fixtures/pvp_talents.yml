@@ -1,0 +1,13 @@
+<% talent_id = 0 %>
+<% [62, 63, 64, 65, 66].each do |s| %>
+  <% 12.times do |t| %>
+    <% id = "#{s}0#{t}" %>
+    pvp_talent<%= talent_id %>:
+      id: <%= talent_id %>
+      spell_id: <%= id %>
+      spec_id: <%= s %>
+      name: <%= "pvptalent#{id}" %>
+      icon: <%= "pvptalenticon#{id}" %>
+    <% talent_id = talent_id + 1 %>
+  <% end %>
+<% end %>

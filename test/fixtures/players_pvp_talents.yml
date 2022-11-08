@@ -1,0 +1,7 @@
+<% 100.times do |p| %>
+  <% 48.times do |n| %>
+  playerpvptalent<%= "#{p}-#{n}" %>:
+    player_id: <%= p %>
+    pvp_talent_id: <%= n % 48 %>
+  <% end %>
+<% end %>

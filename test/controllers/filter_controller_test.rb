@@ -28,7 +28,7 @@ class FilterControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_find_filtered_results
-    base_params = {class: "death-knight", spec: "frost"}
+    base_params = {class: "mage", spec: "frost"}
     test_params = [
       base_params,
       base_params.merge({factions: "alliance"}),
@@ -50,8 +50,9 @@ class FilterControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
       assert_not_equal(0, @controller.instance_variable_get(:@total), "No players returned for #{params}")
       assert_not_nil assigns(:class_id)
-      assert_not_nil assigns(:talent_counts)
-      assert_not_empty assigns(:talent_counts)
+      assert_not_nil assigns(:class_talent_counts)
+      assert_not_nil assigns(:spec_talent_counts)
+      assert_not_nil assigns(:pvp_talent_counts)
       assert_not_nil assigns(:stat_counts)
       assert_not_nil assigns(:gear)
       assert_not_nil assigns(:total)
