@@ -52,13 +52,13 @@ class ClassesController < ApplicationController
 
   def get_class_talent_counts
     label = "class_#{@class_id}"
-    where = "players.class_id=#{@class_id} AND talents.spec_id=0"
+    where = "players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND talents.spec_id=0"
     return get_talent_counts(label, where)
   end
 
   def get_spec_talent_counts
     label = "spec_#{@spec_id}"
-    where = "talents.spec_id=#{@spec_id}"
+    where = "players.spec_id=#{@spec_id} AND talents.spec_id=#{@spec_id}"
     return get_talent_counts(label, where)
   end
 
