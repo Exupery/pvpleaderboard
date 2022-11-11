@@ -221,7 +221,8 @@ class PlayerController < BracketRegionController
   end
 
   def populate_talents(player_hash, spec)
-    player_hash["talents"] = Array.new
+    player_hash["class_talents"] = Array.new
+    player_hash["spec_talents"] = Array.new
     player_hash["pvp_talents"] = Array.new
     return if spec.nil?
     json = get "/specializations"
@@ -234,13 +235,10 @@ class PlayerController < BracketRegionController
       specialization = s["specialization"]
       next unless specialization["name"] == spec
 
-      next if s["talents"].nil?
-      s["talents"].each do |talent|
-        id = talent["talent"]["id"]
-        name = talent["talent"]["name"]
-        spell_id = talent["spell_tooltip"]["spell"]["id"]
-        player_hash["talents"].push({:id => id, :spell_id => spell_id, :name => name, :icon => talent_icons[id]})
-      end
+      next if s["selected_class_talents"].nil?
+      parse_talents(s, player_hash, "class", talent_icons)
+      next if s["selected_spec_talents"].nil?
+      parse_talents(s, player_hash, "spec", talent_icons)
 
       next if s["pvp_talent_slots"].nil?
       s["pvp_talent_slots"].each do |slot|
@@ -250,6 +248,15 @@ class PlayerController < BracketRegionController
         spell_id = selected["spell_tooltip"]["spell"]["id"]
         player_hash["pvp_talents"].push({:id => id, :spell_id => spell_id, :name => name, :icon => pvp_talent_icons[id]})
       end
+    end
+  end
+
+  def parse_talents(json, hash, talent_type, talent_icons)
+    json["selected_#{talent_type}_talents"].each do |talent|
+      id = talent["tooltip"]["talent"]["id"]
+      name = talent["tooltip"]["talent"]["name"]
+      spell_id = talent["tooltip"]["spell_tooltip"]["spell"]["id"]
+      hash["#{talent_type}_talents"].push({:id => id, :spell_id => spell_id, :name => name, :icon => talent_icons[id]})
     end
   end
 

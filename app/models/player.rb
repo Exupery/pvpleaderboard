@@ -1,7 +1,7 @@
 class Player
   attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender,
     :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image,
-    :ratings, :titles, :ilvl, :talents, :pvp_talents, :dates
+    :ratings, :titles, :ilvl, :class_talents, :spec_talents, :pvp_talents, :dates
 
 
   @@armory_locales = { "US" => "en-us", "EU" => "en-gb", "KR" => "ko_kr", "TW" => "zh-tw" }
@@ -29,7 +29,8 @@ class Player
     @ratings = hash["ratings"]
     @titles = trim_titles(hash["titles"]) if hash["titles"]
     @ilvl = hash["ilvl"]
-    @talents = hash["talents"]
+    @class_talents = hash["class_talents"]
+    @spec_talents = hash["spec_talents"]
     @pvp_talents = hash["pvp_talents"]
     @dates = populate_dates hash["achiev_dates"]
   end
