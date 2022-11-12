@@ -34,10 +34,12 @@ module TalentsHelper
   end
 
   def fill_missing(pct_talents, all_talents)
+    seen = Set.new # Seems Blizz has a bug where some talents are duped
     all_talents.each do |id, talent|
-      next if pct_talents.key?(id)
+      next if (pct_talents.key?(id) || seen.include?(talent[:spell_id]))
       talent[:percent] = 0
       pct_talents[id] = talent
+      seen.add(talent[:spell_id])
     end
   end
 
