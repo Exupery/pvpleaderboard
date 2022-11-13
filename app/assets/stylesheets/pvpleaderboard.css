@@ -626,6 +626,13 @@ th.tablesorter-headerAsc:hover,
   min-width: 1em;
 }
 
+.undecorated-list {
+  list-style-type: none;
+  padding-inline-start: 0;
+  font-size: 1.25em;
+  margin-bottom: 1.5em;
+}
+
 /* PACE */
 .pace {
   -webkit-pointer-events: none;

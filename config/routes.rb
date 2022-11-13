@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get "players/:region/:realm_slug" => "player#search"
   get "players/:region/:realm_slug/:player" => "player#show"
 
+  get "resources" => "resources#show"
+
   ## OLD ROUTES BEGIN
   get "filter", to: redirect("/pvp/filter")
   get "filter/results", to: redirect { |path_params, req| "/pvp/filter/results?#{req.query_string}" }
