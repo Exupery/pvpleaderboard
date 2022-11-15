@@ -2,6 +2,8 @@ class ClassesController < ApplicationController
   include Utils
   protect_from_forgery with: :exception
 
+  @@NUM_TOP_PLAYERS_PER_BRACKET = ENV.fetch("TOP_PLAYERS_PER_BRACKET", 6)
+
   def select_class
     @title = "Class / Spec Selection"
     @description = "WoW PvP leaderboard talents, stats, and gear by class and spec"
@@ -44,11 +46,29 @@ class ClassesController < ApplicationController
     @pvp_talent_counts = get_pvp_talent_counts
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_spec(@class_id, @spec_id)
+    @players_title = "The #{@@NUM_TOP_PLAYERS_PER_BRACKET} highest rated players from each bracket in each region"
+    @top_players = get_top_players
 
     @total = total_player_count(@class_id, @spec_id)
   end
 
   private
+
+  def get_top_players
+    players = Array.new
+
+    Regions.list.each do |region|
+      Brackets.list.each do |bracket|
+        rows = ActiveRecord::Base.connection.execute("SELECT ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, leaderboards.bracket AS bracket FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN realms ON players.realm_id=realms.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND realms.region='#{region}' AND bracket='#{bracket}' ORDER BY ranking ASC LIMIT #{@@NUM_TOP_PLAYERS_PER_BRACKET}")
+
+        rows.each do |row|
+          players << Player.new(row)
+        end
+      end
+    end
+
+    return players
+  end
 
   def get_class_talent_counts
     label = "class_#{@class_id}"

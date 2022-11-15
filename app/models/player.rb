@@ -1,6 +1,6 @@
 class Player
-  attr_reader :id, :ranking, :rating, :wins, :losses, :name, :faction, :race, :gender,
-    :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image,
+  attr_reader :id, :ranking, :rating, :bracket, :wins, :losses, :name, :faction, :race,
+    :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image,
     :ratings, :titles, :ilvl, :class_talents, :spec_talents, :pvp_talents, :dates
 
 
@@ -10,6 +10,7 @@ class Player
     @id = hash["id"]
     @ranking = hash["ranking"]
     @rating = hash["rating"]
+    @bracket = style_bracket hash["bracket"]
     @wins = hash["wins"].to_i
     @losses = hash["losses"].to_i
     @name = hash["name"]
@@ -112,6 +113,15 @@ class Player
     end
 
     return a
+  end
+
+  def style_bracket bracket
+    return nil if bracket.nil?
+
+    return "RBG" if bracket.downcase == "rbg"
+    return "Solo" if bracket.downcase == "solo"
+
+    return bracket
   end
 
 end

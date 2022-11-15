@@ -1,0 +1,42 @@
+<table id="players-table" class="table table-bordered table-condensed table-responsive table-hover table-sorted center">
+  <thead>
+    <tr>
+      <th>Region</th>
+      <th>Bracket</th>
+      <th>Rating</th>
+      <th>Name</th>
+      <th class="show-when-wide">Realm</th>
+      <th>Faction</th>
+      <th>Race</th>
+      <th class="show-when-wide" title="Season Wins - Losses">W - L</th>
+      <th class="show-when-wide">Win %</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% players.each do |player| %>
+      <tr>
+        <td><%= player.region %></td>
+        <% ladder_link = "/leaderboards/#{player.bracket}/#{player.region}".downcase %>
+        <td>
+          <a href="<%= ladder_link %>" translate="no"><%= player.bracket %></a>
+        </td>
+        <% rating_title = "Rank #{player.ranking} on the #{player.region} #{player.bracket} ladder" %>
+        <td title="<%= rating_title %>"><%= player.rating %></td>
+        <% audit_link = "/players/#{player.region}/#{player.realm_slug}/#{player.name}".downcase %>
+        <td><a href="<%= audit_link %>" translate="no"><%= player.name %></a></td>
+        <td class="show-when-wide">
+          <% realm = Realms.list[player.realm_slug + player.region] %>
+          <a href="/realms/<%= player.bracket.downcase %>/<%= player.region.downcase %>/<%= urlify realm.slug %>" translate="no"><%= realm.name %></a>
+        </td>
+        <td title="<%= player.faction %>"><img src="/images/<%= player.faction.downcase %>.png" class="img-responsive center" alt="<%= player.faction %>"></td>
+        <% race_and_gender = "#{player.race} #{player.gender}".titleize %>
+        <td title="<%= race_and_gender %>">
+          <% race_slug = slugify player.race %>
+          <img src="/images/races/<%= race_slug %>_<%= player.gender %>.png" class="img-responsive center inline-block" alt="<%= race_and_gender %>">
+        </td>
+        <td class="show-when-wide"><span class="wins"><%= player.wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= player.losses %></span></td>
+        <td class="show-when-wide"><%= player.win_ratio %>%</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

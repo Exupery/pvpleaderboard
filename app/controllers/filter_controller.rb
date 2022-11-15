@@ -5,6 +5,8 @@ class FilterController < ApplicationController
   protect_from_forgery with: :exception
   before_action :get_selected
 
+  @@NUM_TOP_PLAYERS = ENV.fetch("TOP_PLAYERS_PER_BRACKET", 6).to_i * 8
+
   def filter
     @title = "Filter"
     @description = "World of Warcraft PvP leaderboard filter"
@@ -31,9 +33,24 @@ class FilterController < ApplicationController
     @pvp_talent_counts = get_pvp_talent_counts
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_player_ids player_ids
+
+    @players_title = "The #{@@NUM_TOP_PLAYERS} highest rated players matching the filter"
+    @top_players = get_top_players
   end
 
   private
+
+  def get_top_players
+    players = Array.new
+
+    rows = ActiveRecord::Base.connection.execute("SELECT ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, leaderboards.bracket AS bracket FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN realms ON players.realm_id=realms.id WHERE players.id IN (#{@whereified_ids}) ORDER BY ranking ASC LIMIT #{@@NUM_TOP_PLAYERS}")
+
+    rows.each do |row|
+      players << Player.new(row)
+    end
+
+    return players
+  end
 
   def get_class_talent_counts
     return get_talent_counts "players.class_id=#{@class_id} AND talents.spec_id=0"

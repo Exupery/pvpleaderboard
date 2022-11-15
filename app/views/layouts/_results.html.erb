@@ -6,6 +6,7 @@
     <li role="presentation"><a href="#tab-pane-pvp-talents" aria-controls="pvp-talents" role="tab" data-toggle="tab" data-fragment="pvp-talents">PvP Talents</a></li>
     <li role="presentation"><a href="#tab-pane-gear" aria-controls="gear" role="tab" data-toggle="tab" data-fragment="gear">Gear</a></li>
     <li role="presentation"><a href="#tab-pane-stats" aria-controls="stats" role="tab" data-toggle="tab" data-fragment="stats">Stats</a></li>
+    <li role="presentation"><a href="#tab-pane-players" aria-controls="players" role="tab" data-toggle="tab" data-fragment="players" title="<%= @players_title %>">Top Players</a></li>
   </ul>
 
   <div class="tab-content">
@@ -23,6 +24,9 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-stats">
       <%= render "layouts/stats_table", :counts => @stat_counts %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-players">
+      <%= render "layouts/players_table", :players => @top_players %>
     </div>
   </div>
 
