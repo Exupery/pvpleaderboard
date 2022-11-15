@@ -53,6 +53,8 @@ class PlayerController < BracketRegionController
     cnt = 0
     while cnt < 3
       begin
+        get_statistics
+        get_achievements
         return get_player_details
       rescue Exception => e
         cnt += 1
@@ -88,19 +90,44 @@ class PlayerController < BracketRegionController
 
     hash["thumbnail"] = get_thumbnail
 
-    hash["ratings"] = Hash.new
-    assign_ratings(hash, get("/achievements/statistics"))
-
-    achievJson = FastJsonparser.parse((get "/achievements").body)
-    hash["titles"] = get_titles achievJson
-    hash["achiev_dates"] = get_achiev_dates achievJson
+    t = Thread.new {
+      hash["ratings"] = Hash.new
+      wait @statistics
+      assign_ratings(hash, @statistics)
+    }
 
     equipment = get "/equipment"
     hash["ilvl"] = profile["equipped_item_level"]
 
     populate_talents(hash, hash["spec"])
 
+    wait @achievements
+    hash["titles"] = get_titles @achievements
+    hash["achiev_dates"] = get_achiev_dates @achievements
+
+    t.join
+
     return hash
+  end
+
+  def wait obj
+    cnt = 0
+    while (obj.nil? && cnt < 64)
+      cnt += 1
+      sleep(0.25)
+    end
+  end
+
+  def get_achievements
+    Thread.new {
+      @achievements = FastJsonparser.parse(get("/achievements").body)
+    }
+  end
+
+  def get_statistics
+    Thread.new {
+      @statistics = FastJsonparser.parse(get("/achievements/statistics").body)
+    }
   end
 
   def get_spec talents
@@ -137,23 +164,23 @@ class PlayerController < BracketRegionController
   def assign_ratings(hash, statistics)
     highest = Hash.new()
     stats = Hash.new()
-    if valid_response(statistics)
-      if !statistics["categories"].nil?
-        stats = statistics["categories"]
-      elsif !statistics["statistics"].nil?
-        stats = statistics["statistics"]
-      end
+
+    if !statistics[:categories].nil?
+      stats = statistics[:categories]
+    elsif !statistics[:statistics].nil?
+      stats = statistics[:statistics]
     end
+
     stats.each do |cat|
-      next unless cat["name"] == "Player vs. Player"
-      next if cat["sub_categories"].nil?
-      cat["sub_categories"].each do |sub_cat|
-        next unless sub_cat["name"] == "Rated Arenas"
-        sub_cat["statistics"].each do |s|
-          if s["name"] == "Highest 2v2 personal rating"
-            highest["2v2"] = { "high" => s["quantity"], "time" => s["last_updated_timestamp"] }
-          elsif s["name"] == "Highest 3v3 personal rating"
-            highest["3v3"] = { "high" => s["quantity"], "time" => s["last_updated_timestamp"] }
+      next unless cat[:name] == "Player vs. Player"
+      next if cat[:sub_categories].nil?
+      cat[:sub_categories].each do |sub_cat|
+        next unless sub_cat[:name] == "Rated Arenas"
+        sub_cat[:statistics].each do |s|
+          if s[:name] == "Highest 2v2 personal rating"
+            highest["2v2"] = { "high" => s[:quantity], "time" => s[:last_updated_timestamp] }
+          elsif s[:name] == "Highest 3v3 personal rating"
+            highest["3v3"] = { "high" => s[:quantity], "time" => s[:last_updated_timestamp] }
           end
         end
       end
