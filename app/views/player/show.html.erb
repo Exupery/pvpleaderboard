@@ -2,7 +2,7 @@
 <% if @player.nil? %>
   <h1><%= @player_name %> - <%= @realm_name %> (<%= @region %>)</h1>
 <% else %>
-  <h1 class="margin-top-0-25em margin-bottom-0-25em"><a href="<%= @player.armory_link %>" title="Armory"><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</a></h1>
+  <h1 class="margin-top-0-25em margin-bottom-0-25em"><a href="<%= @player.armory_link %>" title="Armory" target="_blank"><%= @player_name %> - <%= @realm.name %> (<%= @region %>)</a></h1>
 <% end %>
 
 <% if @player.nil? %>

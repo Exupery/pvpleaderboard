@@ -5,7 +5,7 @@
     <% filtered_ranking = @filtered ? "Filtered Ranking: #{fr}" : "" %>
     <td title="<%= filtered_ranking %>"><%= player.ranking %></td>
     <td><%= player.rating %></td>
-    <td><a href="<%= player.armory_link %>" translate="no"><%= player.name %></a></td>
+    <td><a href="<%= player.armory_link %>" translate="no" target="_blank"><%= player.name %></a></td>
     <td class="show-when-wide">
       <% realm = Realms.list[player.realm_slug + @region] %>
       <a href="/realms/<%= @bracket %>/<%= @region.downcase %>/<%= urlify realm.slug %>" translate="no"><%= realm.name %></a>
