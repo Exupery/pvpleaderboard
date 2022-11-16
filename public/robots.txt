@@ -2,4 +2,5 @@
 # It can't be reasoned with.
 # It doesn't feel pity, or remorse, or fear.
 User-agent: *
+Disallow: /players/
 Sitemap: https://www.pvpleaderboard.com/sitemap.xml
