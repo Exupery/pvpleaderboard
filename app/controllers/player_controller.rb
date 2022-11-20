@@ -308,7 +308,8 @@ class PlayerController < BracketRegionController
     talent_icons = Hash.new
     rows = ActiveRecord::Base.connection.execute("SELECT id, icon FROM #{tbl}")
     rows.each do |row|
-      talent_icons[row["id"]] = row["icon"]
+      icon = row["icon"] == "" ? "placeholder" : row["icon"]
+      talent_icons[row["id"]] = icon
     end
 
     Rails.cache.write(cache_key, talent_icons)

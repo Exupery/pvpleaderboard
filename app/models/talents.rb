@@ -14,7 +14,8 @@ class Talents
 
 		rows = ActiveRecord::Base.connection.execute("SELECT id, spell_id, spec_id, name, icon FROM talents WHERE #{where}")
     rows.each do |row|
-      h[row["id"]] = {:id => row["id"], :spell_id => row["spell_id"], :spec_id => row["spec_id"].to_i, :name => row["name"], :icon => row["icon"]}
+      icon = row["icon"] == "" ? "placeholder" : row["icon"]
+      h[row["id"]] = {:id => row["id"], :spell_id => row["spell_id"], :spec_id => row["spec_id"].to_i, :name => row["name"], :icon => icon}
     end
 
     return h
