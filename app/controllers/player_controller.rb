@@ -256,17 +256,17 @@ class PlayerController < BracketRegionController
     talent_icons = get_talent_icons "talents"
     pvp_talent_icons = get_talent_icons "pvp_talents"
 
-    json["specializations"].each do |s|
-      specialization = s["specialization"]
-      next unless specialization["name"] == spec
+    json["specializations"].each do |specialization|
+      s = specialization["specialization"]
+      next unless s["name"] == spec
 
-      next if s["selected_class_talents"].nil?
-      parse_talents(s, player_hash, "class", talent_icons)
-      next if s["selected_spec_talents"].nil?
-      parse_talents(s, player_hash, "spec", talent_icons)
+      loadout = get_loadout specialization
 
-      next if s["pvp_talent_slots"].nil?
-      s["pvp_talent_slots"].each do |slot|
+      parse_talents(loadout, player_hash, "class", talent_icons)
+      parse_talents(loadout, player_hash, "spec", talent_icons)
+
+      next if specialization["pvp_talent_slots"].nil?
+      specialization["pvp_talent_slots"].each do |slot|
         selected = slot["selected"]
         id = selected["talent"]["id"]
         name = selected["talent"]["name"]
@@ -276,7 +276,23 @@ class PlayerController < BracketRegionController
     end
   end
 
+  def get_loadout specialization
+    # Players who have not created a loadout will have the
+    # necessary fields directly on the specialization object
+    return specialization if specialization["loadouts"].nil?
+
+    specialization["loadouts"].each do |loadout|
+      return loadout if loadout["is_active"]
+    end
+
+    # This should never get hit but return an empty
+    # hash instead of null for such an edge case
+    # https://xkcd.com/2200/
+    return Hash.new
+  end
+
   def parse_talents(json, hash, talent_type, talent_icons)
+    return if json["selected_#{talent_type}_talents"].nil?
     json["selected_#{talent_type}_talents"].each do |talent|
       id = talent["tooltip"]["talent"]["id"]
       name = talent["tooltip"]["talent"]["name"]
