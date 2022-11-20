@@ -44,7 +44,7 @@ class PlayerController < BracketRegionController
     return nil if player_hash.nil?
     player = Player.new(player_hash)
 
-    Rails.cache.write(cache_key, player, :expires_in => 15.minutes) unless player.nil?
+    Rails.cache.write(cache_key, player, :expires_in => 30.minutes) unless player.nil?
     return player
   end
 
