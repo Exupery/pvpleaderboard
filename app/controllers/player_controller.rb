@@ -1,5 +1,6 @@
 include Utils
 
+require "concurrent"
 require "httparty"
 require "yajl/json_gem"
 
@@ -162,6 +163,8 @@ class PlayerController < BracketRegionController
   def assign_ratings(hash, statistics)
     highest = Hash.new()
     stats = Hash.new()
+    bracket_ratings = Concurrent::Hash.new()
+    threads = get_bracket_ratings bracket_ratings
 
     if !statistics["categories"].nil?
       stats = statistics["categories"]
@@ -184,8 +187,11 @@ class PlayerController < BracketRegionController
       end
     end
 
+    threads.each do |thread|
+      thread.join
+    end
     @@BRACKETS.each do |bracket|
-      json = get "/pvp-bracket/#{bracket}"
+      json = bracket_ratings[bracket]
 
       h = Hash.new
       if !json["rating"].nil?
@@ -202,6 +208,17 @@ class PlayerController < BracketRegionController
 
       hash["ratings"][bracket] = h
     end
+  end
+
+  def get_bracket_ratings chash
+    threads = Array.new
+    @@BRACKETS.each do |bracket|
+      t = Thread.new {
+        chash[bracket] = get "/pvp-bracket/#{bracket}"
+      }
+      threads.push t
+    end
+    return threads
   end
 
   def get_date time
