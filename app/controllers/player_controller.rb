@@ -112,7 +112,7 @@ class PlayerController < BracketRegionController
 
   def wait obj
     cnt = 0
-    while (obj.nil? && cnt < 64)
+    while (obj.body.nil? && cnt < 64)
       cnt += 1
       sleep(0.25)
     end
@@ -120,13 +120,13 @@ class PlayerController < BracketRegionController
 
   def get_achievements
     Thread.new {
-      @achievements = FastJsonparser.parse(get("/achievements").body)
+      @achievements = get "/achievements"
     }
   end
 
   def get_statistics
     Thread.new {
-      @statistics = FastJsonparser.parse(get("/achievements/statistics").body)
+      @statistics = get "/achievements/statistics"
     }
   end
 
@@ -164,23 +164,24 @@ class PlayerController < BracketRegionController
   def assign_ratings(hash, statistics)
     highest = Hash.new()
     stats = Hash.new()
+    return unless valid_response(statistics)
 
-    if !statistics[:categories].nil?
-      stats = statistics[:categories]
-    elsif !statistics[:statistics].nil?
-      stats = statistics[:statistics]
+    if !statistics["categories"].nil?
+      stats = statistics["categories"]
+    elsif !statistics["statistics"].nil?
+      stats = statistics["statistics"]
     end
 
     stats.each do |cat|
-      next unless cat[:name] == "Player vs. Player"
-      next if cat[:sub_categories].nil?
-      cat[:sub_categories].each do |sub_cat|
-        next unless sub_cat[:name] == "Rated Arenas"
-        sub_cat[:statistics].each do |s|
-          if s[:name] == "Highest 2v2 personal rating"
-            highest["2v2"] = { "high" => s[:quantity], "time" => s[:last_updated_timestamp] }
-          elsif s[:name] == "Highest 3v3 personal rating"
-            highest["3v3"] = { "high" => s[:quantity], "time" => s[:last_updated_timestamp] }
+      next unless cat["name"] == "Player vs. Player"
+      next if cat["sub_categories"].nil?
+      cat["sub_categories"].each do |sub_cat|
+        next unless sub_cat["name"] == "Rated Arenas"
+        sub_cat["statistics"].each do |s|
+          if s["name"] == "Highest 2v2 personal rating"
+            highest["2v2"] = { "high" => s["quantity"], "time" => s["last_updated_timestamp"] }
+          elsif s["name"] == "Highest 3v3 personal rating"
+            highest["3v3"] = { "high" => s["quantity"], "time" => s["last_updated_timestamp"] }
           end
         end
       end
@@ -213,13 +214,14 @@ class PlayerController < BracketRegionController
 
   def get_titles json
     titles  = Array.new
+    return title unless valid_response(json)
 
-    achievements = json[:achievements]
+    achievements = json["achievements"]
     pvp_achievements = Achievement.get_seasonal_achievements
     achievements.each do |a|
-      id = a[:id]
+      id = a["id"]
       next unless pvp_achievements.has_key? id
-      time = a[:completed_timestamp]
+      time = a["completed_timestamp"]
       achievement = pvp_achievements[id]
       title = Title.new(achievement.name, achievement.description, time)
       titles.push title
@@ -230,14 +232,15 @@ class PlayerController < BracketRegionController
 
   def get_achiev_dates json
     achiev_dates  = Hash.new
+    return achiev_dates unless valid_response(json)
 
-    achievements = json[:achievements]
+    achievements = json["achievements"]
     rating_achievements = PlayerAchievement.get_rating_achievements
 
     achievements.each do |a|
-      id = a[:id]
+      id = a["id"]
       next unless rating_achievements.has_key? id
-      time = a[:completed_timestamp]
+      time = a["completed_timestamp"]
       achievement = rating_achievements[id]
       achiev_dates[id] = PlayerAchievement.new(achievement, time)
     end
