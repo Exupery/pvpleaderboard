@@ -1,6 +1,7 @@
 include Utils
 
 require "httparty"
+require "yajl/json_gem"
 
 class PlayerController < BracketRegionController
   protect_from_forgery with: :exception
@@ -22,9 +23,8 @@ class PlayerController < BracketRegionController
     @description = "World of Warcraft PvP details for #{@player_name} of #{@realm_name}"
 
     @player = get_player
-    if @player
-      @image = @player.main_image
-    end
+    GC.start # Parsing all the JSON seems to retain a lot of mem, encourage cleanup
+    @image = @player.main_image if @player
   end
 
   def search
@@ -73,7 +73,6 @@ class PlayerController < BracketRegionController
     hash["realm_slug"] = @realm_slug
 
     profile = get("")
-    return nil unless valid_response(profile)
 
     hash["name"] = profile["name"]
     hash["guild"] = get_guild profile["guild"]
@@ -112,7 +111,7 @@ class PlayerController < BracketRegionController
 
   def wait obj
     cnt = 0
-    while (obj.body.nil? && cnt < 64)
+    while (obj.nil? && cnt < 64)
       cnt += 1
       sleep(0.25)
     end
@@ -153,7 +152,6 @@ class PlayerController < BracketRegionController
 
   def get_thumbnail
     json = get "/character-media"
-    return nil unless valid_response(json)
     return nil if json["assets"].nil?
     json["assets"].each do |asset|
       return asset["value"] if asset["key"] == "main"
@@ -164,7 +162,6 @@ class PlayerController < BracketRegionController
   def assign_ratings(hash, statistics)
     highest = Hash.new()
     stats = Hash.new()
-    return unless valid_response(statistics)
 
     if !statistics["categories"].nil?
       stats = statistics["categories"]
@@ -191,7 +188,7 @@ class PlayerController < BracketRegionController
       json = get "/pvp-bracket/#{bracket}"
 
       h = Hash.new
-      if valid_response(json)
+      if !json["rating"].nil?
         h["current_rating"] = json["rating"]
         h["wins"] = json["season_match_statistics"]["won"]
         h["losses"] = json["season_match_statistics"]["lost"]
@@ -214,7 +211,6 @@ class PlayerController < BracketRegionController
 
   def get_titles json
     titles  = Array.new
-    return title unless valid_response(json)
 
     achievements = json["achievements"]
     pvp_achievements = Achievement.get_seasonal_achievements
@@ -232,7 +228,6 @@ class PlayerController < BracketRegionController
 
   def get_achiev_dates json
     achiev_dates  = Hash.new
-    return achiev_dates unless valid_response(json)
 
     achievements = json["achievements"]
     rating_achievements = PlayerAchievement.get_rating_achievements
@@ -254,7 +249,6 @@ class PlayerController < BracketRegionController
     player_hash["pvp_talents"] = Array.new
     return if spec.nil?
     json = get "/specializations"
-    return unless valid_response(json)
 
     talent_icons = get_talent_icons "talents"
     pvp_talent_icons = get_talent_icons "pvp_talents"
@@ -319,13 +313,6 @@ class PlayerController < BracketRegionController
     return talent_icons
   end
 
-  def valid_response res
-    # Shenanigans necessary due to HTTParty not wanting Response.nil? calls
-    # https://github.com/jnunemaker/httparty/issues/568
-    return !res.body.nil? if res&.code == 200
-    return false
-  end
-
   def get path
     uri = create_uri path
     return nil if uri.nil?
@@ -335,7 +322,8 @@ class PlayerController < BracketRegionController
       Rails.cache.delete(@@OAUTH_CACHE_KEY)
       res = HTTParty.get(create_uri path)
     end
-    return res
+    return Hash.new if (res.body.nil? || res&.code != 200)
+    return JSON.parse(res.body)
   end
 
   def create_uri path

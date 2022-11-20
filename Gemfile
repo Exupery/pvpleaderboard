@@ -27,7 +27,7 @@ gem 'minitest'
 gem 'httparty'
 gem 'rack', '~> 2.2', '>= 2.2.3'
 gem 'sassc-rails'
-gem 'fast_jsonparser'
+gem 'yajl-ruby', require: 'yajl'
 
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
