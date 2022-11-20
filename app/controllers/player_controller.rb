@@ -91,7 +91,7 @@ class PlayerController < BracketRegionController
 
     t = Thread.new {
       hash["ratings"] = Hash.new
-      wait @statistics
+      wait "statistics"
       assign_ratings(hash, @statistics)
     }
 
@@ -100,7 +100,7 @@ class PlayerController < BracketRegionController
 
     populate_talents(hash, hash["spec"])
 
-    wait @achievements
+    wait "achievements"
     hash["titles"] = get_titles @achievements
     hash["achiev_dates"] = get_achiev_dates @achievements
 
@@ -109,11 +109,11 @@ class PlayerController < BracketRegionController
     return hash
   end
 
-  def wait obj
+  def wait obj_name
     cnt = 0
-    while (obj.nil? && cnt < 64)
+    while (instance_variable_get("@#{obj_name}").nil? && cnt < 64)
       cnt += 1
-      sleep(0.25)
+      sleep(0.2)
     end
   end
 
