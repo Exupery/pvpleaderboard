@@ -275,6 +275,7 @@ class PlayerController < BracketRegionController
       next unless s["name"] == spec
 
       loadout = get_loadout specialization
+      player_hash["loadout_code"] = loadout["talent_loadout_code"] unless loadout["talent_loadout_code"].nil?
 
       parse_talents(loadout, player_hash, "class", talent_icons)
       parse_talents(loadout, player_hash, "spec", talent_icons)

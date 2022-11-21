@@ -1,8 +1,7 @@
 class Player
   attr_reader :id, :ranking, :rating, :bracket, :wins, :losses, :name, :faction, :race,
     :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image,
-    :ratings, :titles, :ilvl, :class_talents, :spec_talents, :pvp_talents, :dates
-
+    :ratings, :titles, :ilvl, :class_talents, :spec_talents, :pvp_talents, :loadout, :dates
 
   @@armory_locales = { "US" => "en-us", "EU" => "en-gb", "KR" => "ko_kr", "TW" => "zh-tw" }
 
@@ -33,6 +32,7 @@ class Player
     @class_talents = hash["class_talents"]
     @spec_talents = hash["spec_talents"]
     @pvp_talents = hash["pvp_talents"]
+    @loadout = hash["loadout_code"]
     @dates = populate_dates hash["achiev_dates"]
   end
 

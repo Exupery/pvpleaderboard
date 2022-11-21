@@ -135,6 +135,9 @@
             <% end %>
           </tbody>
         </table>
+        <% if @player.loadout %>
+          <%= render "loadout" %>
+        <% end %>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="tab-pane-spec-talents">
@@ -152,6 +155,9 @@
             <% end %>
           </tbody>
         </table>
+        <% if @player.loadout %>
+          <%= render "loadout" %>
+        <% end %>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="tab-pane-pvp-talents">

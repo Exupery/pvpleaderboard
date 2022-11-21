@@ -74,6 +74,10 @@ a:focus {
   margin-bottom: 1em;
 }
 
+.margin-bottom-0-5em {
+  margin-bottom: 0.5em;
+}
+
 .margin-bottom-0-25em {
   margin-bottom: 0.25em;
 }
@@ -631,6 +635,24 @@ th.tablesorter-headerAsc:hover,
   padding-inline-start: 0;
   font-size: 1.25em;
   margin-bottom: 1.5em;
+}
+
+.loadout {
+  overflow-wrap: anywhere;
+}
+
+.inverse {
+  color: #1A0F08;
+  background-color: #E4A703;
+}
+
+.neg-top-margin {
+  margin-top: -1.25em;
+}
+
+.wowhead-button:hover {
+  color: #FFFFFF;
+  background: #A71A19;
 }
 
 /* PACE */
