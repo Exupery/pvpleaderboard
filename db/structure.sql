@@ -360,7 +360,10 @@ CREATE TABLE public.talents (
     class_id integer NOT NULL,
     spec_id integer NOT NULL,
     name character varying(128) NOT NULL,
-    icon character varying(128)
+    icon character varying(128),
+    node_id integer,
+    display_row integer,
+    display_col integer
 );
 
 

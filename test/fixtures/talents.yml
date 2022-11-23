@@ -10,6 +10,9 @@
         spec_id: <%= s %>
         name: <%= "talent#{id}" %>
         icon: <%= "talenticon#{id}" %>
+        node_id: <%= id %>
+        display_row: <%= id % 10 %>
+        display_col: <%= id % 22 %>
       <% talent_id = talent_id + 1 %>
     <% end %>
   <% end %>

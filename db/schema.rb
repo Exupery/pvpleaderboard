@@ -155,7 +155,11 @@ ActiveRecord::Schema[7.0].define(version: 0) do
     t.integer "spec_id", null: false
     t.string "name", limit: 128, null: false
     t.string "icon", limit: 128
+    t.integer "node_id"
+    t.integer "display_row"
+    t.integer "display_col"
     t.index ["class_id", "spec_id"], name: "talents_class_id_spec_id_idx"
+    t.index ["node_id"], name: "talents_node_id_idx"
   end
 
   add_foreign_key "leaderboards", "players", name: "leaderboards_player_id_fkey"
