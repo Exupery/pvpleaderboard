@@ -54,8 +54,8 @@ class PlayerController < BracketRegionController
     cnt = 0
     while cnt < 3
       begin
-        get_statistics
-        get_achievements
+        @statistics_thread = get_statistics
+        @achievements_thread = get_achievements
         return get_player_details
       rescue Exception => e
         cnt += 1
@@ -92,7 +92,7 @@ class PlayerController < BracketRegionController
 
     t = Thread.new {
       hash["ratings"] = Hash.new
-      wait "statistics"
+      @statistics_thread.join
       assign_ratings(hash, @statistics)
     }
 
@@ -101,7 +101,7 @@ class PlayerController < BracketRegionController
 
     populate_talents(hash, hash["spec"])
 
-    wait "achievements"
+    @achievements_thread.join
     hash["titles"] = get_titles @achievements
     hash["achiev_dates"] = get_achiev_dates @achievements
 
@@ -110,22 +110,14 @@ class PlayerController < BracketRegionController
     return hash
   end
 
-  def wait obj_name
-    cnt = 0
-    while (instance_variable_get("@#{obj_name}").nil? && cnt < 64)
-      cnt += 1
-      sleep(0.2)
-    end
-  end
-
   def get_achievements
-    Thread.new {
+    return Thread.new {
       @achievements = get "/achievements"
     }
   end
 
   def get_statistics
-    Thread.new {
+    return Thread.new {
       @statistics = get "/achievements/statistics"
     }
   end
