@@ -75,8 +75,8 @@ class PlayerController < BracketRegionController
     hash["realm_slug"] = @realm_slug
 
     profile = get("")
-    @class_id = profile["character_class"]["id"]
-    @spec_id = profile["active_spec"]["id"] unless profile["active_spec"].nil?
+    hash["class_id"] = profile["character_class"]["id"]
+    hash["spec_id"] = profile["active_spec"]["id"] unless profile["active_spec"].nil?
 
     hash["name"] = profile["name"]
     hash["guild"] = get_guild profile["guild"]
@@ -84,7 +84,7 @@ class PlayerController < BracketRegionController
     active = profile["active_spec"]
     # Spec may be nil if very low level player who hasn't selected a spec yet
     hash["spec"] = active["name"] unless active.nil?
-    hash["spec_icon"] = (active.nil? || active["id"].nil?)  ? "placeholder" : get_spec_icon(@spec_id)
+    hash["spec_icon"] = hash["spec_id"].nil?  ? "placeholder" : get_spec_icon(hash["spec_id"])
 
     hash["faction"] = profile["faction"]["name"]
     hash["race"] = profile["race"]["name"]

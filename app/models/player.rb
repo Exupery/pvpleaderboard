@@ -1,6 +1,6 @@
 class Player
   attr_reader :id, :ranking, :rating, :bracket, :wins, :losses, :name, :faction, :race,
-    :gender, :class, :spec, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image,
+    :gender, :class, :class_id, :spec, :spec_id, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image,
     :ratings, :titles, :ilvl, :class_talents, :spec_talents, :pvp_talents, :loadout, :dates
 
   @@armory_locales = { "US" => "en-us", "EU" => "en-gb", "KR" => "ko_kr", "TW" => "zh-tw" }
@@ -17,7 +17,9 @@ class Player
     @race = hash["race"]
     @gender = hash["gender"].to_i == 0 ? "male" : "female"
     @class = hash["class"]
+    @class_id = hash["class_id"]
     @spec = hash["spec"]
+    @spec_id = hash["spec_id"]
     @spec_icon = hash["spec_icon"]
     @realm = hash["realm"]
     @realm_slug = hash["realm_slug"]
