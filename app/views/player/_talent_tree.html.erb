@@ -8,16 +8,16 @@
       <tr>
         <% (min_col..max_col).each do |col| %>
           <% talent = talents["#{row}-#{col}"] %>
-            <% unless talent.nil? %>
+          <% unless talent.nil? %>
             <td>
               <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=60" target="_blank" class="no-a-style">
                 <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
                 <div class="table-tiny-font no-overflow"><%= talent[:name] %></div>
               </a>
             </td>
-            <% else %>
+          <% else %>
             <td class="min-height"></td>
-            <% end %>
+          <% end %>
         <% end %>
       </tr>
     <% end %>
