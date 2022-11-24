@@ -121,44 +121,14 @@
       </div>
 
       <div role="tabpanel" class="tab-pane" id="tab-pane-class-talents">
-        <table id="class-talents-audit" class="table table-bordered table-condensed table-responsive table-hover center">
-          <tbody>
-            <% @player.class_talents.each do |talent| %>
-              <tr>
-                <td>
-                  <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=60" target="_blank" class="no-a-style">
-                    <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
-                    <div><%= talent[:name] %></div>
-                  </a>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-        <% if @player.loadout %>
-          <%= render "loadout" %>
-        <% end %>
+        <%= render "talent_tree", talents: @player.class_talents, all_talents: Talents.get_class_talents(@class_id) %>
       </div>
 
+      <% unless @spec_id.nil? %>
       <div role="tabpanel" class="tab-pane" id="tab-pane-spec-talents">
-        <table id="class-spec-audit" class="table table-bordered table-condensed table-responsive table-hover center">
-          <tbody>
-            <% @player.spec_talents.each do |talent| %>
-              <tr>
-                <td>
-                  <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=60" target="_blank" class="no-a-style">
-                    <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
-                    <div><%= talent[:name] %></div>
-                  </a>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-        <% if @player.loadout %>
-          <%= render "loadout" %>
-        <% end %>
+        <%= render "talent_tree", talents: @player.spec_talents, all_talents: Talents.get_spec_talents(@spec_id) %>
       </div>
+      <% end %>
 
       <div role="tabpanel" class="tab-pane" id="tab-pane-pvp-talents">
         <table id="pvp-talents-audit" class="table table-bordered table-condensed table-responsive table-hover center">

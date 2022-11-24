@@ -1,3 +1,4 @@
+include TalentsHelper
 include Utils
 
 require "concurrent"
@@ -74,6 +75,8 @@ class PlayerController < BracketRegionController
     hash["realm_slug"] = @realm_slug
 
     profile = get("")
+    @class_id = profile["character_class"]["id"]
+    @spec_id = profile["active_spec"]["id"] unless profile["active_spec"].nil?
 
     hash["name"] = profile["name"]
     hash["guild"] = get_guild profile["guild"]
@@ -81,7 +84,7 @@ class PlayerController < BracketRegionController
     active = profile["active_spec"]
     # Spec may be nil if very low level player who hasn't selected a spec yet
     hash["spec"] = active["name"] unless active.nil?
-    hash["spec_icon"] = (active.nil? || active["id"].nil?)  ? "placeholder" : get_spec_icon(active["id"])
+    hash["spec_icon"] = (active.nil? || active["id"].nil?)  ? "placeholder" : get_spec_icon(@spec_id)
 
     hash["faction"] = profile["faction"]["name"]
     hash["race"] = profile["race"]["name"]
@@ -253,8 +256,8 @@ class PlayerController < BracketRegionController
   end
 
   def populate_talents(player_hash, spec)
-    player_hash["class_talents"] = Array.new
-    player_hash["spec_talents"] = Array.new
+    player_hash["class_talents"] = Hash.new
+    player_hash["spec_talents"] = Hash.new
     player_hash["pvp_talents"] = Array.new
     return if spec.nil?
     json = get "/specializations"
@@ -269,8 +272,9 @@ class PlayerController < BracketRegionController
       loadout = get_loadout specialization
       player_hash["loadout_code"] = loadout["talent_loadout_code"] unless loadout["talent_loadout_code"].nil?
 
-      parse_talents(loadout, player_hash, "class", talent_icons)
-      parse_talents(loadout, player_hash, "spec", talent_icons)
+      talents_positions = get_talent_positions
+      parse_talents(loadout, player_hash, "class", talent_icons, talents_positions)
+      parse_talents(loadout, player_hash, "spec", talent_icons, talents_positions)
 
       next if specialization["pvp_talent_slots"].nil?
       specialization["pvp_talent_slots"].each do |slot|
@@ -298,13 +302,23 @@ class PlayerController < BracketRegionController
     return Hash.new
   end
 
-  def parse_talents(json, hash, talent_type, talent_icons)
+  def parse_talents(json, hash, talent_type, talent_icons, talents_positions)
     return if json["selected_#{talent_type}_talents"].nil?
     json["selected_#{talent_type}_talents"].each do |talent|
       id = talent["tooltip"]["talent"]["id"]
       name = talent["tooltip"]["talent"]["name"]
       spell_id = talent["tooltip"]["spell_tooltip"]["spell"]["id"]
-      hash["#{talent_type}_talents"].push({:id => id, :spell_id => spell_id, :name => name, :icon => talent_icons[id]})
+      next if talents_positions[id].nil? ## Safety in case talent is added before next import
+      row = talents_positions[id]["row"]
+      col = talents_positions[id]["col"]
+      hash["#{talent_type}_talents"]["#{row}-#{col}"] = {
+        :id => id,
+        :spell_id => spell_id,
+        :name => name,
+        :icon => talent_icons[id],
+        :row => row,
+        :col => col
+      }
     end
   end
 
@@ -321,6 +335,23 @@ class PlayerController < BracketRegionController
 
     Rails.cache.write(cache_key, talent_icons)
     return talent_icons
+  end
+
+  def get_talent_positions
+    cache_key = "talent_positions"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    talent_positions = Hash.new
+    rows = ActiveRecord::Base.connection.execute("SELECT id, display_row, display_col FROM talents ORDER BY node_id ASC")
+    rows.each do |row|
+      talent_positions[row["id"]] = {
+        "row" => row["display_row"],
+        "col" => row["display_col"]
+      }
+    end
+
+    Rails.cache.write(cache_key, talent_positions)
+    return talent_positions
   end
 
   def get path

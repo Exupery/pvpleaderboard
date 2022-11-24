@@ -1,0 +1,31 @@
+<table class="table table-bordered table-condensed table-responsive table-hover center table-fixed">
+  <tbody>
+    <% min_row = find_min_row all_talents %>
+    <% max_row = find_max_row all_talents %>
+    <% min_col = find_min_col all_talents %>
+    <% max_col = find_max_col all_talents %>
+    <% (min_row..max_row).each do |row| %>
+      <tr>
+        <% (min_col..max_col).each do |col| %>
+          <% talent = talents["#{row}-#{col}"] %>
+            <% unless talent.nil? %>
+            <td>
+              <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=60" target="_blank" class="no-a-style">
+                <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
+                <div class="table-tiny-font no-overflow"><%= talent[:name] %></div>
+              </a>
+            </td>
+            <% else %>
+            <td class="min-height">
+              <img src="/images/icons/placeholder.png" class="img-responsive center hidden">
+              <div class="table-tiny-font hidden">empty node</div>
+            </td>
+            <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if @player.loadout %>
+  <%= render "loadout" %>
+<% end %>

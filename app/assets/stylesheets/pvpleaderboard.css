@@ -111,6 +111,14 @@ a:focus {
   margin-bottom: 0;
 }
 
+.min-height {
+  height: 4em;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
 .expands {
   min-height: calc(100vh - 235px);
 }
@@ -321,6 +329,11 @@ th:focus {
   width: 100%;
 }
 
+.no-overflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .table {
   background-color: #302620;
   width: auto;
@@ -335,6 +348,15 @@ th:focus {
 
 .table-small-font {
   font-size: calc(1vw + 4px);
+}
+
+.table-tiny-font {
+  font-size: 0.7em;
+}
+
+.table-fixed {
+  max-width: 100%;
+  table-layout: fixed;
 }
 
 td {

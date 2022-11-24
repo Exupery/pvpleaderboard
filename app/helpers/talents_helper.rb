@@ -16,7 +16,45 @@ module TalentsHelper
     return get_percents(@pvp_talents, @pvp_talent_counts)
   end
 
+  def find_min_row talents
+    return find_min(talents, "row")
+  end
+
+  def find_max_row talents
+    return find_max(talents, "row")
+  end
+
+  def find_min_col talents
+    return find_min(talents, "col")
+  end
+
+  def find_max_col talents
+    return find_max(talents, "col")
+  end
+
   private
+
+  def find_min(talents, key)
+    min = 9999
+
+    talents.each do |id, talent|
+      val = talent[:"#{key}"]
+      min = val if val < min
+    end
+
+    return min
+  end
+
+  def find_max(talents, key)
+    max = 0
+
+    talents.each do |id, talent|
+      val = talent[:"#{key}"]
+      max = val if val > max
+    end
+
+    return max
+  end
 
   def get_percents(talents, talent_counts)
     h = Hash.new
