@@ -1,19 +1,21 @@
 module TalentsHelper
   include Utils
 
-  def class_talent_counts_table(class_id)
-    @class_talents = Talents.get_class_talents(class_id)
-    return get_percents(@class_talents, @class_talent_counts)
+  def class_talent_counts_tree(class_id, spec_id, class_talent_counts)
+    class_talents = Talents.get_class_talents(class_id, spec_id)
+    talents_with_percents = get_percents(class_talents, class_talent_counts)
+    return convert_to_tree(talents_with_percents)
   end
 
-  def spec_talent_counts_table(spec_id)
-    @spec_talents = Talents.get_spec_talents(spec_id)
-    return get_percents(@spec_talents, @spec_talent_counts)
+  def spec_talent_counts_tree(spec_id, spec_talent_counts)
+    spec_talents = Talents.get_spec_talents(spec_id)
+    talents_with_percents = get_percents(spec_talents, spec_talent_counts)
+    return convert_to_tree(talents_with_percents)
   end
 
-  def pvp_talent_counts_table(spec_id)
-    @pvp_talents = Pvptalents.get_talents(spec_id)
-    return get_percents(@pvp_talents, @pvp_talent_counts)
+  def pvp_talent_counts(spec_id, pvp_talent_counts)
+    pvp_talents = Pvptalents.get_talents(spec_id)
+    return get_percents(pvp_talents, pvp_talent_counts)
   end
 
   def find_min_row talents
@@ -35,7 +37,7 @@ module TalentsHelper
   private
 
   def find_min(talents, key)
-    min = 9999
+    min = 2 ** 32
 
     talents.each do |id, talent|
       val = talent[:"#{key}"]
@@ -54,6 +56,18 @@ module TalentsHelper
     end
 
     return max
+  end
+
+  def convert_to_tree(talents)
+    tree = Hash.new
+
+    talents.each do |id, talent|
+      row = talent[:row]
+      col = talent[:col]
+      tree["#{row}-#{col}"] = talent
+    end
+
+    return tree
   end
 
   def get_percents(talents, talent_counts)

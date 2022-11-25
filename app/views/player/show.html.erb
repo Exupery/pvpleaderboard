@@ -121,7 +121,7 @@
       </div>
 
       <div role="tabpanel" class="tab-pane" id="tab-pane-class-talents">
-        <%= render "talent_tree", talents: @player.class_talents, all_talents: Talents.get_class_talents(@player.class_id) %>
+        <%= render "talent_tree", talents: @player.class_talents, all_talents: Talents.get_class_talents(@player.class_id, @player.spec_id) %>
       </div>
 
       <% unless @player.spec_id.nil? %>

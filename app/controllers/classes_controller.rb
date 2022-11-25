@@ -3,6 +3,7 @@ class ClassesController < ApplicationController
   protect_from_forgery with: :exception
 
   @@NUM_TOP_PLAYERS_PER_BRACKET = ENV.fetch("TOP_PLAYERS_PER_BRACKET", 6)
+  @@PIVOT_COL = ENV.fetch("TALENT_PIVOT_COL").to_i
 
   def select_class
     @title = "Class / Spec Selection"
@@ -72,13 +73,13 @@ class ClassesController < ApplicationController
 
   def get_class_talent_counts
     label = "class_#{@class_id}_#{@spec_id}"
-    where = "players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND talents.spec_id=0"
+    where = "players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND (talents.spec_id=0 OR talents.spec_id=#{@spec_id}) AND display_col < #{@@PIVOT_COL}"
     return get_talent_counts(label, where)
   end
 
   def get_spec_talent_counts
     label = "spec_#{@class_id}_#{@spec_id}"
-    where = "players.spec_id=#{@spec_id} AND talents.spec_id=#{@spec_id}"
+    where = "players.spec_id=#{@spec_id} AND talents.spec_id=#{@spec_id} AND display_col > #{@@PIVOT_COL}"
     return get_talent_counts(label, where)
   end
 

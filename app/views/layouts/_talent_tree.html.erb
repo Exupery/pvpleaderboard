@@ -1,0 +1,26 @@
+<table class="table table-bordered table-condensed table-responsive center table-fixed">
+  <tbody>
+    <% min_row = find_min_row talent_positions %>
+    <% max_row = find_max_row talent_positions %>
+    <% min_col = find_min_col talent_positions %>
+    <% max_col = find_max_col talent_positions %>
+    <% (min_row..max_row).each do |row| %>
+      <tr>
+        <% (min_col..max_col).each do |col| %>
+          <% talent = talent_positions["#{row}-#{col}"] %>
+          <% unless talent.nil? %>
+            <td>
+              <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=60" target="_blank" class="no-a-style">
+                <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
+                <div class="table-tiny-font no-overflow"><%= talent[:name] %></div>
+                <div class="table-tiny-font no-overflow"><%= talent[:percent] %>&#37;</div>
+              </a>
+            </td>
+          <% else %>
+            <td class="min-height"></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

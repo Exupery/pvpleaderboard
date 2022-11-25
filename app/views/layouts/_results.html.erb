@@ -11,13 +11,13 @@
 
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="tab-pane-class-talents">
-      <%= render "layouts/talents_table", :label => "class", :talents => class_talent_counts_table(@class_id) %>
+      <%= render "layouts/talent_tree", :label => "class", :talent_positions => class_talent_counts_tree(@class_id, @spec_id, @class_talent_counts) %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-spec-talents">
-      <%= render "layouts/talents_table", :label => "spec", :talents => spec_talent_counts_table(@spec_id) %>
+      <%= render "layouts/talent_tree", :label => "spec", :talent_positions => spec_talent_counts_tree(@spec_id, @spec_talent_counts) %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-pvp-talents">
-      <%= render "layouts/pvp_talents_table", :pvp_talents => pvp_talent_counts_table(@spec_id) %>
+      <%= render "layouts/pvp_talents_table", :pvp_talents => pvp_talent_counts(@spec_id, @pvp_talent_counts) %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-gear">
       <%= render "layouts/gear_table", :gear => @gear %>

@@ -3,7 +3,7 @@ require "test_helper"
 class TalentsTest < ActiveSupport::TestCase
   def test_get_talents_for_class
     (1..12).each do |id|
-      class_talents = Talents.get_class_talents(id)
+      class_talents = Talents.get_class_talents(id, 62)
       assert_not_nil(class_talents)
       assert_not_empty(class_talents)
     end
