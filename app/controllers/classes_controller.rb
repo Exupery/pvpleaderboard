@@ -94,23 +94,7 @@ class ClassesController < ApplicationController
       h[row["talent"]] = row["count"].to_i
     end
 
-    ## Resolving the updater bug that results in no talents
-    ## for a spec has proven quite difficult - so until that
-    ## is fixed at least make sure we're not caching the bogus
-    ## data. (Or maybe the caching IS the issue?)
-    nonzero = false
-    h.each do |t, cnt|
-      if cnt > 0 then
-        nonzero = true
-        break
-      end
-    end
-    if nonzero
-      Rails.cache.write(cache_key, h)
-    else
-      logger.warn("No talent counts found for #{label}")
-    end
-
+    write_to_cache_if_no_stale("players_talents", h, cache_key)
     return h
   end
 
@@ -125,8 +109,24 @@ class ClassesController < ApplicationController
       h[row["pvp_talent"]] = row["count"].to_i
     end
 
-    Rails.cache.write(cache_key, h)
+    write_to_cache_if_no_stale("players_pvp_talents", h, cache_key)
     return h
+  end
+
+  def write_to_cache_if_no_stale(tbl, hash, cache_key)
+    stale_count = get_stale_count tbl
+    if stale_count == 0
+      Rails.cache.write(cache_key, hash)
+    else
+      logger.warn("Not caching counts for #{cache_key} due to stale rows still present")
+    end
+  end
+
+  def get_stale_count tbl
+    rows = ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS count FROM #{tbl} WHERE stale=TRUE")
+    rows.each do |row|
+      return row["count"].to_i
+    end
   end
 
   def get_stat_counts

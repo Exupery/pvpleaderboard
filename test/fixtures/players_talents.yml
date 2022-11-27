@@ -3,5 +3,6 @@
   playertalent<%= "#{p}-#{n}" %>:
     player_id: <%= p %>
     talent_id: <%= n % 480 %>
+    stale: false
   <% end %>
 <% end %>

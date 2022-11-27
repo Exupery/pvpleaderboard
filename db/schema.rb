@@ -102,6 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 0) do
   create_table "players_pvp_talents", primary_key: ["player_id", "pvp_talent_id"], force: :cascade do |t|
     t.integer "player_id", null: false
     t.integer "pvp_talent_id", null: false
+    t.boolean "stale", default: true
   end
 
   create_table "players_stats", primary_key: "player_id", id: :integer, default: nil, force: :cascade do |t|
@@ -121,6 +122,7 @@ ActiveRecord::Schema[7.0].define(version: 0) do
   create_table "players_talents", primary_key: ["player_id", "talent_id"], force: :cascade do |t|
     t.integer "player_id", null: false
     t.integer "talent_id", null: false
+    t.boolean "stale", default: true
   end
 
   create_table "pvp_talents", id: :integer, default: nil, force: :cascade do |t|

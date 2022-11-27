@@ -243,7 +243,8 @@ CREATE TABLE public.players_items (
 
 CREATE TABLE public.players_pvp_talents (
     player_id integer NOT NULL,
-    pvp_talent_id integer NOT NULL
+    pvp_talent_id integer NOT NULL,
+    stale boolean NOT NULL DEFAULT false
 );
 
 
@@ -277,7 +278,8 @@ CREATE TABLE public.players_stats (
 
 CREATE TABLE public.players_talents (
     player_id integer NOT NULL,
-    talent_id integer NOT NULL
+    talent_id integer NOT NULL,
+    stale boolean NOT NULL DEFAULT false
 );
 
 

@@ -3,5 +3,6 @@
   playerpvptalent<%= "#{p}-#{n}" %>:
     player_id: <%= p %>
     pvp_talent_id: <%= n % 48 %>
+    stale: false
   <% end %>
 <% end %>
