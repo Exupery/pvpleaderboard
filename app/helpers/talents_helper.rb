@@ -64,7 +64,14 @@ module TalentsHelper
     talents.each do |id, talent|
       row = talent[:row]
       col = talent[:col]
-      tree["#{row}-#{col}"] = talent
+      key = "#{row}-#{col}"
+      if tree.include? key
+        existing = tree[key]
+        t = (existing[:percent] > talent[:percent]) ? existing : talent
+        tree[key] = t
+      else
+        tree[key] = talent
+      end
     end
 
     return tree
