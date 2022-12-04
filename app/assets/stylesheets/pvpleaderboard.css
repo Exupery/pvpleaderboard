@@ -677,6 +677,14 @@ th.tablesorter-headerAsc:hover,
   background: #A71A19;
 }
 
+#solo-selection #region {
+  margin-bottom: 0.5em;
+}
+
+#solo-selection #spec-selection {
+  margin-top: 0.5em;
+}
+
 /* PACE */
 .pace {
   -webkit-pointer-events: none;
