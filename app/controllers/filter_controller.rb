@@ -26,7 +26,7 @@ class FilterController < ApplicationController
     clazz = Classes.list[slugify @selected[:class]]
     @class_id = clazz[:id] if clazz
     @class_name = clazz[:name] if clazz
-    spec = Specs.slugs["#{slugify @selected[:class]}_#{slugify @selected[:spec]}"]
+    spec = get_spec_from_selected
     @spec_id = spec[:id] if spec
     @spec_name = spec[:name] if spec
 
@@ -138,6 +138,11 @@ class FilterController < ApplicationController
       @@BRACKETS.each do |bracket|
         brackets.push("'#{bracket}'") if @selected[:leaderboards].include? bracket
       end
+      spec = get_spec_from_selected
+      unless spec.nil?
+        solo_bracket = "solo_#{spec[:id]}"
+        brackets.push("'#{solo_bracket}'") if @selected[:leaderboards].include? "solo"
+      end
       return "AND leaderboards.bracket IN (#{brackets.join(",")})"
     end
   end
@@ -154,5 +159,9 @@ class FilterController < ApplicationController
 
   def sanitize obj
     return ActiveRecord::Base::sanitize obj
+  end
+
+  def get_spec_from_selected
+    return Specs.slugs["#{slugify @selected[:class]}_#{slugify @selected[:spec]}"]
   end
 end
