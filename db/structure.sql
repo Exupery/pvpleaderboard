@@ -126,7 +126,7 @@ CREATE TABLE public.items (
 
 CREATE TABLE public.leaderboards (
     region character(2) NOT NULL,
-    bracket character(3) NOT NULL,
+    bracket character(16) NOT NULL,
     player_id integer NOT NULL,
     ranking smallint NOT NULL,
     rating smallint NOT NULL,

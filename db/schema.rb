@@ -38,7 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 0) do
 
   create_table "leaderboards", primary_key: ["region", "bracket", "player_id"], force: :cascade do |t|
     t.string "region", limit: 2, null: false
-    t.string "bracket", limit: 3, null: false
+    t.string "bracket", limit: 16, null: false
     t.integer "player_id", null: false
     t.integer "ranking", limit: 2, null: false
     t.integer "rating", limit: 2, null: false
