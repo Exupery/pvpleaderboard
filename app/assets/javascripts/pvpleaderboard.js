@@ -30,13 +30,11 @@ var ready = function() {
     $(this).blur();
   });
 
-  $(".class-selector").on("mouseenter", function() {
+  $(".class-selector").click(function() {
     var classSlug = urlify($(this).data("value"));
     $(".spec-group").hide();
     $("#" + classSlug + "-specs").show();
-  });
 
-  $(".class-selector").click(function() {
     var active = $(".class-selector.active").first();
     if (active && active.data("value") != $(this).data("value")) {
       $(".spec-selector").removeClass("active");
@@ -72,17 +70,6 @@ var ready = function() {
       enableSubmit();
     }
   }
-
-  $(".class-selector-group").mouseleave(function() {
-    if ($(".class-selector").hasClass("active")) {
-      var classSlug = urlify($(".class-selector.active").first().data("value"));
-      $(".spec-group").hide();
-      $("#" + classSlug + "-specs").show();
-    } else {
-      $(".spec-group").hide();
-      $(".placeholder-spec-group").show();
-    }
-  });
 
   $(".unactivater").click(function() {
     $("." + $(this).data("unactivate")).removeClass("active");
