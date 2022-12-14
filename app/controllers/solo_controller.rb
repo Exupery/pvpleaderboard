@@ -37,11 +37,14 @@ class SoloController < ApplicationController
 
   def more
     @region = get_leaderboard_region
-    class_slug = slugify params[:class]
-    @class = Classes.list[slugify params[:class]]
-    @spec = Specs.slugs["#{class_slug}_#{slugify params[:spec]}"]
+    spec_id = params[:spec]
+    return if spec_id.nil?
+    spec = Specs.get_specs_by_id[spec_id.to_i]
+    return if spec.nil?
+    @class = spec[:class]
+    @spec = spec[:spec]
     if (@region && @class && @spec)
-      @bracket = "solo_#{@spec[:id]}"
+      @bracket = "solo_#{params[:spec]}"
       max_results = params[:all] == "true" ? nil : @@DEFAULT_MAX_RESULTS
       @leaderboard = players_on_leaderboard(params[:min], max_results)
       render partial: "layouts/leaderboard_table_body"

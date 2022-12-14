@@ -4,6 +4,7 @@ class Specs
 	@@specs = nil
 	@@slugs = nil
   @@solo_slugs = nil
+  @@specs_by_id = nil
 
 	def self.list
 		@@specs = get_specs if @@specs.nil?
@@ -18,6 +19,11 @@ class Specs
   def self.solo_slugs
 		@@solo_slugs = get_solo_slugs if @@solo_slugs.nil?
 	  return @@solo_slugs
+	end
+
+  def self.specs_by_id
+		@@specs_by_id = get_specs_by_id if @@specs_by_id.nil?
+	  return @@specs_by_id
 	end
 
 	private
@@ -45,6 +51,20 @@ class Specs
       spec = row["spec"]
       slug = slugify "#{clazz}_#{spec}"
       h[slug] = {:id => row["id"], :name => spec}
+    end
+
+    return h
+	end
+
+  def self.get_specs_by_id
+		h = Hash.new
+
+		rows = ActiveRecord::Base.connection.execute("SELECT specs.id AS id, classes.name AS class, specs.name AS spec FROM specs JOIN classes ON specs.class_id=classes.id ORDER BY id ASC")
+    rows.each do |row|
+      h[row["id"]] = {
+        :class => row["class"],
+        :spec => row["spec"]
+      }
     end
 
     return h

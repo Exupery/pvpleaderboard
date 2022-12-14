@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get "leaderboards/solo/:region" => "solo#show"
   get "leaderboards/solo/:region/:class" => "solo#show"
   get "leaderboards/solo/:region/:class/:spec" => "solo#show"
-  get "leaderboards/solo/:region/:class/:spec/more" => "solo#more"
+  get "leaderboards/solo_:spec/:region/more" => "solo#more"
 
   get "leaderboards/:bracket/:region" => "leaderboards#show"
   get "leaderboards/:bracket/:region/more" => "leaderboards#more"
