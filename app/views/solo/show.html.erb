@@ -10,7 +10,10 @@
 
   <%= render "layouts/class_selection" %>
 
-  <div id="spec-selection"><%= render "layouts/spec_selection", :use_anchors => true, :path => "leaderboards/solo/#{@region.downcase}" %></div>
+  <div id="spec-selection">
+    <% region = @region.nil? ? "us" : @region.downcase %>
+    <%= render "layouts/spec_selection", :use_anchors => true, :path => "leaderboards/solo/#{region}" %>
+  </div>
   <% heading = @spec ? "#{@title_region}#{@spec[:name]} #{@class[:name]} Solo Shuffle Leaderboard" : "Select a Class and Specialization" %>
   <h1 id="leaderboard-heading" data-default="<%= heading %>"><%= heading %></h1>
 
