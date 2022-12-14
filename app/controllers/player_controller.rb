@@ -84,6 +84,14 @@ class PlayerController < BracketRegionController
     active = profile["active_spec"]
     # Spec may be nil if very low level player who hasn't selected a spec yet
     hash["spec"] = active["name"] unless active.nil?
+    if hash["spec_id"].nil?
+      hash["spec_icon"] = "placeholder"
+      @brackets = @@BRACKETS
+    else
+      hash["spec_icon"] = get_spec_icon(hash["spec_id"])
+      @solo_bracket = Specs.solo_slugs[hash["spec_id"]]
+      @brackets = [ @solo_bracket ].concat(@@BRACKETS)
+    end
     hash["spec_icon"] = hash["spec_id"].nil?  ? "placeholder" : get_spec_icon(hash["spec_id"])
 
     hash["faction"] = profile["faction"]["name"]
@@ -185,14 +193,15 @@ class PlayerController < BracketRegionController
     threads.each do |thread|
       thread.join
     end
-    @@BRACKETS.each do |bracket|
+    @brackets.each do |bracket|
       json = bracket_ratings[bracket]
 
       h = Hash.new
       if !json["rating"].nil?
         h["current_rating"] = json["rating"]
-        h["wins"] = json["season_match_statistics"]["won"]
-        h["losses"] = json["season_match_statistics"]["lost"]
+        key = bracket.start_with?("shuffle") ? "round" : "match"
+        h["wins"] = json["season_#{key}_statistics"]["won"]
+        h["losses"] = json["season_#{key}_statistics"]["lost"]
       else
         h["current_rating"] = nil
         h["wins"] = 0
@@ -207,7 +216,7 @@ class PlayerController < BracketRegionController
 
   def get_bracket_ratings chash
     threads = Array.new
-    @@BRACKETS.each do |bracket|
+    @brackets.each do |bracket|
       t = Thread.new {
         chash[bracket] = get "/pvp-bracket/#{bracket}"
       }
