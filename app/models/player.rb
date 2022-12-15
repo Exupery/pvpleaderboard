@@ -121,7 +121,7 @@ class Player
     return nil if bracket.nil?
 
     return "RBG" if bracket.downcase == "rbg"
-    return "Solo" if bracket.downcase == "solo"
+    return "Solo" if bracket.downcase.start_with?("solo")
 
     return bracket
   end
