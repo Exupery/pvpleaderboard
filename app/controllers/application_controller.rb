@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :set_format
 
   @@BRACKETS = Brackets.list
+  @@BRACKETS_WITH_SOLO = Brackets.with_solo
   @@REGIONS = Regions.list
 
   def set_format
@@ -18,19 +19,21 @@ class ApplicationController < ActionController::Base
     bracket = params[:bracket] || params[:leaderboard]
     if bracket
       bracket.downcase!
-      bracket = nil unless @@BRACKETS.include?(bracket)
+      bracket = nil unless @@BRACKETS_WITH_SOLO.include?(bracket)
     end
 
     return bracket
   end
 
   def get_title_bracket bracket
-    return bracket.eql?("rbg") ? "RBG" : bracket
+    return "Solo Shuffle" if bracket.eql?("solo")
+    return "RBG" if bracket.eql?("rbg")
+    return bracket
   end
 
   def get_bracket_fullname(bracket, region)
     return "All #{get_title_region region}Leaderboards" if bracket.nil?
-    return (get_title_region region) + (bracket.downcase.eql?("rbg") ? "Rated Battlegrounds" : bracket)
+    return (get_title_region region) + (bracket.downcase.eql?("rbg") ? "Rated Battlegrounds" : get_title_bracket(bracket))
   end
 
   def get_player_region

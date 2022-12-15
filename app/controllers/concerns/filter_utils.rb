@@ -2,7 +2,7 @@ module FilterUtils extend ActiveSupport::Concern
   def filter_leaderboard(bracket, region, where)
     players = Array.new
 
-    bracket_clause = "AND leaderboards.bracket='#{bracket}'"
+    bracket_clause = "AND leaderboards.bracket LIKE '#{bracket}%'"
     region_clause = "AND leaderboards.region='#{region}'"
 
     rows = ActiveRecord::Base.connection.execute("SELECT players.id AS id, players.profile_id, ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, classes.name AS class, specs.name AS spec, specs.icon AS spec_icon, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, players.guild FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN classes on players.class_id=classes.id LEFT JOIN specs ON players.spec_id=specs.id LEFT JOIN realms ON players.realm_id=realms.id #{where} #{bracket_clause} #{region_clause} ORDER BY ranking ASC")
