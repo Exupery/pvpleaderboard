@@ -1,4 +1,4 @@
 <% update_time = last_players_update %>
 <% if update_time %>
-<div>Last updated <span id="last-update-time" data-unix-time=<%= update_time.strftime("%Q") %>><%= update_time.strftime("%d %b %Y %H:%M:%S") %> UTC</span></div>
+<h3>Last updated <span id="last-update-time" data-unix-time=<%= update_time.strftime("%Q") %>><%= update_time.strftime("%d %b %Y %H:%M:%S") %> UTC</span></h3>
 <% end %>
