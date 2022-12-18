@@ -110,7 +110,7 @@ module FilterUtils extend ActiveSupport::Concern
     return Set.new unless (@selected[:"arena-achievements"] || @selected[:"rbg-achievements"])
 
     arena_narrowed = Set.new
-    if @selected[:"arena-achievements"]
+    if @selected[:"arena-achievements"] && @selected[:"arena-achievements"].size > 0
       arena_achievements = arena_achievement_ids @selected[:"arena-achievements"]
       rows = ActiveRecord::Base.connection.execute("SELECT player_id FROM players_achievements WHERE player_id IN (#{id_array.join(",")}) AND achievement_id IN (#{arena_achievements.join(",")})")
       rows.each do |row|
@@ -121,7 +121,7 @@ module FilterUtils extend ActiveSupport::Concern
     end
 
     rbg_narrowed = Set.new
-    if @selected[:"rbg-achievements"]
+    if @selected[:"rbg-achievements"] && @selected[:"rbg-achievements"].size > 0
       rbg_achievements = rbg_achievement_id_pairs
       if rbg_achievements.length == 2
         rows = ActiveRecord::Base.connection.execute("SELECT player_id FROM players_achievements WHERE player_id IN (#{id_array.join(",")}) AND (achievement_id IN (#{rbg_achievements[0].join(",")}) OR achievement_id IN (#{rbg_achievements[1].join(",")}))")
@@ -132,6 +132,8 @@ module FilterUtils extend ActiveSupport::Concern
 
       return @selected[:"arena-achievements"] ? (arena_narrowed & rbg_narrowed) : rbg_narrowed
     end
+
+    return Set.new
   end
 
   def rbg_achievement_id_pairs
