@@ -94,7 +94,7 @@ class ClassesController < ApplicationController
       h[row["talent"]] = row["count"].to_i
     end
 
-    write_to_cache_if_no_stale("players_talents", h, cache_key)
+    write_to_cache_maybe_stale("players_talents", h, cache_key)
     return h
   end
 
@@ -109,17 +109,14 @@ class ClassesController < ApplicationController
       h[row["pvp_talent"]] = row["count"].to_i
     end
 
-    write_to_cache_if_no_stale("players_pvp_talents", h, cache_key)
+    write_to_cache_maybe_stale("players_pvp_talents", h, cache_key)
     return h
   end
 
-  def write_to_cache_if_no_stale(tbl, hash, cache_key)
+  def write_to_cache_maybe_stale(tbl, hash, cache_key)
     stale_count = get_stale_count tbl
-    if stale_count == 0
-      Rails.cache.write(cache_key, hash)
-    else
-      logger.warn("Not caching counts for #{cache_key} due to stale rows still present")
-    end
+    ttl = (stale_count == 0) ? 1.hour : 10.minutes
+    Rails.cache.write(cache_key, hash, :expires_in => ttl)
   end
 
   def get_stale_count tbl
