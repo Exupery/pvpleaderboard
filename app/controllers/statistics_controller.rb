@@ -110,7 +110,7 @@ class StatisticsController < BracketRegionController
 
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT specs.name AS spec, specs.icon, classes.name AS class, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN specs ON players.spec_id=specs.id JOIN classes ON specs.class_id=classes.id WHERE leaderboards.bracket LIKE '#{bracket}%' #{@region_clause} AND leaderboards.rating > #{@min_rating} GROUP BY spec, specs.icon, class ORDER BY spec ASC")
+    rows = ActiveRecord::Base.connection.execute("SELECT specs.name AS spec, specs.icon, classes.name AS class, COUNT(DISTINCT(leaderboards.player_id)) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN specs ON players.spec_id=specs.id JOIN classes ON specs.class_id=classes.id WHERE leaderboards.bracket LIKE '#{bracket}%' #{@region_clause} AND leaderboards.rating > #{@min_rating} GROUP BY spec, specs.icon, class ORDER BY spec ASC")
     rows.each do |row|
       h[row["class"] + row["spec"]] = SpecInfo.new(row["spec"], row["count"].to_i, row["icon"], row["class"])
     end
