@@ -1,6 +1,6 @@
 <p></p>
 <div class="btn-group btn-group-lg margin-0-5em" role="group" aria-label="Brackets">
-  <% ["Top 5000", "2400+ CR", "2700+ CR", "3000+ CR"].each do |rating| %>
+  <% ["Top 5000", "2200+ CR", "2400+ CR", "2700+ CR", "3000+ CR"].each do |rating| %>
     <% is_all = rating == "Top 5000" %>
     <% r = is_all ? nil : rating[0..3] %>
     <% tooltip = is_all ? 'Top 5000 players of each selected bracket/region' : 'Players on the selected bracket(s)/region(s) with a current rating higher than ' + r %>

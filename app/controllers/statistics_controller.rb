@@ -47,7 +47,7 @@ class StatisticsController < BracketRegionController
   def get_min_rating rating_param
     return 0 if rating_param.nil?
     num = rating_param.to_i
-    return num < 2400 ? 0 : num
+    return num < 2200 ? 0 : num
   end
 
   def find_counts bracket
