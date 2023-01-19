@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "3.1.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '7.0.4'
+gem 'rails', '7.0.4.1'
 
 gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
@@ -28,6 +28,7 @@ gem 'httparty'
 gem 'rack', '~> 2.2', '>= 2.2.3'
 gem 'sassc-rails'
 gem 'yajl-ruby', require: 'yajl'
+gem 'nokogiri', '1.13.10'
 
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
