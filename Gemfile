@@ -25,7 +25,7 @@ gem 'puma'
 gem 'dalli'
 gem 'minitest'
 gem 'httparty'
-gem 'rack', '~> 2.2', '>= 2.2.3'
+gem 'rack', '~> 2.2'
 gem 'sassc-rails'
 gem 'yajl-ruby', require: 'yajl'
 
