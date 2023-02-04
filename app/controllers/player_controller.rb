@@ -9,10 +9,13 @@ class PlayerController < BracketRegionController
   protect_from_forgery with: :exception
 
   @@URI = "https://%s.api.blizzard.com/profile/wow/character/%s/%s%s?locale=en_US&access_token=%s&namespace=profile-%s"
+  @@SEASON_URI = "https://us.api.blizzard.com/data/wow/pvp-season/index?namespace=dynamic-us&locale=en_US&access_token=%s"
   @@OAUTH_URI = "https://us.battle.net/oauth/token"
   @@OAUTH_ID = ENV["BATTLE_NET_CLIENT_ID"]
   @@OAUTH_SECRET = ENV["BATTLE_NET_SECRET"]
   @@OAUTH_CACHE_KEY = "oauth_access_token"
+
+  @@CURRENT_SEASON = 0
 
   def show
     expires_in 1.hour, public: true
@@ -62,7 +65,7 @@ class PlayerController < BracketRegionController
         return nil if e.message.start_with?("429")
         cnt += 1
         logger.warn("Attempt #{cnt} failed for #{player_id}: #{e.to_s}")
-        sleep(0.5)
+        sleep(0.75)
       end
     end
 
@@ -198,7 +201,7 @@ class PlayerController < BracketRegionController
       json = bracket_ratings[bracket]
 
       h = Hash.new
-      if !json["rating"].nil?
+      if has_current_season_rating(json)
         h["current_rating"] = json["rating"]
         key = bracket.start_with?("shuffle") ? "round" : "match"
         h["wins"] = json["season_#{key}_statistics"]["won"]
@@ -213,6 +216,28 @@ class PlayerController < BracketRegionController
 
       hash["ratings"][bracket] = h
     end
+  end
+
+  def has_current_season_rating json
+    return false if json.nil?
+    return false if json["rating"].nil?
+    return false if json["season"].nil?
+    season = json["season"]["id"]
+    return season == get_current_season
+  end
+
+  def get_current_season
+    return @@CURRENT_SEASON if @@CURRENT_SEASON > 0
+    oauth_token = create_token
+    return 0 if oauth_token.nil?
+    uri = @@SEASON_URI % [oauth_token]
+    res = HTTParty.get(uri, timeout: 5)
+    return 0 if res.code != 200
+    json = JSON.parse(res.body)
+
+    @@CURRENT_SEASON = json["current_season"]["id"]
+
+    return @@CURRENT_SEASON
   end
 
   def get_bracket_ratings chash
