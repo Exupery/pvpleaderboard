@@ -19,8 +19,8 @@ class UtilsConcernTest < ActionDispatch::IntegrationTest
   end
 
   def test_get_leaderboard_player_count
-    assert_not_equal(0, total_player_count(10, 270))
-    assert_equal(0, total_player_count(-999, -999))
+    assert_not_equal(0, total_player_count(10, 270, 11))
+    assert_equal(0, total_player_count(-999, -999, 11))
   end
 
   def test_get_last_updated_time

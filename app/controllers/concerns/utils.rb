@@ -90,15 +90,15 @@ module Utils extend ActiveSupport::Concern
     return set.to_a.join(",")
   end
 
-	def total_player_count(class_id, spec_id)
+	def total_player_count(class_id, spec_id, pivot)
     cache_key = "total_player_count_#{class_id}_#{spec_id}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
 		total = 0
 
-		rows = ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS total FROM leaderboards JOIN players ON leaderboards.player_id=players.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id}")
+		rows = ActiveRecord::Base.connection.execute("SELECT talents.id, COUNT(*) AS cnt FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} AND (talents.spec_id=0 OR talents.spec_id=#{spec_id}) AND display_col < #{pivot} GROUP BY talents.id ORDER BY cnt DESC LIMIT 1")
 		rows.each do |row|
-      total = row["total"].to_i
+      total = row["cnt"].to_i
     end
 
     Rails.cache.write(cache_key, total)

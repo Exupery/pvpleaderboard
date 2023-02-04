@@ -105,7 +105,7 @@ class FilterController < ApplicationController
     where = (@selected[:class] && @selected[:spec]) ? create_where_clause : ""
     return ids if where.empty?
 
-    rows = ActiveRecord::Base.connection.execute("SELECT DISTINCT(leaderboards.player_id) FROM leaderboards JOIN players ON players.id=leaderboards.player_id WHERE #{where} #{bracket_clause} #{region_clause}")
+    rows = ActiveRecord::Base.connection.execute("SELECT DISTINCT(leaderboards.player_id) FROM players_talents JOIN leaderboards ON players_talents.player_id=leaderboards.player_id JOIN players ON players.id=leaderboards.player_id WHERE #{where} #{bracket_clause} #{region_clause}")
     rows.each do |row|
       ids.push(row["player_id"])
     end

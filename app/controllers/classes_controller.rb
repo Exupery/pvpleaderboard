@@ -50,7 +50,7 @@ class ClassesController < ApplicationController
     @players_title = "The #{@@NUM_TOP_PLAYERS_PER_BRACKET} highest rated players from each bracket in each region"
     @top_players = get_top_players
 
-    @total = total_player_count(@class_id, @spec_id)
+    @total = total_player_count(@class_id, @spec_id, @@PIVOT_COL)
   end
 
   private

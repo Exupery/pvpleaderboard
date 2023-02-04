@@ -1,4 +1,4 @@
-<% 100.times do |p| %>
+<% 256.times do |p| %>
   <% 480.times do |n| %>
   playertalent<%= "#{p}-#{n}" %>:
     player_id: <%= p %>
