@@ -59,6 +59,7 @@ class PlayerController < BracketRegionController
         @achievements_thread = get_achievements
         return get_player_details
       rescue Exception => e
+        return nil if e.message.start_with?("429")
         cnt += 1
         logger.warn("Attempt #{cnt} failed for #{player_id}: #{e.to_s}")
         sleep(0.5)
@@ -371,6 +372,9 @@ class PlayerController < BracketRegionController
       # On 401 clear oauth token cache to force a new one and try again
       Rails.cache.delete(@@OAUTH_CACHE_KEY)
       res = HTTParty.get(create_uri path)
+    elsif res.code == 429
+      logger.warn("Could not GET #{path} - 429 Too Many Requests")
+      raise StandardError.new "429 Too Many Requests"
     end
     return Hash.new if (res.body.nil? || res&.code != 200)
     return JSON.parse(res.body)
