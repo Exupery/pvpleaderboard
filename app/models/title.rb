@@ -3,19 +3,19 @@ class Title
   attr_reader :name, :season, :description
   attr_accessor :date
 
-  @@ARENA_TITLES = ["Combatant", "Combatant I", "Combatant II", "Challenger", "Challenger I", "Challenger II", "Rival", "Rival I", "Rival II", "Duelist", "Elite", "Gladiator"]
+  @@ARENA_TITLES = ["Combatant", "Combatant I", "Combatant II", "Challenger", "Challenger I", "Challenger II", "Rival", "Rival I", "Rival II", "Duelist", "Elite", "Legend", "Gladiator"]
   @@ARENA_TITLES_SET = @@ARENA_TITLES.to_set
   @@ALLIANCE_RBG_TITLES = {
     "Soldier of the Alliance" => "Challenger",
     "Defender of the Alliance" => "Rival",
     "Guardian of the Alliance" => "Duelist",
-    "Hero of the Alliance" => "Gladiator"
+    "Hero of the Alliance" => "Legend"
   }
   @@HORDE_RBG_TITLES = {
     "Soldier of the Horde" => "Challenger",
     "Defender of the Horde" => "Rival",
     "Guardian of the Horde" => "Duelist",
-    "Hero of the Horde" => "Gladiator"
+    "Hero of the Horde" => "Legend"
   }
 
   def initialize(achievement_name, achievement_description, date)
