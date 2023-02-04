@@ -55,7 +55,12 @@ class Player
   # season if more than one earned in a season
   def trim_titles titles
     h = Hash.new
+    prev_time = 0
     titles.each do |title|
+      # Some DFS1 Glad titles are missing timestamps
+      title.date = prev_time + 1 if title.date.nil?
+      prev_time = title.date
+
       if h.include? title.season
         h[title.season] = title if title > h[title.season]
       else

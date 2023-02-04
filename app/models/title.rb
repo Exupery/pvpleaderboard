@@ -1,6 +1,7 @@
 class Title
   include Comparable
-  attr_reader :name, :season, :date, :description
+  attr_reader :name, :season, :description
+  attr_accessor :date
 
   @@ARENA_TITLES = ["Combatant", "Combatant I", "Combatant II", "Challenger", "Challenger I", "Challenger II", "Rival", "Rival I", "Rival II", "Duelist", "Elite", "Gladiator"]
   @@ARENA_TITLES_SET = @@ARENA_TITLES.to_set
