@@ -1,7 +1,19 @@
 <div class="inverse neg-top-margin">
   <h2>Talent Import String</h2>
   <h4 class="loadout"><%= @player.loadout %></h4>
+  <button id="copy-button" class="btn btn-default margin-bottom-0-5em wowhead-button" type="button" onclick="copyText()">
+    <span>Copy to Clipboard</span>
+  </button>
   <a href="https://www.wowhead.com/talent-calc/blizzard/<%= @player.loadout %>" target="_blank">
-    <button class="btn btn-default margin-bottom-0-5em wowhead-button" type="button">View Talents on Wowhead</button>
+    <button class="btn btn-default margin-bottom-0-5em wowhead-button" type="button">View on Wowhead</button>
   </a>
 </div>
+<script>
+  function copyText() {
+      navigator.clipboard.writeText("<%= @player.loadout %>");
+      let btn = document.querySelector("#copy-button");
+      let width = btn.offsetWidth;
+      btn.innerText = "Copied!";
+      btn.style.width = width + "px";
+  }
+</script>
