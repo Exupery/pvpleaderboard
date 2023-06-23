@@ -10,6 +10,7 @@ class TitleTest < ActiveSupport::TestCase
     @elite = create_title "Elite"
     @gladiator = create_title "Gladiator"
     @rank_one = create_title "Foo Gladiator"
+    @solo_rank_one = create_title "Foo Legend"
   end
 
   def test_sort_by_title_name
@@ -26,8 +27,13 @@ class TitleTest < ActiveSupport::TestCase
 
     # Check rank one handling
     assert @rank_one == @rank_one
+    assert @solo_rank_one == @solo_rank_one
     assert @rank_one > @challenger
     assert @challenger < @rank_one
+    assert @gladiator < @solo_rank_one
+    assert @solo_rank_one > @gladiator
+    assert @solo_rank_one < @rank_one
+    assert @rank_one > @solo_rank_one
   end
 
   private

@@ -32,9 +32,12 @@ class Title
     this_rank = @@ARENA_TITLES.index this_name
     other_rank = @@ARENA_TITLES.index other_name
 
-    return 0 if this_rank.nil? and other_rank.nil?
-    return 1 if this_rank.nil? and @name.end_with? "Gladiator"
-    return -1 if other_rank.nil? and other.name.end_with? "Gladiator"
+    if this_rank.nil? and other_rank.nil?
+      return 1 if @name.end_with? "Gladiator"
+      return -1 if other.name.end_with? "Gladiator"
+    end
+    return 1 if this_rank.nil? and (@name.end_with? "Gladiator" or @name.end_with? "Legend")
+    return -1 if other_rank.nil? and (other.name.end_with? "Gladiator" or other.name.end_with? "Legend")
 
     # prioritize arena titles over RBG titles of same rank
     if this_rank == other_rank
