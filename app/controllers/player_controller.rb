@@ -162,7 +162,10 @@ class PlayerController < BracketRegionController
     json = get "/character-media"
     return nil if json["assets"].nil?
     json["assets"].each do |asset|
-      return asset["value"] if asset["key"] == "main"
+      if asset["key"] == "main-raw"
+        raw = asset["value"]
+        return raw.sub("main-raw.png", "main.jpg")
+      end
     end
     return nil
   end
