@@ -23,16 +23,16 @@ module Utils extend ActiveSupport::Concern
     return @@stat_cols
   end
 
- 	def parse_stats_row row
-		h = Hash.new
- 		@@stats.each do |stat|
-  		h[stat] = Hash.new
-  		h[stat][:min] = row["min_#{stat}"].to_i
+  def parse_stats_row row
+    h = Hash.new
+    @@stats.each do |stat|
+      h[stat] = Hash.new
+      h[stat][:min] = [row["min_#{stat}"].to_i, 0].max
       h[stat][:med] = row["med_#{stat}"].to_i
-  		h[stat][:max] = row["max_#{stat}"].to_i
+      h[stat][:max] = row["max_#{stat}"].to_i
     end
 
- 		return h
+    return h
   end
 
   # Any given spec uses only one of Intellect, Agility, or Strength
