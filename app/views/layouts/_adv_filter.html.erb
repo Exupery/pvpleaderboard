@@ -1,7 +1,7 @@
 <% if not class_filter %>
 <div class="filter-row">
   <label for="char-name" class="btn-group-label" title="Character name">Name <span class="text-muted">(full or partial)</span></label>
-  <input type="search" class="form-control btn-group btn-group-lg btn-group-filter search-input" id="char-name" size="20" value="<%= @selected[:name] unless @selected[:name].nil? %>">
+  <input type="search" spellcheck="false" class="form-control btn-group btn-group-lg btn-group-filter search-input" id="char-name" size="20" value="<%= @selected[:name] unless @selected[:name].nil? %>">
 </div>
 <% end %>
 

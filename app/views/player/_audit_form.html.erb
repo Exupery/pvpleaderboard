@@ -13,12 +13,12 @@
   <div class="audit-group">
     <label for="realm" class="left-text" title="Realm">Realm</label>
     <% region = @region.nil? ? "" : @region %>
-    <input type="search" list="<%= region %>-realms" autocomplete=off class="form-control btn-group btn-group-lg btn-group-filter" id="realm" size="20" value="<%= @realm.nil? ? '' : @realm.name %>">
+    <input type="search" list="<%= region %>-realms" autocomplete="off" spellcheck="false" class="form-control btn-group btn-group-lg btn-group-filter" id="realm" size="20" value="<%= @realm.nil? ? '' : @realm.name %>">
   </div>
 
   <div class="audit-group">
     <label for="character" class="left-text" title="Character">Character</label>
-    <input type="search" class="form-control btn-group btn-group-lg btn-group-filter" id="character" size="20" value="<%= @player_name.nil? ? '' : @player_name %>">
+    <input type="search" spellcheck="false" class="form-control btn-group btn-group-lg btn-group-filter" id="character" size="20" value="<%= @player_name.nil? ? '' : @player_name %>">
   </div>
 
   <div class="audit-group">
