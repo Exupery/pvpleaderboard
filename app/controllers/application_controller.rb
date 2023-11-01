@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :set_format
+  before_action :set_format, :check_params
 
   @@BRACKETS = Brackets.list
   @@BRACKETS_WITH_SOLO = Brackets.with_solo
@@ -8,6 +8,22 @@ class ApplicationController < ActionController::Base
 
   def set_format
     request.format = "html"
+  end
+
+  # Getting a large number of SQL injection attack attemps, param
+  # sanitization is preventing any of them succeeding but it does
+  # cause a large number of 5xxs and eats up resources due to the
+  # volume - so just adding this as a simple check early on to
+  # fail early with a 403 before spending cycles to fully process
+  # the request.
+  def check_params
+    params.each do | key, param |
+      next if param.nil?
+      param_lc = param.downcase
+      if param_lc.include?("select") && param_lc.include?("from")
+        head :forbidden
+      end
+    end
   end
 
   def index
