@@ -64,6 +64,11 @@ class ApplicationController < ActionController::Base
     return region.nil? ? "" : "#{region} "
   end
 
+  def get_rows sql
+    sanitized = ActiveRecord::Base::sanitize_sql(sql)
+    return ActiveRecord::Base.connection.execute(sanitized)
+  end
+
   private
 
   def get_region regions

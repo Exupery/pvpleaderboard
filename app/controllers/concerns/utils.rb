@@ -96,7 +96,8 @@ module Utils extend ActiveSupport::Concern
 
 		total = 0
 
-		rows = ActiveRecord::Base.connection.execute("SELECT talents.id, COUNT(*) AS cnt FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} AND (talents.spec_id=0 OR talents.spec_id=#{spec_id}) AND display_col < #{pivot} GROUP BY talents.id ORDER BY cnt DESC LIMIT 1")
+		sql = ActiveRecord::Base::sanitize_sql("SELECT talents.id, COUNT(*) AS cnt FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} AND (talents.spec_id=0 OR talents.spec_id=#{spec_id}) AND display_col < #{pivot} GROUP BY talents.id ORDER BY cnt DESC LIMIT 1")
+    rows = ActiveRecord::Base.connection.execute(sql)
 		rows.each do |row|
       total = row["cnt"].to_i
     end
@@ -121,7 +122,8 @@ module Utils extend ActiveSupport::Concern
   def get_most_equipped_gear(class_id, spec_id, ids)
     h = Hash.new
     gear = Hash.new
-    rows = ActiveRecord::Base.connection.execute(gear_sql(class_id, spec_id, ids))
+    sql = ActiveRecord::Base::sanitize_sql(gear_sql(class_id, spec_id, ids))
+    rows = ActiveRecord::Base.connection.execute(sql)
     rows.each do |row|
       get_slots.each do |slot|
         h[slot] = row[slot].to_i
@@ -160,7 +162,8 @@ module Utils extend ActiveSupport::Concern
 
   def get_gear_names ids
     h = Hash.new
-    rows = ActiveRecord::Base.connection.execute("SELECT id, name FROM items WHERE id IN (#{whereify(ids)})")
+    sql = ActiveRecord::Base::sanitize_sql("SELECT id, name FROM items WHERE id IN (#{whereify(ids)})")
+    rows = ActiveRecord::Base.connection.execute(sql)
     rows.each do |row|
       h[row["id"].to_i] = row["name"]
     end

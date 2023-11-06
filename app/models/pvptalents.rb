@@ -1,6 +1,7 @@
 class Pvptalents
 	def self.get_talents(spec_id)
 		h = Hash.new()
+    return h unless spec_id.is_a? Numeric
 
 		rows = ActiveRecord::Base.connection.execute("SELECT id, spell_id, spec_id, name, icon FROM pvp_talents WHERE spec_id=#{spec_id}")
     rows.each do |row|

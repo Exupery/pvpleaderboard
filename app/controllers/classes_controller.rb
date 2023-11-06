@@ -60,7 +60,7 @@ class ClassesController < ApplicationController
 
     Regions.list.each do |region|
       Brackets.list.each do |bracket|
-        rows = ActiveRecord::Base.connection.execute("SELECT ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, leaderboards.bracket AS bracket FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN realms ON players.realm_id=realms.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND realms.region='#{region}' AND bracket='#{bracket}' ORDER BY ranking ASC LIMIT #{@@NUM_TOP_PLAYERS_PER_BRACKET}")
+        rows = get_rows("SELECT ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, leaderboards.bracket AS bracket FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN realms ON players.realm_id=realms.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND realms.region='#{region}' AND bracket='#{bracket}' ORDER BY ranking ASC LIMIT #{@@NUM_TOP_PLAYERS_PER_BRACKET}")
 
         rows.each do |row|
           players << Player.new(row)
@@ -89,7 +89,7 @@ class ClassesController < ApplicationController
 
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT talents.id AS talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE #{where} GROUP BY talent")
+    rows = get_rows("SELECT talents.id AS talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE #{where} GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
     end
@@ -104,7 +104,7 @@ class ClassesController < ApplicationController
 
     h = Hash.new
 
-    rows = ActiveRecord::Base.connection.execute("SELECT pvp_talents.id AS pvp_talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_pvp_talents ON players.id=players_pvp_talents.player_id JOIN pvp_talents ON players_pvp_talents.pvp_talent_id=pvp_talents.id WHERE pvp_talents.spec_id=#{@spec_id} GROUP BY pvp_talent ORDER BY count DESC")
+    rows = get_rows("SELECT pvp_talents.id AS pvp_talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_pvp_talents ON players.id=players_pvp_talents.player_id JOIN pvp_talents ON players_pvp_talents.pvp_talent_id=pvp_talents.id WHERE pvp_talents.spec_id=#{@spec_id} GROUP BY pvp_talent ORDER BY count DESC")
     rows.each do |row|
       h[row["pvp_talent"]] = row["count"].to_i
     end
@@ -120,7 +120,7 @@ class ClassesController < ApplicationController
   end
 
   def get_stale_count tbl
-    rows = ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS count FROM #{tbl} WHERE stale=TRUE")
+    rows = get_rows("SELECT COUNT(*) AS count FROM #{tbl} WHERE stale=TRUE")
     rows.each do |row|
       return row["count"].to_i
     end
@@ -132,7 +132,7 @@ class ClassesController < ApplicationController
     h = Hash.new
     cols = get_stat_cols
     return h if cols.empty?
-      rows = ActiveRecord::Base.connection.execute("SELECT #{cols} FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_stats ON players.id=players_stats.player_id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id}")
+    rows = get_rows("SELECT #{cols} FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_stats ON players.id=players_stats.player_id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id}")
     rows.each do |row|
       h.merge!(parse_stats_row row)
     end

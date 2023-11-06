@@ -147,8 +147,8 @@ class PlayerController < BracketRegionController
     cache_key = "spec_icon_#{spec_id}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
     icon = nil
-    row = ActiveRecord::Base.connection.execute("SELECT icon FROM specs WHERE id=#{spec_id} LIMIT 1")
-    row.each do |row| icon = row["icon"] end
+    rows = get_rows("SELECT icon FROM specs WHERE id=#{spec_id} LIMIT 1")
+    rows.each do |row| icon = row["icon"] end
     Rails.cache.write(cache_key, icon, :expires_in => 30.days) unless icon.nil?
     return icon
   end

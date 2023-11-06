@@ -21,7 +21,8 @@ class Achievement
     achievements = Hash.new
     sql = "SELECT id, name, description, icon FROM achievements"
     (sql += " WHERE id IN (#{ids.join(',')})") unless ids.empty?
-    rows = ActiveRecord::Base.connection.execute(sql)
+    sanitized = ActiveRecord::Base::sanitize_sql(sql)
+    rows = ActiveRecord::Base.connection.execute(sanitized)
     rows.each do |row|
       next unless (row["name"].downcase.include?("season") || ids.include?(row["id"]))
       achievements[row["id"]] =

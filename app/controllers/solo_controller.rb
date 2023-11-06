@@ -59,7 +59,7 @@ class SoloController < ApplicationController
     players = Array.new
     limit = max_results.nil? ? "" : "LIMIT #{max_results}"
 
-    rows = ActiveRecord::Base.connection.execute("SELECT ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, classes.name AS class, specs.name AS spec, specs.icon AS spec_icon, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, players.guild FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN classes on players.class_id=classes.id LEFT JOIN specs ON players.spec_id=specs.id LEFT JOIN realms ON players.realm_id=realms.id WHERE ranking > #{min_rank} AND leaderboards.bracket='#{@bracket}' AND leaderboards.region='#{@region}' ORDER BY ranking ASC #{limit}")
+    rows = get_rows("SELECT ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, classes.name AS class, specs.name AS spec, specs.icon AS spec_icon, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, players.guild FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN classes on players.class_id=classes.id LEFT JOIN specs ON players.spec_id=specs.id LEFT JOIN realms ON players.realm_id=realms.id WHERE ranking > #{min_rank} AND leaderboards.bracket='#{@bracket}' AND leaderboards.region='#{@region}' ORDER BY ranking ASC #{limit}")
 
     rows.each do |row|
       players << Player.new(row)
@@ -74,7 +74,7 @@ class SoloController < ApplicationController
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
     last = 0
 
-    rows = ActiveRecord::Base.connection.execute("SELECT MAX(ranking) AS ranking FROM leaderboards WHERE bracket='#{@bracket}' AND leaderboards.region='#{@region}'")
+    rows = get_rows("SELECT MAX(ranking) AS ranking FROM leaderboards WHERE bracket='#{@bracket}' AND leaderboards.region='#{@region}'")
 
     rows.each do |row|
       last = row["ranking"].to_i
@@ -89,7 +89,7 @@ class SoloController < ApplicationController
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
     count = 0
 
-    rows = ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS count FROM leaderboards WHERE bracket='#{@bracket}' AND leaderboards.region='#{@region}'")
+    rows = get_rows("SELECT COUNT(*) AS count FROM leaderboards WHERE bracket='#{@bracket}' AND leaderboards.region='#{@region}'")
 
     rows.each do |row|
       count = row["count"].to_i
