@@ -28,7 +28,7 @@ gem 'httparty'
 gem 'rack', '~> 2.2', '>= 2.2.3'
 gem 'sassc-rails'
 gem 'yajl-ruby', require: 'yajl'
-gem 'nokogiri', '1.13.10'
+gem 'nokogiri'
 
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
