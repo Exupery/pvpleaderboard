@@ -5,6 +5,7 @@ class TitleTest < ActiveSupport::TestCase
     super arg
     @combatant = create_title "Combatant"
     @challenger = create_title "Challenger"
+    @battle_mender = create_title "Battle Mender"
     @rival = create_title "Rival"
     @duelist = create_title "Duelist"
     @elite = create_title "Elite"
@@ -16,6 +17,7 @@ class TitleTest < ActiveSupport::TestCase
   def test_sort_by_title_name
     # Check hierarchy
     assert @combatant < @challenger
+    assert @challenger < @battle_mender
     assert @challenger < @rival
     assert @rival < @duelist
     assert @duelist < @elite

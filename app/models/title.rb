@@ -3,7 +3,7 @@ class Title
   attr_reader :name, :season, :description
   attr_accessor :date
 
-  @@ARENA_TITLES = ["Combatant", "Combatant I", "Combatant II", "Challenger", "Challenger I", "Challenger II", "Rival", "Rival I", "Rival II", "Duelist", "Elite", "Legend", "Gladiator"]
+  @@ARENA_TITLES = ["Combatant", "Combatant I", "Combatant II", "Challenger", "Challenger I", "Challenger II", "Battle Mender", "Rival", "Rival I", "Rival II", "Duelist", "Elite", "Legend", "Gladiator"]
   @@ARENA_TITLES_SET = @@ARENA_TITLES.to_set
   @@ALLIANCE_RBG_TITLES = {
     "Soldier of the Alliance" => "Challenger",
@@ -54,5 +54,9 @@ class Title
     return @@HORDE_RBG_TITLES[name] if @@HORDE_RBG_TITLES.has_key? name
 
     return @@ALLIANCE_RBG_TITLES[name] if @@ALLIANCE_RBG_TITLES.has_key? name
+  end
+
+  def to_s
+    return "#{@name} #{@season} #{@date}"
   end
 end
