@@ -5,8 +5,6 @@ ruby "3.1.4"
 gem 'rails', '7.1.2'
 
 gem 'pg'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -29,6 +27,7 @@ gem 'rack', '~> 2.2', '>= 2.2.3'
 gem 'sassc-rails'
 gem 'yajl-ruby', require: 'yajl'
 gem 'nokogiri'
+gem 'terser'
 
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
