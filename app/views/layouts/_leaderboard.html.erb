@@ -1,8 +1,9 @@
 <div id="sorting" class="hidden"><h1>Sorting...</h1></div>
-<table id="leaderboard-table" class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="[[0,0]]" data-bracket="<%= @bracket %>" data-region="<%= @region %>" data-last="<%= @last %>">
+<% sort = (@bracket == "solo") ? "[[1,1]]" : "[[0,0]]" %>
+<table id="leaderboard-table" class="table table-bordered table-condensed table-responsive table-hover table-sorted center" data-sortlist="<%= sort %>" data-bracket="<%= @bracket %>" data-region="<%= @region %>" data-last="<%= @last %>">
   <thead>
     <tr>
-      <th>Rank</th>
+      <th><%= (@bracket == "solo") ? "Spec Leaderboard Rank" : "Rank" %></th>
       <th>Rating</th>
       <th>Name</th>
       <th class="show-when-wide">Realm</th>
