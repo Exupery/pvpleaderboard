@@ -37,8 +37,8 @@ class FilterController < ApplicationController
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_player_ids player_ids
 
-    @players_title = "The #{@@NUM_TOP_PLAYERS} highest rated players matching the filter"
     @top_players = get_top_players
+    @players_title = "The #{@top_players.length} highest rated players matching the filter"
   end
 
   private
@@ -49,10 +49,19 @@ class FilterController < ApplicationController
     rows = get_rows("SELECT ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, leaderboards.bracket AS bracket FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN realms ON players.realm_id=realms.id WHERE players.id IN (#{@whereified_ids}) #{bracket_clause} ORDER BY ranking ASC LIMIT #{@@NUM_TOP_PLAYERS}")
 
     rows.each do |row|
+      next unless matchSpec(row["bracket"])
       players << Player.new(row)
     end
 
     return players
+  end
+
+  def matchSpec bracket
+      return true if @spec_id.nil?
+
+      return true unless bracket.start_with?("solo")
+
+      return bracket == "solo_#{@spec_id}"
   end
 
   def get_class_talent_counts
