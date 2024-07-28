@@ -20,14 +20,11 @@ SET row_security = off;
 --
 --
 
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
---
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+CREATE TYPE public.talent_cat AS ENUM (
+    'CLASS',
+    'SPEC',
+    'HERO'
+);
 
 
 --
@@ -38,21 +35,16 @@ CREATE FUNCTION public.purge_old_players() RETURNS void
     LANGUAGE plpgsql
     AS $$
 BEGIN
-  DELETE FROM players_achievements WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
-  DELETE FROM players_pvp_talents WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
-  DELETE FROM players_talents WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
-  DELETE FROM players_stats WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
-  DELETE FROM players_items WHERE player_id NOT IN (SELECT player_id FROM leaderboards);
+  DELETE FROM players_pvp_talents WHERE stale=TRUE;
+  DELETE FROM players_talents WHERE stale=TRUE;
   DELETE FROM players WHERE DATE_PART('day', NOW() - players.last_update) > 30 AND id NOT IN (SELECT player_id FROM leaderboards);
   DELETE FROM items WHERE DATE_PART('day', NOW() - items.last_update) > 30;
 END; $$;
 
 
-
-
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 --
@@ -64,8 +56,6 @@ CREATE TABLE public.achievements (
     description character varying(1024),
     icon character varying(128)
 );
-
-
 
 
 --
@@ -80,8 +70,6 @@ CREATE TABLE public.ar_internal_metadata (
 );
 
 
-
-
 --
 --
 --
@@ -92,8 +80,6 @@ CREATE TABLE public.classes (
 );
 
 
-
-
 --
 --
 --
@@ -102,8 +88,6 @@ CREATE TABLE public.factions (
     id integer NOT NULL,
     name character varying(32) NOT NULL
 );
-
-
 
 
 --
@@ -118,15 +102,13 @@ CREATE TABLE public.items (
 );
 
 
-
-
 --
 --
 --
 
 CREATE TABLE public.leaderboards (
     region character(2) NOT NULL,
-    bracket character(16) NOT NULL,
+    bracket character varying(16) NOT NULL,
     player_id integer NOT NULL,
     ranking smallint NOT NULL,
     rating smallint NOT NULL,
@@ -134,8 +116,6 @@ CREATE TABLE public.leaderboards (
     season_losses smallint,
     last_update timestamp without time zone DEFAULT now()
 );
-
-
 
 
 --
@@ -149,8 +129,6 @@ CREATE TABLE public.metadata (
 );
 
 
-
-
 --
 --
 --
@@ -159,7 +137,7 @@ CREATE TABLE public.players (
     id integer NOT NULL,
     name character varying(32) NOT NULL,
     realm_id integer NOT NULL,
-    blizzard_id integer NOT NULL,
+    blizzard_id bigint NOT NULL,
     class_id integer,
     spec_id integer,
     faction_id integer,
@@ -167,11 +145,9 @@ CREATE TABLE public.players (
     gender smallint,
     guild character varying(64),
     last_update timestamp without time zone DEFAULT now() NOT NULL,
-    last_login timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone NOT NULL,
+    last_login timestamp without time zone DEFAULT '2004-11-23 00:00:00'::timestamp without time zone NOT NULL,
     profile_id text
 );
-
-
 
 
 --
@@ -182,8 +158,6 @@ CREATE TABLE public.players_achievements (
     player_id integer NOT NULL,
     achievement_id integer NOT NULL
 );
-
-
 
 
 --
@@ -197,8 +171,6 @@ CREATE SEQUENCE public.players_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 
 
 --
@@ -235,8 +207,6 @@ CREATE TABLE public.players_items (
 );
 
 
-
-
 --
 --
 --
@@ -244,10 +214,8 @@ CREATE TABLE public.players_items (
 CREATE TABLE public.players_pvp_talents (
     player_id integer NOT NULL,
     pvp_talent_id integer NOT NULL,
-    stale boolean NOT NULL DEFAULT false
+    stale boolean DEFAULT true
 );
-
-
 
 
 --
@@ -270,8 +238,6 @@ CREATE TABLE public.players_stats (
 );
 
 
-
-
 --
 --
 --
@@ -279,10 +245,8 @@ CREATE TABLE public.players_stats (
 CREATE TABLE public.players_talents (
     player_id integer NOT NULL,
     talent_id integer NOT NULL,
-    stale boolean NOT NULL DEFAULT false
+    stale boolean DEFAULT true
 );
-
-
 
 
 --
@@ -294,10 +258,9 @@ CREATE TABLE public.pvp_talents (
     spell_id integer NOT NULL,
     spec_id integer NOT NULL,
     name character varying(128) NOT NULL,
-    icon character varying(128)
+    icon character varying(128),
+    stale boolean DEFAULT true
 );
-
-
 
 
 --
@@ -308,8 +271,6 @@ CREATE TABLE public.races (
     id integer NOT NULL,
     name character varying(32) NOT NULL
 );
-
-
 
 
 --
@@ -324,8 +285,6 @@ CREATE TABLE public.realms (
 );
 
 
-
-
 --
 --
 --
@@ -333,8 +292,6 @@ CREATE TABLE public.realms (
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
-
-
 
 
 --
@@ -350,8 +307,6 @@ CREATE TABLE public.specs (
 );
 
 
-
-
 --
 --
 --
@@ -360,15 +315,16 @@ CREATE TABLE public.talents (
     id integer NOT NULL,
     spell_id integer NOT NULL,
     class_id integer NOT NULL,
-    spec_id integer NOT NULL,
+    spec_id integer DEFAULT 0 NOT NULL,
     name character varying(128) NOT NULL,
     icon character varying(128),
     node_id integer,
     display_row integer,
-    display_col integer
+    display_col integer,
+    stale boolean DEFAULT true,
+    cat public.talent_cat,
+    hero_specs integer[] DEFAULT ARRAY[]::integer[] NOT NULL
 );
-
-
 
 
 --
@@ -566,6 +522,27 @@ ALTER TABLE ONLY public.talents
 --
 --
 
+CREATE INDEX items_last_update_idx ON public.items USING btree (last_update);
+
+
+--
+--
+--
+
+CREATE INDEX leaderboards_bracket_idx ON public.leaderboards USING btree (bracket);
+
+
+--
+--
+--
+
+CREATE INDEX leaderboards_player_id_idx ON public.leaderboards USING btree (player_id);
+
+
+--
+--
+--
+
 CREATE INDEX leaderboards_ranking_idx ON public.leaderboards USING btree (ranking);
 
 
@@ -601,6 +578,27 @@ CREATE INDEX players_guild_idx ON public.players USING btree (guild);
 --
 --
 
+CREATE INDEX players_last_update_idx ON public.players USING btree (last_update);
+
+
+--
+--
+--
+
+CREATE INDEX players_pvp_talents_stale_idx ON public.players_pvp_talents USING btree (stale);
+
+
+--
+--
+--
+
+CREATE INDEX players_talents_stale_idx ON public.players_talents USING btree (stale);
+
+
+--
+--
+--
+
 CREATE INDEX pvp_talents_spec_id_idx ON public.pvp_talents USING btree (spec_id);
 
 
@@ -608,7 +606,35 @@ CREATE INDEX pvp_talents_spec_id_idx ON public.pvp_talents USING btree (spec_id)
 --
 --
 
+CREATE INDEX talents_cat_idx ON public.talents USING btree (cat);
+
+
+--
+--
+--
+
 CREATE INDEX talents_class_id_spec_id_idx ON public.talents USING btree (class_id, spec_id);
+
+
+--
+--
+--
+
+CREATE INDEX talents_display_col_idx ON public.talents USING btree (display_col);
+
+
+--
+--
+--
+
+CREATE INDEX talents_hero_specs_idx ON public.talents USING btree (hero_specs);
+
+
+--
+--
+--
+
+CREATE INDEX talents_node_id_idx ON public.talents USING btree (node_id);
 
 
 --
@@ -632,7 +658,7 @@ ALTER TABLE ONLY public.players_achievements
 --
 
 ALTER TABLE ONLY public.players_achievements
-    ADD CONSTRAINT players_achievements_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id);
+    ADD CONSTRAINT players_achievements_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
 
 
 --
@@ -656,7 +682,7 @@ ALTER TABLE ONLY public.players
 --
 
 ALTER TABLE ONLY public.players_items
-    ADD CONSTRAINT players_items_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id);
+    ADD CONSTRAINT players_items_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
 
 
 --
@@ -672,7 +698,7 @@ ALTER TABLE ONLY public.players_pvp_talents
 --
 
 ALTER TABLE ONLY public.players_pvp_talents
-    ADD CONSTRAINT players_pvp_talents_pvp_talent_id_fkey FOREIGN KEY (pvp_talent_id) REFERENCES public.pvp_talents(id);
+    ADD CONSTRAINT players_pvp_talents_pvp_talent_id_fkey FOREIGN KEY (pvp_talent_id) REFERENCES public.pvp_talents(id) ON DELETE CASCADE;
 
 
 --
@@ -704,7 +730,7 @@ ALTER TABLE ONLY public.players
 --
 
 ALTER TABLE ONLY public.players_stats
-    ADD CONSTRAINT players_stats_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id);
+    ADD CONSTRAINT players_stats_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(id) ON DELETE CASCADE;
 
 
 --
@@ -720,7 +746,7 @@ ALTER TABLE ONLY public.players_talents
 --
 
 ALTER TABLE ONLY public.players_talents
-    ADD CONSTRAINT players_talents_talent_id_fkey FOREIGN KEY (talent_id) REFERENCES public.talents(id);
+    ADD CONSTRAINT players_talents_talent_id_fkey FOREIGN KEY (talent_id) REFERENCES public.talents(id) ON DELETE CASCADE;
 
 
 --

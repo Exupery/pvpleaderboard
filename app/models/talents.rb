@@ -1,11 +1,10 @@
 class Talents
-  @@PIVOT_COL = ENV.fetch("TALENT_PIVOT_COL").to_i
 
   def self.get_class_talents(class_id, spec_id)
     cache_key = "class_talents_#{class_id}_#{spec_id}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
     or_clause = spec_id.nil? ? "" : "OR spec_id=#{spec_id}"
-		talents = get_talents "class_id=#{class_id} AND (spec_id=0 #{or_clause}) AND display_col < #{@@PIVOT_COL}"
+		talents = get_talents "class_id=#{class_id} AND cat='CLASS'"
     Rails.cache.write(cache_key, talents, :expires_in => 1.hour)
     return talents
 	end
@@ -14,7 +13,7 @@ class Talents
     return Hash.new if spec_id.nil?
     cache_key = "spec_talents_#{spec_id}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
-		talents = get_talents "spec_id=#{spec_id} AND display_col > #{@@PIVOT_COL}"
+		talents = get_talents "spec_id=#{spec_id} AND cat='SPEC'"
     Rails.cache.write(cache_key, talents, :expires_in => 1.hour)
     return talents
 	end

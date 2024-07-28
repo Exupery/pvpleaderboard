@@ -6,7 +6,6 @@ class FilterController < ApplicationController
   before_action :get_selected
 
   @@NUM_TOP_PLAYERS = ENV.fetch("TOP_PLAYERS_PER_BRACKET", 6).to_i * 8
-  @@PIVOT_COL = ENV.fetch("TALENT_PIVOT_COL").to_i
 
   def filter
     @title = "Filter"
@@ -65,11 +64,11 @@ class FilterController < ApplicationController
   end
 
   def get_class_talent_counts
-    return get_talent_counts "players.class_id=#{@class_id} AND (talents.spec_id=0 OR talents.spec_id=#{@spec_id}) AND display_col < #{@@PIVOT_COL}"
+    return get_talent_counts "players.class_id=#{@class_id} AND (talents.spec_id=0 OR talents.spec_id=#{@spec_id}) AND talents.cat='CLASS'"
   end
 
   def get_spec_talent_counts
-    return get_talent_counts "talents.spec_id=#{@spec_id} AND display_col > #{@@PIVOT_COL}"
+    return get_talent_counts "talents.spec_id=#{@spec_id} AND talents.cat='SPEC'"
   end
 
   def get_talent_counts where

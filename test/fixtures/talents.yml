@@ -13,6 +13,8 @@
         node_id: <%= id %>
         display_row: <%= talent_id % 10 %>
         display_col: <%= talent_id % 22 %>
+        cat: <%= (talent_id % 22) < 9 ? "CLASS" : "SPEC" %>
+        hero_specs: []
       <% talent_id = talent_id + 1 %>
     <% end %>
   <% end %>
