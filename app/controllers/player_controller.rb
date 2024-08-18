@@ -8,8 +8,9 @@ require "yajl/json_gem"
 class PlayerController < BracketRegionController
   protect_from_forgery with: :exception
 
-  @@URI = "https://%s.api.blizzard.com/profile/wow/character/%s/%s%s?locale=en_US&access_token=%s&namespace=profile-%s"
-  @@SEASON_URI = "https://us.api.blizzard.com/data/wow/pvp-season/index?namespace=dynamic-us&locale=en_US&access_token=%s"
+  @@URI = "https://%s.api.blizzard.com/profile/wow/character/%s/%s%s?locale=en_US&namespace=profile-%s"
+  @@SEASON_URI = "https://us.api.blizzard.com/data/wow/pvp-season/index?namespace=dynamic-us&locale=en_US"
+  @@BEARER_HEADER = "Bearer %s"
   @@OAUTH_URI = "https://us.battle.net/oauth/token"
   @@OAUTH_ID = ENV["BATTLE_NET_CLIENT_ID"]
   @@OAUTH_SECRET = ENV["BATTLE_NET_SECRET"]
@@ -231,10 +232,7 @@ class PlayerController < BracketRegionController
 
   def get_current_season
     return @@CURRENT_SEASON if @@CURRENT_SEASON > 0
-    oauth_token = create_token
-    return 0 if oauth_token.nil?
-    uri = @@SEASON_URI % [oauth_token]
-    res = HTTParty.get(uri, timeout: 5)
+    res = HTTParty.get(@@SEASON_URI, timeout: 5, headers: create_headers())
     return 0 if res.code != 200
     json = JSON.parse(res.body)
 
@@ -395,11 +393,11 @@ class PlayerController < BracketRegionController
   def get path
     uri = create_uri path
     return nil if uri.nil?
-    res = HTTParty.get(uri, timeout: 5)
+    res = HTTParty.get(uri, timeout: 5, headers: create_headers())
     if res.code == 401
       # On 401 clear oauth token cache to force a new one and try again
       Rails.cache.delete(@@OAUTH_CACHE_KEY)
-      res = HTTParty.get(create_uri path)
+      res = HTTParty.get(create_uri path, headers: create_headers())
     elsif res.code == 429
       logger.warn("Could not GET #{path} - 429 Too Many Requests")
       raise StandardError.new "429 Too Many Requests"
@@ -409,9 +407,8 @@ class PlayerController < BracketRegionController
   end
 
   def create_uri path
-    oauth_token = create_token
-    return nil if oauth_token.nil? or @region.nil? or @realm.nil?
-    return @@URI % [@region.downcase, CGI.escape(urlify(@realm.name)), CGI.escape(@player_name.downcase), path, oauth_token, @region.downcase]
+    return nil if @region.nil? or @realm.nil?
+    return @@URI % [@region.downcase, CGI.escape(urlify(@realm.name)), CGI.escape(@player_name.downcase), path, @region.downcase]
   end
 
   def create_token
@@ -426,6 +423,14 @@ class PlayerController < BracketRegionController
     return nil if access_token.nil?
     Rails.cache.write(@@OAUTH_CACHE_KEY, access_token, :expires_in => 30.minutes)
     return access_token
+  end
+
+  def create_headers
+    oauth_token = create_token
+    raise StandardError.new "Creating OAUTH tokean failed" if oauth_token.nil?
+    return {
+      "Authorization" => @@BEARER_HEADER % [oauth_token]
+    }
   end
 
 end
