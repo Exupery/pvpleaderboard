@@ -9,7 +9,7 @@
     <% talents.each do |id, talent| %>
       <tr>
         <td>
-          <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=70" target="_blank" class="no-a-style">
+          <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>" target="_blank" class="no-a-style">
             <div>
               <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive inline" alt="<%= talent[:name] %>">
               <div class="inline"><%= talent[:name] %></div>

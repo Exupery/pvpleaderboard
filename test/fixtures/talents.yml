@@ -3,6 +3,15 @@
   <% [0, 1, 2, 3, 4, 62, 63, 64, 65, 66].each do |s| %>
     <% 10.times do |t| %>
       <% id = "#{c}0#{s}0#{t}" %>
+      <%
+        cat = "CLASS"
+        if (talent_id % 22) > 9
+          cat = "HERO"
+        end
+        if (talent_id % 22) > 11
+          cat = "SPEC"
+        end
+      %>
       talent<%= talent_id %>:
         id: <%= talent_id %>
         spell_id: <%= id %>
@@ -13,8 +22,8 @@
         node_id: <%= id %>
         display_row: <%= talent_id % 10 %>
         display_col: <%= talent_id % 22 %>
-        cat: <%= (talent_id % 22) < 9 ? "CLASS" : "SPEC" %>
-        hero_specs: []
+        cat: <%= cat %>
+        hero_specs: [<%= s %>]
       <% talent_id = talent_id + 1 %>
     <% end %>
   <% end %>

@@ -382,6 +382,8 @@ th {
 
 .table>tbody>tr>td {
   vertical-align: middle;
+  /* Change to align-content once better supported https://caniuse.com/mdn-css_properties_align-content_block_context */
+  /* align-content: center; */
   cursor: default;
 }
 
@@ -557,6 +559,16 @@ th.tablesorter-primary,
 .navbar-default .navbar-nav>li>a:hover {
   border-color: #F6E4B3;
   border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.nav-tabs>li>a {
+  align-content: center;
+  font-size: 0.9rem;
+  border-color: rgba(246, 228, 179, 0.5);
+  border-style: solid;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding: 10px;
 }
 
 th.tablesorter-headerDesc:hover,

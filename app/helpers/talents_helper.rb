@@ -13,6 +13,11 @@ module TalentsHelper
     return convert_to_tree(talents_with_percents)
   end
 
+  def hero_talent_counts(spec_id, hero_talent_counts)
+    hero_talents = Herotalents.get_talents(spec_id)
+    return get_percents(hero_talents, hero_talent_counts)
+  end
+
   def pvp_talent_counts(spec_id, pvp_talent_counts)
     pvp_talents = Pvptalents.get_talents(spec_id)
     return get_percents(pvp_talents, pvp_talent_counts)
