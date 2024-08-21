@@ -32,6 +32,7 @@ class FilterController < ApplicationController
     @whereified_ids = whereify(player_ids)
     @class_talent_counts = get_class_talent_counts
     @spec_talent_counts = get_spec_talent_counts
+    @hero_talent_counts = get_hero_talent_counts
     @pvp_talent_counts = get_pvp_talent_counts
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_player_ids player_ids
@@ -88,6 +89,17 @@ class FilterController < ApplicationController
     rows = get_rows("SELECT pvp_talents.id AS pvp_talent, COUNT(*) AS count FROM players JOIN players_pvp_talents ON players.id=players_pvp_talents.player_id JOIN pvp_talents ON players_pvp_talents.pvp_talent_id=pvp_talents.id WHERE players.id IN (#{@whereified_ids}) GROUP BY pvp_talent ORDER BY count DESC")
     rows.each do |row|
       h[row["pvp_talent"]] = row["count"].to_i
+    end
+
+    return h
+  end
+
+  def get_hero_talent_counts
+    h = Hash.new
+
+    rows = get_rows("SELECT talents.id AS hero_talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.id IN (#{@whereified_ids}) AND cat='HERO' AND #{@spec_id}=ANY(hero_specs) GROUP BY hero_talent ORDER BY count DESC")
+    rows.each do |row|
+      h[row["hero_talent"]] = row["count"].to_i
     end
 
     return h
@@ -163,10 +175,6 @@ class FilterController < ApplicationController
     filters.each do |filter|
       @selected[filter] = dashify params[filter]
     end
-  end
-
-  def sanitize obj
-    return ActiveRecord::Base::sanitize obj
   end
 
   def get_spec_from_selected

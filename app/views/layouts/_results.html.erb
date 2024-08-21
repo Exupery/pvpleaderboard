@@ -3,6 +3,7 @@
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#tab-pane-class-talents" aria-controls="class-talents" role="tab" data-toggle="tab" data-fragment="class-talents"><%= @class_name %> Talents</a></li>
     <li role="presentation"><a href="#tab-pane-spec-talents" aria-controls="spec-talents" role="tab" data-toggle="tab" data-fragment="spec-talents"><%= @spec_name %> Talents</a></li>
+    <li role="presentation"><a href="#tab-pane-hero-talents" aria-controls="hero-talents" role="tab" data-toggle="tab" data-fragment="hero-talents">Hero Talents</a></li>
     <li role="presentation"><a href="#tab-pane-pvp-talents" aria-controls="pvp-talents" role="tab" data-toggle="tab" data-fragment="pvp-talents">PvP Talents</a></li>
     <li role="presentation"><a href="#tab-pane-gear" aria-controls="gear" role="tab" data-toggle="tab" data-fragment="gear">Gear</a></li>
     <li role="presentation"><a href="#tab-pane-stats" aria-controls="stats" role="tab" data-toggle="tab" data-fragment="stats">Stats</a></li>
@@ -16,8 +17,11 @@
     <div role="tabpanel" class="tab-pane" id="tab-pane-spec-talents">
       <%= render "layouts/talent_tree", :label => "spec", :talent_positions => spec_talent_counts_tree(@spec_id, @spec_talent_counts) %>
     </div>
+    <div role="tabpanel" class="tab-pane" id="tab-pane-hero-talents">
+      <%= render "layouts/talents_table", :label => "hero", :talents => hero_talent_counts(@spec_id, @hero_talent_counts) %>
+    </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-pvp-talents">
-      <%= render "layouts/pvp_talents_table", :pvp_talents => pvp_talent_counts(@spec_id, @pvp_talent_counts) %>
+      <%= render "layouts/talents_table", :label => "pvp", :talents => pvp_talent_counts(@spec_id, @pvp_talent_counts) %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-gear">
       <%= render "layouts/gear_table", :gear => @gear %>

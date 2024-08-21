@@ -3,6 +3,7 @@ require 'test_helper'
 class AchievementsTest < ActiveSupport::TestCase
   def test_init
     achievement = Achievement.new(1, "Foo", "Foo the Bar", "cool_icon_bro")
+    assert_not_nil achievement
   end
 
   def test_seasonal

@@ -43,6 +43,7 @@ class ClassesController < ApplicationController
 
     @class_talent_counts = get_class_talent_counts
     @spec_talent_counts = get_spec_talent_counts
+    @hero_talent_counts = get_hero_talent_counts
     @pvp_talent_counts = get_pvp_talent_counts
     @stat_counts = get_stat_counts
     @gear = get_most_equipped_gear_by_spec(@class_id, @spec_id)
@@ -109,6 +110,21 @@ class ClassesController < ApplicationController
     end
 
     write_to_cache_maybe_stale("players_pvp_talents", h, cache_key)
+    return h
+  end
+
+  def get_hero_talent_counts
+    cache_key = "hero_talent_counts_#{@spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+
+    h = Hash.new
+
+    rows = get_rows("SELECT talents.id AS hero_talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE cat='HERO' AND #{@spec_id}=ANY(hero_specs) GROUP BY hero_talent ORDER BY count DESC")
+    rows.each do |row|
+      h[row["hero_talent"]] = row["count"].to_i
+    end
+
+    write_to_cache_maybe_stale("players_talents", h, cache_key)
     return h
   end
 

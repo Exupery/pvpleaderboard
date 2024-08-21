@@ -64,6 +64,8 @@ Rails.application.configure do
   logger.formatter = config.log_formatter
   config.logger = ActiveSupport::TaggedLogging.new(logger)
 
+  config.hosts << ".ngrok-free.app"
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
