@@ -119,7 +119,7 @@ class ClassesController < ApplicationController
 
     h = Hash.new
 
-    rows = get_rows("SELECT talents.id AS hero_talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE cat='HERO' AND #{@spec_id}=ANY(hero_specs) GROUP BY hero_talent ORDER BY count DESC")
+    rows = get_rows("SELECT talents.id AS hero_talent, COUNT(*) AS count FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.spec_id=#{@spec_id} AND cat='HERO' AND #{@spec_id}=ANY(hero_specs) GROUP BY hero_talent ORDER BY count DESC")
     rows.each do |row|
       h[row["hero_talent"]] = row["count"].to_i
     end
