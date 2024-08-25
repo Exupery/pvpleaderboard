@@ -17,6 +17,7 @@ class PlayerController < BracketRegionController
   @@OAUTH_CACHE_KEY = "oauth_access_token"
 
   @@CURRENT_SEASON = 0
+  @@NUM_RETRIES = ENV.fetch("NUM_AUDIT_RETRIES", 3).to_i
 
   def show
     expires_in 1.hour, public: true
@@ -57,7 +58,7 @@ class PlayerController < BracketRegionController
   def get_player_with_retry player_id
     # Blizzard's player API often flakes out but works on retry
     cnt = 0
-    while cnt < 3
+    while cnt < @@NUM_RETRIES
       begin
         @statistics_thread = get_statistics
         @achievements_thread = get_achievements
