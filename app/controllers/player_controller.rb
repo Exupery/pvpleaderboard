@@ -205,10 +205,11 @@ class PlayerController < BracketRegionController
       json = bracket_ratings[bracket]
 
       h = Hash.new
-      if has_current_season_rating(json)
+      key = bracket.start_with?("shuffle") ? "round" : "match"
+      if has_current_season_rating(json, key)
         h["current_rating"] = json["rating"]
-        h["wins"] = json["season_match_statistics"]["won"]
-        h["losses"] = json["season_match_statistics"]["lost"]
+        h["wins"] = json["season_#{key}_statistics"]["won"]
+        h["losses"] = json["season_#{key}_statistics"]["lost"]
       else
         h["current_rating"] = nil
         h["wins"] = 0
@@ -221,10 +222,11 @@ class PlayerController < BracketRegionController
     end
   end
 
-  def has_current_season_rating json
+  def has_current_season_rating(json, key)
     return false if json.nil?
     return false if json["rating"].nil?
     return false if json["season"].nil?
+    return false if json["season_#{key}_statistics"].nil?
     season = json["season"]["id"]
     return season == get_current_season
   end
