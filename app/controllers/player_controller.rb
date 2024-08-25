@@ -207,9 +207,8 @@ class PlayerController < BracketRegionController
       h = Hash.new
       if has_current_season_rating(json)
         h["current_rating"] = json["rating"]
-        key = bracket.start_with?("shuffle") ? "round" : "match"
-        h["wins"] = json["season_#{key}_statistics"]["won"]
-        h["losses"] = json["season_#{key}_statistics"]["lost"]
+        h["wins"] = json["season_match_statistics"]["won"]
+        h["losses"] = json["season_match_statistics"]["lost"]
       else
         h["current_rating"] = nil
         h["wins"] = 0
@@ -341,6 +340,7 @@ class PlayerController < BracketRegionController
   def parse_talents(json, hash, talent_type, talent_icons, talents_positions)
     return if json["selected_#{talent_type}_talents"].nil?
     json["selected_#{talent_type}_talents"].each do |talent|
+      next if (talent["tooltip"].nil? || talent["tooltip"]["talent"].nil? || talent["tooltip"]["talent"]["id"].nil?)
       id = talent["tooltip"]["talent"]["id"]
       name = talent["tooltip"]["talent"]["name"]
       spell_id = talent["tooltip"]["spell_tooltip"]["spell"]["id"]
