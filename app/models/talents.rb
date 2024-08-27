@@ -18,6 +18,15 @@ class Talents
     return talents
 	end
 
+  def self.get_hero_talents(spec_id)
+    return Hash.new if spec_id.nil?
+    cache_key = "hero_talents_#{spec_id}"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
+		talents = get_talents "#{spec_id}=ANY(hero_specs) AND cat='HERO'"
+    Rails.cache.write(cache_key, talents, :expires_in => 1.hour)
+    return talents
+	end
+
   private
 
 	def self.get_talents(where)

@@ -60,7 +60,12 @@
       <li role="presentation" class="active"><a href="#tab-pane-titles" aria-controls="titles" role="tab" data-toggle="tab" data-fragment="titles">Seasonal Titles</a></li>
       <li role="presentation"><a href="#tab-pane-dates" aria-controls="dates" role="tab" data-toggle="tab" data-fragment="dates">Dates</a></li>
       <li role="presentation"><a href="#tab-pane-class-talents" aria-controls="class-talents" role="tab" data-toggle="tab" data-fragment="class-talents">Class Talents</a></li>
+      <% unless @player.spec_id.nil? %>
       <li role="presentation"><a href="#tab-pane-spec-talents" aria-controls="spec-talents" role="tab" data-toggle="tab" data-fragment="spec-talents">Spec Talents</a></li>
+      <% end %>
+      <% unless @player.hero_talents.empty? %>
+      <li role="presentation"><a href="#tab-pane-hero-talents" aria-controls="hero-talents" role="tab" data-toggle="tab" data-fragment="hero-talents">Hero</a></li>
+      <% end %>
       <li role="presentation"><a href="#tab-pane-pvp-talents" aria-controls="pvp-talents" role="tab" data-toggle="tab" data-fragment="pvp-talents">PvP Talents</a></li>
     </ul>
 
@@ -129,6 +134,12 @@
       <% unless @player.spec_id.nil? %>
       <div role="tabpanel" class="tab-pane" id="tab-pane-spec-talents">
         <%= render "talent_tree", talents: @player.spec_talents, all_talents: Talents.get_spec_talents(@player.spec_id) %>
+      </div>
+      <% end %>
+
+      <% unless @player.hero_talents.empty? %>
+      <div role="tabpanel" class="tab-pane" id="tab-pane-hero-talents">
+        <%= render "talent_tree", talents: @player.hero_talents, all_talents: @player.hero_talents %>
       </div>
       <% end %>
 

@@ -296,6 +296,7 @@ class PlayerController < BracketRegionController
   def populate_talents(player_hash, spec)
     player_hash["class_talents"] = Hash.new
     player_hash["spec_talents"] = Hash.new
+    player_hash["hero_talents"] = Hash.new
     player_hash["pvp_talents"] = Array.new
     return if spec.nil?
     json = get "/specializations"
@@ -313,6 +314,7 @@ class PlayerController < BracketRegionController
       talents_positions = get_talent_positions
       parse_talents(loadout, player_hash, "class", talent_icons, talents_positions)
       parse_talents(loadout, player_hash, "spec", talent_icons, talents_positions)
+      parse_talents(loadout, player_hash, "hero", talent_icons, talents_positions)
 
       next if specialization["pvp_talent_slots"].nil?
       specialization["pvp_talent_slots"].each do |slot|
