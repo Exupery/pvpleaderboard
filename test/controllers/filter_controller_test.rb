@@ -20,7 +20,7 @@ class FilterControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_get_selected_params
-    get("/pvp/filter/results", params: {class: "death-knight", spec: "frost"})
+    get("/pvp/filter/results", params: {class: "mage", spec: "frost"})
     assert_response :success
     assert_not_nil assigns(:selected)
     assert_not_empty assigns(:selected)

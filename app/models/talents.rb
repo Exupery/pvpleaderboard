@@ -32,13 +32,14 @@ class Talents
 	def self.get_talents(where)
 		h = Hash.new
 
-		rows = ActiveRecord::Base.connection.execute("SELECT id, spell_id, spec_id, name, icon, node_id, display_row, display_col FROM talents WHERE #{where} ORDER BY node_id ASC")
+		rows = ActiveRecord::Base.connection.execute("SELECT id, spell_id, spec_id, hero_specs, name, icon, node_id, display_row, display_col FROM talents WHERE #{where} ORDER BY node_id ASC")
     rows.each do |row|
       icon = row["icon"] == "" ? "placeholder" : row["icon"]
       h[row["id"]] = {
         :id => row["id"],
         :spell_id => row["spell_id"],
         :spec_id => row["spec_id"].to_i,
+        :hero_specs => hero_specs_str(row["hero_specs"]),
         :name => row["name"],
         :row => row["display_row"],
         :col => row["display_col"],
@@ -47,4 +48,12 @@ class Talents
 
     return h
 	end
+
+  def self.hero_specs_str specs_array
+    return nil if specs_array.nil?
+    return nil if specs_array.empty?
+
+    return specs_array.gsub("{", "").gsub(" ", "").gsub(",", "_").gsub("}", "")
+  end
+
 end

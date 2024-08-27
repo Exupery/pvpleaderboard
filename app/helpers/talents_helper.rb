@@ -13,6 +13,19 @@ module TalentsHelper
     return convert_to_tree(talents_with_percents)
   end
 
+  def hero_talent_counts_trees(spec_id, hero_talent_counts)
+    hero_talents = Talents.get_hero_talents(spec_id)
+    grouped = hero_talents.group_by { |id, t| t[:hero_specs] }
+    trees = Hash.new
+    return trees if (grouped.empty? || grouped.size > 2)
+    grouped.each { |k, group|
+      key = trees.empty? ? "left" : "right"
+      talents_with_percents = get_percents(group.to_h, hero_talent_counts)
+      trees[key] = convert_to_tree(talents_with_percents)
+    }
+    return trees
+  end
+
   def hero_talent_counts(spec_id, hero_talent_counts)
     hero_talents = Herotalents.get_talents(spec_id)
     return get_percents(hero_talents, hero_talent_counts)

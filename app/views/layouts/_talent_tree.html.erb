@@ -10,7 +10,7 @@
           <% talent = talent_positions["#{row}-#{col}"] %>
           <% unless talent.nil? %>
             <td>
-              <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>&amp;lvl=60" target="_blank" class="no-a-style">
+              <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>" target="_blank" class="no-a-style">
                 <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
                 <div class="table-tiny-font no-overflow"><%= talent[:name] %></div>
                 <div class="table-tiny-font no-overflow"><%= talent[:percent] %>&#37;</div>

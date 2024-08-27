@@ -435,6 +435,14 @@ th {
   margin-top: 0;
 }
 
+.hero-tree {
+  display: inline-flex;
+  width: 46%;
+  min-width: 325px;
+  margin-left: 1.5%;
+  margin-right: 1.5%;
+}
+
 .results-panel table,
 .audit-results-panel table {
   width: 100%;
