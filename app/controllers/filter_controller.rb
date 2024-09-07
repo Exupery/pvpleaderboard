@@ -59,9 +59,9 @@ class FilterController < ApplicationController
   def matchSpec bracket
       return true if @spec_id.nil?
 
-      return true unless bracket.start_with?("solo")
+      return true unless (bracket.start_with?("solo") || bracket.start_with?("blitz"))
 
-      return bracket == "solo_#{@spec_id}"
+      return bracket.end_with?("_#{@spec_id.to_s}")
   end
 
   def get_class_talent_counts
@@ -162,6 +162,8 @@ class FilterController < ApplicationController
       unless spec.nil?
         solo_bracket = "solo_#{spec[:id]}"
         brackets.push("'#{solo_bracket}'") if @selected[:leaderboards].include? "solo"
+        blitz_bracket = "blitz_#{spec[:id]}"
+        brackets.push("'#{blitz_bracket}'") if @selected[:leaderboards].include? "blitz"
       end
       return "AND leaderboards.bracket IN (#{brackets.join(",")})"
     end

@@ -15,7 +15,7 @@
     <label class="btn <%= active %> unactivater leaderboards-any default-option" data-unactivate="leaderboards-btn">
       <input type="checkbox" autocomplete="off">ANY
     </label>
-    <% ["Solo", "2v2", "3v3", "RBG"].each do |leaderboard| %>
+    <% ["Solo", "2v2", "3v3", "Blitz", "RBG"].each do |leaderboard| %>
       <% active = (@selected[:leaderboards].include?(urlify(leaderboard)) if @selected[:leaderboards]) ? "active" : "" %>
       <label class="btn leaderboards-btn unactivater <%= active %>" data-value="<%= leaderboard %>" data-unactivate="leaderboards-any">
         <input type="checkbox" autocomplete="off"><%= leaderboard %>

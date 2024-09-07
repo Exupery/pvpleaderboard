@@ -16,7 +16,7 @@
       <ul class="dropdown-menu" role="menu">
         <% pathFormat = "/leaderboards/%{bracket}/%{region}" %>
         <% Regions.list.each do |region| %>
-          <% ["Solo", "2v2", "3v3", "RBG"].each do |bracket| %>
+          <% ["Solo", "2v2", "3v3", "Blitz", "RBG"].each do |bracket| %>
             <% path = pathFormat % {:bracket => urlify(bracket), :region => region.downcase} %>
             <li class="<%= is_active path %>"><a href="<%= path %>"><%= region %> <%= bracket %></a></li>
           <% end %>

@@ -128,6 +128,7 @@ class Player
 
     return "RBG" if bracket.downcase == "rbg"
     return "Solo" if bracket.downcase.start_with?("solo")
+    return "BG Blitz" if bracket.downcase.start_with?("blitz")
 
     return bracket
   end

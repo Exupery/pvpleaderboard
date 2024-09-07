@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :set_format, :check_params
 
   @@BRACKETS = Brackets.list
-  @@BRACKETS_WITH_SOLO = Brackets.with_solo
+  @@BRACKETS_WITH_SOLO_BLITZ = Brackets.with_solo_blitz
   @@REGIONS = Regions.list
 
   def set_format
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     bracket = params[:bracket] || params[:leaderboard]
     if bracket
       bracket.downcase!
-      bracket = nil unless @@BRACKETS_WITH_SOLO.include?(bracket)
+      bracket = nil unless @@BRACKETS_WITH_SOLO_BLITZ.include?(bracket)
     end
 
     return bracket
@@ -43,6 +43,7 @@ class ApplicationController < ActionController::Base
 
   def get_title_bracket bracket
     return "Solo Shuffle" if bracket.eql?("solo")
+    return "BG Blitz" if bracket.eql?("blitz")
     return "RBG" if bracket.eql?("rbg")
     return bracket
   end

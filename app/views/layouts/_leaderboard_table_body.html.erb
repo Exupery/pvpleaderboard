@@ -8,7 +8,9 @@
     <td><a href="<%= player.armory_link %>" translate="no" target="_blank"><%= player.name %></a></td>
     <td class="show-when-wide">
       <% realm = Realms.list[player.realm_slug + @region] %>
-      <% b = @bracket.start_with?("solo") ? "solo" : @bracket %>
+      <% b = @bracket %>
+      <% b = "solo" if @bracket.start_with?("solo") %>
+      <% b = "blitz" if @bracket.start_with?("blitz") %>
       <a href="/realms/<%= b %>/<%= @region.downcase %>/<%= urlify realm.slug %>" translate="no"><%= realm.name %></a>
     </td>
     <td title="<%= player.faction %>"><img src="/images/<%= player.faction.downcase %>.png" class="img-responsive center" alt="<%= player.faction %>"></td>

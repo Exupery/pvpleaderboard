@@ -697,10 +697,12 @@ th.tablesorter-headerAsc:hover,
   background: #A71A19;
 }
 
+#blitz-selection #region,
 #solo-selection #region {
   margin-bottom: 0.5em;
 }
 
+#blitz-selection #spec-selection,
 #solo-selection #spec-selection {
   margin-top: 0.5em;
 }

@@ -21,6 +21,11 @@ Rails.application.routes.draw do
   get "leaderboards/solo/:region/:class/:spec" => "solo#show"
   get "leaderboards/solo_:spec/:region/more" => "solo#more"
 
+  get "leaderboards/blitz/:region" => "blitz#show"
+  get "leaderboards/blitz/:region/:class" => "blitz#show"
+  get "leaderboards/blitz/:region/:class/:spec" => "blitz#show"
+  get "leaderboards/blitz:spec/:region/more" => "blitz#more"
+
   get "leaderboards/:bracket/:region" => "leaderboards#show"
   get "leaderboards/:bracket/:region/more" => "leaderboards#more"
 

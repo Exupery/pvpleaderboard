@@ -9,7 +9,7 @@ class RealmsController < StatisticsController
     ## if the current bracket location is a valid US realm slug and the current region is
     ## a valid bracket. [Cannot be done via routing due to ambiguity].
     if (params[:bracket] && Realms.list.include?(params[:bracket].downcase + "US")) &&
-      (params[:region] && @@BRACKETS_WITH_SOLO.include?(params[:region].downcase))
+      (params[:region] && @@BRACKETS_WITH_SOLO_BLITZ.include?(params[:region].downcase))
       redirect_to "/realms/#{params[:region].downcase}/us/#{params[:bracket].downcase}", :status => 301
       return nil
     end
@@ -21,7 +21,7 @@ class RealmsController < StatisticsController
         redirect_to "/realms"
         return nil
       end
-      @@BRACKETS_WITH_SOLO.each do |b|
+      @@BRACKETS_WITH_SOLO_BLITZ.each do |b|
         (realm_counts(@region, b, 0, "ALL")).each do |k, h|
           if @realms.has_key?(k)
             @realms[k][:count] += h[:count]

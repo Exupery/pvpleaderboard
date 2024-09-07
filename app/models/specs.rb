@@ -4,6 +4,7 @@ class Specs
 	@@specs = nil
 	@@slugs = nil
   @@solo_slugs = nil
+  @@blitz_slugs = nil
   @@specs_by_id = nil
 
 	def self.list
@@ -17,8 +18,13 @@ class Specs
 	end
 
   def self.solo_slugs
-		@@solo_slugs = get_solo_slugs if @@solo_slugs.nil?
+		@@solo_slugs = get_prefixed_slugs("shuffle") if @@solo_slugs.nil?
 	  return @@solo_slugs
+	end
+
+  def self.blitz_slugs
+		@@blitz_slugs = get_prefixed_slugs("blitz") if @@blitz_slugs.nil?
+	  return @@blitz_slugs
 	end
 
   def self.specs_by_id
@@ -70,21 +76,21 @@ class Specs
     return h
 	end
 
-  def self.get_solo_slugs
+  def self.get_prefixed_slugs prefix
 		h = Hash.new()
 
 		rows = ActiveRecord::Base.connection.execute("SELECT specs.id AS id, classes.name AS class, specs.name AS spec FROM specs JOIN classes ON specs.class_id=classes.id")
     rows.each do |row|
-      clazz = solo_slugify row["class"]
-      spec = solo_slugify row["spec"]
-      slug = "shuffle-#{clazz}-#{spec}"
+      clazz = prefixed_slugify row["class"]
+      spec = prefixed_slugify row["spec"]
+      slug = "#{prefix}-#{clazz}-#{spec}"
       h[row["id"]] = slug
     end
 
     return h
 	end
 
-  def self.solo_slugify name
+  def self.prefixed_slugify name
     return name.downcase.gsub(/\s/, "")
   end
 end

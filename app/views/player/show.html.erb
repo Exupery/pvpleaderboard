@@ -36,15 +36,19 @@
     </thead>
     <tbody>
       <% solo = @solo_bracket.nil? ? [] : [ @solo_bracket ] %>
-      <% brackets = solo.concat(["2v2", "3v3", "RBG"]) %>
+      <% blitz = @blitz_bracket.nil? ? [] : [ @blitz_bracket ] %>
+      <% brackets = solo.concat(["2v2", "3v3", "RBG"]).concat(blitz) %>
       <% brackets.each do |b| %>
         <% ratings = @player.ratings[b.downcase] %>
         <% wins = ratings["wins"] %>
         <% losses = ratings["losses"] %>
         <% total = wins + losses %>
         <% win_ratio = total > 0 ? (wins.to_f / total * 100).round(1).to_s + "%" : "" %>
+        <% bracket_name = b %>
+        <% bracket_name = "Solo" if b.start_with?("shuffle") %>
+        <% bracket_name = "Blitz" if b.start_with?("blitz") %>
         <tr>
-          <td><%= b.start_with?("shuffle") ? "Solo" : b %></td>
+          <td><%= bracket_name %></td>
           <td><%= ratings["current_rating"] %></td>
           <td><span class="wins"><%= wins %></span>&nbsp;&#45;&nbsp;<span class="losses"><%= losses %></span></td>
           <td class="hide-when-narrow"><%= win_ratio %></td>

@@ -96,7 +96,8 @@ class PlayerController < BracketRegionController
     else
       hash["spec_icon"] = get_spec_icon(hash["spec_id"])
       @solo_bracket = Specs.solo_slugs[hash["spec_id"]]
-      @brackets = [ @solo_bracket ].concat(@@BRACKETS)
+      @blitz_bracket = Specs.blitz_slugs[hash["spec_id"]]
+      @brackets = [ @solo_bracket, @blitz_bracket ].concat(@@BRACKETS)
     end
     hash["spec_icon"] = hash["spec_id"].nil?  ? "placeholder" : get_spec_icon(hash["spec_id"])
 
