@@ -101,7 +101,9 @@ module TalentsHelper
     talent_counts.each do |id, count|
       talent = talents[id]
       next if talent.nil?
-      talent[:percent] = (count.to_f / @total * 100).round(1)
+      pct = (count.to_f / @total * 100).round(1)
+      pct = 100 if pct >= 99.8
+      talent[:percent] = pct
       h[id] = talent
     end
 

@@ -96,7 +96,7 @@ module Utils extend ActiveSupport::Concern
 
 		total = 0
 
-		sql = ActiveRecord::Base::sanitize_sql("SELECT talents.id, COUNT(*) AS cnt FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} AND (talents.spec_id=0 OR talents.spec_id=#{spec_id}) AND talents.cat='CLASS' GROUP BY talents.id ORDER BY cnt DESC LIMIT 1")
+		sql = ActiveRecord::Base::sanitize_sql("SELECT talents.id, COUNT(DISTINCT(players.id)) AS cnt FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE players.class_id=#{class_id} AND players.spec_id=#{spec_id} AND (talents.spec_id=0 OR talents.spec_id=#{spec_id}) AND talents.cat='CLASS' GROUP BY talents.id ORDER BY cnt DESC LIMIT 1")
     rows = ActiveRecord::Base.connection.execute(sql)
 		rows.each do |row|
       total = row["cnt"].to_i
