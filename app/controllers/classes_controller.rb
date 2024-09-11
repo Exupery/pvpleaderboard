@@ -59,8 +59,8 @@ class ClassesController < ApplicationController
     players = Array.new
 
     Regions.list.each do |region|
-      Brackets.list.each do |bracket|
-        rows = get_rows("SELECT ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, leaderboards.bracket AS bracket FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN realms ON players.realm_id=realms.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND realms.region='#{region}' AND bracket='#{bracket}' ORDER BY ranking ASC LIMIT #{@@NUM_TOP_PLAYERS_PER_BRACKET}")
+      Brackets.with_solo_blitz.each do |bracket|
+        rows = get_rows("SELECT ranking, rating, season_wins AS wins, season_losses AS losses, players.name AS name, factions.name AS faction, races.name AS race, players.gender AS gender, realms.slug AS realm_slug, realms.name AS realm, realms.region AS region, leaderboards.bracket AS bracket FROM leaderboards LEFT JOIN players ON leaderboards.player_id=players.id LEFT JOIN factions ON players.faction_id=factions.id LEFT JOIN races ON players.race_id=races.id LEFT JOIN realms ON players.realm_id=realms.id WHERE players.class_id=#{@class_id} AND players.spec_id=#{@spec_id} AND realms.region='#{region}' AND (bracket='#{bracket}' OR bracket='#{bracket}_#{@spec_id}') ORDER BY ranking ASC LIMIT #{@@NUM_TOP_PLAYERS_PER_BRACKET}")
 
         rows.each do |row|
           players << Player.new(row)
