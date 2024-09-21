@@ -75,7 +75,7 @@ class FilterController < ApplicationController
   def get_talent_counts where
     h = Hash.new
 
-    rows = get_rows("SELECT talents.id AS talent, COUNT(*) AS count FROM players JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE #{where} AND players.id IN (#{@whereified_ids}) GROUP BY talent")
+    rows = get_rows("SELECT talents.id AS talent, COUNT(DISTINCT(players.id)) AS count FROM players JOIN players_talents ON players.id=players_talents.player_id JOIN talents ON players_talents.talent_id=talents.id WHERE #{where} AND players.id IN (#{@whereified_ids}) GROUP BY talent")
     rows.each do |row|
       h[row["talent"]] = row["count"].to_i
     end
@@ -86,7 +86,7 @@ class FilterController < ApplicationController
   def get_pvp_talent_counts
     h = Hash.new
 
-    rows = get_rows("SELECT pvp_talents.id AS pvp_talent, COUNT(*) AS count FROM players JOIN players_pvp_talents ON players.id=players_pvp_talents.player_id JOIN pvp_talents ON players_pvp_talents.pvp_talent_id=pvp_talents.id WHERE players.id IN (#{@whereified_ids}) GROUP BY pvp_talent ORDER BY count DESC")
+    rows = get_rows("SELECT pvp_talents.id AS pvp_talent, COUNT(DISTINCT(players.id)) AS count FROM players JOIN players_pvp_talents ON players.id=players_pvp_talents.player_id JOIN pvp_talents ON players_pvp_talents.pvp_talent_id=pvp_talents.id WHERE players.id IN (#{@whereified_ids}) GROUP BY pvp_talent ORDER BY count DESC")
     rows.each do |row|
       h[row["pvp_talent"]] = row["count"].to_i
     end

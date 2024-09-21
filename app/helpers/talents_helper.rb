@@ -102,7 +102,7 @@ module TalentsHelper
       talent = talents[id]
       next if talent.nil?
       pct = (count.to_f / @total * 100).round(1)
-      pct = 100 if pct >= 99.8
+      pct = 100 if (pct >= 99.5 && !talent[:row].nil? && talent[:row] <= 3)
       talent[:percent] = pct
       h[id] = talent
     end
