@@ -31,7 +31,9 @@ class StatisticsController < BracketRegionController
 
     h = Hash.new
 
-    sql = "SELECT realms.slug AS slug, realms.region AS region, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN realms ON players.realm_id=realms.id WHERE leaderboards.bracket LIKE '#{bracket}%' #{@region_clause} AND leaderboards.rating > #{min_rating} GROUP BY slug, realms.region ORDER BY COUNT(*) DESC LIMIT #{limit}"
+    bracket_clause = get_bracket_clause bracket
+
+    sql = "SELECT realms.slug AS slug, realms.region AS region, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN realms ON players.realm_id=realms.id WHERE leaderboards.rating > #{min_rating} #{bracket_clause} #{@region_clause} GROUP BY slug, realms.region ORDER BY COUNT(*) DESC LIMIT #{limit}"
     rows = get_rows(sql)
     rows.each do |row|
       key = row["slug"] + row["region"]
@@ -44,6 +46,10 @@ class StatisticsController < BracketRegionController
   end
 
   private
+
+  def get_bracket_clause bracket
+    return bracket.nil? ? "" : "AND leaderboards.bracket LIKE '#{bracket}%'"
+  end
 
   def get_min_rating rating_param
     return 0 if rating_param.nil?
@@ -66,7 +72,9 @@ class StatisticsController < BracketRegionController
 
     h = Hash.new
 
-    rows = get_rows("SELECT factions.name AS faction, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id WHERE leaderboards.bracket LIKE '#{bracket}%' #{@region_clause} AND leaderboards.rating > #{@min_rating} GROUP BY faction ORDER BY faction ASC")
+    bracket_clause = get_bracket_clause bracket
+
+    rows = get_rows("SELECT factions.name AS faction, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN factions ON players.faction_id=factions.id WHERE leaderboards.rating > #{@min_rating} #{bracket_clause} #{@region_clause} GROUP BY faction ORDER BY faction ASC")
     rows.each do |row|
       h[row["faction"]] = row["count"].to_i
     end
@@ -81,7 +89,9 @@ class StatisticsController < BracketRegionController
 
     h = Hash.new
 
-    rows = get_rows("SELECT races.name AS race, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN races ON players.race_id=races.id WHERE leaderboards.bracket LIKE '#{bracket}%' #{@region_clause} AND leaderboards.rating > #{@min_rating} GROUP BY race ORDER BY race ASC")
+    bracket_clause = get_bracket_clause bracket
+
+    rows = get_rows("SELECT races.name AS race, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN races ON players.race_id=races.id WHERE leaderboards.rating > #{@min_rating} #{bracket_clause} #{@region_clause} GROUP BY race ORDER BY race ASC")
     rows.each do |row|
       h[row["race"]] = row["count"].to_i
     end
@@ -96,7 +106,9 @@ class StatisticsController < BracketRegionController
 
     h = Hash.new
 
-    rows = get_rows("SELECT classes.name AS class, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN classes ON players.class_id=classes.id WHERE leaderboards.bracket LIKE '#{bracket}%' #{@region_clause} AND leaderboards.rating > #{@min_rating} GROUP BY class ORDER BY class ASC")
+    bracket_clause = get_bracket_clause bracket
+
+    rows = get_rows("SELECT classes.name AS class, COUNT(*) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN classes ON players.class_id=classes.id WHERE leaderboards.rating > #{@min_rating} #{bracket_clause} #{@region_clause} GROUP BY class ORDER BY class ASC")
     rows.each do |row|
       h[row["class"]] = row["count"].to_i
     end
@@ -111,7 +123,9 @@ class StatisticsController < BracketRegionController
 
     h = Hash.new
 
-    rows = get_rows("SELECT specs.name AS spec, specs.icon, classes.name AS class, COUNT(DISTINCT(leaderboards.player_id)) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN specs ON players.spec_id=specs.id JOIN classes ON specs.class_id=classes.id WHERE leaderboards.bracket LIKE '#{bracket}%' #{@region_clause} AND leaderboards.rating > #{@min_rating} GROUP BY spec, specs.icon, class ORDER BY spec ASC")
+    bracket_clause = get_bracket_clause bracket
+
+    rows = get_rows("SELECT specs.name AS spec, specs.icon, classes.name AS class, COUNT(DISTINCT(leaderboards.player_id)) AS count FROM leaderboards JOIN players ON player_id=players.id JOIN specs ON players.spec_id=specs.id JOIN classes ON specs.class_id=classes.id WHERE leaderboards.rating > #{@min_rating} #{bracket_clause} #{@region_clause} GROUP BY spec, specs.icon, class ORDER BY spec ASC")
     rows.each do |row|
       h[row["class"] + row["spec"]] = SpecInfo.new(row["spec"], row["count"].to_i, row["icon"], row["class"])
     end
@@ -126,7 +140,7 @@ class StatisticsController < BracketRegionController
 
     h = Hash.new
 
-    bracket_clause = (bracket.nil?) ? "" : "AND bracket LIKE '#{bracket}%'"
+    bracket_clause = get_bracket_clause bracket
 
     rows = get_rows("SELECT guild, realms.name AS realm, factions.name AS faction, COUNT(*) FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN factions ON players.faction_id=factions.id JOIN realms ON players.realm_id=realms.id WHERE guild != '' AND guild IS NOT NULL #{bracket_clause} #{@region_clause} AND leaderboards.rating > #{@min_rating} GROUP BY guild, realms.name, factions.name ORDER BY COUNT(*) DESC LIMIT 100")
     rows.each do |row|
