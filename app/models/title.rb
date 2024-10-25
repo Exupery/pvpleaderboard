@@ -9,13 +9,15 @@ class Title
     "Soldier of the Alliance" => "Challenger",
     "Defender of the Alliance" => "Rival",
     "Guardian of the Alliance" => "Duelist",
-    "Hero of the Alliance" => "Legend"
+    "Hero of the Alliance" => "Legend",
+    "Strategist" => "Legend"
   }
   @@HORDE_RBG_TITLES = {
     "Soldier of the Horde" => "Challenger",
     "Defender of the Horde" => "Rival",
     "Guardian of the Horde" => "Duelist",
-    "Hero of the Horde" => "Legend"
+    "Hero of the Horde" => "Legend",
+    "Strategist" => "Legend"
   }
 
   def initialize(achievement_name, achievement_description, date)
