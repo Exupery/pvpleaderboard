@@ -1,0 +1,8 @@
+<% 1000.times do |p| %>
+  playeritem<%= "#{p}" %>:
+    player_id: <%= p %>
+    head: <%= p % 10 %>
+    shoulder: <%= (p % 10) + 10 %>
+    finger1: <%= (p % 10) + 20 %>
+    finger2: <%= (p % 10) + 30 %>
+<% end %>
