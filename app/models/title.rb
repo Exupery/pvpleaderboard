@@ -29,17 +29,8 @@ class Title
   end
 
   def <=>(other)
-    this_name = convert_to_arena @name
-    other_name = convert_to_arena other.name
-    this_rank = @@ARENA_TITLES.index this_name
-    other_rank = @@ARENA_TITLES.index other_name
-
-    if this_rank.nil? and other_rank.nil?
-      return 1 if @name.end_with? "Gladiator"
-      return -1 if other.name.end_with? "Gladiator"
-    end
-    return 1 if this_rank.nil? and (@name.end_with? "Gladiator" or @name.end_with? "Legend")
-    return -1 if other_rank.nil? and (other.name.end_with? "Gladiator" or other.name.end_with? "Legend")
+    this_rank = get_rank @name
+    other_rank = get_rank other.name
 
     # prioritize arena titles over RBG titles of same rank
     if this_rank == other_rank
@@ -50,15 +41,35 @@ class Title
     return this_rank <=> other_rank
   end
 
+  def to_s
+    return "#{@name} #{@season} #{@date}"
+  end
+
+  private
+
   def convert_to_arena name
     return name if @@ARENA_TITLES_SET.include? name
 
     return @@HORDE_RBG_TITLES[name] if @@HORDE_RBG_TITLES.has_key? name
 
     return @@ALLIANCE_RBG_TITLES[name] if @@ALLIANCE_RBG_TITLES.has_key? name
+
+    return nil
   end
 
-  def to_s
-    return "#{@name} #{@season} #{@date}"
+  def get_rank name
+    arena_name = convert_to_arena name
+    arena_rank = @@ARENA_TITLES.index arena_name
+    return arena_rank unless arena_rank.nil?
+
+    # Not in @@ARENA_TITLES means it's an R1 title
+    base = @@ARENA_TITLES.length
+    return (base + 1) if name.end_with? "Marshal"
+    return (base + 2) if name.end_with? "Warlord"
+    return (base + 3) if name.end_with? "Legend"
+    return (base + 4) if name.end_with? "Gladiator"
+
+    return -1
   end
+
 end
