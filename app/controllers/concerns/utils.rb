@@ -1,5 +1,3 @@
-require "concurrent"
-
 module Utils extend ActiveSupport::Concern
 
   @@stats = ["strength", "agility", "intellect", "stamina", "critical_strike", "haste", "mastery", "versatility", "leech", "dodge", "parry"]
@@ -54,6 +52,10 @@ module Utils extend ActiveSupport::Concern
       hash.delete("agility")
       hash.delete("intellect")
     end
+  end
+
+  def get_slots
+    return @@normal_slots + @@two_slots
   end
 
   def get_most_equipped_gear_by_spec(class_id, spec_id)
@@ -118,51 +120,34 @@ module Utils extend ActiveSupport::Concern
   private
 
   def get_most_equipped_gear(class_id, spec_id, ids)
-    h = Concurrent::Hash.new()
-    threads = Array.new
+    h = Hash.new
     gear = Hash.new
-
-    where = ids ? "players.id IN (#{whereify(ids)})" : "players.class_id=#{class_id} AND players.spec_id=#{spec_id}"
-
-    normal_slot_thread = Thread.new {
-      @@normal_slots.each do |slot|
-        sql = "SELECT #{slot} AS cnt FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_items ON players_items.player_id=players.id WHERE #{where} GROUP BY #{slot} ORDER BY COUNT(*) DESC LIMIT 1"
-        result = ActiveRecord::Base.connection.execute(ActiveRecord::Base::sanitize_sql(sql))
-        next if result.num_tuples.zero?
-        h[slot] = result[0]["cnt"].to_i
+    sql = ActiveRecord::Base::sanitize_sql(gear_sql(class_id, spec_id, ids))
+    rows = ActiveRecord::Base.connection.execute(sql)
+    rows.each do |row|
+      get_slots.each do |slot|
+        h[slot] = row[slot].to_i
       end
-    }
-    threads.push normal_slot_thread
-
-    fingers_thread = Thread.new {
-      find_two_slot_counts("finger", where, h)
-    }
-    threads.push fingers_thread
-    trinkets_thread = Thread.new {
-      find_two_slot_counts("trinket", where, h)
-    }
-    threads.push trinkets_thread
-
-    threads.each do |thread|
-      thread.join
     end
-
     names = get_gear_names h.values
-    (@@normal_slots + @@two_slots).each do |slot|
-      next unless h.key?(slot)
-      id = h[slot]
+    h.each do |slot, id|
       gear[slot] = {:id => id, :name => names[id]}
     end
 
     return gear
   end
 
-  def find_two_slot_counts(slot, where, h)
-    sql = two_slot_sql(slot, where)
-    result = ActiveRecord::Base.connection.execute(ActiveRecord::Base::sanitize_sql("SELECT #{sql}"))
-    return if result.num_tuples.zero? || result[0]["#{slot}1"].nil?
-    h["#{slot}1"] = result[0]["#{slot}1"]
-    h["#{slot}2"] = result[0]["#{slot}2"]
+  def gear_sql(class_id, spec_id, ids)
+    sql = ""
+    where = ids ? "players.id IN (#{whereify(ids)})" : "players.class_id=#{class_id} AND players.spec_id=#{spec_id}"
+    @@normal_slots.each do |slot|
+      sql += "(SELECT #{slot} FROM leaderboards JOIN players ON leaderboards.player_id=players.id JOIN players_items ON players_items.player_id=players.id WHERE #{where} GROUP BY #{slot} ORDER BY COUNT(*) DESC LIMIT 1),"
+    end
+    sql += two_slot_sql("finger", where)
+    sql += ","
+    sql += two_slot_sql("trinket", where)
+
+    return "SELECT #{sql}"
   end
 
   def two_slot_sql(slot, where)
@@ -177,7 +162,6 @@ module Utils extend ActiveSupport::Concern
 
   def get_gear_names ids
     h = Hash.new
-    return h if ids.empty?
     sql = ActiveRecord::Base::sanitize_sql("SELECT id, name FROM items WHERE id IN (#{whereify(ids)})")
     rows = ActiveRecord::Base.connection.execute(sql)
     rows.each do |row|
