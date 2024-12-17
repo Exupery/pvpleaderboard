@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby "3.1.4"
+ruby "3.3.6"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '7.2.1.1'
+gem 'rails', '8.0.1'
 
 gem 'pg'
 # Use CoffeeScript for .coffee assets and views
@@ -15,15 +15,15 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 1.0.0', group: :doc
+gem 'sdoc', group: :doc
 
 gem 'puma'
 gem 'dalli'
 gem 'minitest'
 gem 'httparty'
-gem 'rack', '~> 2.2', '>= 2.2.3'
+gem 'rack'
 gem 'sassc-rails'
 gem 'yajl-ruby', require: 'yajl'
 gem 'nokogiri'
