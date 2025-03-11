@@ -28,6 +28,7 @@ gem 'sassc-rails'
 gem 'yajl-ruby', require: 'yajl'
 gem 'nokogiri'
 gem 'terser'
+gem 'stringio', '~> 3.1.5'
 
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
