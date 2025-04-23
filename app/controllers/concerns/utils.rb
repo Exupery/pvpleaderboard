@@ -16,7 +16,7 @@ module Utils extend ActiveSupport::Concern
     cols = ""
 		@@stats.each do |stat|
 			cols += "," if !cols.empty?
-			cols += "MIN(#{stat}) AS min_#{stat}, PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY #{stat}) AS med_#{stat}, MAX(#{stat}) AS max_#{stat}"
+			cols += "PERCENTILE_CONT(0.05) WITHIN GROUP(ORDER BY #{stat}) AS min_#{stat}, PERCENTILE_CONT(0.55) WITHIN GROUP(ORDER BY #{stat}) AS med_#{stat}, MAX(#{stat}) AS max_#{stat}"
     end
     @@stat_cols = cols
 
