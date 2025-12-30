@@ -116,5 +116,4 @@ Rails.application.configure do
   # Prevent health checks from clogging up the logs.
   config.silence_healthcheck_path = "/up"
 
-  config.active_support.to_time_preserves_timezone = :zone
 end

@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby "3.3.6"
+ruby "3.4.8"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '8.0.2.1'
+gem 'rails', '8.1.1'
 
 gem 'pg'
 # Use CoffeeScript for .coffee assets and views
@@ -28,7 +28,7 @@ gem 'sassc-rails'
 gem 'yajl-ruby', require: 'yajl'
 gem 'nokogiri'
 gem 'terser'
-gem 'stringio', '~> 3.1.5'
+gem 'image_processing'
 
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
