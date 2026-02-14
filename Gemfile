@@ -21,7 +21,7 @@ gem 'sdoc', group: :doc
 
 gem 'puma'
 gem 'dalli'
-gem 'minitest'
+gem 'minitest', '~> 5.1'
 gem 'httparty'
 gem 'rack'
 gem 'sassc-rails'

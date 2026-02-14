@@ -14,6 +14,7 @@ class Realms
 	@@realms = nil
 
   def self.list
+	  @@realms = get_realms if @@realms.nil?
 	  return @@realms
 	end
 
@@ -29,8 +30,6 @@ class Realms
       h[slug + region] = Realm.new(slug, row["name"], region)
     end
 
-    @@realms = h
+    return h
 	end
-
-  get_realms
 end

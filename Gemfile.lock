@@ -141,8 +141,7 @@ GEM
       logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (6.0.1)
-      prism (~> 1.5)
+    minitest (5.27.0)
     multi_xml (0.8.0)
       bigdecimal (>= 3.1, < 5)
     net-imap (0.6.2)
@@ -162,7 +161,6 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.7.0)
     psych (5.3.1)
       date
       stringio
@@ -285,7 +283,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   listen
-  minitest
+  minitest (~> 5.1)
   nokogiri
   pg
   puma
