@@ -29,6 +29,7 @@ gem 'yajl-ruby', require: 'yajl'
 gem 'nokogiri'
 gem 'terser'
 gem 'image_processing'
+gem 'mini_portile2', '~> 2.8.9'
 
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
