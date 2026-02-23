@@ -20,7 +20,8 @@ gem 'jbuilder'
 gem 'sdoc', group: :doc
 
 gem 'puma'
-gem 'dalli'
+gem 'dalli', '~> 4.0'
+gem 'connection_pool', '~> 2.4'
 gem 'minitest', '~> 5.1'
 gem 'httparty'
 gem 'rack'
