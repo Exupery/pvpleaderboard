@@ -1,0 +1,15 @@
+<% 256.times do |p| %>
+pstat<%= p %>:
+  player_id: <%= p %>
+  strength: <%= 1000 + (p * 7) % 500 %>
+  agility: <%= 1000 + (p * 11) % 500 %>
+  intellect: <%= 1000 + (p * 13) % 500 %>
+  stamina: <%= 2000 + (p * 17) % 500 %>
+  critical_strike: <%= 200 + (p * 3) % 100 %>
+  haste: <%= 200 + (p * 5) % 100 %>
+  versatility: <%= 200 + (p * 7) % 100 %>
+  mastery: <%= 200 + (p * 11) % 100 %>
+  leech: <%= (p * 3) % 50 %>
+  dodge: <%= 50 + (p * 2) % 50 %>
+  parry: <%= 50 + (p * 4) % 50 %>
+<% end %>

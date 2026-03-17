@@ -11,6 +11,30 @@ achiev<%= sn %>:
   name: <%= "season foo achievname#{sn}" %>
   description: <%= "seasonalachievdescription#{sn}" %>
 <% end %>
+achiev399:
+  id: 399
+  name: "Combatant"
+  description: "Earned 1400 rating in 2v2"
+achiev400:
+  id: 400
+  name: "Challenger"
+  description: "Earned 1550 rating in 2v2"
+achiev401:
+  id: 401
+  name: "Rival"
+  description: "Earned 1800 rating in 2v2"
+achiev402:
+  id: 402
+  name: "Combatant"
+  description: "Earned 1400 rating in 3v3"
+achiev403:
+  id: 403
+  name: "Challenger"
+  description: "Earned 1550 rating in 3v3"
+achiev405:
+  id: 405
+  name: "Rival"
+  description: "Earned 1800 rating in 3v3"
 achiev<%= 5341 %>:
   id: <%= 5341 %>
   name: <%= "rbg achievname#{5341}" %>

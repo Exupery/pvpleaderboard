@@ -1,4 +1,4 @@
-<% 1200.times do |n| %>
+<% 256.times do |n| %>
 playerachiev<%= n %>:
   player_id: <%= n %>
   achievement_id: 5341

@@ -1,8 +1,38 @@
+<%
+  specs_list = [
+    [62, 8], [63, 8], [64, 8], [65, 2], [66, 2], [70, 2],
+    [71, 1], [72, 1], [73, 1], [102, 11], [103, 11], [104, 11],
+    [105, 11], [250, 6], [251, 6], [252, 6], [253, 3], [254, 3],
+    [255, 3], [256, 5], [257, 5], [258, 5], [259, 4], [260, 4],
+    [261, 4], [262, 7], [263, 7], [264, 7], [265, 9], [266, 9],
+    [267, 9], [268, 10], [269, 10], [270, 10], [577, 12], [581, 12],
+    [1467, 13], [1468, 13]
+  ]
+  # Talent spec groups used in the talents fixture
+  spec_order = [0, 62, 63, 64, 65, 66]
+  # Each class has 6 spec groups × 22 talents = 132 talents
+  talents_per_class = spec_order.length * 22
+%>
 <% 256.times do |p| %>
-  <% 480.times do |n| %>
-  playertalent<%= "#{p}-#{n}" %>:
+  <% class_id = specs_list[p % 38][1] %>
+  <% spec_id = specs_list[p % 38][0] %>
+  <% class_base = (class_id - 1) * talents_per_class %>
+  <%# Assign all 22 talents from spec_id=0 group (includes CLASS, HERO, SPEC cats) %>
+  <% 22.times do |n| %>
+  pt_<%= p %>_<%= n %>:
     player_id: <%= p %>
-    talent_id: <%= n % 480 %>
-    stale: false
+    talent_id: <%= class_base + n %>
+    stale: "false"
+  <% end %>
+  <%# Assign 22 talents from player's actual spec group if it exists in fixture %>
+  <% spec_idx = spec_order.index(spec_id) %>
+  <% if spec_idx && spec_idx > 0 %>
+    <% spec_base = class_base + spec_idx * 22 %>
+    <% 22.times do |n| %>
+  pt_<%= p %>_s<%= n %>:
+    player_id: <%= p %>
+    talent_id: <%= spec_base + n %>
+    stale: "false"
+    <% end %>
   <% end %>
 <% end %>

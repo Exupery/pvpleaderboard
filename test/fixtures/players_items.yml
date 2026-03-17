@@ -1,8 +1,20 @@
-<% 1000.times do |p| %>
-  playeritem<%= "#{p}" %>:
+<% 256.times do |p| %>
+  playeritem<%= p %>:
     player_id: <%= p %>
     head: <%= p % 10 %>
-    shoulder: <%= (p % 10) + 10 %>
-    finger1: <%= (p % 10) + 20 %>
-    finger2: <%= (p % 10) + 30 %>
+    neck: <%= (p % 10) + 10 %>
+    shoulder: <%= (p % 10) + 20 %>
+    back: <%= (p % 10) + 30 %>
+    chest: <%= (p % 10) + 40 %>
+    wrist: <%= (p % 10) + 50 %>
+    hands: <%= (p % 10) + 60 %>
+    waist: <%= (p % 10) + 70 %>
+    legs: <%= (p % 10) + 80 %>
+    feet: <%= (p % 10) + 90 %>
+    finger1: <%= p % 10 %>
+    finger2: <%= (p % 10) + 10 %>
+    trinket1: <%= (p % 10) + 20 %>
+    trinket2: <%= (p % 10) + 30 %>
+    mainhand: <%= (p % 10) + 40 %>
+    offhand: <%= (p % 10) + 50 %>
 <% end %>
