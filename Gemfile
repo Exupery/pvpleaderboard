@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "3.4.8"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '8.1.1'
+gem 'rails', '8.1.3'
 
 gem 'pg'
 # Use CoffeeScript for .coffee assets and views
