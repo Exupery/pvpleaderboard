@@ -3,7 +3,7 @@ class Player
     :gender, :class, :class_id, :spec, :spec_id, :spec_icon, :realm, :realm_slug, :region, :guild, :main_image,
     :ratings, :titles, :ilvl, :class_talents, :spec_talents, :hero_talents, :pvp_talents, :loadout, :dates
 
-  @@armory_locales = { "US" => "en-us", "EU" => "en-gb", "KR" => "ko_kr", "TW" => "zh-tw" }
+  @@armory_locales = { "US" => "en-us", "EU" => "en-gb", "KR" => "ko-kr", "TW" => "zh-tw" }
 
   def initialize hash
     @id = hash["id"]
@@ -47,7 +47,7 @@ class Player
 
   def armory_link
     locale = @@armory_locales[@region]
-    return "https://worldofwarcraft.com/#{locale}/character/#{@realm_slug}/#{@name}".downcase
+    return "https://worldofwarcraft.blizzard.com/#{locale}/character/#{@region}/#{@realm_slug}/#{@name}/".downcase
   end
 
   private

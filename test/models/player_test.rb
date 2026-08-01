@@ -15,7 +15,7 @@ class PlayerTest < ActiveSupport::TestCase
   def test_create_an_armory_link
     assert_not_nil @player
     assert_not_nil @player.armory_link
-    assert @player.armory_link == "https://worldofwarcraft.com/en-us/character/encom/tron"
+    assert @player.armory_link == "https://worldofwarcraft.blizzard.com/en-us/character/us/encom/tron/"
   end
 
   def test_audit_calculations
