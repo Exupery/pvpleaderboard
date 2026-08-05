@@ -16,6 +16,11 @@ module Pvpleaderboard
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # This app has no Active Storage attachments, so it never generates image
+    # variants. Without this, Rails eagerly loads the vips transformer at boot
+    # and blows up unless the libvips system library is installed.
+    config.active_storage.variant_processor = :disabled
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
