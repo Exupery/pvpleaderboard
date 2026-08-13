@@ -90,6 +90,9 @@ class Player
   def swap_if_needed(titles, pos1, pos2)
     title_a = titles[pos1]
     title_b = titles[pos2]
+    # An achievement name without a "Title: Season" split has no season to order by
+    return titles if title_a.season.nil? || title_b.season.nil?
+
     if title_a.season.start_with?(title_b.season.slice(0, 3))
       title_a_season_num = title_a.season.slice(/[0-9]/)
       title_b_season_num = title_b.season.slice(/[0-9]/)
