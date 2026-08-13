@@ -4,12 +4,26 @@ achiev<%= n %>:
   name: <%= "achievname#{n}" %>
   description: <%= "achievdescription#{n}" %>
 <% end %>
+<%
+  ## Mirrors the live "<Title>: <Expansion> Season <N>" naming. Title splits the
+  ## season off the name at the colon, so a name without one has a nil season.
+  ## "Foo"/"Bar" stand in for the expansion to keep these obviously fake.
+  seasonal_titles = [
+    "Combatant I", "Challenger", "Rival II", "Duelist", "Elite", "Legend",
+    "Gladiator", "Sinful Gladiator", "Verdant Legend", "Soldier of the Alliance",
+    "Defender of the Horde", "Strategist"
+  ]
+  seasonal_expansions = [ "Foo", "Bar" ]
+%>
 <% 100.times do |n| %>
 <% sn = n + 100 %>
+<% title = seasonal_titles[n % seasonal_titles.length] %>
+<% expansion = seasonal_expansions[(n / seasonal_titles.length) % seasonal_expansions.length] %>
+<% season = (n % 6) + 1 %>
 achiev<%= sn %>:
   id: <%= sn %>
-  name: <%= "season foo achievname#{sn}" %>
-  description: <%= "seasonalachievdescription#{sn}" %>
+  name: "<%= title %>: <%= expansion %> Season <%= season %>"
+  description: "Earn the rank of <%= title %> during <%= expansion %> Season <%= season %>."
 <% end %>
 achiev399:
   id: 399
