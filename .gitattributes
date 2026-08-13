@@ -1,0 +1,8 @@
+# Store every text file with LF in the repo, and check it out with LF.
+# This overrides core.autocrlf, so line endings stay correct even if the
+# global git config changes or the repo is cloned somewhere new.
+* text=auto eol=lf
+
+# Binary assets - git must never inspect or rewrite these.
+*.png binary
+*.ico binary
