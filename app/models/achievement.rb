@@ -7,7 +7,7 @@ class Achievement
     @id = id
     @name = name
     @description = description
-    @icon = icon
+    @icon = icon.to_s.empty? ? "placeholder" : icon
   end
 
   def self.get_seasonal_achievements

@@ -1,92 +1,95 @@
 #!/usr/bin/env ruby
 
 require "fileutils"
-require "find"
+require "net/http"
 require "open3"
+require "tmpdir"
+require "uri"
 
-ICONS_DEST = "public/images/icons/"
-SCRIPT_DIR = File.dirname(__FILE__)
+require_relative "icon_check"
 
-if ARGV.empty?
-  puts "Usage: ruby #{$0} <WOW_ICONS_DIR>"
-  abort
+CASC_URL = ENV["CASC_URL"].to_s
+MAX_REDIRECTS = 3
+
+if CASC_URL.empty?
+  abort "CASC_URL is not set"
 end
 
-blp_source = ARGV[0]
-
-unless Dir.exist?(blp_source)
-  puts "Error: source directory not found: #{blp_source}"
-  abort
+## Accepts either a base URL to append the ID to, or a format string with %s
+def casc_url(id)
+  CASC_URL.include?("%s") ? format(CASC_URL, id) : "#{CASC_URL.chomp("/")}/#{id}"
 end
 
-# Run icon_check.rb and collect missing icon names
-puts "Checking for missing icons..."
-output, status = Open3.capture2("ruby #{SCRIPT_DIR}/icon_check.rb")
+def fetch(url, redirects = MAX_REDIRECTS)
+  response = Net::HTTP.get_response(URI(url))
 
-if status.exitstatus != 0
-  puts "Error running icon_check.rb"
-  abort
+  if response.is_a?(Net::HTTPRedirection) && redirects > 0
+    return fetch(response["location"], redirects - 1)
+  end
+
+  response.is_a?(Net::HTTPSuccess) ? response.body : nil
 end
 
-lines = output.lines.map(&:chomp)
-missing_index = lines.index("MISSING:")
+## BLPConverter writes <input basename>.png into --dest, so downloading to
+## <id>.blp is what produces the <id>.png the app expects.
+def convert(blp_file, dest)
+  _, stderr, status = Open3.capture3("BLPConverter", "--dest", dest, blp_file)
+  status.success? ? nil : (stderr.strip.empty? ? "BLPConverter failed" : stderr.strip)
+end
 
-if missing_index.nil?
-  puts output.strip
+unless system("which BLPConverter > /dev/null 2>&1")
+  abort "BLPConverter not found on PATH. Install it before running this script."
+end
+
+db = connect
+missing = missing_icon_ids(db)
+db.close
+
+if missing.empty?
+  puts "All required icons present in #{ICONS}"
   exit 0
 end
 
-missing_icons = lines[(missing_index + 1)..].reject(&:empty?)
+puts "Found #{missing.length} missing icon(s). Downloading..."
 
-if missing_icons.empty?
-  puts "No missing icons to fetch."
-  exit 0
-end
+downloaded = 0
+failed = []
 
-puts "Found #{missing_icons.length} missing icon(s). Converting from BLP..."
+Dir.mktmpdir do |tmp|
+  missing.each do |id|
+    data = fetch(casc_url(id))
 
-converted = 0
-not_found = []
-
-missing_icons.each do |icon_name|
-  blp_file = nil
-
-  Find.find(blp_source) do |f|
-    if f =~ /\/#{Regexp.escape(icon_name)}\.blp$/i
-      blp_file = f
-      Find.prune
-    end
-  end
-
-  if blp_file.nil?
-    not_found << icon_name
-    next
-  end
-
-  # BLPConverter outputs <iconname>.png into the dest directory
-  _, stderr, status = Open3.capture3("BLPConverter", "--dest", ICONS_DEST, blp_file)
-
-  if status.exitstatus != 0
-    puts "  ERROR converting #{icon_name}: #{stderr.strip}"
-  else
-    # BLPConverter may preserve original casing; rename to lowercase if needed
-    expected = File.join(ICONS_DEST, "#{icon_name.downcase}.png")
-    produced = Dir[File.join(ICONS_DEST, "#{icon_name}.png")].first ||
-               Dir[File.join(ICONS_DEST, "#{File.basename(blp_file, '.blp')}.png")].first
-
-    if produced && produced != expected
-      FileUtils.mv(produced, expected)
+    if data.nil?
+      failed << [ id, "download failed" ]
+      next
     end
 
-    puts "  OK #{icon_name}"
-    converted += 1
+    unless data.start_with?("BLP2")
+      failed << [ id, "not a BLP (file may not exist in the client)" ]
+      next
+    end
+
+    blp_file = File.join(tmp, "#{id}.blp")
+    File.binwrite(blp_file, data)
+
+    error = convert(blp_file, ICONS)
+
+    if error
+      failed << [ id, error ]
+    elsif !File.exist?(File.join(ICONS, "#{id}.png"))
+      failed << [ id, "converted but #{id}.png was not produced" ]
+    else
+      puts "  OK #{id}.png"
+      downloaded += 1
+    end
   end
 end
 
 puts
-puts "Done. #{converted} icon(s) converted."
+puts "Done. #{downloaded} icon(s) written to #{ICONS}."
 
-unless not_found.empty?
-  puts "\nCould not find BLP source for #{not_found.length} icon(s):"
-  not_found.each { |name| puts "  #{name}" }
+unless failed.empty?
+  puts
+  puts "Failed to fetch #{failed.length} icon(s):"
+  failed.each { |id, reason| puts "  #{id}: #{reason}" }
 end
