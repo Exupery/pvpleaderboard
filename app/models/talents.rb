@@ -3,8 +3,8 @@ class Talents
   def self.get_class_talents(class_id, spec_id)
     cache_key = "class_talents_#{class_id}_#{spec_id}"
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
-    or_clause = spec_id.nil? ? "" : "OR spec_id=#{spec_id}"
-		talents = get_talents "class_id=#{class_id} AND cat='CLASS'"
+    spec_clause = spec_id.nil? ? "" : " AND #{spec_id}=ANY(hero_specs)"
+		talents = get_talents "class_id=#{class_id} AND cat='CLASS'#{spec_clause}"
     Rails.cache.write(cache_key, talents, :expires_in => 1.hour)
     return talents
 	end
