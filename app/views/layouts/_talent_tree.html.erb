@@ -1,23 +1,37 @@
+<% min_row = find_min_row talent_positions %>
+<% max_row = find_max_row talent_positions %>
+<% min_col = find_min_col talent_positions %>
+<% max_col = find_max_col talent_positions %>
+<% title = local_assigns[:title] %>
+<% center_ends = local_assigns[:center_ends] %>
+<% cols = (min_col..max_col).to_a %>
 <table class="table table-bordered table-condensed table-responsive center table-fixed">
-  <tbody>
-    <% min_row = find_min_row talent_positions %>
-    <% max_row = find_max_row talent_positions %>
-    <% min_col = find_min_col talent_positions %>
-    <% max_col = find_max_col talent_positions %>
-    <% (min_row..max_row).each do |row| %>
+  <% unless title.blank? %>
+    <thead>
       <tr>
-        <% (min_col..max_col).each do |col| %>
+        <th class="talent-tree-title" colspan="<%= cols.length %>"><%= title %></th>
+      </tr>
+    </thead>
+  <% end %>
+  <tbody>
+    <% (min_row..max_row).each do |row| %>
+      <% filled = cols.select { |col| talent_positions["#{row}-#{col}"] } %>
+      <%# A hero tree starts and ends on a single talent, which the game
+          centers over the whole tree rather than leaving in its column %>
+      <% span_row = center_ends && (row == min_row || row == max_row) && filled.length == 1 %>
+      <tr>
+        <% (span_row ? filled : cols).each do |col| %>
           <% talent = talent_positions["#{row}-#{col}"] %>
-          <% unless talent.nil? %>
-            <td>
+          <% if talent.nil? %>
+            <td class="min-height"></td>
+          <% else %>
+            <td<% if span_row %> colspan="<%= cols.length %>"<% end %>>
               <a href="https://www.wowhead.com/spell=<%= talent[:spell_id] %>" rel="spell=<%= talent[:spell_id] %>" target="_blank" class="no-a-style">
                 <img src="/images/icons/<%= talent[:icon] %>.png" class="img-responsive center" alt="<%= talent[:name] %>">
                 <div class="table-tiny-font no-overflow"><%= talent[:name] %></div>
                 <div class="table-tiny-font no-overflow"><%= talent[:percent] %>&#37;</div>
               </a>
             </td>
-          <% else %>
-            <td class="min-height"></td>
           <% end %>
         <% end %>
       </tr>

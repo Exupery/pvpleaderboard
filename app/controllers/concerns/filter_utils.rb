@@ -29,7 +29,7 @@ module FilterUtils extend ActiveSupport::Concern
     end
 
     if @selected[:spec]
-      spec = Specs.slugs[slugify "#{@selected[:class]}_#{@selected[:spec]}"]
+      spec = selected_spec
       return "" if spec.nil?
       where += " AND players.spec_id=#{spec[:id]}" if spec
     end
@@ -52,8 +52,35 @@ module FilterUtils extend ActiveSupport::Concern
     where += races_clause if @selected[:races]
     where += realm_clause if @selected[:realm]
     where += name_clause if @selected[:name]
+    where += hero_tree_clause if @selected[:"hero-tree"]
 
     return where.start_with?(" AND ") ? where.sub(" AND ", "") : where
+  end
+
+  def selected_spec
+    return nil if @selected[:spec].nil?
+
+    return Specs.slugs[slugify "#{@selected[:class]}_#{@selected[:spec]}"]
+  end
+
+  # Narrows to players specced into a hero tree. Every cat='HERO' talent
+  # carries the spec set that shares its tree, so holding any one of them
+  # places a player in that tree - no need to single out the first talent,
+  # which sidesteps both choice nodes and the entry talents that differ
+  # between the two specs sharing a tree. Pairing it with the spec clause
+  # above keeps stale talents from a spec's other tree out.
+  def hero_tree_clause
+    spec = selected_spec
+    return "" if spec.nil?
+
+    tree = Herotrees.find(spec[:id], @selected[:"hero-tree"])
+    return "" if tree.nil?
+
+    # Compare hero_specs as a set rather than with = - array equality in
+    # Postgres is order sensitive and nothing guarantees the order the
+    # updater stored the specs in
+    specs = "'{#{tree[:specs].join(",")}}'"
+    return " AND EXISTS (SELECT 1 FROM players_talents pt JOIN talents t ON pt.talent_id=t.id WHERE pt.player_id=players.id AND t.cat='HERO' AND t.hero_specs @> #{specs} AND t.hero_specs <@ #{specs})"
   end
 
   def factions_clause

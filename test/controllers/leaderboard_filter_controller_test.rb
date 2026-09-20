@@ -45,6 +45,39 @@ class LeaderboardFilterControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  def test_filter_by_hero_tree
+    base_params = {class: "mage", spec: "frost", leaderboard: "2v2", region: "US"}
+    get("/leaderboards/filter/results", params: base_params)
+    total = @controller.instance_variable_get(:@leaderboard).size
+
+    trees = Herotrees.for_spec(64)
+    assert_equal 2, trees.length
+
+    narrowed = trees.map do |tree|
+      get("/leaderboards/filter/results", params: base_params.merge({"hero-tree": tree[:slug]}))
+
+      assert_response :success
+      count = @controller.instance_variable_get(:@leaderboard).size
+      assert_operator count, :>, 0, "No players returned for #{tree[:slug]}"
+      assert_operator count, :<, total, "#{tree[:slug]} did not narrow the results"
+      count
+    end
+
+    assert_equal total, narrowed.sum, "Every player should land in exactly one hero tree"
+  end
+
+  def test_ignore_hero_tree_without_a_spec
+    base_params = {class: "mage", leaderboard: "2v2", region: "US"}
+    get("/leaderboards/filter/results", params: base_params)
+    total = @controller.instance_variable_get(:@leaderboard).size
+
+    tree = Herotrees.for_spec(64).first
+    get("/leaderboards/filter/results", params: base_params.merge({"hero-tree": tree[:slug]}))
+
+    assert_response :success
+    assert_equal total, @controller.instance_variable_get(:@leaderboard).size
+  end
+
   def test_not_include_on_partial_race_match
     base_params = {class: "druid", leaderboard: "3v3", region: "US"}
     troll_params = base_params.merge({races: "troll"})

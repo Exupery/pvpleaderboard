@@ -28,7 +28,15 @@
   <% spec_idx = spec_order.index(spec_id) %>
   <% if spec_idx && spec_idx > 0 %>
     <% spec_base = class_base + spec_idx * 22 %>
+    <%# Talents 10 and 11 of a group are the HERO ones and they sit in
+        different hero trees, so give a player only one of them - in game
+        a player can only ever spec into a single hero tree. Players are
+        dealt out to specs round robin, so split on how many times round
+        rather than on the player id, which never changes parity within
+        a spec %>
+    <% skipped_hero_talent = ((p / specs_list.length) % 2 == 0) ? 11 : 10 %>
     <% 22.times do |n| %>
+      <% next if n == skipped_hero_talent %>
   pt_<%= p %>_s<%= n %>:
     player_id: <%= p %>
     talent_id: <%= spec_base + n %>

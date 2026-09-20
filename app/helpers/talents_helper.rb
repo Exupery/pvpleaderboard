@@ -13,17 +13,22 @@ module TalentsHelper
     return convert_to_tree(talents_with_percents)
   end
 
+  # The spec's hero trees as [{:name, :positions}], sorted by name so the
+  # two sides stay put between requests and line up with the order the
+  # hero tree filter lists them in
   def hero_talent_counts_trees(spec_id, hero_talent_counts)
     hero_talents = Talents.get_hero_talents(spec_id)
     grouped = hero_talents.group_by { |id, t| t[:hero_specs] }
-    trees = Hash.new
+    trees = Array.new
     return trees if (grouped.empty? || grouped.size > 2)
-    grouped.each { |k, group|
-      key = trees.empty? ? "left" : "right"
+    grouped.each { |key, group|
       talents_with_percents = get_percents(group.to_h, hero_talent_counts)
-      trees[key] = convert_to_tree(talents_with_percents)
+      trees.push({
+        :name => Herotrees.name_for(key),
+        :positions => convert_to_tree(talents_with_percents)
+      })
     }
-    return trees
+    return trees.sort_by { |tree| tree[:name].to_s }
   end
 
   def hero_talent_counts(spec_id, hero_talent_counts)

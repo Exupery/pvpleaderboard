@@ -19,14 +19,13 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-hero-talents">
       <% hero_trees = hero_talent_counts_trees(@spec_id, @hero_talent_counts) %>
-      <div id="hero-left" class="hero-tree">
-        <%= render "layouts/talent_tree", :label => "hero1", :talent_positions => hero_trees["left"] %>
+      <div class="hero-trees">
+        <% hero_trees.each_with_index do |tree, i| %>
+          <div id="hero-<%= i == 0 ? "left" : "right" %>" class="hero-tree">
+            <%= render "layouts/talent_tree", :label => "hero#{i + 1}", :talent_positions => tree[:positions], :title => tree[:name], :center_ends => true %>
+          </div>
+        <% end %>
       </div>
-      <% unless hero_trees["right"].nil? %>
-      <div id="hero-right" class="hero-tree">
-        <%= render "layouts/talent_tree", :label => "hero2", :talent_positions => hero_trees["right"] %>
-      </div>
-      <% end %>
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-pane-pvp-talents">
       <%= render "layouts/talents_table", :label => "pvp", :talents => pvp_talent_counts(@spec_id, @pvp_talent_counts) %>

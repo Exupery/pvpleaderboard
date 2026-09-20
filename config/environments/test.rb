@@ -30,6 +30,9 @@ Rails.application.configure do
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 
+  # Keep the suite off Blizzard's API - hero trees get named from the DB
+  config.x.hero_trees_from_api = false
+
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 

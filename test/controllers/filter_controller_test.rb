@@ -60,4 +60,40 @@ class FilterControllerTest < ActionDispatch::IntegrationTest
       assert_not_nil assigns(:top_players)
     end
   end
+
+  def test_filter_by_hero_tree
+    base_params = {class: "mage", spec: "frost"}
+    get("/pvp/filter/results", params: base_params)
+    total = @controller.instance_variable_get(:@total)
+
+    trees = Herotrees.for_spec(64)
+    assert_equal 2, trees.length
+
+    narrowed = trees.map do |tree|
+      get("/pvp/filter/results", params: base_params.merge({"hero-tree": tree[:slug]}))
+
+      assert_response :success
+      count = @controller.instance_variable_get(:@total)
+      assert_operator count, :>, 0, "No players returned for #{tree[:slug]}"
+      assert_operator count, :<, total, "#{tree[:slug]} did not narrow the results"
+      count
+    end
+
+    assert_equal total, narrowed.sum, "Every player should land in exactly one hero tree"
+  end
+
+  def test_ignore_unknown_hero_tree
+    base_params = {class: "mage", spec: "frost"}
+    get("/pvp/filter/results", params: base_params)
+    total = @controller.instance_variable_get(:@total)
+
+    # A tree another spec owns is no more selectable than a made up one
+    other_spec_tree = Herotrees.for_spec(65).first
+    [other_spec_tree.nil? ? "not-a-tree" : other_spec_tree[:slug], "not-a-tree", ""].each do |slug|
+      get("/pvp/filter/results", params: base_params.merge({"hero-tree": slug}))
+
+      assert_response :success
+      assert_equal total, @controller.instance_variable_get(:@total), "#{slug} should not have filtered"
+    end
+  end
 end

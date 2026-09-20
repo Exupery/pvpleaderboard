@@ -35,6 +35,9 @@ var ready = function() {
     $(".spec-group").hide();
     $("#" + classSlug + "-specs").show();
 
+    clearHeroTrees();
+    $(".placeholder-hero-tree-group").show();
+
     var active = $(".class-selector.active").first();
     if (active && active.data("value") != $(this).data("value")) {
       $(".spec-selector").removeClass("active");
@@ -48,6 +51,9 @@ var ready = function() {
     if (isRequired("spec") && isActive(".class-selector.active")) {
       enableSubmit();
     }
+
+    var classSlug = ($(this).closest(".spec-group").attr("id") || "").replace(/-specs$/, "");
+    showHeroTrees(classSlug + "-" + urlify($(this).data("value")));
   });
 
   $(".leaderboard-btn").click(function() {
@@ -306,6 +312,7 @@ function createFilterQueryString() {
   params += queryParam("name", getInputValue("#char-name"));
   params += queryParam("active-since", getAllValues("#active-since"));
   params += queryParam("exclude-alts", getAllValues(".exclude-alts-btn.active"));
+  params += queryParam("hero-tree", getFirstValue(".hero-tree-btn.active"));
 
   return params;
 }
@@ -371,6 +378,25 @@ function toggleCollapser(id, collapsed) {
 
 function enableSubmit() {
   $(".btn-submit").prop("disabled", false);
+}
+
+// Every spec's hero trees are rendered up front and kept hidden, the same
+// way the spec groups are, so picking a spec just swaps which one shows
+function showHeroTrees(specSlug) {
+  clearHeroTrees();
+
+  var group = $("#" + specSlug + "-hero-trees");
+  if (group.length) {
+    group.show();
+  } else {
+    $(".placeholder-hero-tree-group").show();
+  }
+}
+
+function clearHeroTrees() {
+  $(".hero-tree-group").hide();
+  $(".hero-tree-btn").removeClass("active");
+  $(".hero-tree-group .default-option").addClass("active");
 }
 
 function isActive(selector) {

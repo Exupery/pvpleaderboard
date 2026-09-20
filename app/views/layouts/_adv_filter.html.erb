@@ -40,6 +40,41 @@
 </div>
 
 <div class="filter-row">
+  <% note = "Narrows to players specced into a hero talent tree - select a spec first" %>
+  <label for="hero-trees" class="btn-group-label" title="<%= note %>">Hero Talent Tree</label>
+  <div id="hero-trees" data-turbolinks="false">
+    <% spec_selected = !@selected[:class].nil? && !@selected[:spec].nil? %>
+    <% style = spec_selected ? "display: none;" : "" %>
+    <div class="btn-group btn-group-lg btn-group-filter hero-tree-group placeholder-hero-tree-group show-on-reset" style="<%= style %>" role="group" aria-label="Hero Talent Trees">
+      <label class="btn active default-option" title="Select a spec above first" disabled="disabled">
+        <input type="radio" autocomplete="off" disabled="disabled">ANY
+      </label>
+    </div>
+
+    <% Specs.list.each do |clazz, specs| %>
+      <% specs.each do |spec| %>
+        <% trees = Herotrees.for_spec spec.id %>
+        <% next if trees.empty? %>
+        <% showing = spec_selected && urlify(clazz) == urlify(@selected[:class]) && urlify(spec.slug) == urlify(@selected[:spec]) %>
+        <% style = showing ? "" : "display: none;" %>
+        <div id="<%= urlify clazz %>-<%= urlify spec.slug %>-hero-trees" class="btn-group btn-group-lg btn-group-filter hero-tree-group hide-on-reset" role="group" aria-label="<%= clazz %> <%= spec.name %> Hero Talent Trees" style="<%= style %>" data-toggle="buttons">
+          <% active = (showing && @selected[:"hero-tree"]) ? "" : "active" %>
+          <label class="btn <%= active %> default-option" title="Any hero talent tree">
+            <input type="radio" autocomplete="off">ANY
+          </label>
+          <% trees.each do |tree| %>
+            <% active = (showing && @selected[:"hero-tree"] == tree[:slug]) ? "active" : "" %>
+            <label class="btn hero-tree-btn <%= active %>" title="<%= tree[:name] %>" data-value="<%= tree[:slug] %>">
+              <input type="radio" autocomplete="off"><%= tree[:name] %>
+            </label>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="filter-row">
   <label for="activity" class="btn-group-label">Activity</label>
   <div id="activity" class="input-group">
     <span>Exclude players that have NOT logged in within the last</span>

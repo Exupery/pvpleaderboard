@@ -172,7 +172,7 @@ class FilterController < ApplicationController
   def get_selected
     @selected = Hash.new
 
-    filters = [:class, :spec, :leaderboards, :factions, :"cr-bracket", :"current-rating", :"arena-achievements", :"rbg-achievements", :races, :regions, :"active-since"]
+    filters = [:class, :spec, :leaderboards, :factions, :"cr-bracket", :"current-rating", :"arena-achievements", :"rbg-achievements", :races, :regions, :"active-since", :"hero-tree"]
 
     filters.each do |filter|
       @selected[filter] = dashify params[filter]
@@ -180,6 +180,6 @@ class FilterController < ApplicationController
   end
 
   def get_spec_from_selected
-    return Specs.slugs["#{slugify @selected[:class]}_#{slugify @selected[:spec]}"]
+    return selected_spec
   end
 end

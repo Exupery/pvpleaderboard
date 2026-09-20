@@ -435,12 +435,26 @@ th {
   margin-top: 0;
 }
 
+/* Gutter between the two trees only, so the pair lines up flush with the
+   edges of the tab strip the way the single table tabs do */
+.hero-trees {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 3%;
+  row-gap: 1em;
+}
+
 .hero-tree {
-  display: inline-flex;
-  width: 46%;
-  min-width: 325px;
-  margin-left: 1.5%;
-  margin-right: 1.5%;
+  flex: 1 1 325px;
+  min-width: 0;
+}
+
+.talent-tree-title {
+  color: #E4A703;
+  font-size: 1.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .results-panel table,
