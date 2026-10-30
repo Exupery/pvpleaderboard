@@ -47,7 +47,7 @@ class Player
 
   def armory_link
     locale = @@armory_locales[@region]
-    return "https://worldofwarcraft.blizzard.com/#{locale}/character/#{@region}/#{@realm_slug}/#{@name}/".downcase
+    return "https://worldofwarcraft.blizzard.com/#{locale}/worldsoul/#{@region}/armory/character/#{@realm_slug}/#{@name}".downcase
   end
 
   private
